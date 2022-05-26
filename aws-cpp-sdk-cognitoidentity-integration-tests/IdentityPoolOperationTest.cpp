@@ -6,6 +6,7 @@
 #include <aws/external/gtest.h>
 #include <aws/testing/MemoryTesting.h>
 #include <algorithm>
+#include <thread>
 
 #include <aws/cognito-identity/CognitoIdentityClient.h>
 #include <aws/cognito-identity/CognitoIdentityErrors.h>
@@ -253,7 +254,7 @@ TEST_F(IdentityPoolOperationTest, TestIdentityActions)
     ClientConfiguration clientConfig;
     clientConfig.region = Aws::Region::US_EAST_1;
 
-    auto accountId = Aws::Environment::GetEnv("TEST_ACCOUNT_ID");
+    auto accountId = Aws::Environment::GetEnv("CATAPULT_TEST_ACCOUNT");
     if (accountId.empty()) {
         auto iamClient = Aws::MakeShared<Aws::IAM::IAMClient>(ALLOCATION_TAG, clientConfig);
         Aws::AccessManagement::AccessManagementClient accessManagementClient(iamClient, client);

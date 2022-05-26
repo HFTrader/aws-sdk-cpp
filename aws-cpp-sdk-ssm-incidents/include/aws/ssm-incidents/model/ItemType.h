@@ -22,7 +22,8 @@ namespace Model
     PARENT,
     ATTACHMENT,
     OTHER,
-    AUTOMATION
+    AUTOMATION,
+    INVOLVED_RESOURCE
   };
 
 namespace ItemTypeMapper

@@ -1156,68 +1156,110 @@ namespace Model
 
 
     /**
-     * <p>The protocol settings that are configured for your server.</p> <p> Use the
-     * <code>PassiveIp</code> parameter to indicate passive mode (for FTP and FTPS
-     * protocols). Enter a single dotted-quad IPv4 address, such as the external IP
-     * address of a firewall, router, or load balancer. </p> <p>Use the
-     * <code>TlsSessionResumptionMode</code> parameter to determine whether or not your
-     * Transfer server resumes recent, negotiated sessions through a unique session
-     * ID.</p>
+     * <p>The protocol settings that are configured for your server.</p> <ul> <li> <p>
+     * Use the <code>PassiveIp</code> parameter to indicate passive mode (for FTP and
+     * FTPS protocols). Enter a single dotted-quad IPv4 address, such as the external
+     * IP address of a firewall, router, or load balancer. </p> </li> <li> <p>Use the
+     * <code>SetStatOption</code> to ignore the error that is generated when the client
+     * attempts to use SETSTAT on a file you are uploading to an S3 bucket. Set the
+     * value to <code>ENABLE_NO_OP</code> to have the Transfer Family server ignore the
+     * SETSTAT command, and upload files without needing to make any changes to your
+     * SFTP client. Note that with <code>SetStatOption</code> set to
+     * <code>ENABLE_NO_OP</code>, Transfer generates a log entry to CloudWatch Logs, so
+     * you can determine when the client is making a SETSTAT call.</p> </li> <li>
+     * <p>Use the <code>TlsSessionResumptionMode</code> parameter to determine whether
+     * or not your Transfer server resumes recent, negotiated sessions through a unique
+     * session ID.</p> </li> </ul>
      */
     inline const ProtocolDetails& GetProtocolDetails() const{ return m_protocolDetails; }
 
     /**
-     * <p>The protocol settings that are configured for your server.</p> <p> Use the
-     * <code>PassiveIp</code> parameter to indicate passive mode (for FTP and FTPS
-     * protocols). Enter a single dotted-quad IPv4 address, such as the external IP
-     * address of a firewall, router, or load balancer. </p> <p>Use the
-     * <code>TlsSessionResumptionMode</code> parameter to determine whether or not your
-     * Transfer server resumes recent, negotiated sessions through a unique session
-     * ID.</p>
+     * <p>The protocol settings that are configured for your server.</p> <ul> <li> <p>
+     * Use the <code>PassiveIp</code> parameter to indicate passive mode (for FTP and
+     * FTPS protocols). Enter a single dotted-quad IPv4 address, such as the external
+     * IP address of a firewall, router, or load balancer. </p> </li> <li> <p>Use the
+     * <code>SetStatOption</code> to ignore the error that is generated when the client
+     * attempts to use SETSTAT on a file you are uploading to an S3 bucket. Set the
+     * value to <code>ENABLE_NO_OP</code> to have the Transfer Family server ignore the
+     * SETSTAT command, and upload files without needing to make any changes to your
+     * SFTP client. Note that with <code>SetStatOption</code> set to
+     * <code>ENABLE_NO_OP</code>, Transfer generates a log entry to CloudWatch Logs, so
+     * you can determine when the client is making a SETSTAT call.</p> </li> <li>
+     * <p>Use the <code>TlsSessionResumptionMode</code> parameter to determine whether
+     * or not your Transfer server resumes recent, negotiated sessions through a unique
+     * session ID.</p> </li> </ul>
      */
     inline bool ProtocolDetailsHasBeenSet() const { return m_protocolDetailsHasBeenSet; }
 
     /**
-     * <p>The protocol settings that are configured for your server.</p> <p> Use the
-     * <code>PassiveIp</code> parameter to indicate passive mode (for FTP and FTPS
-     * protocols). Enter a single dotted-quad IPv4 address, such as the external IP
-     * address of a firewall, router, or load balancer. </p> <p>Use the
-     * <code>TlsSessionResumptionMode</code> parameter to determine whether or not your
-     * Transfer server resumes recent, negotiated sessions through a unique session
-     * ID.</p>
+     * <p>The protocol settings that are configured for your server.</p> <ul> <li> <p>
+     * Use the <code>PassiveIp</code> parameter to indicate passive mode (for FTP and
+     * FTPS protocols). Enter a single dotted-quad IPv4 address, such as the external
+     * IP address of a firewall, router, or load balancer. </p> </li> <li> <p>Use the
+     * <code>SetStatOption</code> to ignore the error that is generated when the client
+     * attempts to use SETSTAT on a file you are uploading to an S3 bucket. Set the
+     * value to <code>ENABLE_NO_OP</code> to have the Transfer Family server ignore the
+     * SETSTAT command, and upload files without needing to make any changes to your
+     * SFTP client. Note that with <code>SetStatOption</code> set to
+     * <code>ENABLE_NO_OP</code>, Transfer generates a log entry to CloudWatch Logs, so
+     * you can determine when the client is making a SETSTAT call.</p> </li> <li>
+     * <p>Use the <code>TlsSessionResumptionMode</code> parameter to determine whether
+     * or not your Transfer server resumes recent, negotiated sessions through a unique
+     * session ID.</p> </li> </ul>
      */
     inline void SetProtocolDetails(const ProtocolDetails& value) { m_protocolDetailsHasBeenSet = true; m_protocolDetails = value; }
 
     /**
-     * <p>The protocol settings that are configured for your server.</p> <p> Use the
-     * <code>PassiveIp</code> parameter to indicate passive mode (for FTP and FTPS
-     * protocols). Enter a single dotted-quad IPv4 address, such as the external IP
-     * address of a firewall, router, or load balancer. </p> <p>Use the
-     * <code>TlsSessionResumptionMode</code> parameter to determine whether or not your
-     * Transfer server resumes recent, negotiated sessions through a unique session
-     * ID.</p>
+     * <p>The protocol settings that are configured for your server.</p> <ul> <li> <p>
+     * Use the <code>PassiveIp</code> parameter to indicate passive mode (for FTP and
+     * FTPS protocols). Enter a single dotted-quad IPv4 address, such as the external
+     * IP address of a firewall, router, or load balancer. </p> </li> <li> <p>Use the
+     * <code>SetStatOption</code> to ignore the error that is generated when the client
+     * attempts to use SETSTAT on a file you are uploading to an S3 bucket. Set the
+     * value to <code>ENABLE_NO_OP</code> to have the Transfer Family server ignore the
+     * SETSTAT command, and upload files without needing to make any changes to your
+     * SFTP client. Note that with <code>SetStatOption</code> set to
+     * <code>ENABLE_NO_OP</code>, Transfer generates a log entry to CloudWatch Logs, so
+     * you can determine when the client is making a SETSTAT call.</p> </li> <li>
+     * <p>Use the <code>TlsSessionResumptionMode</code> parameter to determine whether
+     * or not your Transfer server resumes recent, negotiated sessions through a unique
+     * session ID.</p> </li> </ul>
      */
     inline void SetProtocolDetails(ProtocolDetails&& value) { m_protocolDetailsHasBeenSet = true; m_protocolDetails = std::move(value); }
 
     /**
-     * <p>The protocol settings that are configured for your server.</p> <p> Use the
-     * <code>PassiveIp</code> parameter to indicate passive mode (for FTP and FTPS
-     * protocols). Enter a single dotted-quad IPv4 address, such as the external IP
-     * address of a firewall, router, or load balancer. </p> <p>Use the
-     * <code>TlsSessionResumptionMode</code> parameter to determine whether or not your
-     * Transfer server resumes recent, negotiated sessions through a unique session
-     * ID.</p>
+     * <p>The protocol settings that are configured for your server.</p> <ul> <li> <p>
+     * Use the <code>PassiveIp</code> parameter to indicate passive mode (for FTP and
+     * FTPS protocols). Enter a single dotted-quad IPv4 address, such as the external
+     * IP address of a firewall, router, or load balancer. </p> </li> <li> <p>Use the
+     * <code>SetStatOption</code> to ignore the error that is generated when the client
+     * attempts to use SETSTAT on a file you are uploading to an S3 bucket. Set the
+     * value to <code>ENABLE_NO_OP</code> to have the Transfer Family server ignore the
+     * SETSTAT command, and upload files without needing to make any changes to your
+     * SFTP client. Note that with <code>SetStatOption</code> set to
+     * <code>ENABLE_NO_OP</code>, Transfer generates a log entry to CloudWatch Logs, so
+     * you can determine when the client is making a SETSTAT call.</p> </li> <li>
+     * <p>Use the <code>TlsSessionResumptionMode</code> parameter to determine whether
+     * or not your Transfer server resumes recent, negotiated sessions through a unique
+     * session ID.</p> </li> </ul>
      */
     inline CreateServerRequest& WithProtocolDetails(const ProtocolDetails& value) { SetProtocolDetails(value); return *this;}
 
     /**
-     * <p>The protocol settings that are configured for your server.</p> <p> Use the
-     * <code>PassiveIp</code> parameter to indicate passive mode (for FTP and FTPS
-     * protocols). Enter a single dotted-quad IPv4 address, such as the external IP
-     * address of a firewall, router, or load balancer. </p> <p>Use the
-     * <code>TlsSessionResumptionMode</code> parameter to determine whether or not your
-     * Transfer server resumes recent, negotiated sessions through a unique session
-     * ID.</p>
+     * <p>The protocol settings that are configured for your server.</p> <ul> <li> <p>
+     * Use the <code>PassiveIp</code> parameter to indicate passive mode (for FTP and
+     * FTPS protocols). Enter a single dotted-quad IPv4 address, such as the external
+     * IP address of a firewall, router, or load balancer. </p> </li> <li> <p>Use the
+     * <code>SetStatOption</code> to ignore the error that is generated when the client
+     * attempts to use SETSTAT on a file you are uploading to an S3 bucket. Set the
+     * value to <code>ENABLE_NO_OP</code> to have the Transfer Family server ignore the
+     * SETSTAT command, and upload files without needing to make any changes to your
+     * SFTP client. Note that with <code>SetStatOption</code> set to
+     * <code>ENABLE_NO_OP</code>, Transfer generates a log entry to CloudWatch Logs, so
+     * you can determine when the client is making a SETSTAT call.</p> </li> <li>
+     * <p>Use the <code>TlsSessionResumptionMode</code> parameter to determine whether
+     * or not your Transfer server resumes recent, negotiated sessions through a unique
+     * session ID.</p> </li> </ul>
      */
     inline CreateServerRequest& WithProtocolDetails(ProtocolDetails&& value) { SetProtocolDetails(std::move(value)); return *this;}
 
