@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 
 namespace Aws
 {
@@ -18,11 +18,11 @@ namespace Json
   class JsonValue;
 } // namespace Json
 } // namespace Utils
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
-  class AWS_EMRSERVERLESSWEBSERVICE_API StartApplicationResult
+  class AWS_EMRSERVERLESS_API StartApplicationResult
   {
   public:
     StartApplicationResult();
@@ -32,5 +32,5 @@ namespace Model
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

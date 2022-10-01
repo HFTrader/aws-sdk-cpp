@@ -4,8 +4,8 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
-#include <aws/emr-serverless/EMRServerlessWebServiceRequest.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerlessRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/emr-serverless/model/ApplicationState.h>
@@ -17,14 +17,14 @@ namespace Http
 {
     class URI;
 } //namespace Http
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
 
   /**
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API ListApplicationsRequest : public EMRServerlessWebServiceRequest
+  class AWS_EMRSERVERLESS_API ListApplicationsRequest : public EMRServerlessRequest
   {
   public:
     ListApplicationsRequest();
@@ -153,15 +153,15 @@ namespace Model
   private:
 
     Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet;
+    bool m_nextTokenHasBeenSet = false;
 
     int m_maxResults;
-    bool m_maxResultsHasBeenSet;
+    bool m_maxResultsHasBeenSet = false;
 
     Aws::Vector<ApplicationState> m_states;
-    bool m_statesHasBeenSet;
+    bool m_statesHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -20,7 +20,7 @@ namespace Json
   class JsonView;
 } // namespace Json
 } // namespace Utils
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
@@ -34,7 +34,7 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/emr-serverless-2021-07-13/Configuration">AWS
    * API Reference</a></p>
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API Configuration
+  class AWS_EMRSERVERLESS_API Configuration
   {
   public:
     Configuration();
@@ -201,15 +201,15 @@ namespace Model
   private:
 
     Aws::String m_classification;
-    bool m_classificationHasBeenSet;
+    bool m_classificationHasBeenSet = false;
 
     Aws::Map<Aws::String, Aws::String> m_properties;
-    bool m_propertiesHasBeenSet;
+    bool m_propertiesHasBeenSet = false;
 
     Aws::Vector<Configuration> m_configurations;
-    bool m_configurationsHasBeenSet;
+    bool m_configurationsHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

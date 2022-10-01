@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <utility>
@@ -21,11 +21,11 @@ namespace Json
   class JsonValue;
 } // namespace Json
 } // namespace Utils
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
-  class AWS_EMRSERVERLESSWEBSERVICE_API ListTagsForResourceResult
+  class AWS_EMRSERVERLESS_API ListTagsForResourceResult
   {
   public:
     ListTagsForResourceResult();
@@ -99,5 +99,5 @@ namespace Model
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

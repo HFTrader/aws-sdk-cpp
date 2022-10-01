@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <utility>
@@ -19,7 +19,7 @@ namespace Json
   class JsonView;
 } // namespace Json
 } // namespace Utils
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
@@ -30,7 +30,7 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/emr-serverless-2021-07-13/SparkSubmit">AWS
    * API Reference</a></p>
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API SparkSubmit
+  class AWS_EMRSERVERLESS_API SparkSubmit
   {
   public:
     SparkSubmit();
@@ -169,15 +169,15 @@ namespace Model
   private:
 
     Aws::String m_entryPoint;
-    bool m_entryPointHasBeenSet;
+    bool m_entryPointHasBeenSet = false;
 
     Aws::Vector<Aws::String> m_entryPointArguments;
-    bool m_entryPointArgumentsHasBeenSet;
+    bool m_entryPointArgumentsHasBeenSet = false;
 
     Aws::String m_sparkSubmitParameters;
-    bool m_sparkSubmitParametersHasBeenSet;
+    bool m_sparkSubmitParametersHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

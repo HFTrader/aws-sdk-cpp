@@ -4,21 +4,21 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
-#include <aws/emr-serverless/EMRServerlessWebServiceRequest.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerlessRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <utility>
 
 namespace Aws
 {
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
 
   /**
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API ListTagsForResourceRequest : public EMRServerlessWebServiceRequest
+  class AWS_EMRSERVERLESS_API ListTagsForResourceRequest : public EMRServerlessRequest
   {
   public:
     ListTagsForResourceRequest();
@@ -91,9 +91,9 @@ namespace Model
   private:
 
     Aws::String m_resourceArn;
-    bool m_resourceArnHasBeenSet;
+    bool m_resourceArnHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

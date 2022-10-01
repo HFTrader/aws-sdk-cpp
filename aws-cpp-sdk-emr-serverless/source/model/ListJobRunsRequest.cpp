@@ -10,7 +10,7 @@
 
 #include <utility>
 
-using namespace Aws::EMRServerlessWebService::Model;
+using namespace Aws::EMRServerless::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws::Http;
@@ -50,14 +50,14 @@ void ListJobRunsRequest::AddQueryStringParameters(URI& uri) const
 
     if(m_createdAtAfterHasBeenSet)
     {
-      ss << m_createdAtAfter.ToGmtString(DateFormat::ISO_8601);
+      ss << m_createdAtAfter.ToGmtString(Aws::Utils::DateFormat::ISO_8601);
       uri.AddQueryStringParameter("createdAtAfter", ss.str());
       ss.str("");
     }
 
     if(m_createdAtBeforeHasBeenSet)
     {
-      ss << m_createdAtBefore.ToGmtString(DateFormat::ISO_8601);
+      ss << m_createdAtBefore.ToGmtString(Aws::Utils::DateFormat::ISO_8601);
       uri.AddQueryStringParameter("createdAtBefore", ss.str());
       ss.str("");
     }

@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <utility>
 
@@ -18,7 +18,7 @@ namespace Json
   class JsonView;
 } // namespace Json
 } // namespace Utils
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
@@ -28,7 +28,7 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/emr-serverless-2021-07-13/Hive">AWS
    * API Reference</a></p>
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API Hive
+  class AWS_EMRSERVERLESS_API Hive
   {
   public:
     Hive();
@@ -162,15 +162,15 @@ namespace Model
   private:
 
     Aws::String m_query;
-    bool m_queryHasBeenSet;
+    bool m_queryHasBeenSet = false;
 
     Aws::String m_initQueryFile;
-    bool m_initQueryFileHasBeenSet;
+    bool m_initQueryFileHasBeenSet = false;
 
     Aws::String m_parameters;
-    bool m_parametersHasBeenSet;
+    bool m_parametersHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

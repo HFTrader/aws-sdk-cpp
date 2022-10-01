@@ -4,8 +4,8 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
-#include <aws/emr-serverless/EMRServerlessWebServiceRequest.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerlessRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/emr-serverless/model/JobDriver.h>
 #include <aws/emr-serverless/model/ConfigurationOverrides.h>
@@ -15,14 +15,14 @@
 
 namespace Aws
 {
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
 
   /**
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API StartJobRunRequest : public EMRServerlessWebServiceRequest
+  class AWS_EMRSERVERLESS_API StartJobRunRequest : public EMRServerlessRequest
   {
   public:
     StartJobRunRequest();
@@ -363,30 +363,30 @@ namespace Model
   private:
 
     Aws::String m_applicationId;
-    bool m_applicationIdHasBeenSet;
+    bool m_applicationIdHasBeenSet = false;
 
     Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet;
+    bool m_clientTokenHasBeenSet = false;
 
     Aws::String m_executionRoleArn;
-    bool m_executionRoleArnHasBeenSet;
+    bool m_executionRoleArnHasBeenSet = false;
 
     JobDriver m_jobDriver;
-    bool m_jobDriverHasBeenSet;
+    bool m_jobDriverHasBeenSet = false;
 
     ConfigurationOverrides m_configurationOverrides;
-    bool m_configurationOverridesHasBeenSet;
+    bool m_configurationOverridesHasBeenSet = false;
 
     Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet;
+    bool m_tagsHasBeenSet = false;
 
     long long m_executionTimeoutMinutes;
-    bool m_executionTimeoutMinutesHasBeenSet;
+    bool m_executionTimeoutMinutesHasBeenSet = false;
 
     Aws::String m_name;
-    bool m_nameHasBeenSet;
+    bool m_nameHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

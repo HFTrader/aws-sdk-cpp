@@ -4,12 +4,12 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 
 namespace Aws
 {
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
@@ -28,10 +28,10 @@ namespace Model
 
 namespace JobRunStateMapper
 {
-AWS_EMRSERVERLESSWEBSERVICE_API JobRunState GetJobRunStateForName(const Aws::String& name);
+AWS_EMRSERVERLESS_API JobRunState GetJobRunStateForName(const Aws::String& name);
 
-AWS_EMRSERVERLESSWEBSERVICE_API Aws::String GetNameForJobRunState(JobRunState value);
+AWS_EMRSERVERLESS_API Aws::String GetNameForJobRunState(JobRunState value);
 } // namespace JobRunStateMapper
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 
 namespace Aws
 {
@@ -16,7 +16,7 @@ namespace Json
   class JsonView;
 } // namespace Json
 } // namespace Utils
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
@@ -28,7 +28,7 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/emr-serverless-2021-07-13/TotalResourceUtilization">AWS
    * API Reference</a></p>
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API TotalResourceUtilization
+  class AWS_EMRSERVERLESS_API TotalResourceUtilization
   {
   public:
     TotalResourceUtilization();
@@ -114,15 +114,15 @@ namespace Model
   private:
 
     double m_vCPUHour;
-    bool m_vCPUHourHasBeenSet;
+    bool m_vCPUHourHasBeenSet = false;
 
     double m_memoryGBHour;
-    bool m_memoryGBHourHasBeenSet;
+    bool m_memoryGBHourHasBeenSet = false;
 
     double m_storageGBHour;
-    bool m_storageGBHourHasBeenSet;
+    bool m_storageGBHourHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

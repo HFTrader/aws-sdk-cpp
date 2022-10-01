@@ -13,7 +13,7 @@ using namespace Aws::Utils;
 
 namespace Aws
 {
-  namespace EMRServerlessWebService
+  namespace EMRServerless
   {
     namespace Model
     {
@@ -108,5 +108,5 @@ namespace Aws
 
       } // namespace JobRunStateMapper
     } // namespace Model
-  } // namespace EMRServerlessWebService
+  } // namespace EMRServerless
 } // namespace Aws

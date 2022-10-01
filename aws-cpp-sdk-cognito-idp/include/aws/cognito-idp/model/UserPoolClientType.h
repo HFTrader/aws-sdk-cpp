@@ -746,72 +746,72 @@ namespace Model
     /**
      * <p>A list of provider names for the IdPs that this client supports. The
      * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
-     * <code>Google</code> <code>LoginWithAmazon</code>, and the names of your own SAML
-     * and OIDC providers.</p>
+     * <code>Google</code>, <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     * and the names of your own SAML and OIDC providers.</p>
      */
     inline const Aws::Vector<Aws::String>& GetSupportedIdentityProviders() const{ return m_supportedIdentityProviders; }
 
     /**
      * <p>A list of provider names for the IdPs that this client supports. The
      * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
-     * <code>Google</code> <code>LoginWithAmazon</code>, and the names of your own SAML
-     * and OIDC providers.</p>
+     * <code>Google</code>, <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     * and the names of your own SAML and OIDC providers.</p>
      */
     inline bool SupportedIdentityProvidersHasBeenSet() const { return m_supportedIdentityProvidersHasBeenSet; }
 
     /**
      * <p>A list of provider names for the IdPs that this client supports. The
      * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
-     * <code>Google</code> <code>LoginWithAmazon</code>, and the names of your own SAML
-     * and OIDC providers.</p>
+     * <code>Google</code>, <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     * and the names of your own SAML and OIDC providers.</p>
      */
     inline void SetSupportedIdentityProviders(const Aws::Vector<Aws::String>& value) { m_supportedIdentityProvidersHasBeenSet = true; m_supportedIdentityProviders = value; }
 
     /**
      * <p>A list of provider names for the IdPs that this client supports. The
      * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
-     * <code>Google</code> <code>LoginWithAmazon</code>, and the names of your own SAML
-     * and OIDC providers.</p>
+     * <code>Google</code>, <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     * and the names of your own SAML and OIDC providers.</p>
      */
     inline void SetSupportedIdentityProviders(Aws::Vector<Aws::String>&& value) { m_supportedIdentityProvidersHasBeenSet = true; m_supportedIdentityProviders = std::move(value); }
 
     /**
      * <p>A list of provider names for the IdPs that this client supports. The
      * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
-     * <code>Google</code> <code>LoginWithAmazon</code>, and the names of your own SAML
-     * and OIDC providers.</p>
+     * <code>Google</code>, <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     * and the names of your own SAML and OIDC providers.</p>
      */
     inline UserPoolClientType& WithSupportedIdentityProviders(const Aws::Vector<Aws::String>& value) { SetSupportedIdentityProviders(value); return *this;}
 
     /**
      * <p>A list of provider names for the IdPs that this client supports. The
      * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
-     * <code>Google</code> <code>LoginWithAmazon</code>, and the names of your own SAML
-     * and OIDC providers.</p>
+     * <code>Google</code>, <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     * and the names of your own SAML and OIDC providers.</p>
      */
     inline UserPoolClientType& WithSupportedIdentityProviders(Aws::Vector<Aws::String>&& value) { SetSupportedIdentityProviders(std::move(value)); return *this;}
 
     /**
      * <p>A list of provider names for the IdPs that this client supports. The
      * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
-     * <code>Google</code> <code>LoginWithAmazon</code>, and the names of your own SAML
-     * and OIDC providers.</p>
+     * <code>Google</code>, <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     * and the names of your own SAML and OIDC providers.</p>
      */
     inline UserPoolClientType& AddSupportedIdentityProviders(const Aws::String& value) { m_supportedIdentityProvidersHasBeenSet = true; m_supportedIdentityProviders.push_back(value); return *this; }
 
     /**
      * <p>A list of provider names for the IdPs that this client supports. The
      * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
-     * <code>Google</code> <code>LoginWithAmazon</code>, and the names of your own SAML
-     * and OIDC providers.</p>
+     * <code>Google</code>, <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     * and the names of your own SAML and OIDC providers.</p>
      */
     inline UserPoolClientType& AddSupportedIdentityProviders(Aws::String&& value) { m_supportedIdentityProvidersHasBeenSet = true; m_supportedIdentityProviders.push_back(std::move(value)); return *this; }
 
     /**
      * <p>A list of provider names for the IdPs that this client supports. The
      * following are supported: <code>COGNITO</code>, <code>Facebook</code>,
-     * <code>Google</code> <code>LoginWithAmazon</code>, and the names of your own SAML
-     * and OIDC providers.</p>
+     * <code>Google</code>, <code>SignInWithApple</code>, <code>LoginWithAmazon</code>,
+     * and the names of your own SAML and OIDC providers.</p>
      */
     inline UserPoolClientType& AddSupportedIdentityProviders(const char* value) { m_supportedIdentityProvidersHasBeenSet = true; m_supportedIdentityProviders.push_back(value); return *this; }
 
@@ -1450,76 +1450,208 @@ namespace Model
      */
     inline UserPoolClientType& WithEnableTokenRevocation(bool value) { SetEnableTokenRevocation(value); return *this;}
 
+
+    /**
+     * <p>When <code>EnablePropagateAdditionalUserContextData</code> is true, Amazon
+     * Cognito accepts an <code>IpAddress</code> value that you send in the
+     * <code>UserContextData</code> parameter. The <code>UserContextData</code>
+     * parameter sends information to Amazon Cognito advanced security for risk
+     * analysis. You can send <code>UserContextData</code> when you sign in Amazon
+     * Cognito native users with the <code>InitiateAuth</code> and
+     * <code>RespondToAuthChallenge</code> API operations.</p> <p>When
+     * <code>EnablePropagateAdditionalUserContextData</code> is false, you can't send
+     * your user's source IP address to Amazon Cognito advanced security with
+     * unauthenticated API operations.
+     * <code>EnablePropagateAdditionalUserContextData</code> doesn't affect whether you
+     * can send a source IP address in a <code>ContextData</code> parameter with the
+     * authenticated API operations <code>AdminInitiateAuth</code> and
+     * <code>AdminRespondToAuthChallenge</code>.</p> <p>You can only activate
+     * <code>EnablePropagateAdditionalUserContextData</code> in an app client that has
+     * a client secret. For more information about propagation of user context data,
+     * see <a
+     * href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint">Adding
+     * user device and session data to API requests</a>.</p>
+     */
+    inline bool GetEnablePropagateAdditionalUserContextData() const{ return m_enablePropagateAdditionalUserContextData; }
+
+    /**
+     * <p>When <code>EnablePropagateAdditionalUserContextData</code> is true, Amazon
+     * Cognito accepts an <code>IpAddress</code> value that you send in the
+     * <code>UserContextData</code> parameter. The <code>UserContextData</code>
+     * parameter sends information to Amazon Cognito advanced security for risk
+     * analysis. You can send <code>UserContextData</code> when you sign in Amazon
+     * Cognito native users with the <code>InitiateAuth</code> and
+     * <code>RespondToAuthChallenge</code> API operations.</p> <p>When
+     * <code>EnablePropagateAdditionalUserContextData</code> is false, you can't send
+     * your user's source IP address to Amazon Cognito advanced security with
+     * unauthenticated API operations.
+     * <code>EnablePropagateAdditionalUserContextData</code> doesn't affect whether you
+     * can send a source IP address in a <code>ContextData</code> parameter with the
+     * authenticated API operations <code>AdminInitiateAuth</code> and
+     * <code>AdminRespondToAuthChallenge</code>.</p> <p>You can only activate
+     * <code>EnablePropagateAdditionalUserContextData</code> in an app client that has
+     * a client secret. For more information about propagation of user context data,
+     * see <a
+     * href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint">Adding
+     * user device and session data to API requests</a>.</p>
+     */
+    inline bool EnablePropagateAdditionalUserContextDataHasBeenSet() const { return m_enablePropagateAdditionalUserContextDataHasBeenSet; }
+
+    /**
+     * <p>When <code>EnablePropagateAdditionalUserContextData</code> is true, Amazon
+     * Cognito accepts an <code>IpAddress</code> value that you send in the
+     * <code>UserContextData</code> parameter. The <code>UserContextData</code>
+     * parameter sends information to Amazon Cognito advanced security for risk
+     * analysis. You can send <code>UserContextData</code> when you sign in Amazon
+     * Cognito native users with the <code>InitiateAuth</code> and
+     * <code>RespondToAuthChallenge</code> API operations.</p> <p>When
+     * <code>EnablePropagateAdditionalUserContextData</code> is false, you can't send
+     * your user's source IP address to Amazon Cognito advanced security with
+     * unauthenticated API operations.
+     * <code>EnablePropagateAdditionalUserContextData</code> doesn't affect whether you
+     * can send a source IP address in a <code>ContextData</code> parameter with the
+     * authenticated API operations <code>AdminInitiateAuth</code> and
+     * <code>AdminRespondToAuthChallenge</code>.</p> <p>You can only activate
+     * <code>EnablePropagateAdditionalUserContextData</code> in an app client that has
+     * a client secret. For more information about propagation of user context data,
+     * see <a
+     * href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint">Adding
+     * user device and session data to API requests</a>.</p>
+     */
+    inline void SetEnablePropagateAdditionalUserContextData(bool value) { m_enablePropagateAdditionalUserContextDataHasBeenSet = true; m_enablePropagateAdditionalUserContextData = value; }
+
+    /**
+     * <p>When <code>EnablePropagateAdditionalUserContextData</code> is true, Amazon
+     * Cognito accepts an <code>IpAddress</code> value that you send in the
+     * <code>UserContextData</code> parameter. The <code>UserContextData</code>
+     * parameter sends information to Amazon Cognito advanced security for risk
+     * analysis. You can send <code>UserContextData</code> when you sign in Amazon
+     * Cognito native users with the <code>InitiateAuth</code> and
+     * <code>RespondToAuthChallenge</code> API operations.</p> <p>When
+     * <code>EnablePropagateAdditionalUserContextData</code> is false, you can't send
+     * your user's source IP address to Amazon Cognito advanced security with
+     * unauthenticated API operations.
+     * <code>EnablePropagateAdditionalUserContextData</code> doesn't affect whether you
+     * can send a source IP address in a <code>ContextData</code> parameter with the
+     * authenticated API operations <code>AdminInitiateAuth</code> and
+     * <code>AdminRespondToAuthChallenge</code>.</p> <p>You can only activate
+     * <code>EnablePropagateAdditionalUserContextData</code> in an app client that has
+     * a client secret. For more information about propagation of user context data,
+     * see <a
+     * href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-adaptive-authentication.html#user-pool-settings-adaptive-authentication-device-fingerprint">Adding
+     * user device and session data to API requests</a>.</p>
+     */
+    inline UserPoolClientType& WithEnablePropagateAdditionalUserContextData(bool value) { SetEnablePropagateAdditionalUserContextData(value); return *this;}
+
+
+    /**
+     * <p>Amazon Cognito creates a session token for each API request in an
+     * authentication flow. <code>AuthSessionValidity</code> is the duration, in
+     * minutes, of that session token. Your user pool native user must respond to each
+     * authentication challenge before the session expires.</p>
+     */
+    inline int GetAuthSessionValidity() const{ return m_authSessionValidity; }
+
+    /**
+     * <p>Amazon Cognito creates a session token for each API request in an
+     * authentication flow. <code>AuthSessionValidity</code> is the duration, in
+     * minutes, of that session token. Your user pool native user must respond to each
+     * authentication challenge before the session expires.</p>
+     */
+    inline bool AuthSessionValidityHasBeenSet() const { return m_authSessionValidityHasBeenSet; }
+
+    /**
+     * <p>Amazon Cognito creates a session token for each API request in an
+     * authentication flow. <code>AuthSessionValidity</code> is the duration, in
+     * minutes, of that session token. Your user pool native user must respond to each
+     * authentication challenge before the session expires.</p>
+     */
+    inline void SetAuthSessionValidity(int value) { m_authSessionValidityHasBeenSet = true; m_authSessionValidity = value; }
+
+    /**
+     * <p>Amazon Cognito creates a session token for each API request in an
+     * authentication flow. <code>AuthSessionValidity</code> is the duration, in
+     * minutes, of that session token. Your user pool native user must respond to each
+     * authentication challenge before the session expires.</p>
+     */
+    inline UserPoolClientType& WithAuthSessionValidity(int value) { SetAuthSessionValidity(value); return *this;}
+
   private:
 
     Aws::String m_userPoolId;
-    bool m_userPoolIdHasBeenSet;
+    bool m_userPoolIdHasBeenSet = false;
 
     Aws::String m_clientName;
-    bool m_clientNameHasBeenSet;
+    bool m_clientNameHasBeenSet = false;
 
     Aws::String m_clientId;
-    bool m_clientIdHasBeenSet;
+    bool m_clientIdHasBeenSet = false;
 
     Aws::String m_clientSecret;
-    bool m_clientSecretHasBeenSet;
+    bool m_clientSecretHasBeenSet = false;
 
     Aws::Utils::DateTime m_lastModifiedDate;
-    bool m_lastModifiedDateHasBeenSet;
+    bool m_lastModifiedDateHasBeenSet = false;
 
     Aws::Utils::DateTime m_creationDate;
-    bool m_creationDateHasBeenSet;
+    bool m_creationDateHasBeenSet = false;
 
     int m_refreshTokenValidity;
-    bool m_refreshTokenValidityHasBeenSet;
+    bool m_refreshTokenValidityHasBeenSet = false;
 
     int m_accessTokenValidity;
-    bool m_accessTokenValidityHasBeenSet;
+    bool m_accessTokenValidityHasBeenSet = false;
 
     int m_idTokenValidity;
-    bool m_idTokenValidityHasBeenSet;
+    bool m_idTokenValidityHasBeenSet = false;
 
     TokenValidityUnitsType m_tokenValidityUnits;
-    bool m_tokenValidityUnitsHasBeenSet;
+    bool m_tokenValidityUnitsHasBeenSet = false;
 
     Aws::Vector<Aws::String> m_readAttributes;
-    bool m_readAttributesHasBeenSet;
+    bool m_readAttributesHasBeenSet = false;
 
     Aws::Vector<Aws::String> m_writeAttributes;
-    bool m_writeAttributesHasBeenSet;
+    bool m_writeAttributesHasBeenSet = false;
 
     Aws::Vector<ExplicitAuthFlowsType> m_explicitAuthFlows;
-    bool m_explicitAuthFlowsHasBeenSet;
+    bool m_explicitAuthFlowsHasBeenSet = false;
 
     Aws::Vector<Aws::String> m_supportedIdentityProviders;
-    bool m_supportedIdentityProvidersHasBeenSet;
+    bool m_supportedIdentityProvidersHasBeenSet = false;
 
     Aws::Vector<Aws::String> m_callbackURLs;
-    bool m_callbackURLsHasBeenSet;
+    bool m_callbackURLsHasBeenSet = false;
 
     Aws::Vector<Aws::String> m_logoutURLs;
-    bool m_logoutURLsHasBeenSet;
+    bool m_logoutURLsHasBeenSet = false;
 
     Aws::String m_defaultRedirectURI;
-    bool m_defaultRedirectURIHasBeenSet;
+    bool m_defaultRedirectURIHasBeenSet = false;
 
     Aws::Vector<OAuthFlowType> m_allowedOAuthFlows;
-    bool m_allowedOAuthFlowsHasBeenSet;
+    bool m_allowedOAuthFlowsHasBeenSet = false;
 
     Aws::Vector<Aws::String> m_allowedOAuthScopes;
-    bool m_allowedOAuthScopesHasBeenSet;
+    bool m_allowedOAuthScopesHasBeenSet = false;
 
     bool m_allowedOAuthFlowsUserPoolClient;
-    bool m_allowedOAuthFlowsUserPoolClientHasBeenSet;
+    bool m_allowedOAuthFlowsUserPoolClientHasBeenSet = false;
 
     AnalyticsConfigurationType m_analyticsConfiguration;
-    bool m_analyticsConfigurationHasBeenSet;
+    bool m_analyticsConfigurationHasBeenSet = false;
 
     PreventUserExistenceErrorTypes m_preventUserExistenceErrors;
-    bool m_preventUserExistenceErrorsHasBeenSet;
+    bool m_preventUserExistenceErrorsHasBeenSet = false;
 
     bool m_enableTokenRevocation;
-    bool m_enableTokenRevocationHasBeenSet;
+    bool m_enableTokenRevocationHasBeenSet = false;
+
+    bool m_enablePropagateAdditionalUserContextData;
+    bool m_enablePropagateAdditionalUserContextDataHasBeenSet = false;
+
+    int m_authSessionValidity;
+    bool m_authSessionValidityHasBeenSet = false;
   };
 
 } // namespace Model

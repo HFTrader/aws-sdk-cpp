@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <utility>
 
@@ -18,7 +18,7 @@ namespace Json
   class JsonView;
 } // namespace Json
 } // namespace Utils
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
@@ -29,7 +29,7 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/emr-serverless-2021-07-13/MaximumAllowedResources">AWS
    * API Reference</a></p>
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API MaximumAllowedResources
+  class AWS_EMRSERVERLESS_API MaximumAllowedResources
   {
   public:
     MaximumAllowedResources();
@@ -163,15 +163,15 @@ namespace Model
   private:
 
     Aws::String m_cpu;
-    bool m_cpuHasBeenSet;
+    bool m_cpuHasBeenSet = false;
 
     Aws::String m_memory;
-    bool m_memoryHasBeenSet;
+    bool m_memoryHasBeenSet = false;
 
     Aws::String m_disk;
-    bool m_diskHasBeenSet;
+    bool m_diskHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

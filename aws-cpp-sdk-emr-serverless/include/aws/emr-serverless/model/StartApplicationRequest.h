@@ -4,21 +4,21 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
-#include <aws/emr-serverless/EMRServerlessWebServiceRequest.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerlessRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <utility>
 
 namespace Aws
 {
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
 
   /**
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API StartApplicationRequest : public EMRServerlessWebServiceRequest
+  class AWS_EMRSERVERLESS_API StartApplicationRequest : public EMRServerlessRequest
   {
   public:
     StartApplicationRequest();
@@ -75,9 +75,9 @@ namespace Model
   private:
 
     Aws::String m_applicationId;
-    bool m_applicationIdHasBeenSet;
+    bool m_applicationIdHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

@@ -749,44 +749,50 @@ namespace Model
 
 
     /**
-     * <p>Contextual data such as the user's device fingerprint, IP address, or
-     * location used for evaluating the risk of an unexpected event by Amazon Cognito
-     * advanced security.</p>
+     * <p>Contextual data about your user session, such as the device fingerprint, IP
+     * address, or location. Amazon Cognito advanced security evaluates the risk of an
+     * authentication event based on the context that your app generates and passes to
+     * Amazon Cognito when it makes API requests.</p>
      */
     inline const ContextDataType& GetContextData() const{ return m_contextData; }
 
     /**
-     * <p>Contextual data such as the user's device fingerprint, IP address, or
-     * location used for evaluating the risk of an unexpected event by Amazon Cognito
-     * advanced security.</p>
+     * <p>Contextual data about your user session, such as the device fingerprint, IP
+     * address, or location. Amazon Cognito advanced security evaluates the risk of an
+     * authentication event based on the context that your app generates and passes to
+     * Amazon Cognito when it makes API requests.</p>
      */
     inline bool ContextDataHasBeenSet() const { return m_contextDataHasBeenSet; }
 
     /**
-     * <p>Contextual data such as the user's device fingerprint, IP address, or
-     * location used for evaluating the risk of an unexpected event by Amazon Cognito
-     * advanced security.</p>
+     * <p>Contextual data about your user session, such as the device fingerprint, IP
+     * address, or location. Amazon Cognito advanced security evaluates the risk of an
+     * authentication event based on the context that your app generates and passes to
+     * Amazon Cognito when it makes API requests.</p>
      */
     inline void SetContextData(const ContextDataType& value) { m_contextDataHasBeenSet = true; m_contextData = value; }
 
     /**
-     * <p>Contextual data such as the user's device fingerprint, IP address, or
-     * location used for evaluating the risk of an unexpected event by Amazon Cognito
-     * advanced security.</p>
+     * <p>Contextual data about your user session, such as the device fingerprint, IP
+     * address, or location. Amazon Cognito advanced security evaluates the risk of an
+     * authentication event based on the context that your app generates and passes to
+     * Amazon Cognito when it makes API requests.</p>
      */
     inline void SetContextData(ContextDataType&& value) { m_contextDataHasBeenSet = true; m_contextData = std::move(value); }
 
     /**
-     * <p>Contextual data such as the user's device fingerprint, IP address, or
-     * location used for evaluating the risk of an unexpected event by Amazon Cognito
-     * advanced security.</p>
+     * <p>Contextual data about your user session, such as the device fingerprint, IP
+     * address, or location. Amazon Cognito advanced security evaluates the risk of an
+     * authentication event based on the context that your app generates and passes to
+     * Amazon Cognito when it makes API requests.</p>
      */
     inline AdminRespondToAuthChallengeRequest& WithContextData(const ContextDataType& value) { SetContextData(value); return *this;}
 
     /**
-     * <p>Contextual data such as the user's device fingerprint, IP address, or
-     * location used for evaluating the risk of an unexpected event by Amazon Cognito
-     * advanced security.</p>
+     * <p>Contextual data about your user session, such as the device fingerprint, IP
+     * address, or location. Amazon Cognito advanced security evaluates the risk of an
+     * authentication event based on the context that your app generates and passes to
+     * Amazon Cognito when it makes API requests.</p>
      */
     inline AdminRespondToAuthChallengeRequest& WithContextData(ContextDataType&& value) { SetContextData(std::move(value)); return *this;}
 
@@ -1184,28 +1190,28 @@ namespace Model
   private:
 
     Aws::String m_userPoolId;
-    bool m_userPoolIdHasBeenSet;
+    bool m_userPoolIdHasBeenSet = false;
 
     Aws::String m_clientId;
-    bool m_clientIdHasBeenSet;
+    bool m_clientIdHasBeenSet = false;
 
     ChallengeNameType m_challengeName;
-    bool m_challengeNameHasBeenSet;
+    bool m_challengeNameHasBeenSet = false;
 
     Aws::Map<Aws::String, Aws::String> m_challengeResponses;
-    bool m_challengeResponsesHasBeenSet;
+    bool m_challengeResponsesHasBeenSet = false;
 
     Aws::String m_session;
-    bool m_sessionHasBeenSet;
+    bool m_sessionHasBeenSet = false;
 
     AnalyticsMetadataType m_analyticsMetadata;
-    bool m_analyticsMetadataHasBeenSet;
+    bool m_analyticsMetadataHasBeenSet = false;
 
     ContextDataType m_contextData;
-    bool m_contextDataHasBeenSet;
+    bool m_contextDataHasBeenSet = false;
 
     Aws::Map<Aws::String, Aws::String> m_clientMetadata;
-    bool m_clientMetadataHasBeenSet;
+    bool m_clientMetadataHasBeenSet = false;
   };
 
 } // namespace Model

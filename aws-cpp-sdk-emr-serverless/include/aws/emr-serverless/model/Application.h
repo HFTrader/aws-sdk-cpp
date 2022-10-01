@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/emr-serverless/model/ApplicationState.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
@@ -26,7 +26,7 @@ namespace Json
   class JsonView;
 } // namespace Json
 } // namespace Utils
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
@@ -37,7 +37,7 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/emr-serverless-2021-07-13/Application">AWS
    * API Reference</a></p>
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API Application
+  class AWS_EMRSERVERLESS_API Application
   {
   public:
     Application();
@@ -674,51 +674,51 @@ namespace Model
   private:
 
     Aws::String m_applicationId;
-    bool m_applicationIdHasBeenSet;
+    bool m_applicationIdHasBeenSet = false;
 
     Aws::String m_name;
-    bool m_nameHasBeenSet;
+    bool m_nameHasBeenSet = false;
 
     Aws::String m_arn;
-    bool m_arnHasBeenSet;
+    bool m_arnHasBeenSet = false;
 
     Aws::String m_releaseLabel;
-    bool m_releaseLabelHasBeenSet;
+    bool m_releaseLabelHasBeenSet = false;
 
     Aws::String m_type;
-    bool m_typeHasBeenSet;
+    bool m_typeHasBeenSet = false;
 
     ApplicationState m_state;
-    bool m_stateHasBeenSet;
+    bool m_stateHasBeenSet = false;
 
     Aws::String m_stateDetails;
-    bool m_stateDetailsHasBeenSet;
+    bool m_stateDetailsHasBeenSet = false;
 
     Aws::Map<Aws::String, InitialCapacityConfig> m_initialCapacity;
-    bool m_initialCapacityHasBeenSet;
+    bool m_initialCapacityHasBeenSet = false;
 
     MaximumAllowedResources m_maximumCapacity;
-    bool m_maximumCapacityHasBeenSet;
+    bool m_maximumCapacityHasBeenSet = false;
 
     Aws::Utils::DateTime m_createdAt;
-    bool m_createdAtHasBeenSet;
+    bool m_createdAtHasBeenSet = false;
 
     Aws::Utils::DateTime m_updatedAt;
-    bool m_updatedAtHasBeenSet;
+    bool m_updatedAtHasBeenSet = false;
 
     Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet;
+    bool m_tagsHasBeenSet = false;
 
     AutoStartConfig m_autoStartConfiguration;
-    bool m_autoStartConfigurationHasBeenSet;
+    bool m_autoStartConfigurationHasBeenSet = false;
 
     AutoStopConfig m_autoStopConfiguration;
-    bool m_autoStopConfigurationHasBeenSet;
+    bool m_autoStopConfigurationHasBeenSet = false;
 
     NetworkConfiguration m_networkConfiguration;
-    bool m_networkConfigurationHasBeenSet;
+    bool m_networkConfigurationHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

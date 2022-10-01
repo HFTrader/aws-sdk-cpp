@@ -4,8 +4,8 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
-#include <aws/emr-serverless/EMRServerlessWebServiceRequest.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerlessRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <utility>
@@ -16,14 +16,14 @@ namespace Http
 {
     class URI;
 } //namespace Http
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
 
   /**
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API UntagResourceRequest : public EMRServerlessWebServiceRequest
+  class AWS_EMRSERVERLESS_API UntagResourceRequest : public EMRServerlessRequest
   {
   public:
     UntagResourceRequest();
@@ -144,12 +144,12 @@ namespace Model
   private:
 
     Aws::String m_resourceArn;
-    bool m_resourceArnHasBeenSet;
+    bool m_resourceArnHasBeenSet = false;
 
     Aws::Vector<Aws::String> m_tagKeys;
-    bool m_tagKeysHasBeenSet;
+    bool m_tagKeysHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

@@ -6,8 +6,8 @@
 #pragma once
 #include <aws/proton/Proton_EXPORTS.h>
 #include <aws/proton/ProtonRequest.h>
-#include <aws/proton/model/DeploymentUpdateType.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/proton/model/DeploymentUpdateType.h>
 #include <aws/proton/model/RepositoryBranchInput.h>
 #include <utility>
 
@@ -34,6 +34,103 @@ namespace Model
     Aws::String SerializePayload() const override;
 
     Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that Proton uses when
+     * provisioning directly defined components in this environment. It determines the
+     * scope of infrastructure that a component can provision.</p> <p>The environment
+     * must have a <code>componentRoleArn</code> to allow directly defined components
+     * to be associated with the environment.</p> <p>For more information about
+     * components, see <a
+     * href="https://docs.aws.amazon.com/proton/latest/userguide/ag-components.html">Proton
+     * components</a> in the <i>Proton User Guide</i>.</p>
+     */
+    inline const Aws::String& GetComponentRoleArn() const{ return m_componentRoleArn; }
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that Proton uses when
+     * provisioning directly defined components in this environment. It determines the
+     * scope of infrastructure that a component can provision.</p> <p>The environment
+     * must have a <code>componentRoleArn</code> to allow directly defined components
+     * to be associated with the environment.</p> <p>For more information about
+     * components, see <a
+     * href="https://docs.aws.amazon.com/proton/latest/userguide/ag-components.html">Proton
+     * components</a> in the <i>Proton User Guide</i>.</p>
+     */
+    inline bool ComponentRoleArnHasBeenSet() const { return m_componentRoleArnHasBeenSet; }
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that Proton uses when
+     * provisioning directly defined components in this environment. It determines the
+     * scope of infrastructure that a component can provision.</p> <p>The environment
+     * must have a <code>componentRoleArn</code> to allow directly defined components
+     * to be associated with the environment.</p> <p>For more information about
+     * components, see <a
+     * href="https://docs.aws.amazon.com/proton/latest/userguide/ag-components.html">Proton
+     * components</a> in the <i>Proton User Guide</i>.</p>
+     */
+    inline void SetComponentRoleArn(const Aws::String& value) { m_componentRoleArnHasBeenSet = true; m_componentRoleArn = value; }
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that Proton uses when
+     * provisioning directly defined components in this environment. It determines the
+     * scope of infrastructure that a component can provision.</p> <p>The environment
+     * must have a <code>componentRoleArn</code> to allow directly defined components
+     * to be associated with the environment.</p> <p>For more information about
+     * components, see <a
+     * href="https://docs.aws.amazon.com/proton/latest/userguide/ag-components.html">Proton
+     * components</a> in the <i>Proton User Guide</i>.</p>
+     */
+    inline void SetComponentRoleArn(Aws::String&& value) { m_componentRoleArnHasBeenSet = true; m_componentRoleArn = std::move(value); }
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that Proton uses when
+     * provisioning directly defined components in this environment. It determines the
+     * scope of infrastructure that a component can provision.</p> <p>The environment
+     * must have a <code>componentRoleArn</code> to allow directly defined components
+     * to be associated with the environment.</p> <p>For more information about
+     * components, see <a
+     * href="https://docs.aws.amazon.com/proton/latest/userguide/ag-components.html">Proton
+     * components</a> in the <i>Proton User Guide</i>.</p>
+     */
+    inline void SetComponentRoleArn(const char* value) { m_componentRoleArnHasBeenSet = true; m_componentRoleArn.assign(value); }
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that Proton uses when
+     * provisioning directly defined components in this environment. It determines the
+     * scope of infrastructure that a component can provision.</p> <p>The environment
+     * must have a <code>componentRoleArn</code> to allow directly defined components
+     * to be associated with the environment.</p> <p>For more information about
+     * components, see <a
+     * href="https://docs.aws.amazon.com/proton/latest/userguide/ag-components.html">Proton
+     * components</a> in the <i>Proton User Guide</i>.</p>
+     */
+    inline UpdateEnvironmentRequest& WithComponentRoleArn(const Aws::String& value) { SetComponentRoleArn(value); return *this;}
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that Proton uses when
+     * provisioning directly defined components in this environment. It determines the
+     * scope of infrastructure that a component can provision.</p> <p>The environment
+     * must have a <code>componentRoleArn</code> to allow directly defined components
+     * to be associated with the environment.</p> <p>For more information about
+     * components, see <a
+     * href="https://docs.aws.amazon.com/proton/latest/userguide/ag-components.html">Proton
+     * components</a> in the <i>Proton User Guide</i>.</p>
+     */
+    inline UpdateEnvironmentRequest& WithComponentRoleArn(Aws::String&& value) { SetComponentRoleArn(std::move(value)); return *this;}
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that Proton uses when
+     * provisioning directly defined components in this environment. It determines the
+     * scope of infrastructure that a component can provision.</p> <p>The environment
+     * must have a <code>componentRoleArn</code> to allow directly defined components
+     * to be associated with the environment.</p> <p>For more information about
+     * components, see <a
+     * href="https://docs.aws.amazon.com/proton/latest/userguide/ag-components.html">Proton
+     * components</a> in the <i>Proton User Guide</i>.</p>
+     */
+    inline UpdateEnvironmentRequest& WithComponentRoleArn(const char* value) { SetComponentRoleArn(value); return *this;}
 
 
     /**
@@ -360,38 +457,50 @@ namespace Model
 
 
     /**
-     * <p>The infrastructure repository that you use to host your rendered
-     * infrastructure templates for self-managed provisioning.</p>
+     * <p>The linked repository that you use to host your rendered infrastructure
+     * templates for self-managed provisioning. A linked repository is a repository
+     * that has been registered with Proton. For more information, see
+     * <a>CreateRepository</a>.</p>
      */
     inline const RepositoryBranchInput& GetProvisioningRepository() const{ return m_provisioningRepository; }
 
     /**
-     * <p>The infrastructure repository that you use to host your rendered
-     * infrastructure templates for self-managed provisioning.</p>
+     * <p>The linked repository that you use to host your rendered infrastructure
+     * templates for self-managed provisioning. A linked repository is a repository
+     * that has been registered with Proton. For more information, see
+     * <a>CreateRepository</a>.</p>
      */
     inline bool ProvisioningRepositoryHasBeenSet() const { return m_provisioningRepositoryHasBeenSet; }
 
     /**
-     * <p>The infrastructure repository that you use to host your rendered
-     * infrastructure templates for self-managed provisioning.</p>
+     * <p>The linked repository that you use to host your rendered infrastructure
+     * templates for self-managed provisioning. A linked repository is a repository
+     * that has been registered with Proton. For more information, see
+     * <a>CreateRepository</a>.</p>
      */
     inline void SetProvisioningRepository(const RepositoryBranchInput& value) { m_provisioningRepositoryHasBeenSet = true; m_provisioningRepository = value; }
 
     /**
-     * <p>The infrastructure repository that you use to host your rendered
-     * infrastructure templates for self-managed provisioning.</p>
+     * <p>The linked repository that you use to host your rendered infrastructure
+     * templates for self-managed provisioning. A linked repository is a repository
+     * that has been registered with Proton. For more information, see
+     * <a>CreateRepository</a>.</p>
      */
     inline void SetProvisioningRepository(RepositoryBranchInput&& value) { m_provisioningRepositoryHasBeenSet = true; m_provisioningRepository = std::move(value); }
 
     /**
-     * <p>The infrastructure repository that you use to host your rendered
-     * infrastructure templates for self-managed provisioning.</p>
+     * <p>The linked repository that you use to host your rendered infrastructure
+     * templates for self-managed provisioning. A linked repository is a repository
+     * that has been registered with Proton. For more information, see
+     * <a>CreateRepository</a>.</p>
      */
     inline UpdateEnvironmentRequest& WithProvisioningRepository(const RepositoryBranchInput& value) { SetProvisioningRepository(value); return *this;}
 
     /**
-     * <p>The infrastructure repository that you use to host your rendered
-     * infrastructure templates for self-managed provisioning.</p>
+     * <p>The linked repository that you use to host your rendered infrastructure
+     * templates for self-managed provisioning. A linked repository is a repository
+     * that has been registered with Proton. For more information, see
+     * <a>CreateRepository</a>.</p>
      */
     inline UpdateEnvironmentRequest& WithProvisioningRepository(RepositoryBranchInput&& value) { SetProvisioningRepository(std::move(value)); return *this;}
 
@@ -520,32 +629,35 @@ namespace Model
 
   private:
 
+    Aws::String m_componentRoleArn;
+    bool m_componentRoleArnHasBeenSet = false;
+
     DeploymentUpdateType m_deploymentType;
-    bool m_deploymentTypeHasBeenSet;
+    bool m_deploymentTypeHasBeenSet = false;
 
     Aws::String m_description;
-    bool m_descriptionHasBeenSet;
+    bool m_descriptionHasBeenSet = false;
 
     Aws::String m_environmentAccountConnectionId;
-    bool m_environmentAccountConnectionIdHasBeenSet;
+    bool m_environmentAccountConnectionIdHasBeenSet = false;
 
     Aws::String m_name;
-    bool m_nameHasBeenSet;
+    bool m_nameHasBeenSet = false;
 
     Aws::String m_protonServiceRoleArn;
-    bool m_protonServiceRoleArnHasBeenSet;
+    bool m_protonServiceRoleArnHasBeenSet = false;
 
     RepositoryBranchInput m_provisioningRepository;
-    bool m_provisioningRepositoryHasBeenSet;
+    bool m_provisioningRepositoryHasBeenSet = false;
 
     Aws::String m_spec;
-    bool m_specHasBeenSet;
+    bool m_specHasBeenSet = false;
 
     Aws::String m_templateMajorVersion;
-    bool m_templateMajorVersionHasBeenSet;
+    bool m_templateMajorVersionHasBeenSet = false;
 
     Aws::String m_templateMinorVersion;
-    bool m_templateMinorVersionHasBeenSet;
+    bool m_templateMinorVersionHasBeenSet = false;
   };
 
 } // namespace Model

@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 #include <aws/emr-serverless/model/S3MonitoringConfiguration.h>
 #include <aws/emr-serverless/model/ManagedPersistenceMonitoringConfiguration.h>
 #include <utility>
@@ -19,7 +19,7 @@ namespace Json
   class JsonView;
 } // namespace Json
 } // namespace Utils
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
@@ -29,7 +29,7 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/emr-serverless-2021-07-13/MonitoringConfiguration">AWS
    * API Reference</a></p>
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API MonitoringConfiguration
+  class AWS_EMRSERVERLESS_API MonitoringConfiguration
   {
   public:
     MonitoringConfiguration();
@@ -102,12 +102,12 @@ namespace Model
   private:
 
     S3MonitoringConfiguration m_s3MonitoringConfiguration;
-    bool m_s3MonitoringConfigurationHasBeenSet;
+    bool m_s3MonitoringConfigurationHasBeenSet = false;
 
     ManagedPersistenceMonitoringConfiguration m_managedPersistenceMonitoringConfiguration;
-    bool m_managedPersistenceMonitoringConfigurationHasBeenSet;
+    bool m_managedPersistenceMonitoringConfigurationHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

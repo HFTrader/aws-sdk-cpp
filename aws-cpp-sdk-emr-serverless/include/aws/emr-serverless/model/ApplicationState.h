@@ -4,12 +4,12 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 
 namespace Aws
 {
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
@@ -27,10 +27,10 @@ namespace Model
 
 namespace ApplicationStateMapper
 {
-AWS_EMRSERVERLESSWEBSERVICE_API ApplicationState GetApplicationStateForName(const Aws::String& name);
+AWS_EMRSERVERLESS_API ApplicationState GetApplicationStateForName(const Aws::String& name);
 
-AWS_EMRSERVERLESSWEBSERVICE_API Aws::String GetNameForApplicationState(ApplicationState value);
+AWS_EMRSERVERLESS_API Aws::String GetNameForApplicationState(ApplicationState value);
 } // namespace ApplicationStateMapper
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
 #include <aws/emr-serverless/model/WorkerResourceConfig.h>
 #include <utility>
 
@@ -18,7 +18,7 @@ namespace Json
   class JsonView;
 } // namespace Json
 } // namespace Utils
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
@@ -28,7 +28,7 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/emr-serverless-2021-07-13/InitialCapacityConfig">AWS
    * API Reference</a></p>
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API InitialCapacityConfig
+  class AWS_EMRSERVERLESS_API InitialCapacityConfig
   {
   public:
     InitialCapacityConfig();
@@ -91,12 +91,12 @@ namespace Model
   private:
 
     long long m_workerCount;
-    bool m_workerCountHasBeenSet;
+    bool m_workerCountHasBeenSet = false;
 
     WorkerResourceConfig m_workerConfiguration;
-    bool m_workerConfigurationHasBeenSet;
+    bool m_workerConfigurationHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

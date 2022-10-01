@@ -4,8 +4,8 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
-#include <aws/emr-serverless/EMRServerlessWebServiceRequest.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerlessRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/emr-serverless/model/MaximumAllowedResources.h>
@@ -18,14 +18,14 @@
 
 namespace Aws
 {
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
 
   /**
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API UpdateApplicationRequest : public EMRServerlessWebServiceRequest
+  class AWS_EMRSERVERLESS_API UpdateApplicationRequest : public EMRServerlessRequest
   {
   public:
     UpdateApplicationRequest();
@@ -334,27 +334,27 @@ namespace Model
   private:
 
     Aws::String m_applicationId;
-    bool m_applicationIdHasBeenSet;
+    bool m_applicationIdHasBeenSet = false;
 
     Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet;
+    bool m_clientTokenHasBeenSet = false;
 
     Aws::Map<Aws::String, InitialCapacityConfig> m_initialCapacity;
-    bool m_initialCapacityHasBeenSet;
+    bool m_initialCapacityHasBeenSet = false;
 
     MaximumAllowedResources m_maximumCapacity;
-    bool m_maximumCapacityHasBeenSet;
+    bool m_maximumCapacityHasBeenSet = false;
 
     AutoStartConfig m_autoStartConfiguration;
-    bool m_autoStartConfigurationHasBeenSet;
+    bool m_autoStartConfigurationHasBeenSet = false;
 
     AutoStopConfig m_autoStopConfiguration;
-    bool m_autoStopConfigurationHasBeenSet;
+    bool m_autoStopConfigurationHasBeenSet = false;
 
     NetworkConfiguration m_networkConfiguration;
-    bool m_networkConfigurationHasBeenSet;
+    bool m_networkConfigurationHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

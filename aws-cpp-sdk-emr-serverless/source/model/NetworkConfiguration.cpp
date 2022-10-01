@@ -13,7 +13,7 @@ using namespace Aws::Utils;
 
 namespace Aws
 {
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
@@ -86,5 +86,5 @@ JsonValue NetworkConfiguration::Jsonize() const
 }
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

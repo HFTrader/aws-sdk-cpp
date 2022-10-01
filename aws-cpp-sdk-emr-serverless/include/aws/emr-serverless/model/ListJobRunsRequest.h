@@ -4,8 +4,8 @@
  */
 
 #pragma once
-#include <aws/emr-serverless/EMRServerlessWebService_EXPORTS.h>
-#include <aws/emr-serverless/EMRServerlessWebServiceRequest.h>
+#include <aws/emr-serverless/EMRServerless_EXPORTS.h>
+#include <aws/emr-serverless/EMRServerlessRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
@@ -18,14 +18,14 @@ namespace Http
 {
     class URI;
 } //namespace Http
-namespace EMRServerlessWebService
+namespace EMRServerless
 {
 namespace Model
 {
 
   /**
    */
-  class AWS_EMRSERVERLESSWEBSERVICE_API ListJobRunsRequest : public EMRServerlessWebServiceRequest
+  class AWS_EMRSERVERLESS_API ListJobRunsRequest : public EMRServerlessRequest
   {
   public:
     ListJobRunsRequest();
@@ -257,24 +257,24 @@ namespace Model
   private:
 
     Aws::String m_applicationId;
-    bool m_applicationIdHasBeenSet;
+    bool m_applicationIdHasBeenSet = false;
 
     Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet;
+    bool m_nextTokenHasBeenSet = false;
 
     int m_maxResults;
-    bool m_maxResultsHasBeenSet;
+    bool m_maxResultsHasBeenSet = false;
 
     Aws::Utils::DateTime m_createdAtAfter;
-    bool m_createdAtAfterHasBeenSet;
+    bool m_createdAtAfterHasBeenSet = false;
 
     Aws::Utils::DateTime m_createdAtBefore;
-    bool m_createdAtBeforeHasBeenSet;
+    bool m_createdAtBeforeHasBeenSet = false;
 
     Aws::Vector<JobRunState> m_states;
-    bool m_statesHasBeenSet;
+    bool m_statesHasBeenSet = false;
   };
 
 } // namespace Model
-} // namespace EMRServerlessWebService
+} // namespace EMRServerless
 } // namespace Aws

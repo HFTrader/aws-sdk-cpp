@@ -8,7 +8,7 @@
 
 #include <utility>
 
-using namespace Aws::EMRServerlessWebService::Model;
+using namespace Aws::EMRServerless::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 

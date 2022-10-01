@@ -678,31 +678,83 @@ namespace Model
      */
     inline CreateDatasetImportJobRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
 
+
+    /**
+     * <p>The format of the imported data, CSV or PARQUET. The default value is
+     * CSV.</p>
+     */
+    inline const Aws::String& GetFormat() const{ return m_format; }
+
+    /**
+     * <p>The format of the imported data, CSV or PARQUET. The default value is
+     * CSV.</p>
+     */
+    inline bool FormatHasBeenSet() const { return m_formatHasBeenSet; }
+
+    /**
+     * <p>The format of the imported data, CSV or PARQUET. The default value is
+     * CSV.</p>
+     */
+    inline void SetFormat(const Aws::String& value) { m_formatHasBeenSet = true; m_format = value; }
+
+    /**
+     * <p>The format of the imported data, CSV or PARQUET. The default value is
+     * CSV.</p>
+     */
+    inline void SetFormat(Aws::String&& value) { m_formatHasBeenSet = true; m_format = std::move(value); }
+
+    /**
+     * <p>The format of the imported data, CSV or PARQUET. The default value is
+     * CSV.</p>
+     */
+    inline void SetFormat(const char* value) { m_formatHasBeenSet = true; m_format.assign(value); }
+
+    /**
+     * <p>The format of the imported data, CSV or PARQUET. The default value is
+     * CSV.</p>
+     */
+    inline CreateDatasetImportJobRequest& WithFormat(const Aws::String& value) { SetFormat(value); return *this;}
+
+    /**
+     * <p>The format of the imported data, CSV or PARQUET. The default value is
+     * CSV.</p>
+     */
+    inline CreateDatasetImportJobRequest& WithFormat(Aws::String&& value) { SetFormat(std::move(value)); return *this;}
+
+    /**
+     * <p>The format of the imported data, CSV or PARQUET. The default value is
+     * CSV.</p>
+     */
+    inline CreateDatasetImportJobRequest& WithFormat(const char* value) { SetFormat(value); return *this;}
+
   private:
 
     Aws::String m_datasetImportJobName;
-    bool m_datasetImportJobNameHasBeenSet;
+    bool m_datasetImportJobNameHasBeenSet = false;
 
     Aws::String m_datasetArn;
-    bool m_datasetArnHasBeenSet;
+    bool m_datasetArnHasBeenSet = false;
 
     DataSource m_dataSource;
-    bool m_dataSourceHasBeenSet;
+    bool m_dataSourceHasBeenSet = false;
 
     Aws::String m_timestampFormat;
-    bool m_timestampFormatHasBeenSet;
+    bool m_timestampFormatHasBeenSet = false;
 
     Aws::String m_timeZone;
-    bool m_timeZoneHasBeenSet;
+    bool m_timeZoneHasBeenSet = false;
 
     bool m_useGeolocationForTimeZone;
-    bool m_useGeolocationForTimeZoneHasBeenSet;
+    bool m_useGeolocationForTimeZoneHasBeenSet = false;
 
     Aws::String m_geolocationFormat;
-    bool m_geolocationFormatHasBeenSet;
+    bool m_geolocationFormatHasBeenSet = false;
 
     Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet;
+    bool m_tagsHasBeenSet = false;
+
+    Aws::String m_format;
+    bool m_formatHasBeenSet = false;
   };
 
 } // namespace Model

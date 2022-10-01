@@ -8,6 +8,7 @@
 #include <aws/forecast/ForecastServiceRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/forecast/model/TimeSeriesSelector.h>
 #include <aws/forecast/model/Tag.h>
 #include <utility>
 
@@ -419,19 +420,77 @@ namespace Model
      */
     inline CreateForecastRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
 
+
+    /**
+     * <p>Defines the set of time series that are used to create the forecasts in a
+     * <code>TimeSeriesIdentifiers</code> object.</p> <p>The
+     * <code>TimeSeriesIdentifiers</code> object needs the following information:</p>
+     * <ul> <li> <p> <code>DataSource</code> </p> </li> <li> <p> <code>Format</code>
+     * </p> </li> <li> <p> <code>Schema</code> </p> </li> </ul>
+     */
+    inline const TimeSeriesSelector& GetTimeSeriesSelector() const{ return m_timeSeriesSelector; }
+
+    /**
+     * <p>Defines the set of time series that are used to create the forecasts in a
+     * <code>TimeSeriesIdentifiers</code> object.</p> <p>The
+     * <code>TimeSeriesIdentifiers</code> object needs the following information:</p>
+     * <ul> <li> <p> <code>DataSource</code> </p> </li> <li> <p> <code>Format</code>
+     * </p> </li> <li> <p> <code>Schema</code> </p> </li> </ul>
+     */
+    inline bool TimeSeriesSelectorHasBeenSet() const { return m_timeSeriesSelectorHasBeenSet; }
+
+    /**
+     * <p>Defines the set of time series that are used to create the forecasts in a
+     * <code>TimeSeriesIdentifiers</code> object.</p> <p>The
+     * <code>TimeSeriesIdentifiers</code> object needs the following information:</p>
+     * <ul> <li> <p> <code>DataSource</code> </p> </li> <li> <p> <code>Format</code>
+     * </p> </li> <li> <p> <code>Schema</code> </p> </li> </ul>
+     */
+    inline void SetTimeSeriesSelector(const TimeSeriesSelector& value) { m_timeSeriesSelectorHasBeenSet = true; m_timeSeriesSelector = value; }
+
+    /**
+     * <p>Defines the set of time series that are used to create the forecasts in a
+     * <code>TimeSeriesIdentifiers</code> object.</p> <p>The
+     * <code>TimeSeriesIdentifiers</code> object needs the following information:</p>
+     * <ul> <li> <p> <code>DataSource</code> </p> </li> <li> <p> <code>Format</code>
+     * </p> </li> <li> <p> <code>Schema</code> </p> </li> </ul>
+     */
+    inline void SetTimeSeriesSelector(TimeSeriesSelector&& value) { m_timeSeriesSelectorHasBeenSet = true; m_timeSeriesSelector = std::move(value); }
+
+    /**
+     * <p>Defines the set of time series that are used to create the forecasts in a
+     * <code>TimeSeriesIdentifiers</code> object.</p> <p>The
+     * <code>TimeSeriesIdentifiers</code> object needs the following information:</p>
+     * <ul> <li> <p> <code>DataSource</code> </p> </li> <li> <p> <code>Format</code>
+     * </p> </li> <li> <p> <code>Schema</code> </p> </li> </ul>
+     */
+    inline CreateForecastRequest& WithTimeSeriesSelector(const TimeSeriesSelector& value) { SetTimeSeriesSelector(value); return *this;}
+
+    /**
+     * <p>Defines the set of time series that are used to create the forecasts in a
+     * <code>TimeSeriesIdentifiers</code> object.</p> <p>The
+     * <code>TimeSeriesIdentifiers</code> object needs the following information:</p>
+     * <ul> <li> <p> <code>DataSource</code> </p> </li> <li> <p> <code>Format</code>
+     * </p> </li> <li> <p> <code>Schema</code> </p> </li> </ul>
+     */
+    inline CreateForecastRequest& WithTimeSeriesSelector(TimeSeriesSelector&& value) { SetTimeSeriesSelector(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_forecastName;
-    bool m_forecastNameHasBeenSet;
+    bool m_forecastNameHasBeenSet = false;
 
     Aws::String m_predictorArn;
-    bool m_predictorArnHasBeenSet;
+    bool m_predictorArnHasBeenSet = false;
 
     Aws::Vector<Aws::String> m_forecastTypes;
-    bool m_forecastTypesHasBeenSet;
+    bool m_forecastTypesHasBeenSet = false;
 
     Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet;
+    bool m_tagsHasBeenSet = false;
+
+    TimeSeriesSelector m_timeSeriesSelector;
+    bool m_timeSeriesSelectorHasBeenSet = false;
   };
 
 } // namespace Model
