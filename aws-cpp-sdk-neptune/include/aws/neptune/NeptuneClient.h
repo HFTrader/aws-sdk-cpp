@@ -8,6 +8,7 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/AmazonSerializableWebServiceRequest.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/neptune/NeptuneServiceClientModel.h>
 
@@ -35,31 +36,59 @@ namespace Neptune
    * maintenance window. The reference structure is as follows, and we list following
    * some related topics from the user guide.</p>
    */
-  class AWS_NEPTUNE_API NeptuneClient : public Aws::Client::AWSXMLClient
+  class AWS_NEPTUNE_API NeptuneClient : public Aws::Client::AWSXMLClient, public Aws::Client::ClientWithAsyncTemplateMethods<NeptuneClient>
   {
     public:
       typedef Aws::Client::AWSXMLClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        NeptuneClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        NeptuneClient(const Aws::Neptune::NeptuneClientConfiguration& clientConfiguration = Aws::Neptune::NeptuneClientConfiguration(),
+                      std::shared_ptr<NeptuneEndpointProviderBase> endpointProvider = Aws::MakeShared<NeptuneEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         NeptuneClient(const Aws::Auth::AWSCredentials& credentials,
-                      const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                      std::shared_ptr<NeptuneEndpointProviderBase> endpointProvider = Aws::MakeShared<NeptuneEndpointProvider>(ALLOCATION_TAG),
+                      const Aws::Neptune::NeptuneClientConfiguration& clientConfiguration = Aws::Neptune::NeptuneClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         NeptuneClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                      const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                      std::shared_ptr<NeptuneEndpointProviderBase> endpointProvider = Aws::MakeShared<NeptuneEndpointProvider>(ALLOCATION_TAG),
+                      const Aws::Neptune::NeptuneClientConfiguration& clientConfiguration = Aws::Neptune::NeptuneClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        NeptuneClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        NeptuneClient(const Aws::Auth::AWSCredentials& credentials,
+                      const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        NeptuneClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                      const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~NeptuneClient();
 
 
@@ -1531,13 +1560,14 @@ namespace Neptune
 
 
         void OverrideEndpoint(const Aws::String& endpoint);
+        std::shared_ptr<NeptuneEndpointProviderBase>& accessEndpointProvider();
   private:
-        void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+        friend class Aws::Client::ClientWithAsyncTemplateMethods<NeptuneClient>;
+        void init(const NeptuneClientConfiguration& clientConfiguration);
 
-        Aws::String m_uri;
-        Aws::String m_configScheme;
-        bool m_useDualStack = false;
+        NeptuneClientConfiguration m_clientConfiguration;
         std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+        std::shared_ptr<NeptuneEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Neptune

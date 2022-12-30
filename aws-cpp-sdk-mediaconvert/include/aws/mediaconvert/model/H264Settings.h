@@ -53,13 +53,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/H264Settings">AWS
    * API Reference</a></p>
    */
-  class AWS_MEDIACONVERT_API H264Settings
+  class H264Settings
   {
   public:
-    H264Settings();
-    H264Settings(Aws::Utils::Json::JsonView jsonValue);
-    H264Settings& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_MEDIACONVERT_API H264Settings();
+    AWS_MEDIACONVERT_API H264Settings(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEDIACONVERT_API H264Settings& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEDIACONVERT_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -970,6 +970,39 @@ namespace Model
      * setting GOP size (GopSize).
      */
     inline H264Settings& WithGopSizeUnits(H264GopSizeUnits&& value) { SetGopSizeUnits(std::move(value)); return *this;}
+
+
+    /**
+     * If your downstream systems have strict buffer requirements: Specify the minimum
+     * percentage of the HRD buffer that's available at the end of each encoded video
+     * segment. For the best video quality: Set to 0 or leave blank to automatically
+     * determine the final buffer fill percentage.
+     */
+    inline int GetHrdBufferFinalFillPercentage() const{ return m_hrdBufferFinalFillPercentage; }
+
+    /**
+     * If your downstream systems have strict buffer requirements: Specify the minimum
+     * percentage of the HRD buffer that's available at the end of each encoded video
+     * segment. For the best video quality: Set to 0 or leave blank to automatically
+     * determine the final buffer fill percentage.
+     */
+    inline bool HrdBufferFinalFillPercentageHasBeenSet() const { return m_hrdBufferFinalFillPercentageHasBeenSet; }
+
+    /**
+     * If your downstream systems have strict buffer requirements: Specify the minimum
+     * percentage of the HRD buffer that's available at the end of each encoded video
+     * segment. For the best video quality: Set to 0 or leave blank to automatically
+     * determine the final buffer fill percentage.
+     */
+    inline void SetHrdBufferFinalFillPercentage(int value) { m_hrdBufferFinalFillPercentageHasBeenSet = true; m_hrdBufferFinalFillPercentage = value; }
+
+    /**
+     * If your downstream systems have strict buffer requirements: Specify the minimum
+     * percentage of the HRD buffer that's available at the end of each encoded video
+     * segment. For the best video quality: Set to 0 or leave blank to automatically
+     * determine the final buffer fill percentage.
+     */
+    inline H264Settings& WithHrdBufferFinalFillPercentage(int value) { SetHrdBufferFinalFillPercentage(value); return *this;}
 
 
     /**
@@ -2400,6 +2433,9 @@ namespace Model
 
     H264GopSizeUnits m_gopSizeUnits;
     bool m_gopSizeUnitsHasBeenSet = false;
+
+    int m_hrdBufferFinalFillPercentage;
+    bool m_hrdBufferFinalFillPercentageHasBeenSet = false;
 
     int m_hrdBufferInitialFillPercentage;
     bool m_hrdBufferInitialFillPercentageHasBeenSet = false;

@@ -15,6 +15,7 @@
 #include <aws/rds/model/WriteForwardingStatus.h>
 #include <aws/rds/model/ClusterPendingModifiedValues.h>
 #include <aws/rds/model/ServerlessV2ScalingConfigurationInfo.h>
+#include <aws/rds/model/MasterUserSecret.h>
 #include <aws/rds/model/DBClusterOptionGroupStatus.h>
 #include <aws/rds/model/DBClusterMember.h>
 #include <aws/rds/model/VpcSecurityGroupMembership.h>
@@ -62,15 +63,15 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/DBCluster">AWS API
    * Reference</a></p>
    */
-  class AWS_RDS_API DBCluster
+  class DBCluster
   {
   public:
-    DBCluster();
-    DBCluster(const Aws::Utils::Xml::XmlNode& xmlNode);
-    DBCluster& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_RDS_API DBCluster();
+    AWS_RDS_API DBCluster(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_RDS_API DBCluster& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
 
-    void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    void OutputToStream(Aws::OStream& oStream, const char* location) const;
+    AWS_RDS_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+    AWS_RDS_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
 
 
     /**
@@ -3057,6 +3058,120 @@ namespace Model
      */
     inline DBCluster& WithNetworkType(const char* value) { SetNetworkType(value); return *this;}
 
+
+    /**
+     * <p>Reserved for future use.</p>
+     */
+    inline const Aws::String& GetDBSystemId() const{ return m_dBSystemId; }
+
+    /**
+     * <p>Reserved for future use.</p>
+     */
+    inline bool DBSystemIdHasBeenSet() const { return m_dBSystemIdHasBeenSet; }
+
+    /**
+     * <p>Reserved for future use.</p>
+     */
+    inline void SetDBSystemId(const Aws::String& value) { m_dBSystemIdHasBeenSet = true; m_dBSystemId = value; }
+
+    /**
+     * <p>Reserved for future use.</p>
+     */
+    inline void SetDBSystemId(Aws::String&& value) { m_dBSystemIdHasBeenSet = true; m_dBSystemId = std::move(value); }
+
+    /**
+     * <p>Reserved for future use.</p>
+     */
+    inline void SetDBSystemId(const char* value) { m_dBSystemIdHasBeenSet = true; m_dBSystemId.assign(value); }
+
+    /**
+     * <p>Reserved for future use.</p>
+     */
+    inline DBCluster& WithDBSystemId(const Aws::String& value) { SetDBSystemId(value); return *this;}
+
+    /**
+     * <p>Reserved for future use.</p>
+     */
+    inline DBCluster& WithDBSystemId(Aws::String&& value) { SetDBSystemId(std::move(value)); return *this;}
+
+    /**
+     * <p>Reserved for future use.</p>
+     */
+    inline DBCluster& WithDBSystemId(const char* value) { SetDBSystemId(value); return *this;}
+
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide</i> and <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon Aurora
+     * User Guide.</i> </p>
+     */
+    inline const MasterUserSecret& GetMasterUserSecret() const{ return m_masterUserSecret; }
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide</i> and <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon Aurora
+     * User Guide.</i> </p>
+     */
+    inline bool MasterUserSecretHasBeenSet() const { return m_masterUserSecretHasBeenSet; }
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide</i> and <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon Aurora
+     * User Guide.</i> </p>
+     */
+    inline void SetMasterUserSecret(const MasterUserSecret& value) { m_masterUserSecretHasBeenSet = true; m_masterUserSecret = value; }
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide</i> and <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon Aurora
+     * User Guide.</i> </p>
+     */
+    inline void SetMasterUserSecret(MasterUserSecret&& value) { m_masterUserSecretHasBeenSet = true; m_masterUserSecret = std::move(value); }
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide</i> and <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon Aurora
+     * User Guide.</i> </p>
+     */
+    inline DBCluster& WithMasterUserSecret(const MasterUserSecret& value) { SetMasterUserSecret(value); return *this;}
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide</i> and <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon Aurora
+     * User Guide.</i> </p>
+     */
+    inline DBCluster& WithMasterUserSecret(MasterUserSecret&& value) { SetMasterUserSecret(std::move(value)); return *this;}
+
   private:
 
     int m_allocatedStorage;
@@ -3265,6 +3380,12 @@ namespace Model
 
     Aws::String m_networkType;
     bool m_networkTypeHasBeenSet = false;
+
+    Aws::String m_dBSystemId;
+    bool m_dBSystemIdHasBeenSet = false;
+
+    MasterUserSecret m_masterUserSecret;
+    bool m_masterUserSecretHasBeenSet = false;
   };
 
 } // namespace Model

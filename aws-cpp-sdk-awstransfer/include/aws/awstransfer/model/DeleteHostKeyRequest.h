@@ -18,10 +18,10 @@ namespace Model
 
   /**
    */
-  class AWS_TRANSFER_API DeleteHostKeyRequest : public TransferRequest
+  class DeleteHostKeyRequest : public TransferRequest
   {
   public:
-    DeleteHostKeyRequest();
+    AWS_TRANSFER_API DeleteHostKeyRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -29,97 +29,97 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "DeleteHostKey"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_TRANSFER_API Aws::String SerializePayload() const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_TRANSFER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 
     /**
-     * <p>Provide the ID of the server that contains the host key that you are
+     * <p>The identifier of the server that contains the host key that you are
      * deleting.</p>
      */
     inline const Aws::String& GetServerId() const{ return m_serverId; }
 
     /**
-     * <p>Provide the ID of the server that contains the host key that you are
+     * <p>The identifier of the server that contains the host key that you are
      * deleting.</p>
      */
     inline bool ServerIdHasBeenSet() const { return m_serverIdHasBeenSet; }
 
     /**
-     * <p>Provide the ID of the server that contains the host key that you are
+     * <p>The identifier of the server that contains the host key that you are
      * deleting.</p>
      */
     inline void SetServerId(const Aws::String& value) { m_serverIdHasBeenSet = true; m_serverId = value; }
 
     /**
-     * <p>Provide the ID of the server that contains the host key that you are
+     * <p>The identifier of the server that contains the host key that you are
      * deleting.</p>
      */
     inline void SetServerId(Aws::String&& value) { m_serverIdHasBeenSet = true; m_serverId = std::move(value); }
 
     /**
-     * <p>Provide the ID of the server that contains the host key that you are
+     * <p>The identifier of the server that contains the host key that you are
      * deleting.</p>
      */
     inline void SetServerId(const char* value) { m_serverIdHasBeenSet = true; m_serverId.assign(value); }
 
     /**
-     * <p>Provide the ID of the server that contains the host key that you are
+     * <p>The identifier of the server that contains the host key that you are
      * deleting.</p>
      */
     inline DeleteHostKeyRequest& WithServerId(const Aws::String& value) { SetServerId(value); return *this;}
 
     /**
-     * <p>Provide the ID of the server that contains the host key that you are
+     * <p>The identifier of the server that contains the host key that you are
      * deleting.</p>
      */
     inline DeleteHostKeyRequest& WithServerId(Aws::String&& value) { SetServerId(std::move(value)); return *this;}
 
     /**
-     * <p>Provide the ID of the server that contains the host key that you are
+     * <p>The identifier of the server that contains the host key that you are
      * deleting.</p>
      */
     inline DeleteHostKeyRequest& WithServerId(const char* value) { SetServerId(value); return *this;}
 
 
     /**
-     * <p>The ID of the host key that you are deleting.</p>
+     * <p>The identifier of the host key that you are deleting.</p>
      */
     inline const Aws::String& GetHostKeyId() const{ return m_hostKeyId; }
 
     /**
-     * <p>The ID of the host key that you are deleting.</p>
+     * <p>The identifier of the host key that you are deleting.</p>
      */
     inline bool HostKeyIdHasBeenSet() const { return m_hostKeyIdHasBeenSet; }
 
     /**
-     * <p>The ID of the host key that you are deleting.</p>
+     * <p>The identifier of the host key that you are deleting.</p>
      */
     inline void SetHostKeyId(const Aws::String& value) { m_hostKeyIdHasBeenSet = true; m_hostKeyId = value; }
 
     /**
-     * <p>The ID of the host key that you are deleting.</p>
+     * <p>The identifier of the host key that you are deleting.</p>
      */
     inline void SetHostKeyId(Aws::String&& value) { m_hostKeyIdHasBeenSet = true; m_hostKeyId = std::move(value); }
 
     /**
-     * <p>The ID of the host key that you are deleting.</p>
+     * <p>The identifier of the host key that you are deleting.</p>
      */
     inline void SetHostKeyId(const char* value) { m_hostKeyIdHasBeenSet = true; m_hostKeyId.assign(value); }
 
     /**
-     * <p>The ID of the host key that you are deleting.</p>
+     * <p>The identifier of the host key that you are deleting.</p>
      */
     inline DeleteHostKeyRequest& WithHostKeyId(const Aws::String& value) { SetHostKeyId(value); return *this;}
 
     /**
-     * <p>The ID of the host key that you are deleting.</p>
+     * <p>The identifier of the host key that you are deleting.</p>
      */
     inline DeleteHostKeyRequest& WithHostKeyId(Aws::String&& value) { SetHostKeyId(std::move(value)); return *this;}
 
     /**
-     * <p>The ID of the host key that you are deleting.</p>
+     * <p>The identifier of the host key that you are deleting.</p>
      */
     inline DeleteHostKeyRequest& WithHostKeyId(const char* value) { SetHostKeyId(value); return *this;}
 

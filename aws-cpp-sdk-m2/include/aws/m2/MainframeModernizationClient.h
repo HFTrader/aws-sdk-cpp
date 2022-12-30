@@ -7,6 +7,7 @@
 #include <aws/m2/MainframeModernization_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/m2/MainframeModernizationServiceClientModel.h>
 
@@ -22,33 +23,60 @@ namespace MainframeModernization
    * applications using COBOL or PL/I, and implementing an automated pipeline for
    * continuous integration and continuous delivery (CI/CD) of the applications.</p>
    */
-  class AWS_MAINFRAMEMODERNIZATION_API MainframeModernizationClient : public Aws::Client::AWSJsonClient
+  class AWS_MAINFRAMEMODERNIZATION_API MainframeModernizationClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<MainframeModernizationClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        MainframeModernizationClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        MainframeModernizationClient(const Aws::MainframeModernization::MainframeModernizationClientConfiguration& clientConfiguration = Aws::MainframeModernization::MainframeModernizationClientConfiguration(),
+                                     std::shared_ptr<MainframeModernizationEndpointProviderBase> endpointProvider = Aws::MakeShared<MainframeModernizationEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         MainframeModernizationClient(const Aws::Auth::AWSCredentials& credentials,
-                                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                     std::shared_ptr<MainframeModernizationEndpointProviderBase> endpointProvider = Aws::MakeShared<MainframeModernizationEndpointProvider>(ALLOCATION_TAG),
+                                     const Aws::MainframeModernization::MainframeModernizationClientConfiguration& clientConfiguration = Aws::MainframeModernization::MainframeModernizationClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         MainframeModernizationClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                     std::shared_ptr<MainframeModernizationEndpointProviderBase> endpointProvider = Aws::MakeShared<MainframeModernizationEndpointProvider>(ALLOCATION_TAG),
+                                     const Aws::MainframeModernization::MainframeModernizationClientConfiguration& clientConfiguration = Aws::MainframeModernization::MainframeModernizationClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        MainframeModernizationClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        MainframeModernizationClient(const Aws::Auth::AWSCredentials& credentials,
+                                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        MainframeModernizationClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~MainframeModernizationClient();
-
 
         /**
          * <p>Cancels the running of a specific batch job execution.</p><p><h3>See
@@ -69,7 +97,7 @@ namespace MainframeModernization
         virtual void CancelBatchJobExecutionAsync(const Model::CancelBatchJobExecutionRequest& request, const CancelBatchJobExecutionResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Creates a new application with given parameters. Requires an existing
+         * <p>Creates a new application with given parameters. Requires an existing runtime
          * environment and application definition file.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/CreateApplication">AWS
          * API Reference</a></p>
@@ -105,7 +133,7 @@ namespace MainframeModernization
         virtual void CreateDataSetImportTaskAsync(const Model::CreateDataSetImportTaskRequest& request, const CreateDataSetImportTaskResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Creates and starts a deployment to deploy an application into an
+         * <p>Creates and starts a deployment to deploy an application into a runtime
          * environment.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/CreateDeployment">AWS
          * API Reference</a></p>
@@ -159,11 +187,11 @@ namespace MainframeModernization
         virtual void DeleteApplicationAsync(const Model::DeleteApplicationRequest& request, const DeleteApplicationResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Deletes a specific application from a specified environment where it has been
-         * previously deployed. You cannot delete an environment using DeleteEnvironment,
-         * if any application has ever been deployed to it. This API removes the
-         * association of the application with the environment so you can delete the
-         * environment smoothly.</p><p><h3>See Also:</h3>   <a
+         * <p>Deletes a specific application from the specific runtime environment where it
+         * was previously deployed. You cannot delete a runtime environment using
+         * DeleteEnvironment if any application has ever been deployed to it. This API
+         * removes the association of the application with the runtime environment so you
+         * can delete the environment smoothly.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/DeleteApplicationFromEnvironment">AWS
          * API Reference</a></p>
          */
@@ -180,9 +208,9 @@ namespace MainframeModernization
         virtual void DeleteApplicationFromEnvironmentAsync(const Model::DeleteApplicationFromEnvironmentRequest& request, const DeleteApplicationFromEnvironmentResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Deletes a specific environment. The environment cannot contain deployed
-         * applications. If it does, you must delete those applications before you delete
-         * the environment.</p><p><h3>See Also:</h3>   <a
+         * <p>Deletes a specific runtime environment. The environment cannot contain
+         * deployed applications. If it does, you must delete those applications before you
+         * delete the environment.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/DeleteEnvironment">AWS
          * API Reference</a></p>
          */
@@ -342,8 +370,8 @@ namespace MainframeModernization
 
         /**
          * <p>Lists the applications associated with a specific Amazon Web Services
-         * account. You can provide the unique identifier of a specific environment in a
-         * query parameter to see all applications associated with that
+         * account. You can provide the unique identifier of a specific runtime environment
+         * in a query parameter to see all applications associated with that
          * environment.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/ListApplications">AWS
          * API Reference</a></p>
@@ -362,8 +390,8 @@ namespace MainframeModernization
 
         /**
          * <p>Lists all the available batch job definitions based on the batch job
-         * resources uploaded during the application creation. The listed batch job
-         * definitions can then be used to start a batch job.</p><p><h3>See Also:</h3>   <a
+         * resources uploaded during the application creation. You can use the batch job
+         * definitions in the list to start a batch job.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/ListBatchJobDefinitions">AWS
          * API Reference</a></p>
          */
@@ -418,9 +446,9 @@ namespace MainframeModernization
         /**
          * <p>Lists the data sets imported for a specific application. In Amazon Web
          * Services Mainframe Modernization, data sets are associated with applications
-         * deployed on environments. This is known as importing data sets. Currently,
-         * Amazon Web Services Mainframe Modernization can import data sets into catalogs
-         * using <a
+         * deployed on runtime environments. This is known as importing data sets.
+         * Currently, Amazon Web Services Mainframe Modernization can import data sets into
+         * catalogs using <a
          * href="https://docs.aws.amazon.com/m2/latest/APIReference/API_CreateDataSetImportTask.html">CreateDataSetImportTask</a>.</p><p><h3>See
          * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/ListDataSets">AWS API
@@ -617,8 +645,8 @@ namespace MainframeModernization
         virtual void UpdateApplicationAsync(const Model::UpdateApplicationRequest& request, const UpdateApplicationResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Updates the configuration details for a specific environment.</p><p><h3>See
-         * Also:</h3>   <a
+         * <p>Updates the configuration details for a specific runtime
+         * environment.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/m2-2021-04-28/UpdateEnvironment">AWS
          * API Reference</a></p>
          */
@@ -636,12 +664,14 @@ namespace MainframeModernization
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<MainframeModernizationEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<MainframeModernizationClient>;
+      void init(const MainframeModernizationClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      MainframeModernizationClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<MainframeModernizationEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace MainframeModernization

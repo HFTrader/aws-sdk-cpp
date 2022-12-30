@@ -7,6 +7,7 @@
 #include <aws/kinesisanalyticsv2/KinesisAnalyticsV2_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/kinesisanalyticsv2/KinesisAnalyticsV2ServiceClientModel.h>
 
@@ -21,33 +22,60 @@ namespace KinesisAnalyticsV2
    * sources to perform time series analytics, feed real-time dashboards, and create
    * real-time metrics.</p>
    */
-  class AWS_KINESISANALYTICSV2_API KinesisAnalyticsV2Client : public Aws::Client::AWSJsonClient
+  class AWS_KINESISANALYTICSV2_API KinesisAnalyticsV2Client : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<KinesisAnalyticsV2Client>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        KinesisAnalyticsV2Client(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        KinesisAnalyticsV2Client(const Aws::KinesisAnalyticsV2::KinesisAnalyticsV2ClientConfiguration& clientConfiguration = Aws::KinesisAnalyticsV2::KinesisAnalyticsV2ClientConfiguration(),
+                                 std::shared_ptr<KinesisAnalyticsV2EndpointProviderBase> endpointProvider = Aws::MakeShared<KinesisAnalyticsV2EndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         KinesisAnalyticsV2Client(const Aws::Auth::AWSCredentials& credentials,
-                                 const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                 std::shared_ptr<KinesisAnalyticsV2EndpointProviderBase> endpointProvider = Aws::MakeShared<KinesisAnalyticsV2EndpointProvider>(ALLOCATION_TAG),
+                                 const Aws::KinesisAnalyticsV2::KinesisAnalyticsV2ClientConfiguration& clientConfiguration = Aws::KinesisAnalyticsV2::KinesisAnalyticsV2ClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         KinesisAnalyticsV2Client(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                                 const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                 std::shared_ptr<KinesisAnalyticsV2EndpointProviderBase> endpointProvider = Aws::MakeShared<KinesisAnalyticsV2EndpointProvider>(ALLOCATION_TAG),
+                                 const Aws::KinesisAnalyticsV2::KinesisAnalyticsV2ClientConfiguration& clientConfiguration = Aws::KinesisAnalyticsV2::KinesisAnalyticsV2ClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        KinesisAnalyticsV2Client(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        KinesisAnalyticsV2Client(const Aws::Auth::AWSCredentials& credentials,
+                                 const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        KinesisAnalyticsV2Client(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                                 const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~KinesisAnalyticsV2Client();
-
 
         /**
          * <p>Adds an Amazon CloudWatch log stream to monitor application configuration
@@ -210,8 +238,7 @@ namespace KinesisAnalyticsV2
 
         /**
          * <p>Creates and returns a URL that you can use to connect to an application's
-         * extension. Currently, the only available extension is the Apache Flink
-         * dashboard.</p> <p>The IAM role or user used to call this API defines the
+         * extension.</p> <p>The IAM role or user used to call this API defines the
          * permissions to access the extension. After the presigned URL is created, no
          * additional permission is required to access this URL. IAM authorization policies
          * for this API are also enforced for every HTTP request that attempts to connect
@@ -714,12 +741,14 @@ namespace KinesisAnalyticsV2
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<KinesisAnalyticsV2EndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<KinesisAnalyticsV2Client>;
+      void init(const KinesisAnalyticsV2ClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      KinesisAnalyticsV2ClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<KinesisAnalyticsV2EndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace KinesisAnalyticsV2

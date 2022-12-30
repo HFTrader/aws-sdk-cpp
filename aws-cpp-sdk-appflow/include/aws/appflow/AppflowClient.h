@@ -7,6 +7,7 @@
 #include <aws/appflow/Appflow_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/appflow/AppflowServiceClientModel.h>
 
@@ -43,33 +44,60 @@ namespace Appflow
    * href="https://help.salesforce.com/articleView?id=remoteaccess_authenticate.htm">
    * <i>Authorize Apps with OAuth</i> </a> documentation.</p>
    */
-  class AWS_APPFLOW_API AppflowClient : public Aws::Client::AWSJsonClient
+  class AWS_APPFLOW_API AppflowClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<AppflowClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        AppflowClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        AppflowClient(const Aws::Appflow::AppflowClientConfiguration& clientConfiguration = Aws::Appflow::AppflowClientConfiguration(),
+                      std::shared_ptr<AppflowEndpointProviderBase> endpointProvider = Aws::MakeShared<AppflowEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         AppflowClient(const Aws::Auth::AWSCredentials& credentials,
-                      const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                      std::shared_ptr<AppflowEndpointProviderBase> endpointProvider = Aws::MakeShared<AppflowEndpointProvider>(ALLOCATION_TAG),
+                      const Aws::Appflow::AppflowClientConfiguration& clientConfiguration = Aws::Appflow::AppflowClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         AppflowClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                      const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                      std::shared_ptr<AppflowEndpointProviderBase> endpointProvider = Aws::MakeShared<AppflowEndpointProvider>(ALLOCATION_TAG),
+                      const Aws::Appflow::AppflowClientConfiguration& clientConfiguration = Aws::Appflow::AppflowClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        AppflowClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        AppflowClient(const Aws::Auth::AWSCredentials& credentials,
+                      const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        AppflowClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                      const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~AppflowClient();
-
 
         /**
          * <p> Creates a new connector profile associated with your Amazon Web Services
@@ -346,9 +374,9 @@ namespace Appflow
         virtual void ListTagsForResourceAsync(const Model::ListTagsForResourceRequest& request, const ListTagsForResourceResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Registers a new connector with your Amazon Web Services account. Before you
-         * can register the connector, you must deploy lambda in your
-         * account.</p><p><h3>See Also:</h3>   <a
+         * <p>Registers a new custom connector with your Amazon Web Services account.
+         * Before you can register the connector, you must deploy the associated AWS lambda
+         * function in your account.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/appflow-2020-08-23/RegisterConnector">AWS
          * API Reference</a></p>
          */
@@ -422,7 +450,7 @@ namespace Appflow
 
         /**
          * <p>Unregisters the custom connector registered in your account that matches the
-         * connectorLabel provided in the request.</p><p><h3>See Also:</h3>   <a
+         * connector label provided in the request.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/appflow-2020-08-23/UnregisterConnector">AWS
          * API Reference</a></p>
          */
@@ -474,6 +502,27 @@ namespace Appflow
         virtual void UpdateConnectorProfileAsync(const Model::UpdateConnectorProfileRequest& request, const UpdateConnectorProfileResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Updates a custom connector that you've previously registered. This operation
+         * updates the connector with one of the following:</p> <ul> <li> <p>The latest
+         * version of the AWS Lambda function that's assigned to the connector</p> </li>
+         * <li> <p>A new AWS Lambda function that you specify</p> </li> </ul><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/appflow-2020-08-23/UpdateConnectorRegistration">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::UpdateConnectorRegistrationOutcome UpdateConnectorRegistration(const Model::UpdateConnectorRegistrationRequest& request) const;
+
+        /**
+         * A Callable wrapper for UpdateConnectorRegistration that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::UpdateConnectorRegistrationOutcomeCallable UpdateConnectorRegistrationCallable(const Model::UpdateConnectorRegistrationRequest& request) const;
+
+        /**
+         * An Async wrapper for UpdateConnectorRegistration that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void UpdateConnectorRegistrationAsync(const Model::UpdateConnectorRegistrationRequest& request, const UpdateConnectorRegistrationResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p> Updates an existing flow. </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/appflow-2020-08-23/UpdateFlow">AWS
          * API Reference</a></p>
@@ -492,12 +541,14 @@ namespace Appflow
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<AppflowEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<AppflowClient>;
+      void init(const AppflowClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      AppflowClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<AppflowEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Appflow

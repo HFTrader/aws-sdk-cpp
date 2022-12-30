@@ -9,6 +9,7 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/neptune/model/ServerlessV2ScalingConfigurationInfo.h>
 #include <aws/neptune/model/DBClusterOptionGroupStatus.h>
 #include <aws/neptune/model/DBClusterMember.h>
 #include <aws/neptune/model/VpcSecurityGroupMembership.h>
@@ -36,15 +37,15 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/neptune-2014-10-31/DBCluster">AWS
    * API Reference</a></p>
    */
-  class AWS_NEPTUNE_API DBCluster
+  class DBCluster
   {
   public:
-    DBCluster();
-    DBCluster(const Aws::Utils::Xml::XmlNode& xmlNode);
-    DBCluster& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_NEPTUNE_API DBCluster();
+    AWS_NEPTUNE_API DBCluster(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_NEPTUNE_API DBCluster& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
 
-    void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    void OutputToStream(Aws::OStream& oStream, const char* location) const;
+    AWS_NEPTUNE_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+    AWS_NEPTUNE_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
 
 
     /**
@@ -1738,6 +1739,25 @@ namespace Model
      */
     inline DBCluster& WithAutomaticRestartTime(Aws::Utils::DateTime&& value) { SetAutomaticRestartTime(std::move(value)); return *this;}
 
+
+    
+    inline const ServerlessV2ScalingConfigurationInfo& GetServerlessV2ScalingConfiguration() const{ return m_serverlessV2ScalingConfiguration; }
+
+    
+    inline bool ServerlessV2ScalingConfigurationHasBeenSet() const { return m_serverlessV2ScalingConfigurationHasBeenSet; }
+
+    
+    inline void SetServerlessV2ScalingConfiguration(const ServerlessV2ScalingConfigurationInfo& value) { m_serverlessV2ScalingConfigurationHasBeenSet = true; m_serverlessV2ScalingConfiguration = value; }
+
+    
+    inline void SetServerlessV2ScalingConfiguration(ServerlessV2ScalingConfigurationInfo&& value) { m_serverlessV2ScalingConfigurationHasBeenSet = true; m_serverlessV2ScalingConfiguration = std::move(value); }
+
+    
+    inline DBCluster& WithServerlessV2ScalingConfiguration(const ServerlessV2ScalingConfigurationInfo& value) { SetServerlessV2ScalingConfiguration(value); return *this;}
+
+    
+    inline DBCluster& WithServerlessV2ScalingConfiguration(ServerlessV2ScalingConfigurationInfo&& value) { SetServerlessV2ScalingConfiguration(std::move(value)); return *this;}
+
   private:
 
     int m_allocatedStorage;
@@ -1859,6 +1879,9 @@ namespace Model
 
     Aws::Utils::DateTime m_automaticRestartTime;
     bool m_automaticRestartTimeHasBeenSet = false;
+
+    ServerlessV2ScalingConfigurationInfo m_serverlessV2ScalingConfiguration;
+    bool m_serverlessV2ScalingConfigurationHasBeenSet = false;
   };
 
 } // namespace Model

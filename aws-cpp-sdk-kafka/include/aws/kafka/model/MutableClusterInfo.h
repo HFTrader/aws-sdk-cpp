@@ -14,6 +14,7 @@
 #include <aws/kafka/model/ClientAuthentication.h>
 #include <aws/kafka/model/EncryptionInfo.h>
 #include <aws/kafka/model/ConnectivityInfo.h>
+#include <aws/kafka/model/StorageMode.h>
 #include <aws/kafka/model/BrokerEBSVolumeInfo.h>
 #include <utility>
 
@@ -40,13 +41,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/MutableClusterInfo">AWS
    * API Reference</a></p>
    */
-  class AWS_KAFKA_API MutableClusterInfo
+  class MutableClusterInfo
   {
   public:
-    MutableClusterInfo();
-    MutableClusterInfo(Aws::Utils::Json::JsonView jsonValue);
-    MutableClusterInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_KAFKA_API MutableClusterInfo();
+    AWS_KAFKA_API MutableClusterInfo(Aws::Utils::Json::JsonView jsonValue);
+    AWS_KAFKA_API MutableClusterInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -581,6 +582,55 @@ namespace Model
      */
     inline MutableClusterInfo& WithConnectivityInfo(ConnectivityInfo&& value) { SetConnectivityInfo(std::move(value)); return *this;}
 
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline const StorageMode& GetStorageMode() const{ return m_storageMode; }
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline bool StorageModeHasBeenSet() const { return m_storageModeHasBeenSet; }
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline void SetStorageMode(const StorageMode& value) { m_storageModeHasBeenSet = true; m_storageMode = value; }
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline void SetStorageMode(StorageMode&& value) { m_storageModeHasBeenSet = true; m_storageMode = std::move(value); }
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline MutableClusterInfo& WithStorageMode(const StorageMode& value) { SetStorageMode(value); return *this;}
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline MutableClusterInfo& WithStorageMode(StorageMode&& value) { SetStorageMode(std::move(value)); return *this;}
+
   private:
 
     Aws::Vector<BrokerEBSVolumeInfo> m_brokerEBSVolumeInfo;
@@ -615,6 +665,9 @@ namespace Model
 
     ConnectivityInfo m_connectivityInfo;
     bool m_connectivityInfoHasBeenSet = false;
+
+    StorageMode m_storageMode;
+    bool m_storageModeHasBeenSet = false;
   };
 
 } // namespace Model

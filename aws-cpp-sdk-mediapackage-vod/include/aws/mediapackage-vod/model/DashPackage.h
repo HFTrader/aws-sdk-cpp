@@ -33,13 +33,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/mediapackage-vod-2018-11-07/DashPackage">AWS
    * API Reference</a></p>
    */
-  class AWS_MEDIAPACKAGEVOD_API DashPackage
+  class DashPackage
   {
   public:
-    DashPackage();
-    DashPackage(Aws::Utils::Json::JsonView jsonValue);
-    DashPackage& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_MEDIAPACKAGEVOD_API DashPackage();
+    AWS_MEDIAPACKAGEVOD_API DashPackage(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEDIAPACKAGEVOD_API DashPackage& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEDIAPACKAGEVOD_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -141,6 +141,27 @@ namespace Model
 
      */
     inline DashPackage& WithIncludeEncoderConfigurationInSegments(bool value) { SetIncludeEncoderConfigurationInSegments(value); return *this;}
+
+
+    /**
+     * When enabled, an I-Frame only stream will be included in the output.
+     */
+    inline bool GetIncludeIframeOnlyStream() const{ return m_includeIframeOnlyStream; }
+
+    /**
+     * When enabled, an I-Frame only stream will be included in the output.
+     */
+    inline bool IncludeIframeOnlyStreamHasBeenSet() const { return m_includeIframeOnlyStreamHasBeenSet; }
+
+    /**
+     * When enabled, an I-Frame only stream will be included in the output.
+     */
+    inline void SetIncludeIframeOnlyStream(bool value) { m_includeIframeOnlyStreamHasBeenSet = true; m_includeIframeOnlyStream = value; }
+
+    /**
+     * When enabled, an I-Frame only stream will be included in the output.
+     */
+    inline DashPackage& WithIncludeIframeOnlyStream(bool value) { SetIncludeIframeOnlyStream(value); return *this;}
 
 
     /**
@@ -351,6 +372,9 @@ rounded to the
 
     bool m_includeEncoderConfigurationInSegments;
     bool m_includeEncoderConfigurationInSegmentsHasBeenSet = false;
+
+    bool m_includeIframeOnlyStream;
+    bool m_includeIframeOnlyStreamHasBeenSet = false;
 
     Aws::Vector<__PeriodTriggersElement> m_periodTriggers;
     bool m_periodTriggersHasBeenSet = false;

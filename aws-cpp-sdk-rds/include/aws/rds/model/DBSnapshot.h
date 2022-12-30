@@ -34,15 +34,15 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/DBSnapshot">AWS API
    * Reference</a></p>
    */
-  class AWS_RDS_API DBSnapshot
+  class DBSnapshot
   {
   public:
-    DBSnapshot();
-    DBSnapshot(const Aws::Utils::Xml::XmlNode& xmlNode);
-    DBSnapshot& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_RDS_API DBSnapshot();
+    AWS_RDS_API DBSnapshot(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_RDS_API DBSnapshot& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
 
-    void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    void OutputToStream(Aws::OStream& oStream, const char* location) const;
+    AWS_RDS_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+    AWS_RDS_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
 
 
     /**
@@ -1364,6 +1364,27 @@ namespace Model
      */
     inline DBSnapshot& WithSnapshotTarget(const char* value) { SetSnapshotTarget(value); return *this;}
 
+
+    /**
+     * <p>Specifies the storage throughput for the DB snapshot.</p>
+     */
+    inline int GetStorageThroughput() const{ return m_storageThroughput; }
+
+    /**
+     * <p>Specifies the storage throughput for the DB snapshot.</p>
+     */
+    inline bool StorageThroughputHasBeenSet() const { return m_storageThroughputHasBeenSet; }
+
+    /**
+     * <p>Specifies the storage throughput for the DB snapshot.</p>
+     */
+    inline void SetStorageThroughput(int value) { m_storageThroughputHasBeenSet = true; m_storageThroughput = value; }
+
+    /**
+     * <p>Specifies the storage throughput for the DB snapshot.</p>
+     */
+    inline DBSnapshot& WithStorageThroughput(int value) { SetStorageThroughput(value); return *this;}
+
   private:
 
     Aws::String m_dBSnapshotIdentifier;
@@ -1461,6 +1482,9 @@ namespace Model
 
     Aws::String m_snapshotTarget;
     bool m_snapshotTargetHasBeenSet = false;
+
+    int m_storageThroughput;
+    bool m_storageThroughputHasBeenSet = false;
   };
 
 } // namespace Model

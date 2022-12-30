@@ -7,6 +7,7 @@
 #include <aws/chime-sdk-meetings/ChimeSDKMeetings_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/chime-sdk-meetings/ChimeSDKMeetingsServiceClientModel.h>
 
@@ -22,33 +23,60 @@ namespace ChimeSDKMeetings
    * href="https://docs.aws.amazon.com/chime/latest/APIReference/API_Operations_Amazon_Chime_SDK_Meetings.html">Amazon
    * Chime SDK meetings</a>.</p>
    */
-  class AWS_CHIMESDKMEETINGS_API ChimeSDKMeetingsClient : public Aws::Client::AWSJsonClient
+  class AWS_CHIMESDKMEETINGS_API ChimeSDKMeetingsClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<ChimeSDKMeetingsClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        ChimeSDKMeetingsClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        ChimeSDKMeetingsClient(const Aws::ChimeSDKMeetings::ChimeSDKMeetingsClientConfiguration& clientConfiguration = Aws::ChimeSDKMeetings::ChimeSDKMeetingsClientConfiguration(),
+                               std::shared_ptr<ChimeSDKMeetingsEndpointProviderBase> endpointProvider = Aws::MakeShared<ChimeSDKMeetingsEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         ChimeSDKMeetingsClient(const Aws::Auth::AWSCredentials& credentials,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<ChimeSDKMeetingsEndpointProviderBase> endpointProvider = Aws::MakeShared<ChimeSDKMeetingsEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::ChimeSDKMeetings::ChimeSDKMeetingsClientConfiguration& clientConfiguration = Aws::ChimeSDKMeetings::ChimeSDKMeetingsClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         ChimeSDKMeetingsClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<ChimeSDKMeetingsEndpointProviderBase> endpointProvider = Aws::MakeShared<ChimeSDKMeetingsEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::ChimeSDKMeetings::ChimeSDKMeetingsClientConfiguration& clientConfiguration = Aws::ChimeSDKMeetings::ChimeSDKMeetingsClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ChimeSDKMeetingsClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ChimeSDKMeetingsClient(const Aws::Auth::AWSCredentials& credentials,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        ChimeSDKMeetingsClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~ChimeSDKMeetingsClient();
-
 
         /**
          * <p>Creates up to 100 attendees for an active Amazon Chime SDK meeting. For more
@@ -425,12 +453,14 @@ namespace ChimeSDKMeetings
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<ChimeSDKMeetingsEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<ChimeSDKMeetingsClient>;
+      void init(const ChimeSDKMeetingsClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      ChimeSDKMeetingsClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<ChimeSDKMeetingsEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace ChimeSDKMeetings

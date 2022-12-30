@@ -9,6 +9,7 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/rds/model/ExportSourceType.h>
 #include <aws/rds/model/ResponseMetadata.h>
 #include <utility>
 
@@ -33,15 +34,15 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/ExportTask">AWS API
    * Reference</a></p>
    */
-  class AWS_RDS_API ExportTask
+  class ExportTask
   {
   public:
-    ExportTask();
-    ExportTask(const Aws::Utils::Xml::XmlNode& xmlNode);
-    ExportTask& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_RDS_API ExportTask();
+    AWS_RDS_API ExportTask(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_RDS_API ExportTask& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
 
-    void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    void OutputToStream(Aws::OStream& oStream, const char* location) const;
+    AWS_RDS_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+    AWS_RDS_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
 
 
     /**
@@ -723,6 +724,37 @@ namespace Model
     inline ExportTask& WithWarningMessage(const char* value) { SetWarningMessage(value); return *this;}
 
 
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline const ExportSourceType& GetSourceType() const{ return m_sourceType; }
+
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline bool SourceTypeHasBeenSet() const { return m_sourceTypeHasBeenSet; }
+
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline void SetSourceType(const ExportSourceType& value) { m_sourceTypeHasBeenSet = true; m_sourceType = value; }
+
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline void SetSourceType(ExportSourceType&& value) { m_sourceTypeHasBeenSet = true; m_sourceType = std::move(value); }
+
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline ExportTask& WithSourceType(const ExportSourceType& value) { SetSourceType(value); return *this;}
+
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline ExportTask& WithSourceType(ExportSourceType&& value) { SetSourceType(std::move(value)); return *this;}
+
+
     
     inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
 
@@ -787,6 +819,9 @@ namespace Model
 
     Aws::String m_warningMessage;
     bool m_warningMessageHasBeenSet = false;
+
+    ExportSourceType m_sourceType;
+    bool m_sourceTypeHasBeenSet = false;
 
     ResponseMetadata m_responseMetadata;
     bool m_responseMetadataHasBeenSet = false;

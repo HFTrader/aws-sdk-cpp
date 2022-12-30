@@ -7,6 +7,7 @@
 #include <aws/appintegrations/AppIntegrationsService_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/appintegrations/AppIntegrationsServiceServiceClientModel.h>
 
@@ -24,33 +25,60 @@ namespace AppIntegrationsService
    * information to agents using Amazon Connect Wisdom</a> in the <i>Amazon Connect
    * Administrator Guide</i>.</p>
    */
-  class AWS_APPINTEGRATIONSSERVICE_API AppIntegrationsServiceClient : public Aws::Client::AWSJsonClient
+  class AWS_APPINTEGRATIONSSERVICE_API AppIntegrationsServiceClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<AppIntegrationsServiceClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        AppIntegrationsServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        AppIntegrationsServiceClient(const Aws::AppIntegrationsService::AppIntegrationsServiceClientConfiguration& clientConfiguration = Aws::AppIntegrationsService::AppIntegrationsServiceClientConfiguration(),
+                                     std::shared_ptr<AppIntegrationsServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<AppIntegrationsServiceEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         AppIntegrationsServiceClient(const Aws::Auth::AWSCredentials& credentials,
-                                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                     std::shared_ptr<AppIntegrationsServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<AppIntegrationsServiceEndpointProvider>(ALLOCATION_TAG),
+                                     const Aws::AppIntegrationsService::AppIntegrationsServiceClientConfiguration& clientConfiguration = Aws::AppIntegrationsService::AppIntegrationsServiceClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         AppIntegrationsServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                     std::shared_ptr<AppIntegrationsServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<AppIntegrationsServiceEndpointProvider>(ALLOCATION_TAG),
+                                     const Aws::AppIntegrationsService::AppIntegrationsServiceClientConfiguration& clientConfiguration = Aws::AppIntegrationsService::AppIntegrationsServiceClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        AppIntegrationsServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        AppIntegrationsServiceClient(const Aws::Auth::AWSCredentials& credentials,
+                                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        AppIntegrationsServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~AppIntegrationsServiceClient();
-
 
         /**
          * <p>Creates and persists a DataIntegration resource.</p>  <p>You cannot
@@ -351,12 +379,14 @@ namespace AppIntegrationsService
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<AppIntegrationsServiceEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<AppIntegrationsServiceClient>;
+      void init(const AppIntegrationsServiceClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      AppIntegrationsServiceClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<AppIntegrationsServiceEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace AppIntegrationsService

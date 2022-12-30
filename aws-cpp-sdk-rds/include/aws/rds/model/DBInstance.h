@@ -17,6 +17,7 @@
 #include <aws/rds/model/ActivityStreamMode.h>
 #include <aws/rds/model/AutomationMode.h>
 #include <aws/rds/model/ActivityStreamPolicyStatus.h>
+#include <aws/rds/model/MasterUserSecret.h>
 #include <aws/rds/model/DBSecurityGroupMembership.h>
 #include <aws/rds/model/VpcSecurityGroupMembership.h>
 #include <aws/rds/model/DBParameterGroupStatus.h>
@@ -56,15 +57,15 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/DBInstance">AWS API
    * Reference</a></p>
    */
-  class AWS_RDS_API DBInstance
+  class DBInstance
   {
   public:
-    DBInstance();
-    DBInstance(const Aws::Utils::Xml::XmlNode& xmlNode);
-    DBInstance& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_RDS_API DBInstance();
+    AWS_RDS_API DBInstance(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_RDS_API DBInstance& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
 
-    void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    void OutputToStream(Aws::OStream& oStream, const char* location) const;
+    AWS_RDS_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+    AWS_RDS_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
 
 
     /**
@@ -1693,42 +1694,42 @@ namespace Model
 
 
     /**
-     * <p>Specifies the storage type associated with DB instance.</p>
+     * <p>Specifies the storage type associated with the DB instance.</p>
      */
     inline const Aws::String& GetStorageType() const{ return m_storageType; }
 
     /**
-     * <p>Specifies the storage type associated with DB instance.</p>
+     * <p>Specifies the storage type associated with the DB instance.</p>
      */
     inline bool StorageTypeHasBeenSet() const { return m_storageTypeHasBeenSet; }
 
     /**
-     * <p>Specifies the storage type associated with DB instance.</p>
+     * <p>Specifies the storage type associated with the DB instance.</p>
      */
     inline void SetStorageType(const Aws::String& value) { m_storageTypeHasBeenSet = true; m_storageType = value; }
 
     /**
-     * <p>Specifies the storage type associated with DB instance.</p>
+     * <p>Specifies the storage type associated with the DB instance.</p>
      */
     inline void SetStorageType(Aws::String&& value) { m_storageTypeHasBeenSet = true; m_storageType = std::move(value); }
 
     /**
-     * <p>Specifies the storage type associated with DB instance.</p>
+     * <p>Specifies the storage type associated with the DB instance.</p>
      */
     inline void SetStorageType(const char* value) { m_storageTypeHasBeenSet = true; m_storageType.assign(value); }
 
     /**
-     * <p>Specifies the storage type associated with DB instance.</p>
+     * <p>Specifies the storage type associated with the DB instance.</p>
      */
     inline DBInstance& WithStorageType(const Aws::String& value) { SetStorageType(value); return *this;}
 
     /**
-     * <p>Specifies the storage type associated with DB instance.</p>
+     * <p>Specifies the storage type associated with the DB instance.</p>
      */
     inline DBInstance& WithStorageType(Aws::String&& value) { SetStorageType(std::move(value)); return *this;}
 
     /**
-     * <p>Specifies the storage type associated with DB instance.</p>
+     * <p>Specifies the storage type associated with the DB instance.</p>
      */
     inline DBInstance& WithStorageType(const char* value) { SetStorageType(value); return *this;}
 
@@ -2897,7 +2898,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-on-outposts.html">Working
      * with Amazon RDS on Amazon Web Services Outposts</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p>For more information about CoIPs, see <a
-     * href="https://docs.aws.amazon.com/outposts/latest/userguide/outposts-networking-components.html#ip-addressing">Customer-owned
+     * href="https://docs.aws.amazon.com/outposts/latest/userguide/routing.html#ip-addressing">Customer-owned
      * IP addresses</a> in the <i>Amazon Web Services Outposts User Guide</i>.</p>
      */
     inline bool GetCustomerOwnedIpEnabled() const{ return m_customerOwnedIpEnabled; }
@@ -2912,7 +2913,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-on-outposts.html">Working
      * with Amazon RDS on Amazon Web Services Outposts</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p>For more information about CoIPs, see <a
-     * href="https://docs.aws.amazon.com/outposts/latest/userguide/outposts-networking-components.html#ip-addressing">Customer-owned
+     * href="https://docs.aws.amazon.com/outposts/latest/userguide/routing.html#ip-addressing">Customer-owned
      * IP addresses</a> in the <i>Amazon Web Services Outposts User Guide</i>.</p>
      */
     inline bool CustomerOwnedIpEnabledHasBeenSet() const { return m_customerOwnedIpEnabledHasBeenSet; }
@@ -2927,7 +2928,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-on-outposts.html">Working
      * with Amazon RDS on Amazon Web Services Outposts</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p>For more information about CoIPs, see <a
-     * href="https://docs.aws.amazon.com/outposts/latest/userguide/outposts-networking-components.html#ip-addressing">Customer-owned
+     * href="https://docs.aws.amazon.com/outposts/latest/userguide/routing.html#ip-addressing">Customer-owned
      * IP addresses</a> in the <i>Amazon Web Services Outposts User Guide</i>.</p>
      */
     inline void SetCustomerOwnedIpEnabled(bool value) { m_customerOwnedIpEnabledHasBeenSet = true; m_customerOwnedIpEnabled = value; }
@@ -2942,7 +2943,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-on-outposts.html">Working
      * with Amazon RDS on Amazon Web Services Outposts</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p>For more information about CoIPs, see <a
-     * href="https://docs.aws.amazon.com/outposts/latest/userguide/outposts-networking-components.html#ip-addressing">Customer-owned
+     * href="https://docs.aws.amazon.com/outposts/latest/userguide/routing.html#ip-addressing">Customer-owned
      * IP addresses</a> in the <i>Amazon Web Services Outposts User Guide</i>.</p>
      */
     inline DBInstance& WithCustomerOwnedIpEnabled(bool value) { SetCustomerOwnedIpEnabled(value); return *this;}
@@ -3613,6 +3614,135 @@ namespace Model
      */
     inline DBInstance& WithActivityStreamPolicyStatus(ActivityStreamPolicyStatus&& value) { SetActivityStreamPolicyStatus(std::move(value)); return *this;}
 
+
+    /**
+     * <p>Specifies the storage throughput for the DB instance.</p> <p>This setting
+     * applies only to the <code>gp3</code> storage type.</p>
+     */
+    inline int GetStorageThroughput() const{ return m_storageThroughput; }
+
+    /**
+     * <p>Specifies the storage throughput for the DB instance.</p> <p>This setting
+     * applies only to the <code>gp3</code> storage type.</p>
+     */
+    inline bool StorageThroughputHasBeenSet() const { return m_storageThroughputHasBeenSet; }
+
+    /**
+     * <p>Specifies the storage throughput for the DB instance.</p> <p>This setting
+     * applies only to the <code>gp3</code> storage type.</p>
+     */
+    inline void SetStorageThroughput(int value) { m_storageThroughputHasBeenSet = true; m_storageThroughput = value; }
+
+    /**
+     * <p>Specifies the storage throughput for the DB instance.</p> <p>This setting
+     * applies only to the <code>gp3</code> storage type.</p>
+     */
+    inline DBInstance& WithStorageThroughput(int value) { SetStorageThroughput(value); return *this;}
+
+
+    /**
+     * <p>The Oracle system ID (Oracle SID) for a container database (CDB). The Oracle
+     * SID is also the name of the CDB. This setting is valid for RDS Custom only.</p>
+     */
+    inline const Aws::String& GetDBSystemId() const{ return m_dBSystemId; }
+
+    /**
+     * <p>The Oracle system ID (Oracle SID) for a container database (CDB). The Oracle
+     * SID is also the name of the CDB. This setting is valid for RDS Custom only.</p>
+     */
+    inline bool DBSystemIdHasBeenSet() const { return m_dBSystemIdHasBeenSet; }
+
+    /**
+     * <p>The Oracle system ID (Oracle SID) for a container database (CDB). The Oracle
+     * SID is also the name of the CDB. This setting is valid for RDS Custom only.</p>
+     */
+    inline void SetDBSystemId(const Aws::String& value) { m_dBSystemIdHasBeenSet = true; m_dBSystemId = value; }
+
+    /**
+     * <p>The Oracle system ID (Oracle SID) for a container database (CDB). The Oracle
+     * SID is also the name of the CDB. This setting is valid for RDS Custom only.</p>
+     */
+    inline void SetDBSystemId(Aws::String&& value) { m_dBSystemIdHasBeenSet = true; m_dBSystemId = std::move(value); }
+
+    /**
+     * <p>The Oracle system ID (Oracle SID) for a container database (CDB). The Oracle
+     * SID is also the name of the CDB. This setting is valid for RDS Custom only.</p>
+     */
+    inline void SetDBSystemId(const char* value) { m_dBSystemIdHasBeenSet = true; m_dBSystemId.assign(value); }
+
+    /**
+     * <p>The Oracle system ID (Oracle SID) for a container database (CDB). The Oracle
+     * SID is also the name of the CDB. This setting is valid for RDS Custom only.</p>
+     */
+    inline DBInstance& WithDBSystemId(const Aws::String& value) { SetDBSystemId(value); return *this;}
+
+    /**
+     * <p>The Oracle system ID (Oracle SID) for a container database (CDB). The Oracle
+     * SID is also the name of the CDB. This setting is valid for RDS Custom only.</p>
+     */
+    inline DBInstance& WithDBSystemId(Aws::String&& value) { SetDBSystemId(std::move(value)); return *this;}
+
+    /**
+     * <p>The Oracle system ID (Oracle SID) for a container database (CDB). The Oracle
+     * SID is also the name of the CDB. This setting is valid for RDS Custom only.</p>
+     */
+    inline DBInstance& WithDBSystemId(const char* value) { SetDBSystemId(value); return *this;}
+
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide.</i> </p>
+     */
+    inline const MasterUserSecret& GetMasterUserSecret() const{ return m_masterUserSecret; }
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide.</i> </p>
+     */
+    inline bool MasterUserSecretHasBeenSet() const { return m_masterUserSecretHasBeenSet; }
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide.</i> </p>
+     */
+    inline void SetMasterUserSecret(const MasterUserSecret& value) { m_masterUserSecretHasBeenSet = true; m_masterUserSecret = value; }
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide.</i> </p>
+     */
+    inline void SetMasterUserSecret(MasterUserSecret&& value) { m_masterUserSecretHasBeenSet = true; m_masterUserSecret = std::move(value); }
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide.</i> </p>
+     */
+    inline DBInstance& WithMasterUserSecret(const MasterUserSecret& value) { SetMasterUserSecret(value); return *this;}
+
+    /**
+     * <p>Contains the secret managed by RDS in Amazon Web Services Secrets Manager for
+     * the master user password.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide.</i> </p>
+     */
+    inline DBInstance& WithMasterUserSecret(MasterUserSecret&& value) { SetMasterUserSecret(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_dBInstanceIdentifier;
@@ -3842,6 +3972,15 @@ namespace Model
 
     ActivityStreamPolicyStatus m_activityStreamPolicyStatus;
     bool m_activityStreamPolicyStatusHasBeenSet = false;
+
+    int m_storageThroughput;
+    bool m_storageThroughputHasBeenSet = false;
+
+    Aws::String m_dBSystemId;
+    bool m_dBSystemIdHasBeenSet = false;
+
+    MasterUserSecret m_masterUserSecret;
+    bool m_masterUserSecretHasBeenSet = false;
   };
 
 } // namespace Model

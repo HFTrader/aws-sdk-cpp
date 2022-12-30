@@ -26,10 +26,10 @@ namespace Model
 
   /**
    */
-  class AWS_IOTFLEETWISE_API CreateCampaignRequest : public IoTFleetWiseRequest
+  class CreateCampaignRequest : public IoTFleetWiseRequest
   {
   public:
-    CreateCampaignRequest();
+    AWS_IOTFLEETWISE_API CreateCampaignRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -37,9 +37,9 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "CreateCampaign"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_IOTFLEETWISE_API Aws::String SerializePayload() const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_IOTFLEETWISE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 
     /**
@@ -260,42 +260,42 @@ namespace Model
     /**
      * <p> (Optional) The time the campaign expires, in seconds since epoch (January 1,
      * 1970 at midnight UTC time). Vehicle data won't be collected after the campaign
-     * expires. </p> <p>Default: 253402243200 (December 31, 9999, 00:00:00 UTC)</p>
+     * expires. </p> <p>Default: 253402214400 (December 31, 9999, 00:00:00 UTC)</p>
      */
     inline const Aws::Utils::DateTime& GetExpiryTime() const{ return m_expiryTime; }
 
     /**
      * <p> (Optional) The time the campaign expires, in seconds since epoch (January 1,
      * 1970 at midnight UTC time). Vehicle data won't be collected after the campaign
-     * expires. </p> <p>Default: 253402243200 (December 31, 9999, 00:00:00 UTC)</p>
+     * expires. </p> <p>Default: 253402214400 (December 31, 9999, 00:00:00 UTC)</p>
      */
     inline bool ExpiryTimeHasBeenSet() const { return m_expiryTimeHasBeenSet; }
 
     /**
      * <p> (Optional) The time the campaign expires, in seconds since epoch (January 1,
      * 1970 at midnight UTC time). Vehicle data won't be collected after the campaign
-     * expires. </p> <p>Default: 253402243200 (December 31, 9999, 00:00:00 UTC)</p>
+     * expires. </p> <p>Default: 253402214400 (December 31, 9999, 00:00:00 UTC)</p>
      */
     inline void SetExpiryTime(const Aws::Utils::DateTime& value) { m_expiryTimeHasBeenSet = true; m_expiryTime = value; }
 
     /**
      * <p> (Optional) The time the campaign expires, in seconds since epoch (January 1,
      * 1970 at midnight UTC time). Vehicle data won't be collected after the campaign
-     * expires. </p> <p>Default: 253402243200 (December 31, 9999, 00:00:00 UTC)</p>
+     * expires. </p> <p>Default: 253402214400 (December 31, 9999, 00:00:00 UTC)</p>
      */
     inline void SetExpiryTime(Aws::Utils::DateTime&& value) { m_expiryTimeHasBeenSet = true; m_expiryTime = std::move(value); }
 
     /**
      * <p> (Optional) The time the campaign expires, in seconds since epoch (January 1,
      * 1970 at midnight UTC time). Vehicle data won't be collected after the campaign
-     * expires. </p> <p>Default: 253402243200 (December 31, 9999, 00:00:00 UTC)</p>
+     * expires. </p> <p>Default: 253402214400 (December 31, 9999, 00:00:00 UTC)</p>
      */
     inline CreateCampaignRequest& WithExpiryTime(const Aws::Utils::DateTime& value) { SetExpiryTime(value); return *this;}
 
     /**
      * <p> (Optional) The time the campaign expires, in seconds since epoch (January 1,
      * 1970 at midnight UTC time). Vehicle data won't be collected after the campaign
-     * expires. </p> <p>Default: 253402243200 (December 31, 9999, 00:00:00 UTC)</p>
+     * expires. </p> <p>Default: 253402214400 (December 31, 9999, 00:00:00 UTC)</p>
      */
     inline CreateCampaignRequest& WithExpiryTime(Aws::Utils::DateTime&& value) { SetExpiryTime(std::move(value)); return *this;}
 
@@ -601,55 +601,91 @@ namespace Model
 
     /**
      * <p> (Optional) A list of vehicle attributes to associate with a campaign. </p>
-     * <p>Default: An empty array</p>
+     * <p>Enrich the data with specified vehicle attributes. For example, add
+     * <code>make</code> and <code>model</code> to the campaign, and Amazon Web
+     * Services IoT FleetWise will associate the data with those attributes as
+     * dimensions in Amazon Timestream. You can then query the data against
+     * <code>make</code> and <code>model</code>.</p> <p>Default: An empty array</p>
      */
     inline const Aws::Vector<Aws::String>& GetDataExtraDimensions() const{ return m_dataExtraDimensions; }
 
     /**
      * <p> (Optional) A list of vehicle attributes to associate with a campaign. </p>
-     * <p>Default: An empty array</p>
+     * <p>Enrich the data with specified vehicle attributes. For example, add
+     * <code>make</code> and <code>model</code> to the campaign, and Amazon Web
+     * Services IoT FleetWise will associate the data with those attributes as
+     * dimensions in Amazon Timestream. You can then query the data against
+     * <code>make</code> and <code>model</code>.</p> <p>Default: An empty array</p>
      */
     inline bool DataExtraDimensionsHasBeenSet() const { return m_dataExtraDimensionsHasBeenSet; }
 
     /**
      * <p> (Optional) A list of vehicle attributes to associate with a campaign. </p>
-     * <p>Default: An empty array</p>
+     * <p>Enrich the data with specified vehicle attributes. For example, add
+     * <code>make</code> and <code>model</code> to the campaign, and Amazon Web
+     * Services IoT FleetWise will associate the data with those attributes as
+     * dimensions in Amazon Timestream. You can then query the data against
+     * <code>make</code> and <code>model</code>.</p> <p>Default: An empty array</p>
      */
     inline void SetDataExtraDimensions(const Aws::Vector<Aws::String>& value) { m_dataExtraDimensionsHasBeenSet = true; m_dataExtraDimensions = value; }
 
     /**
      * <p> (Optional) A list of vehicle attributes to associate with a campaign. </p>
-     * <p>Default: An empty array</p>
+     * <p>Enrich the data with specified vehicle attributes. For example, add
+     * <code>make</code> and <code>model</code> to the campaign, and Amazon Web
+     * Services IoT FleetWise will associate the data with those attributes as
+     * dimensions in Amazon Timestream. You can then query the data against
+     * <code>make</code> and <code>model</code>.</p> <p>Default: An empty array</p>
      */
     inline void SetDataExtraDimensions(Aws::Vector<Aws::String>&& value) { m_dataExtraDimensionsHasBeenSet = true; m_dataExtraDimensions = std::move(value); }
 
     /**
      * <p> (Optional) A list of vehicle attributes to associate with a campaign. </p>
-     * <p>Default: An empty array</p>
+     * <p>Enrich the data with specified vehicle attributes. For example, add
+     * <code>make</code> and <code>model</code> to the campaign, and Amazon Web
+     * Services IoT FleetWise will associate the data with those attributes as
+     * dimensions in Amazon Timestream. You can then query the data against
+     * <code>make</code> and <code>model</code>.</p> <p>Default: An empty array</p>
      */
     inline CreateCampaignRequest& WithDataExtraDimensions(const Aws::Vector<Aws::String>& value) { SetDataExtraDimensions(value); return *this;}
 
     /**
      * <p> (Optional) A list of vehicle attributes to associate with a campaign. </p>
-     * <p>Default: An empty array</p>
+     * <p>Enrich the data with specified vehicle attributes. For example, add
+     * <code>make</code> and <code>model</code> to the campaign, and Amazon Web
+     * Services IoT FleetWise will associate the data with those attributes as
+     * dimensions in Amazon Timestream. You can then query the data against
+     * <code>make</code> and <code>model</code>.</p> <p>Default: An empty array</p>
      */
     inline CreateCampaignRequest& WithDataExtraDimensions(Aws::Vector<Aws::String>&& value) { SetDataExtraDimensions(std::move(value)); return *this;}
 
     /**
      * <p> (Optional) A list of vehicle attributes to associate with a campaign. </p>
-     * <p>Default: An empty array</p>
+     * <p>Enrich the data with specified vehicle attributes. For example, add
+     * <code>make</code> and <code>model</code> to the campaign, and Amazon Web
+     * Services IoT FleetWise will associate the data with those attributes as
+     * dimensions in Amazon Timestream. You can then query the data against
+     * <code>make</code> and <code>model</code>.</p> <p>Default: An empty array</p>
      */
     inline CreateCampaignRequest& AddDataExtraDimensions(const Aws::String& value) { m_dataExtraDimensionsHasBeenSet = true; m_dataExtraDimensions.push_back(value); return *this; }
 
     /**
      * <p> (Optional) A list of vehicle attributes to associate with a campaign. </p>
-     * <p>Default: An empty array</p>
+     * <p>Enrich the data with specified vehicle attributes. For example, add
+     * <code>make</code> and <code>model</code> to the campaign, and Amazon Web
+     * Services IoT FleetWise will associate the data with those attributes as
+     * dimensions in Amazon Timestream. You can then query the data against
+     * <code>make</code> and <code>model</code>.</p> <p>Default: An empty array</p>
      */
     inline CreateCampaignRequest& AddDataExtraDimensions(Aws::String&& value) { m_dataExtraDimensionsHasBeenSet = true; m_dataExtraDimensions.push_back(std::move(value)); return *this; }
 
     /**
      * <p> (Optional) A list of vehicle attributes to associate with a campaign. </p>
-     * <p>Default: An empty array</p>
+     * <p>Enrich the data with specified vehicle attributes. For example, add
+     * <code>make</code> and <code>model</code> to the campaign, and Amazon Web
+     * Services IoT FleetWise will associate the data with those attributes as
+     * dimensions in Amazon Timestream. You can then query the data against
+     * <code>make</code> and <code>model</code>.</p> <p>Default: An empty array</p>
      */
     inline CreateCampaignRequest& AddDataExtraDimensions(const char* value) { m_dataExtraDimensionsHasBeenSet = true; m_dataExtraDimensions.push_back(value); return *this; }
 

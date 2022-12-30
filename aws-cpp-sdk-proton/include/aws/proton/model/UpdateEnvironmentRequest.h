@@ -20,10 +20,10 @@ namespace Model
 
   /**
    */
-  class AWS_PROTON_API UpdateEnvironmentRequest : public ProtonRequest
+  class UpdateEnvironmentRequest : public ProtonRequest
   {
   public:
-    UpdateEnvironmentRequest();
+    AWS_PROTON_API UpdateEnvironmentRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -31,9 +31,58 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "UpdateEnvironment"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_PROTON_API Aws::String SerializePayload() const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_PROTON_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that allows Proton to
+     * provision infrastructure using CodeBuild-based provisioning on your behalf.</p>
+     */
+    inline const Aws::String& GetCodebuildRoleArn() const{ return m_codebuildRoleArn; }
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that allows Proton to
+     * provision infrastructure using CodeBuild-based provisioning on your behalf.</p>
+     */
+    inline bool CodebuildRoleArnHasBeenSet() const { return m_codebuildRoleArnHasBeenSet; }
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that allows Proton to
+     * provision infrastructure using CodeBuild-based provisioning on your behalf.</p>
+     */
+    inline void SetCodebuildRoleArn(const Aws::String& value) { m_codebuildRoleArnHasBeenSet = true; m_codebuildRoleArn = value; }
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that allows Proton to
+     * provision infrastructure using CodeBuild-based provisioning on your behalf.</p>
+     */
+    inline void SetCodebuildRoleArn(Aws::String&& value) { m_codebuildRoleArnHasBeenSet = true; m_codebuildRoleArn = std::move(value); }
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that allows Proton to
+     * provision infrastructure using CodeBuild-based provisioning on your behalf.</p>
+     */
+    inline void SetCodebuildRoleArn(const char* value) { m_codebuildRoleArnHasBeenSet = true; m_codebuildRoleArn.assign(value); }
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that allows Proton to
+     * provision infrastructure using CodeBuild-based provisioning on your behalf.</p>
+     */
+    inline UpdateEnvironmentRequest& WithCodebuildRoleArn(const Aws::String& value) { SetCodebuildRoleArn(value); return *this;}
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that allows Proton to
+     * provision infrastructure using CodeBuild-based provisioning on your behalf.</p>
+     */
+    inline UpdateEnvironmentRequest& WithCodebuildRoleArn(Aws::String&& value) { SetCodebuildRoleArn(std::move(value)); return *this;}
+
+    /**
+     * <p>The Amazon Resource Name (ARN) of the IAM service role that allows Proton to
+     * provision infrastructure using CodeBuild-based provisioning on your behalf.</p>
+     */
+    inline UpdateEnvironmentRequest& WithCodebuildRoleArn(const char* value) { SetCodebuildRoleArn(value); return *this;}
 
 
     /**
@@ -628,6 +677,9 @@ namespace Model
     inline UpdateEnvironmentRequest& WithTemplateMinorVersion(const char* value) { SetTemplateMinorVersion(value); return *this;}
 
   private:
+
+    Aws::String m_codebuildRoleArn;
+    bool m_codebuildRoleArnHasBeenSet = false;
 
     Aws::String m_componentRoleArn;
     bool m_componentRoleArnHasBeenSet = false;

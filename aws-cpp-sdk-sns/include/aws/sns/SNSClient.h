@@ -8,6 +8,7 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/AmazonSerializableWebServiceRequest.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/sns/SNSServiceClientModel.h>
 
@@ -35,31 +36,59 @@ namespace SNS
    * available SDKs, go to <a href="http://aws.amazon.com/tools/">Tools for Amazon
    * Web Services</a>. </p>
    */
-  class AWS_SNS_API SNSClient : public Aws::Client::AWSXMLClient
+  class AWS_SNS_API SNSClient : public Aws::Client::AWSXMLClient, public Aws::Client::ClientWithAsyncTemplateMethods<SNSClient>
   {
     public:
       typedef Aws::Client::AWSXMLClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        SNSClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        SNSClient(const Aws::SNS::SNSClientConfiguration& clientConfiguration = Aws::SNS::SNSClientConfiguration(),
+                  std::shared_ptr<SNSEndpointProviderBase> endpointProvider = Aws::MakeShared<SNSEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         SNSClient(const Aws::Auth::AWSCredentials& credentials,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<SNSEndpointProviderBase> endpointProvider = Aws::MakeShared<SNSEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::SNS::SNSClientConfiguration& clientConfiguration = Aws::SNS::SNSClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         SNSClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<SNSEndpointProviderBase> endpointProvider = Aws::MakeShared<SNSEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::SNS::SNSClientConfiguration& clientConfiguration = Aws::SNS::SNSClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SNSClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SNSClient(const Aws::Auth::AWSCredentials& credentials,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        SNSClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~SNSClient();
 
 
@@ -71,8 +100,11 @@ namespace SNS
 
         /**
          * <p>Adds a statement to a topic's access control policy, granting access for the
-         * specified Amazon Web Services accounts to the specified actions.</p><p><h3>See
-         * Also:</h3>   <a
+         * specified Amazon Web Services accounts to the specified actions.</p> 
+         * <p>To remove the ability to change topic permissions, you must deny permissions
+         * to the <code>AddPermission</code>, <code>RemovePermission</code>, and
+         * <code>SetTopicAttributes</code> actions in your IAM policy.</p>
+         * <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/sns-2010-03-31/AddPermission">AWS
          * API Reference</a></p>
          */
@@ -814,8 +846,11 @@ namespace SNS
         virtual void PutDataProtectionPolicyAsync(const Model::PutDataProtectionPolicyRequest& request, const PutDataProtectionPolicyResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Removes a statement from a topic's access control policy.</p><p><h3>See
-         * Also:</h3>   <a
+         * <p>Removes a statement from a topic's access control policy.</p>  <p>To
+         * remove the ability to change topic permissions, you must deny permissions to the
+         * <code>AddPermission</code>, <code>RemovePermission</code>, and
+         * <code>SetTopicAttributes</code> actions in your IAM policy.</p>
+         * <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/sns-2010-03-31/RemovePermission">AWS
          * API Reference</a></p>
          */
@@ -922,8 +957,11 @@ namespace SNS
         virtual void SetSubscriptionAttributesAsync(const Model::SetSubscriptionAttributesRequest& request, const SetSubscriptionAttributesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Allows a topic owner to set an attribute of the topic to a new
-         * value.</p><p><h3>See Also:</h3>   <a
+         * <p>Allows a topic owner to set an attribute of the topic to a new value.</p>
+         *  <p>To remove the ability to change topic permissions, you must deny
+         * permissions to the <code>AddPermission</code>, <code>RemovePermission</code>,
+         * and <code>SetTopicAttributes</code> actions in your IAM policy.</p>
+         * <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/sns-2010-03-31/SetTopicAttributes">AWS
          * API Reference</a></p>
          */
@@ -999,8 +1037,11 @@ namespace SNS
          * <code>Unsubscribe</code> call does not require authentication and the requester
          * is not the subscription owner, a final cancellation message is delivered to the
          * endpoint, so that the endpoint owner can easily resubscribe to the topic if the
-         * <code>Unsubscribe</code> request was unintended.</p> <p>This action is throttled
-         * at 100 transactions per second (TPS).</p><p><h3>See Also:</h3>   <a
+         * <code>Unsubscribe</code> request was unintended.</p>  <p>Amazon SQS queue
+         * subscriptions require authentication for deletion. Only the owner of the
+         * subscription, or the owner of the topic can unsubscribe using the required
+         * Amazon Web Services signature.</p>  <p>This action is throttled at 100
+         * transactions per second (TPS).</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/sns-2010-03-31/Unsubscribe">AWS API
          * Reference</a></p>
          */
@@ -1065,12 +1106,14 @@ namespace SNS
 
 
         void OverrideEndpoint(const Aws::String& endpoint);
+        std::shared_ptr<SNSEndpointProviderBase>& accessEndpointProvider();
   private:
-        void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+        friend class Aws::Client::ClientWithAsyncTemplateMethods<SNSClient>;
+        void init(const SNSClientConfiguration& clientConfiguration);
 
-        Aws::String m_uri;
-        Aws::String m_configScheme;
+        SNSClientConfiguration m_clientConfiguration;
         std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+        std::shared_ptr<SNSEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace SNS

@@ -7,6 +7,7 @@
 #include <aws/iotfleetwise/IoTFleetWise_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/iotfleetwise/IoTFleetWiseServiceClientModel.h>
 
@@ -15,51 +16,70 @@ namespace Aws
 namespace IoTFleetWise
 {
   /**
-   *  <p>Amazon Web Services IoT FleetWise is in preview release and is subject
-   * to change. We recommend that you use the service only with test data, and not in
-   * production environments.</p> <p>While Amazon Web Services IoT FleetWise is in
-   * preview, you must download the preview Amazon Web Services SDK and CLI to use
-   * the API operations for this service. These API operations aren't available in
-   * the public Amazon Web Services SDK or CLI. For more information, see <a
-   * href="https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/preview-sdk-cli.html">Preview
-   * Amazon Web Services SDK and CLI</a> in the <i>Amazon Web Services IoT FleetWise
-   * Developer Guide</i>.</p>  <p>Amazon Web Services IoT FleetWise is a fully
-   * managed service that you can use to collect, model, and transfer vehicle data to
-   * the Amazon Web Services cloud at scale. With Amazon Web Services IoT FleetWise,
-   * you can standardize all of your vehicle data models, independent of the
-   * in-vehicle communication architecture, and define data collection rules to
-   * transfer only high-value data to the cloud. </p> <p>For more information, see <a
+   * <p>Amazon Web Services IoT FleetWise is a fully managed service that you can use
+   * to collect, model, and transfer vehicle data to the Amazon Web Services cloud at
+   * scale. With Amazon Web Services IoT FleetWise, you can standardize all of your
+   * vehicle data models, independent of the in-vehicle communication architecture,
+   * and define data collection rules to transfer only high-value data to the cloud.
+   * </p> <p>For more information, see <a
    * href="https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/">What is
    * Amazon Web Services IoT FleetWise?</a> in the <i>Amazon Web Services IoT
    * FleetWise Developer Guide</i>.</p>
    */
-  class AWS_IOTFLEETWISE_API IoTFleetWiseClient : public Aws::Client::AWSJsonClient
+  class AWS_IOTFLEETWISE_API IoTFleetWiseClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<IoTFleetWiseClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        IoTFleetWiseClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        IoTFleetWiseClient(const Aws::IoTFleetWise::IoTFleetWiseClientConfiguration& clientConfiguration = Aws::IoTFleetWise::IoTFleetWiseClientConfiguration(),
+                           std::shared_ptr<IoTFleetWiseEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTFleetWiseEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         IoTFleetWiseClient(const Aws::Auth::AWSCredentials& credentials,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<IoTFleetWiseEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTFleetWiseEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::IoTFleetWise::IoTFleetWiseClientConfiguration& clientConfiguration = Aws::IoTFleetWise::IoTFleetWiseClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         IoTFleetWiseClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<IoTFleetWiseEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTFleetWiseEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::IoTFleetWise::IoTFleetWiseClientConfiguration& clientConfiguration = Aws::IoTFleetWise::IoTFleetWiseClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IoTFleetWiseClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IoTFleetWiseClient(const Aws::Auth::AWSCredentials& credentials,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        IoTFleetWiseClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~IoTFleetWiseClient();
-
 
         /**
          * <p> Adds, or associates, a vehicle with a fleet. </p><p><h3>See Also:</h3>   <a
@@ -1041,12 +1061,14 @@ namespace IoTFleetWise
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<IoTFleetWiseEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<IoTFleetWiseClient>;
+      void init(const IoTFleetWiseClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      IoTFleetWiseClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<IoTFleetWiseEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace IoTFleetWise

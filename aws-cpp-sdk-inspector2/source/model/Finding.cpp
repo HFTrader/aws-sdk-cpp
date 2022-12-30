@@ -21,6 +21,9 @@ namespace Model
 Finding::Finding() : 
     m_awsAccountIdHasBeenSet(false),
     m_descriptionHasBeenSet(false),
+    m_exploitAvailable(ExploitAvailable::NOT_SET),
+    m_exploitAvailableHasBeenSet(false),
+    m_exploitabilityDetailsHasBeenSet(false),
     m_findingArnHasBeenSet(false),
     m_firstObservedAtHasBeenSet(false),
     m_fixAvailable(FixAvailable::NOT_SET),
@@ -47,6 +50,9 @@ Finding::Finding() :
 Finding::Finding(JsonView jsonValue) : 
     m_awsAccountIdHasBeenSet(false),
     m_descriptionHasBeenSet(false),
+    m_exploitAvailable(ExploitAvailable::NOT_SET),
+    m_exploitAvailableHasBeenSet(false),
+    m_exploitabilityDetailsHasBeenSet(false),
     m_findingArnHasBeenSet(false),
     m_firstObservedAtHasBeenSet(false),
     m_fixAvailable(FixAvailable::NOT_SET),
@@ -85,6 +91,20 @@ Finding& Finding::operator =(JsonView jsonValue)
     m_description = jsonValue.GetString("description");
 
     m_descriptionHasBeenSet = true;
+  }
+
+  if(jsonValue.ValueExists("exploitAvailable"))
+  {
+    m_exploitAvailable = ExploitAvailableMapper::GetExploitAvailableForName(jsonValue.GetString("exploitAvailable"));
+
+    m_exploitAvailableHasBeenSet = true;
+  }
+
+  if(jsonValue.ValueExists("exploitabilityDetails"))
+  {
+    m_exploitabilityDetails = jsonValue.GetObject("exploitabilityDetails");
+
+    m_exploitabilityDetailsHasBeenSet = true;
   }
 
   if(jsonValue.ValueExists("findingArn"))
@@ -152,7 +172,7 @@ Finding& Finding::operator =(JsonView jsonValue)
 
   if(jsonValue.ValueExists("resources"))
   {
-    Array<JsonView> resourcesJsonList = jsonValue.GetArray("resources");
+    Aws::Utils::Array<JsonView> resourcesJsonList = jsonValue.GetArray("resources");
     for(unsigned resourcesIndex = 0; resourcesIndex < resourcesJsonList.GetLength(); ++resourcesIndex)
     {
       m_resources.push_back(resourcesJsonList[resourcesIndex].AsObject());
@@ -214,6 +234,17 @@ JsonValue Finding::Jsonize() const
 
   }
 
+  if(m_exploitAvailableHasBeenSet)
+  {
+   payload.WithString("exploitAvailable", ExploitAvailableMapper::GetNameForExploitAvailable(m_exploitAvailable));
+  }
+
+  if(m_exploitabilityDetailsHasBeenSet)
+  {
+   payload.WithObject("exploitabilityDetails", m_exploitabilityDetails.Jsonize());
+
+  }
+
   if(m_findingArnHasBeenSet)
   {
    payload.WithString("findingArn", m_findingArn);
@@ -267,7 +298,7 @@ JsonValue Finding::Jsonize() const
 
   if(m_resourcesHasBeenSet)
   {
-   Array<JsonValue> resourcesJsonList(m_resources.size());
+   Aws::Utils::Array<JsonValue> resourcesJsonList(m_resources.size());
    for(unsigned resourcesIndex = 0; resourcesIndex < resourcesJsonList.GetLength(); ++resourcesIndex)
    {
      resourcesJsonList[resourcesIndex].AsObject(m_resources[resourcesIndex].Jsonize());

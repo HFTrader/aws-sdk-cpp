@@ -7,6 +7,7 @@
 #include <aws/dataexchange/DataExchange_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/dataexchange/DataExchangeServiceClientModel.h>
 
@@ -19,47 +20,75 @@ namespace DataExchange
    * exchange data in the cloud. You can use the AWS Data Exchange APIs to create,
    * update, manage, and access file-based data set in the AWS Cloud.</p> <p>As a
    * subscriber, you can view and access the data sets that you have an entitlement
-   * to through a subscription. You can use the APIS to download or copy your
-   * entitled data sets to Amazon S3 for use across a variety of AWS analytics and
-   * machine learning services.</p> <p>As a provider, you can create and manage your
-   * data sets that you would like to publish to a product. Being able to package and
-   * provide your data sets into products requires a few steps to determine
-   * eligibility. For more information, visit the AWS Data Exchange User Guide.</p>
-   * <p>A data set is a collection of data that can be changed or updated over time.
-   * Data sets can be updated using revisions, which represent a new version or
-   * incremental change to a data set. A revision contains one or more assets. An
-   * asset in AWS Data Exchange is a piece of data that can be stored as an Amazon S3
-   * object. The asset can be a structured data file, an image file, or some other
-   * data file. Jobs are asynchronous import or export operations used to create or
-   * copy assets.</p>
+   * to through a subscription. You can use the APIs to download or copy your
+   * entitled data sets to Amazon Simple Storage Service (Amazon S3) for use across a
+   * variety of AWS analytics and machine learning services.</p> <p>As a provider,
+   * you can create and manage your data sets that you would like to publish to a
+   * product. Being able to package and provide your data sets into products requires
+   * a few steps to determine eligibility. For more information, visit the <i>AWS
+   * Data Exchange User Guide</i>.</p> <p>A data set is a collection of data that can
+   * be changed or updated over time. Data sets can be updated using revisions, which
+   * represent a new version or incremental change to a data set. A revision contains
+   * one or more assets. An asset in AWS Data Exchange is a piece of data that can be
+   * stored as an Amazon S3 object, Redshift datashare, API Gateway API, AWS Lake
+   * Formation data permission, or Amazon S3 data access. The asset can be a
+   * structured data file, an image file, or some other data file. Jobs are
+   * asynchronous import or export operations used to create or copy assets.</p>
    */
-  class AWS_DATAEXCHANGE_API DataExchangeClient : public Aws::Client::AWSJsonClient
+  class AWS_DATAEXCHANGE_API DataExchangeClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<DataExchangeClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        DataExchangeClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        DataExchangeClient(const Aws::DataExchange::DataExchangeClientConfiguration& clientConfiguration = Aws::DataExchange::DataExchangeClientConfiguration(),
+                           std::shared_ptr<DataExchangeEndpointProviderBase> endpointProvider = Aws::MakeShared<DataExchangeEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         DataExchangeClient(const Aws::Auth::AWSCredentials& credentials,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<DataExchangeEndpointProviderBase> endpointProvider = Aws::MakeShared<DataExchangeEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::DataExchange::DataExchangeClientConfiguration& clientConfiguration = Aws::DataExchange::DataExchangeClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         DataExchangeClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<DataExchangeEndpointProviderBase> endpointProvider = Aws::MakeShared<DataExchangeEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::DataExchange::DataExchangeClientConfiguration& clientConfiguration = Aws::DataExchange::DataExchangeClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DataExchangeClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DataExchangeClient(const Aws::Auth::AWSCredentials& credentials,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        DataExchangeClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~DataExchangeClient();
-
 
         /**
          * <p>This operation cancels a job. Jobs can be cancelled only when they are in the
@@ -571,14 +600,14 @@ namespace DataExchange
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<DataExchangeEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<DataExchangeClient>;
+      void init(const DataExchangeClientConfiguration& clientConfiguration);
 
-      Aws::String m_baseUri;
-      Aws::String m_scheme;
-      bool m_enableHostPrefixInjection = false;
-      Aws::String m_configScheme;
+      DataExchangeClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<DataExchangeEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace DataExchange

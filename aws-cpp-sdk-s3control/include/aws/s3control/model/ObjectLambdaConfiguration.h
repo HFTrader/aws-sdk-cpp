@@ -31,14 +31,14 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/ObjectLambdaConfiguration">AWS
    * API Reference</a></p>
    */
-  class AWS_S3CONTROL_API ObjectLambdaConfiguration
+  class ObjectLambdaConfiguration
   {
   public:
-    ObjectLambdaConfiguration();
-    ObjectLambdaConfiguration(const Aws::Utils::Xml::XmlNode& xmlNode);
-    ObjectLambdaConfiguration& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_S3CONTROL_API ObjectLambdaConfiguration();
+    AWS_S3CONTROL_API ObjectLambdaConfiguration(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_S3CONTROL_API ObjectLambdaConfiguration& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
 
-    void AddToNode(Aws::Utils::Xml::XmlNode& parentNode) const;
+    AWS_S3CONTROL_API void AddToNode(Aws::Utils::Xml::XmlNode& parentNode) const;
 
 
     /**
@@ -105,49 +105,57 @@ namespace Model
 
     /**
      * <p>A container for allowed features. Valid inputs are
-     * <code>GetObject-Range</code> and <code>GetObject-PartNumber</code>.</p>
+     * <code>GetObject-Range</code>, <code>GetObject-PartNumber</code>,
+     * <code>HeadObject-Range</code>, and <code>HeadObject-PartNumber</code>.</p>
      */
     inline const Aws::Vector<ObjectLambdaAllowedFeature>& GetAllowedFeatures() const{ return m_allowedFeatures; }
 
     /**
      * <p>A container for allowed features. Valid inputs are
-     * <code>GetObject-Range</code> and <code>GetObject-PartNumber</code>.</p>
+     * <code>GetObject-Range</code>, <code>GetObject-PartNumber</code>,
+     * <code>HeadObject-Range</code>, and <code>HeadObject-PartNumber</code>.</p>
      */
     inline bool AllowedFeaturesHasBeenSet() const { return m_allowedFeaturesHasBeenSet; }
 
     /**
      * <p>A container for allowed features. Valid inputs are
-     * <code>GetObject-Range</code> and <code>GetObject-PartNumber</code>.</p>
+     * <code>GetObject-Range</code>, <code>GetObject-PartNumber</code>,
+     * <code>HeadObject-Range</code>, and <code>HeadObject-PartNumber</code>.</p>
      */
     inline void SetAllowedFeatures(const Aws::Vector<ObjectLambdaAllowedFeature>& value) { m_allowedFeaturesHasBeenSet = true; m_allowedFeatures = value; }
 
     /**
      * <p>A container for allowed features. Valid inputs are
-     * <code>GetObject-Range</code> and <code>GetObject-PartNumber</code>.</p>
+     * <code>GetObject-Range</code>, <code>GetObject-PartNumber</code>,
+     * <code>HeadObject-Range</code>, and <code>HeadObject-PartNumber</code>.</p>
      */
     inline void SetAllowedFeatures(Aws::Vector<ObjectLambdaAllowedFeature>&& value) { m_allowedFeaturesHasBeenSet = true; m_allowedFeatures = std::move(value); }
 
     /**
      * <p>A container for allowed features. Valid inputs are
-     * <code>GetObject-Range</code> and <code>GetObject-PartNumber</code>.</p>
+     * <code>GetObject-Range</code>, <code>GetObject-PartNumber</code>,
+     * <code>HeadObject-Range</code>, and <code>HeadObject-PartNumber</code>.</p>
      */
     inline ObjectLambdaConfiguration& WithAllowedFeatures(const Aws::Vector<ObjectLambdaAllowedFeature>& value) { SetAllowedFeatures(value); return *this;}
 
     /**
      * <p>A container for allowed features. Valid inputs are
-     * <code>GetObject-Range</code> and <code>GetObject-PartNumber</code>.</p>
+     * <code>GetObject-Range</code>, <code>GetObject-PartNumber</code>,
+     * <code>HeadObject-Range</code>, and <code>HeadObject-PartNumber</code>.</p>
      */
     inline ObjectLambdaConfiguration& WithAllowedFeatures(Aws::Vector<ObjectLambdaAllowedFeature>&& value) { SetAllowedFeatures(std::move(value)); return *this;}
 
     /**
      * <p>A container for allowed features. Valid inputs are
-     * <code>GetObject-Range</code> and <code>GetObject-PartNumber</code>.</p>
+     * <code>GetObject-Range</code>, <code>GetObject-PartNumber</code>,
+     * <code>HeadObject-Range</code>, and <code>HeadObject-PartNumber</code>.</p>
      */
     inline ObjectLambdaConfiguration& AddAllowedFeatures(const ObjectLambdaAllowedFeature& value) { m_allowedFeaturesHasBeenSet = true; m_allowedFeatures.push_back(value); return *this; }
 
     /**
      * <p>A container for allowed features. Valid inputs are
-     * <code>GetObject-Range</code> and <code>GetObject-PartNumber</code>.</p>
+     * <code>GetObject-Range</code>, <code>GetObject-PartNumber</code>,
+     * <code>HeadObject-Range</code>, and <code>HeadObject-PartNumber</code>.</p>
      */
     inline ObjectLambdaConfiguration& AddAllowedFeatures(ObjectLambdaAllowedFeature&& value) { m_allowedFeaturesHasBeenSet = true; m_allowedFeatures.push_back(std::move(value)); return *this; }
 

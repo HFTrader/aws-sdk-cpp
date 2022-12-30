@@ -33,13 +33,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsBackupBackupPlanRuleDetails">AWS
    * API Reference</a></p>
    */
-  class AWS_SECURITYHUB_API AwsBackupBackupPlanRuleDetails
+  class AwsBackupBackupPlanRuleDetails
   {
   public:
-    AwsBackupBackupPlanRuleDetails();
-    AwsBackupBackupPlanRuleDetails(Aws::Utils::Json::JsonView jsonValue);
-    AwsBackupBackupPlanRuleDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_SECURITYHUB_API AwsBackupBackupPlanRuleDetails();
+    AWS_SECURITYHUB_API AwsBackupBackupPlanRuleDetails(Aws::Utils::Json::JsonView jsonValue);
+    AWS_SECURITYHUB_API AwsBackupBackupPlanRuleDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -322,50 +322,50 @@ namespace Model
 
 
     /**
-     * <p>An array of <code>CopyAction</code> objects, which contains the details of
-     * the copy operation. </p>
+     * <p>An array of <code>CopyAction</code> objects, each of which contains details
+     * of the copy operation. </p>
      */
     inline const Aws::Vector<AwsBackupBackupPlanRuleCopyActionsDetails>& GetCopyActions() const{ return m_copyActions; }
 
     /**
-     * <p>An array of <code>CopyAction</code> objects, which contains the details of
-     * the copy operation. </p>
+     * <p>An array of <code>CopyAction</code> objects, each of which contains details
+     * of the copy operation. </p>
      */
     inline bool CopyActionsHasBeenSet() const { return m_copyActionsHasBeenSet; }
 
     /**
-     * <p>An array of <code>CopyAction</code> objects, which contains the details of
-     * the copy operation. </p>
+     * <p>An array of <code>CopyAction</code> objects, each of which contains details
+     * of the copy operation. </p>
      */
     inline void SetCopyActions(const Aws::Vector<AwsBackupBackupPlanRuleCopyActionsDetails>& value) { m_copyActionsHasBeenSet = true; m_copyActions = value; }
 
     /**
-     * <p>An array of <code>CopyAction</code> objects, which contains the details of
-     * the copy operation. </p>
+     * <p>An array of <code>CopyAction</code> objects, each of which contains details
+     * of the copy operation. </p>
      */
     inline void SetCopyActions(Aws::Vector<AwsBackupBackupPlanRuleCopyActionsDetails>&& value) { m_copyActionsHasBeenSet = true; m_copyActions = std::move(value); }
 
     /**
-     * <p>An array of <code>CopyAction</code> objects, which contains the details of
-     * the copy operation. </p>
+     * <p>An array of <code>CopyAction</code> objects, each of which contains details
+     * of the copy operation. </p>
      */
     inline AwsBackupBackupPlanRuleDetails& WithCopyActions(const Aws::Vector<AwsBackupBackupPlanRuleCopyActionsDetails>& value) { SetCopyActions(value); return *this;}
 
     /**
-     * <p>An array of <code>CopyAction</code> objects, which contains the details of
-     * the copy operation. </p>
+     * <p>An array of <code>CopyAction</code> objects, each of which contains details
+     * of the copy operation. </p>
      */
     inline AwsBackupBackupPlanRuleDetails& WithCopyActions(Aws::Vector<AwsBackupBackupPlanRuleCopyActionsDetails>&& value) { SetCopyActions(std::move(value)); return *this;}
 
     /**
-     * <p>An array of <code>CopyAction</code> objects, which contains the details of
-     * the copy operation. </p>
+     * <p>An array of <code>CopyAction</code> objects, each of which contains details
+     * of the copy operation. </p>
      */
     inline AwsBackupBackupPlanRuleDetails& AddCopyActions(const AwsBackupBackupPlanRuleCopyActionsDetails& value) { m_copyActionsHasBeenSet = true; m_copyActions.push_back(value); return *this; }
 
     /**
-     * <p>An array of <code>CopyAction</code> objects, which contains the details of
-     * the copy operation. </p>
+     * <p>An array of <code>CopyAction</code> objects, each of which contains details
+     * of the copy operation. </p>
      */
     inline AwsBackupBackupPlanRuleDetails& AddCopyActions(AwsBackupBackupPlanRuleCopyActionsDetails&& value) { m_copyActionsHasBeenSet = true; m_copyActions.push_back(std::move(value)); return *this; }
 

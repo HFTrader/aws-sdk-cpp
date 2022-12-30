@@ -33,15 +33,15 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/cloudformation-2010-05-15/StackInstanceSummary">AWS
    * API Reference</a></p>
    */
-  class AWS_CLOUDFORMATION_API StackInstanceSummary
+  class StackInstanceSummary
   {
   public:
-    StackInstanceSummary();
-    StackInstanceSummary(const Aws::Utils::Xml::XmlNode& xmlNode);
-    StackInstanceSummary& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_CLOUDFORMATION_API StackInstanceSummary();
+    AWS_CLOUDFORMATION_API StackInstanceSummary(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_CLOUDFORMATION_API StackInstanceSummary& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
 
-    void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    void OutputToStream(Aws::OStream& oStream, const char* location) const;
+    AWS_CLOUDFORMATION_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+    AWS_CLOUDFORMATION_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
 
 
     /**
@@ -617,6 +617,47 @@ namespace Model
      */
     inline StackInstanceSummary& WithLastDriftCheckTimestamp(Aws::Utils::DateTime&& value) { SetLastDriftCheckTimestamp(std::move(value)); return *this;}
 
+
+    /**
+     * <p>The last unique ID of a StackSet operation performed on a stack instance.</p>
+     */
+    inline const Aws::String& GetLastOperationId() const{ return m_lastOperationId; }
+
+    /**
+     * <p>The last unique ID of a StackSet operation performed on a stack instance.</p>
+     */
+    inline bool LastOperationIdHasBeenSet() const { return m_lastOperationIdHasBeenSet; }
+
+    /**
+     * <p>The last unique ID of a StackSet operation performed on a stack instance.</p>
+     */
+    inline void SetLastOperationId(const Aws::String& value) { m_lastOperationIdHasBeenSet = true; m_lastOperationId = value; }
+
+    /**
+     * <p>The last unique ID of a StackSet operation performed on a stack instance.</p>
+     */
+    inline void SetLastOperationId(Aws::String&& value) { m_lastOperationIdHasBeenSet = true; m_lastOperationId = std::move(value); }
+
+    /**
+     * <p>The last unique ID of a StackSet operation performed on a stack instance.</p>
+     */
+    inline void SetLastOperationId(const char* value) { m_lastOperationIdHasBeenSet = true; m_lastOperationId.assign(value); }
+
+    /**
+     * <p>The last unique ID of a StackSet operation performed on a stack instance.</p>
+     */
+    inline StackInstanceSummary& WithLastOperationId(const Aws::String& value) { SetLastOperationId(value); return *this;}
+
+    /**
+     * <p>The last unique ID of a StackSet operation performed on a stack instance.</p>
+     */
+    inline StackInstanceSummary& WithLastOperationId(Aws::String&& value) { SetLastOperationId(std::move(value)); return *this;}
+
+    /**
+     * <p>The last unique ID of a StackSet operation performed on a stack instance.</p>
+     */
+    inline StackInstanceSummary& WithLastOperationId(const char* value) { SetLastOperationId(value); return *this;}
+
   private:
 
     Aws::String m_stackSetId;
@@ -648,6 +689,9 @@ namespace Model
 
     Aws::Utils::DateTime m_lastDriftCheckTimestamp;
     bool m_lastDriftCheckTimestampHasBeenSet = false;
+
+    Aws::String m_lastOperationId;
+    bool m_lastOperationIdHasBeenSet = false;
   };
 
 } // namespace Model

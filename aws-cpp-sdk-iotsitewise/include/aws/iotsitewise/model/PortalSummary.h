@@ -30,13 +30,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/iotsitewise-2019-12-02/PortalSummary">AWS
    * API Reference</a></p>
    */
-  class AWS_IOTSITEWISE_API PortalSummary
+  class PortalSummary
   {
   public:
-    PortalSummary();
-    PortalSummary(Aws::Utils::Json::JsonView jsonValue);
-    PortalSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_IOTSITEWISE_API PortalSummary();
+    AWS_IOTSITEWISE_API PortalSummary(Aws::Utils::Json::JsonView jsonValue);
+    AWS_IOTSITEWISE_API PortalSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_IOTSITEWISE_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -164,65 +164,65 @@ namespace Model
 
     /**
      * <p>The URL for the IoT SiteWise Monitor portal. You can use this URL to access
-     * portals that use Amazon Web Services SSO for authentication. For portals that
-     * use IAM for authentication, you must use the IoT SiteWise console to get a URL
-     * that you can use to access the portal.</p>
+     * portals that use IAM Identity Center for authentication. For portals that use
+     * IAM for authentication, you must use the IoT SiteWise console to get a URL that
+     * you can use to access the portal.</p>
      */
     inline const Aws::String& GetStartUrl() const{ return m_startUrl; }
 
     /**
      * <p>The URL for the IoT SiteWise Monitor portal. You can use this URL to access
-     * portals that use Amazon Web Services SSO for authentication. For portals that
-     * use IAM for authentication, you must use the IoT SiteWise console to get a URL
-     * that you can use to access the portal.</p>
+     * portals that use IAM Identity Center for authentication. For portals that use
+     * IAM for authentication, you must use the IoT SiteWise console to get a URL that
+     * you can use to access the portal.</p>
      */
     inline bool StartUrlHasBeenSet() const { return m_startUrlHasBeenSet; }
 
     /**
      * <p>The URL for the IoT SiteWise Monitor portal. You can use this URL to access
-     * portals that use Amazon Web Services SSO for authentication. For portals that
-     * use IAM for authentication, you must use the IoT SiteWise console to get a URL
-     * that you can use to access the portal.</p>
+     * portals that use IAM Identity Center for authentication. For portals that use
+     * IAM for authentication, you must use the IoT SiteWise console to get a URL that
+     * you can use to access the portal.</p>
      */
     inline void SetStartUrl(const Aws::String& value) { m_startUrlHasBeenSet = true; m_startUrl = value; }
 
     /**
      * <p>The URL for the IoT SiteWise Monitor portal. You can use this URL to access
-     * portals that use Amazon Web Services SSO for authentication. For portals that
-     * use IAM for authentication, you must use the IoT SiteWise console to get a URL
-     * that you can use to access the portal.</p>
+     * portals that use IAM Identity Center for authentication. For portals that use
+     * IAM for authentication, you must use the IoT SiteWise console to get a URL that
+     * you can use to access the portal.</p>
      */
     inline void SetStartUrl(Aws::String&& value) { m_startUrlHasBeenSet = true; m_startUrl = std::move(value); }
 
     /**
      * <p>The URL for the IoT SiteWise Monitor portal. You can use this URL to access
-     * portals that use Amazon Web Services SSO for authentication. For portals that
-     * use IAM for authentication, you must use the IoT SiteWise console to get a URL
-     * that you can use to access the portal.</p>
+     * portals that use IAM Identity Center for authentication. For portals that use
+     * IAM for authentication, you must use the IoT SiteWise console to get a URL that
+     * you can use to access the portal.</p>
      */
     inline void SetStartUrl(const char* value) { m_startUrlHasBeenSet = true; m_startUrl.assign(value); }
 
     /**
      * <p>The URL for the IoT SiteWise Monitor portal. You can use this URL to access
-     * portals that use Amazon Web Services SSO for authentication. For portals that
-     * use IAM for authentication, you must use the IoT SiteWise console to get a URL
-     * that you can use to access the portal.</p>
+     * portals that use IAM Identity Center for authentication. For portals that use
+     * IAM for authentication, you must use the IoT SiteWise console to get a URL that
+     * you can use to access the portal.</p>
      */
     inline PortalSummary& WithStartUrl(const Aws::String& value) { SetStartUrl(value); return *this;}
 
     /**
      * <p>The URL for the IoT SiteWise Monitor portal. You can use this URL to access
-     * portals that use Amazon Web Services SSO for authentication. For portals that
-     * use IAM for authentication, you must use the IoT SiteWise console to get a URL
-     * that you can use to access the portal.</p>
+     * portals that use IAM Identity Center for authentication. For portals that use
+     * IAM for authentication, you must use the IoT SiteWise console to get a URL that
+     * you can use to access the portal.</p>
      */
     inline PortalSummary& WithStartUrl(Aws::String&& value) { SetStartUrl(std::move(value)); return *this;}
 
     /**
      * <p>The URL for the IoT SiteWise Monitor portal. You can use this URL to access
-     * portals that use Amazon Web Services SSO for authentication. For portals that
-     * use IAM for authentication, you must use the IoT SiteWise console to get a URL
-     * that you can use to access the portal.</p>
+     * portals that use IAM Identity Center for authentication. For portals that use
+     * IAM for authentication, you must use the IoT SiteWise console to get a URL that
+     * you can use to access the portal.</p>
      */
     inline PortalSummary& WithStartUrl(const char* value) { SetStartUrl(value); return *this;}
 

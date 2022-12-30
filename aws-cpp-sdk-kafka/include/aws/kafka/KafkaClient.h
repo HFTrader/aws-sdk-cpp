@@ -7,6 +7,7 @@
 #include <aws/kafka/Kafka_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/kafka/KafkaServiceClientModel.h>
 
@@ -20,33 +21,60 @@ namespace Kafka
       
    *      
    */
-  class AWS_KAFKA_API KafkaClient : public Aws::Client::AWSJsonClient
+  class AWS_KAFKA_API KafkaClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<KafkaClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        KafkaClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        KafkaClient(const Aws::Kafka::KafkaClientConfiguration& clientConfiguration = Aws::Kafka::KafkaClientConfiguration(),
+                    std::shared_ptr<KafkaEndpointProviderBase> endpointProvider = Aws::MakeShared<KafkaEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         KafkaClient(const Aws::Auth::AWSCredentials& credentials,
-                    const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                    std::shared_ptr<KafkaEndpointProviderBase> endpointProvider = Aws::MakeShared<KafkaEndpointProvider>(ALLOCATION_TAG),
+                    const Aws::Kafka::KafkaClientConfiguration& clientConfiguration = Aws::Kafka::KafkaClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         KafkaClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                    const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                    std::shared_ptr<KafkaEndpointProviderBase> endpointProvider = Aws::MakeShared<KafkaEndpointProvider>(ALLOCATION_TAG),
+                    const Aws::Kafka::KafkaClientConfiguration& clientConfiguration = Aws::Kafka::KafkaClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        KafkaClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        KafkaClient(const Aws::Auth::AWSCredentials& credentials,
+                    const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        KafkaClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                    const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~KafkaClient();
-
 
         /**
          * 
@@ -748,14 +776,34 @@ namespace Kafka
          */
         virtual void UpdateSecurityAsync(const Model::UpdateSecurityRequest& request, const UpdateSecurityResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
+        /**
+         * Updates cluster broker volume size (or) sets cluster storage mode to
+         * TIERED.<p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/UpdateStorage">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::UpdateStorageOutcome UpdateStorage(const Model::UpdateStorageRequest& request) const;
+
+        /**
+         * A Callable wrapper for UpdateStorage that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::UpdateStorageOutcomeCallable UpdateStorageCallable(const Model::UpdateStorageRequest& request) const;
+
+        /**
+         * An Async wrapper for UpdateStorage that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void UpdateStorageAsync(const Model::UpdateStorageRequest& request, const UpdateStorageResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<KafkaEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<KafkaClient>;
+      void init(const KafkaClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      KafkaClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<KafkaEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Kafka

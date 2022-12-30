@@ -20,13 +20,15 @@ namespace Model
 
 OutpostConfigResponse::OutpostConfigResponse() : 
     m_outpostArnsHasBeenSet(false),
-    m_controlPlaneInstanceTypeHasBeenSet(false)
+    m_controlPlaneInstanceTypeHasBeenSet(false),
+    m_controlPlanePlacementHasBeenSet(false)
 {
 }
 
 OutpostConfigResponse::OutpostConfigResponse(JsonView jsonValue) : 
     m_outpostArnsHasBeenSet(false),
-    m_controlPlaneInstanceTypeHasBeenSet(false)
+    m_controlPlaneInstanceTypeHasBeenSet(false),
+    m_controlPlanePlacementHasBeenSet(false)
 {
   *this = jsonValue;
 }
@@ -35,7 +37,7 @@ OutpostConfigResponse& OutpostConfigResponse::operator =(JsonView jsonValue)
 {
   if(jsonValue.ValueExists("outpostArns"))
   {
-    Array<JsonView> outpostArnsJsonList = jsonValue.GetArray("outpostArns");
+    Aws::Utils::Array<JsonView> outpostArnsJsonList = jsonValue.GetArray("outpostArns");
     for(unsigned outpostArnsIndex = 0; outpostArnsIndex < outpostArnsJsonList.GetLength(); ++outpostArnsIndex)
     {
       m_outpostArns.push_back(outpostArnsJsonList[outpostArnsIndex].AsString());
@@ -50,6 +52,13 @@ OutpostConfigResponse& OutpostConfigResponse::operator =(JsonView jsonValue)
     m_controlPlaneInstanceTypeHasBeenSet = true;
   }
 
+  if(jsonValue.ValueExists("controlPlanePlacement"))
+  {
+    m_controlPlanePlacement = jsonValue.GetObject("controlPlanePlacement");
+
+    m_controlPlanePlacementHasBeenSet = true;
+  }
+
   return *this;
 }
 
@@ -59,7 +68,7 @@ JsonValue OutpostConfigResponse::Jsonize() const
 
   if(m_outpostArnsHasBeenSet)
   {
-   Array<JsonValue> outpostArnsJsonList(m_outpostArns.size());
+   Aws::Utils::Array<JsonValue> outpostArnsJsonList(m_outpostArns.size());
    for(unsigned outpostArnsIndex = 0; outpostArnsIndex < outpostArnsJsonList.GetLength(); ++outpostArnsIndex)
    {
      outpostArnsJsonList[outpostArnsIndex].AsString(m_outpostArns[outpostArnsIndex]);
@@ -71,6 +80,12 @@ JsonValue OutpostConfigResponse::Jsonize() const
   if(m_controlPlaneInstanceTypeHasBeenSet)
   {
    payload.WithString("controlPlaneInstanceType", m_controlPlaneInstanceType);
+
+  }
+
+  if(m_controlPlanePlacementHasBeenSet)
+  {
+   payload.WithObject("controlPlanePlacement", m_controlPlanePlacement.Jsonize());
 
   }
 

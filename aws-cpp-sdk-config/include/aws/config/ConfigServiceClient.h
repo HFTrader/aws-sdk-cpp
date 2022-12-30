@@ -7,6 +7,7 @@
 #include <aws/config/ConfigService_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/config/ConfigServiceServiceClientModel.h>
 
@@ -39,33 +40,60 @@ namespace ConfigService
    * href="https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html">What
    * Is Config</a> in the <i>Config Developer Guide</i>.</p>
    */
-  class AWS_CONFIGSERVICE_API ConfigServiceClient : public Aws::Client::AWSJsonClient
+  class AWS_CONFIGSERVICE_API ConfigServiceClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<ConfigServiceClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        ConfigServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        ConfigServiceClient(const Aws::ConfigService::ConfigServiceClientConfiguration& clientConfiguration = Aws::ConfigService::ConfigServiceClientConfiguration(),
+                            std::shared_ptr<ConfigServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<ConfigServiceEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         ConfigServiceClient(const Aws::Auth::AWSCredentials& credentials,
-                            const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                            std::shared_ptr<ConfigServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<ConfigServiceEndpointProvider>(ALLOCATION_TAG),
+                            const Aws::ConfigService::ConfigServiceClientConfiguration& clientConfiguration = Aws::ConfigService::ConfigServiceClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         ConfigServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                            const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                            std::shared_ptr<ConfigServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<ConfigServiceEndpointProvider>(ALLOCATION_TAG),
+                            const Aws::ConfigService::ConfigServiceClientConfiguration& clientConfiguration = Aws::ConfigService::ConfigServiceClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ConfigServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ConfigServiceClient(const Aws::Auth::AWSCredentials& credentials,
+                            const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        ConfigServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                            const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~ConfigServiceClient();
-
 
         /**
          * <p>Returns the current configuration items for resources that are present in
@@ -259,7 +287,7 @@ namespace ConfigService
 
         /**
          * <p>Deletes the specified organization Config rule and all of its evaluation
-         * results from all member accounts in that organization. </p> <p>Only a master
+         * results from all member accounts in that organization. </p> <p>Only a management
          * account and a delegated administrator account can delete an organization Config
          * rule. When calling this API with a delegated administrator, you must ensure
          * Organizations <code>ListDelegatedAdministrator</code> permissions are added.</p>
@@ -284,8 +312,8 @@ namespace ConfigService
         /**
          * <p>Deletes the specified organization conformance pack and all of the Config
          * rules and remediation actions from all member accounts in that organization.
-         * </p> <p> Only a master account or a delegated administrator account can delete
-         * an organization conformance pack. When calling this API with a delegated
+         * </p> <p> Only a management account or a delegated administrator account can
+         * delete an organization conformance pack. When calling this API with a delegated
          * administrator, you must ensure Organizations
          * <code>ListDelegatedAdministrator</code> permissions are added.</p> <p>Config
          * sets the state of a conformance pack to DELETE_IN_PROGRESS until the deletion is
@@ -1133,8 +1161,8 @@ namespace ConfigService
         /**
          * <p>Returns the evaluation results for the specified Amazon Web Services
          * resource. The results indicate which Config rules were used to evaluate the
-         * resource, when each rule was last used, and whether the resource complies with
-         * each rule.</p><p><h3>See Also:</h3>   <a
+         * resource, when each rule was last invoked, and whether the resource complies
+         * with each rule.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/GetComplianceDetailsByResource">AWS
          * API Reference</a></p>
          */
@@ -1365,6 +1393,28 @@ namespace ConfigService
         virtual void GetResourceConfigHistoryAsync(const Model::GetResourceConfigHistoryRequest& request, const GetResourceConfigHistoryResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Returns a summary of resource evaluation for the specified resource
+         * evaluation ID from the proactive rules that were run. The results indicate which
+         * evaluation context was used to evaluate the rules, which resource details were
+         * evaluated, the evaluation mode that was run, and whether the resource details
+         * comply with the configuration of the proactive rules. </p><p><h3>See Also:</h3> 
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/GetResourceEvaluationSummary">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetResourceEvaluationSummaryOutcome GetResourceEvaluationSummary(const Model::GetResourceEvaluationSummaryRequest& request) const;
+
+        /**
+         * A Callable wrapper for GetResourceEvaluationSummary that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetResourceEvaluationSummaryOutcomeCallable GetResourceEvaluationSummaryCallable(const Model::GetResourceEvaluationSummaryRequest& request) const;
+
+        /**
+         * An Async wrapper for GetResourceEvaluationSummary that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetResourceEvaluationSummaryAsync(const Model::GetResourceEvaluationSummaryRequest& request, const GetResourceEvaluationSummaryResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Returns the details of a specific stored query.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/GetStoredQuery">AWS
          * API Reference</a></p>
@@ -1412,7 +1462,7 @@ namespace ConfigService
          * the percentage of the number of compliant rule-resource combinations in a
          * conformance pack compared to the number of total possible rule-resource
          * combinations in the conformance pack. This metric provides you with a high-level
-         * view of the compliance state of your conformance packs, and can be used to
+         * view of the compliance state of your conformance packs. You can use it to
          * identify, investigate, and understand the level of compliance in your
          * conformance packs.</p>  <p>Conformance packs with no evaluation results
          * will have a compliance score of <code>INSUFFICIENT_DATA</code>.</p>
@@ -1459,6 +1509,24 @@ namespace ConfigService
          * An Async wrapper for ListDiscoveredResources that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void ListDiscoveredResourcesAsync(const Model::ListDiscoveredResourcesRequest& request, const ListDiscoveredResourcesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Returns a list of proactive resource evaluations.</p><p><h3>See Also:</h3>  
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/ListResourceEvaluations">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListResourceEvaluationsOutcome ListResourceEvaluations(const Model::ListResourceEvaluationsRequest& request) const;
+
+        /**
+         * A Callable wrapper for ListResourceEvaluations that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListResourceEvaluationsOutcomeCallable ListResourceEvaluationsCallable(const Model::ListResourceEvaluationsRequest& request) const;
+
+        /**
+         * An Async wrapper for ListResourceEvaluations that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListResourceEvaluationsAsync(const Model::ListResourceEvaluationsRequest& request, const ListResourceEvaluationsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Lists the stored queries for a single Amazon Web Services account and a
@@ -1627,16 +1695,15 @@ namespace ConfigService
         /**
          * <p>Creates or updates a conformance pack. A conformance pack is a collection of
          * Config rules that can be easily deployed in an account and a region and across
-         * Amazon Web Services Organization. For information on how many conformance packs
-         * you can have per account, see <a
+         * an organization. For information on how many conformance packs you can have per
+         * account, see <a
          * href="https://docs.aws.amazon.com/config/latest/developerguide/configlimits.html">
          * <b>Service Limits</b> </a> in the Config Developer Guide.</p> <p>This API
          * creates a service-linked role <code>AWSServiceRoleForConfigConforms</code> in
          * your account. The service-linked role is created only when the role does not
-         * exist in your account. </p>  <p>You must specify one and only one of
-         * the<code>TemplateS3Uri</code>, <code>TemplateBody</code> or
-         * <code>TemplateSSMDocumentDetails</code> parameters.</p> <p><h3>See
-         * Also:</h3>   <a
+         * exist in your account. </p>  <p>You must specify only one of the follow
+         * parameters: <code>TemplateS3Uri</code>, <code>TemplateBody</code> or
+         * <code>TemplateSSMDocumentDetails</code>.</p> <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/PutConformancePack">AWS
          * API Reference</a></p>
          */
@@ -1723,20 +1790,20 @@ namespace ConfigService
          * <a
          * href="https://docs.aws.amazon.com/config/latest/developerguide/configlimits.html">
          * <b>Service Limits</b> </a> in the <i>Config Developer Guide</i>.</p> <p> Only a
-         * master account and a delegated administrator can create or update an
+         * management account and a delegated administrator can create or update an
          * organization Config rule. When calling this API with a delegated administrator,
          * you must ensure Organizations <code>ListDelegatedAdministrator</code>
          * permissions are added. An organization can have up to 3 delegated
          * administrators.</p> <p>This API enables organization service access through the
          * <code>EnableAWSServiceAccess</code> action and creates a service-linked role
-         * <code>AWSServiceRoleForConfigMultiAccountSetup</code> in the master or delegated
-         * administrator account of your organization. The service-linked role is created
-         * only when the role does not exist in the caller account. Config verifies the
-         * existence of role with <code>GetRole</code> action.</p> <p>To use this API with
-         * delegated administrator, register a delegated administrator by calling Amazon
-         * Web Services Organization <code>register-delegated-administrator</code> for
-         * <code>config-multiaccountsetup.amazonaws.com</code>. </p> <p>There are two types
-         * of rules: Config Custom Rules and Config Managed Rules. You can use
+         * <code>AWSServiceRoleForConfigMultiAccountSetup</code> in the management or
+         * delegated administrator account of your organization. The service-linked role is
+         * created only when the role does not exist in the caller account. Config verifies
+         * the existence of role with <code>GetRole</code> action.</p> <p>To use this API
+         * with delegated administrator, register a delegated administrator by calling
+         * Amazon Web Services Organization <code>register-delegated-administrator</code>
+         * for <code>config-multiaccountsetup.amazonaws.com</code>. </p> <p>There are two
+         * types of rules: Config Custom Rules and Config Managed Rules. You can use
          * <code>PutOrganizationConfigRule</code> to create both Config custom rules and
          * Config managed rules.</p> <p>Custom rules are rules that you can create using
          * either Guard or Lambda functions. Guard (<a
@@ -1744,7 +1811,7 @@ namespace ConfigService
          * Repository</a>) is a policy-as-code language that allows you to write policies
          * that are enforced by Config Custom Policy rules. Lambda uses custom code that
          * you upload to evaluate a custom rule. If you are adding a new Custom Lambda
-         * rule, you first need to create an Lambda function in the master account or a
+         * rule, you first need to create an Lambda function in the management account or a
          * delegated administrator that the rule invokes to evaluate your resources. You
          * also need to create an IAM role in the managed account that can be assumed by
          * the Lambda function. When you use <code>PutOrganizationConfigRule</code> to add
@@ -1780,18 +1847,18 @@ namespace ConfigService
          * Organization. For information on how many organization conformance packs and how
          * many Config rules you can have per account, see <a
          * href="https://docs.aws.amazon.com/config/latest/developerguide/configlimits.html">
-         * <b>Service Limits</b> </a> in the Config Developer Guide.</p> <p>Only a master
-         * account and a delegated administrator can call this API. When calling this API
-         * with a delegated administrator, you must ensure Organizations
+         * <b>Service Limits</b> </a> in the Config Developer Guide.</p> <p>Only a
+         * management account and a delegated administrator can call this API. When calling
+         * this API with a delegated administrator, you must ensure Organizations
          * <code>ListDelegatedAdministrator</code> permissions are added. An organization
          * can have up to 3 delegated administrators.</p> <p>This API enables organization
          * service access for <code>config-multiaccountsetup.amazonaws.com</code> through
          * the <code>EnableAWSServiceAccess</code> action and creates a service-linked role
-         * <code>AWSServiceRoleForConfigMultiAccountSetup</code> in the master or delegated
-         * administrator account of your organization. The service-linked role is created
-         * only when the role does not exist in the caller account. To use this API with
-         * delegated administrator, register a delegated administrator by calling Amazon
-         * Web Services Organization <code>register-delegate-admin</code> for
+         * <code>AWSServiceRoleForConfigMultiAccountSetup</code> in the management or
+         * delegated administrator account of your organization. The service-linked role is
+         * created only when the role does not exist in the caller account. To use this API
+         * with delegated administrator, register a delegated administrator by calling
+         * Amazon Web Services Organization <code>register-delegate-admin</code> for
          * <code>config-multiaccountsetup.amazonaws.com</code>.</p>  <p>Prerequisite:
          * Ensure you call <code>EnableAllFeatures</code> API to enable all features in an
          * organization.</p> <p>You must specify either the <code>TemplateS3Uri</code> or
@@ -1856,8 +1923,9 @@ namespace ConfigService
          * exception for a specific resource with a specific Config rule. </p> 
          * <p>Config generates a remediation exception when a problem occurs executing a
          * remediation action to a specific resource. Remediation exceptions blocks
-         * auto-remediation until the exception is cleared.</p> <p><h3>See
-         * Also:</h3>   <a
+         * auto-remediation until the exception is cleared.</p>   <p>To place
+         * an exception on an Amazon Web Services resource, ensure remediation is set as
+         * manual remediation.</p> <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/PutRemediationExceptions">AWS
          * API Reference</a></p>
          */
@@ -2082,6 +2150,30 @@ namespace ConfigService
         virtual void StartRemediationExecutionAsync(const Model::StartRemediationExecutionRequest& request, const StartRemediationExecutionResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Runs an on-demand evaluation for the specified resource to determine whether
+         * the resource details will comply with configured Config rules. You can also use
+         * it for evaluation purposes. Config recommends using an evaluation context. It
+         * runs an execution against the resource details with all of the Config rules in
+         * your account that match with the specified proactive mode and resource type.</p>
+         *  <p>Ensure you have the <code>cloudformation:DescribeType</code> role
+         * setup to validate the resource type schema. </p> <p><h3>See Also:</h3>  
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/StartResourceEvaluation">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::StartResourceEvaluationOutcome StartResourceEvaluation(const Model::StartResourceEvaluationRequest& request) const;
+
+        /**
+         * A Callable wrapper for StartResourceEvaluation that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::StartResourceEvaluationOutcomeCallable StartResourceEvaluationCallable(const Model::StartResourceEvaluationRequest& request) const;
+
+        /**
+         * An Async wrapper for StartResourceEvaluation that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void StartResourceEvaluationAsync(const Model::StartResourceEvaluationRequest& request, const StartResourceEvaluationResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Stops recording configurations of the Amazon Web Services resources you have
          * selected to record in your Amazon Web Services account.</p><p><h3>See Also:</h3>
          * <a
@@ -2139,12 +2231,14 @@ namespace ConfigService
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<ConfigServiceEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<ConfigServiceClient>;
+      void init(const ConfigServiceClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      ConfigServiceClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<ConfigServiceEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace ConfigService

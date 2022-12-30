@@ -23,10 +23,10 @@ namespace Model
 
   /**
    */
-  class AWS_CONNECT_API StartChatContactRequest : public ConnectRequest
+  class StartChatContactRequest : public ConnectRequest
   {
   public:
-    StartChatContactRequest();
+    AWS_CONNECT_API StartChatContactRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -34,7 +34,7 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "StartChatContact"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_CONNECT_API Aws::String SerializePayload() const override;
 
 
     /**
@@ -357,49 +357,73 @@ namespace Model
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request.</p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>.</p>
      */
     inline const Aws::String& GetClientToken() const{ return m_clientToken; }
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request.</p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>.</p>
      */
     inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request.</p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>.</p>
      */
     inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request.</p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>.</p>
      */
     inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request.</p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>.</p>
      */
     inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request.</p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>.</p>
      */
     inline StartChatContactRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request.</p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>.</p>
      */
     inline StartChatContactRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request.</p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>.</p>
      */
     inline StartChatContactRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
 
@@ -434,56 +458,92 @@ namespace Model
 
 
     /**
-     * <p>The supported chat message content types. Content types can be text/plain or
-     * both text/plain and text/markdown.</p>
+     * <p>The supported chat message content types. Content types must always contain
+     * <code>text/plain</code>. You can then put any other supported type in the list.
+     * For example, all the following lists are valid because they contain
+     * <code>text/plain</code>: <code>[text/plain, text/markdown,
+     * application/json]</code>, <code>[text/markdown, text/plain]</code>,
+     * <code>[text/plain, application/json]</code>.</p>
      */
     inline const Aws::Vector<Aws::String>& GetSupportedMessagingContentTypes() const{ return m_supportedMessagingContentTypes; }
 
     /**
-     * <p>The supported chat message content types. Content types can be text/plain or
-     * both text/plain and text/markdown.</p>
+     * <p>The supported chat message content types. Content types must always contain
+     * <code>text/plain</code>. You can then put any other supported type in the list.
+     * For example, all the following lists are valid because they contain
+     * <code>text/plain</code>: <code>[text/plain, text/markdown,
+     * application/json]</code>, <code>[text/markdown, text/plain]</code>,
+     * <code>[text/plain, application/json]</code>.</p>
      */
     inline bool SupportedMessagingContentTypesHasBeenSet() const { return m_supportedMessagingContentTypesHasBeenSet; }
 
     /**
-     * <p>The supported chat message content types. Content types can be text/plain or
-     * both text/plain and text/markdown.</p>
+     * <p>The supported chat message content types. Content types must always contain
+     * <code>text/plain</code>. You can then put any other supported type in the list.
+     * For example, all the following lists are valid because they contain
+     * <code>text/plain</code>: <code>[text/plain, text/markdown,
+     * application/json]</code>, <code>[text/markdown, text/plain]</code>,
+     * <code>[text/plain, application/json]</code>.</p>
      */
     inline void SetSupportedMessagingContentTypes(const Aws::Vector<Aws::String>& value) { m_supportedMessagingContentTypesHasBeenSet = true; m_supportedMessagingContentTypes = value; }
 
     /**
-     * <p>The supported chat message content types. Content types can be text/plain or
-     * both text/plain and text/markdown.</p>
+     * <p>The supported chat message content types. Content types must always contain
+     * <code>text/plain</code>. You can then put any other supported type in the list.
+     * For example, all the following lists are valid because they contain
+     * <code>text/plain</code>: <code>[text/plain, text/markdown,
+     * application/json]</code>, <code>[text/markdown, text/plain]</code>,
+     * <code>[text/plain, application/json]</code>.</p>
      */
     inline void SetSupportedMessagingContentTypes(Aws::Vector<Aws::String>&& value) { m_supportedMessagingContentTypesHasBeenSet = true; m_supportedMessagingContentTypes = std::move(value); }
 
     /**
-     * <p>The supported chat message content types. Content types can be text/plain or
-     * both text/plain and text/markdown.</p>
+     * <p>The supported chat message content types. Content types must always contain
+     * <code>text/plain</code>. You can then put any other supported type in the list.
+     * For example, all the following lists are valid because they contain
+     * <code>text/plain</code>: <code>[text/plain, text/markdown,
+     * application/json]</code>, <code>[text/markdown, text/plain]</code>,
+     * <code>[text/plain, application/json]</code>.</p>
      */
     inline StartChatContactRequest& WithSupportedMessagingContentTypes(const Aws::Vector<Aws::String>& value) { SetSupportedMessagingContentTypes(value); return *this;}
 
     /**
-     * <p>The supported chat message content types. Content types can be text/plain or
-     * both text/plain and text/markdown.</p>
+     * <p>The supported chat message content types. Content types must always contain
+     * <code>text/plain</code>. You can then put any other supported type in the list.
+     * For example, all the following lists are valid because they contain
+     * <code>text/plain</code>: <code>[text/plain, text/markdown,
+     * application/json]</code>, <code>[text/markdown, text/plain]</code>,
+     * <code>[text/plain, application/json]</code>.</p>
      */
     inline StartChatContactRequest& WithSupportedMessagingContentTypes(Aws::Vector<Aws::String>&& value) { SetSupportedMessagingContentTypes(std::move(value)); return *this;}
 
     /**
-     * <p>The supported chat message content types. Content types can be text/plain or
-     * both text/plain and text/markdown.</p>
+     * <p>The supported chat message content types. Content types must always contain
+     * <code>text/plain</code>. You can then put any other supported type in the list.
+     * For example, all the following lists are valid because they contain
+     * <code>text/plain</code>: <code>[text/plain, text/markdown,
+     * application/json]</code>, <code>[text/markdown, text/plain]</code>,
+     * <code>[text/plain, application/json]</code>.</p>
      */
     inline StartChatContactRequest& AddSupportedMessagingContentTypes(const Aws::String& value) { m_supportedMessagingContentTypesHasBeenSet = true; m_supportedMessagingContentTypes.push_back(value); return *this; }
 
     /**
-     * <p>The supported chat message content types. Content types can be text/plain or
-     * both text/plain and text/markdown.</p>
+     * <p>The supported chat message content types. Content types must always contain
+     * <code>text/plain</code>. You can then put any other supported type in the list.
+     * For example, all the following lists are valid because they contain
+     * <code>text/plain</code>: <code>[text/plain, text/markdown,
+     * application/json]</code>, <code>[text/markdown, text/plain]</code>,
+     * <code>[text/plain, application/json]</code>.</p>
      */
     inline StartChatContactRequest& AddSupportedMessagingContentTypes(Aws::String&& value) { m_supportedMessagingContentTypesHasBeenSet = true; m_supportedMessagingContentTypes.push_back(std::move(value)); return *this; }
 
     /**
-     * <p>The supported chat message content types. Content types can be text/plain or
-     * both text/plain and text/markdown.</p>
+     * <p>The supported chat message content types. Content types must always contain
+     * <code>text/plain</code>. You can then put any other supported type in the list.
+     * For example, all the following lists are valid because they contain
+     * <code>text/plain</code>: <code>[text/plain, text/markdown,
+     * application/json]</code>, <code>[text/markdown, text/plain]</code>,
+     * <code>[text/plain, application/json]</code>.</p>
      */
     inline StartChatContactRequest& AddSupportedMessagingContentTypes(const char* value) { m_supportedMessagingContentTypesHasBeenSet = true; m_supportedMessagingContentTypes.push_back(value); return *this; }
 

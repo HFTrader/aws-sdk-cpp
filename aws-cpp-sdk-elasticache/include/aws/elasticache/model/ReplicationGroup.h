@@ -15,6 +15,9 @@
 #include <aws/elasticache/model/Endpoint.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/elasticache/model/DataTieringStatus.h>
+#include <aws/elasticache/model/NetworkType.h>
+#include <aws/elasticache/model/IpDiscovery.h>
+#include <aws/elasticache/model/TransitEncryptionMode.h>
 #include <aws/elasticache/model/NodeGroup.h>
 #include <aws/elasticache/model/LogDeliveryConfiguration.h>
 #include <utility>
@@ -39,15 +42,15 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/ReplicationGroup">AWS
    * API Reference</a></p>
    */
-  class AWS_ELASTICACHE_API ReplicationGroup
+  class ReplicationGroup
   {
   public:
-    ReplicationGroup();
-    ReplicationGroup(const Aws::Utils::Xml::XmlNode& xmlNode);
-    ReplicationGroup& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_ELASTICACHE_API ReplicationGroup();
+    AWS_ELASTICACHE_API ReplicationGroup(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_ELASTICACHE_API ReplicationGroup& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
 
-    void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    void OutputToStream(Aws::OStream& oStream, const char* location) const;
+    AWS_ELASTICACHE_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+    AWS_ELASTICACHE_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
 
 
     /**
@@ -805,45 +808,33 @@ namespace Model
 
     /**
      * <p>A flag that enables in-transit encryption when set to <code>true</code>.</p>
-     * <p>You cannot modify the value of <code>TransitEncryptionEnabled</code> after
-     * the cluster is created. To enable in-transit encryption on a cluster you must
-     * set <code>TransitEncryptionEnabled</code> to <code>true</code> when you create a
-     * cluster.</p> <p> <b>Required:</b> Only available when creating a replication
-     * group in an Amazon VPC using redis version <code>3.2.6</code>, <code>4.x</code>
-     * or later.</p> <p>Default: <code>false</code> </p>
+     * <p> <b>Required:</b> Only available when creating a replication group in an
+     * Amazon VPC using redis version <code>3.2.6</code>, <code>4.x</code> or
+     * later.</p> <p>Default: <code>false</code> </p>
      */
     inline bool GetTransitEncryptionEnabled() const{ return m_transitEncryptionEnabled; }
 
     /**
      * <p>A flag that enables in-transit encryption when set to <code>true</code>.</p>
-     * <p>You cannot modify the value of <code>TransitEncryptionEnabled</code> after
-     * the cluster is created. To enable in-transit encryption on a cluster you must
-     * set <code>TransitEncryptionEnabled</code> to <code>true</code> when you create a
-     * cluster.</p> <p> <b>Required:</b> Only available when creating a replication
-     * group in an Amazon VPC using redis version <code>3.2.6</code>, <code>4.x</code>
-     * or later.</p> <p>Default: <code>false</code> </p>
+     * <p> <b>Required:</b> Only available when creating a replication group in an
+     * Amazon VPC using redis version <code>3.2.6</code>, <code>4.x</code> or
+     * later.</p> <p>Default: <code>false</code> </p>
      */
     inline bool TransitEncryptionEnabledHasBeenSet() const { return m_transitEncryptionEnabledHasBeenSet; }
 
     /**
      * <p>A flag that enables in-transit encryption when set to <code>true</code>.</p>
-     * <p>You cannot modify the value of <code>TransitEncryptionEnabled</code> after
-     * the cluster is created. To enable in-transit encryption on a cluster you must
-     * set <code>TransitEncryptionEnabled</code> to <code>true</code> when you create a
-     * cluster.</p> <p> <b>Required:</b> Only available when creating a replication
-     * group in an Amazon VPC using redis version <code>3.2.6</code>, <code>4.x</code>
-     * or later.</p> <p>Default: <code>false</code> </p>
+     * <p> <b>Required:</b> Only available when creating a replication group in an
+     * Amazon VPC using redis version <code>3.2.6</code>, <code>4.x</code> or
+     * later.</p> <p>Default: <code>false</code> </p>
      */
     inline void SetTransitEncryptionEnabled(bool value) { m_transitEncryptionEnabledHasBeenSet = true; m_transitEncryptionEnabled = value; }
 
     /**
      * <p>A flag that enables in-transit encryption when set to <code>true</code>.</p>
-     * <p>You cannot modify the value of <code>TransitEncryptionEnabled</code> after
-     * the cluster is created. To enable in-transit encryption on a cluster you must
-     * set <code>TransitEncryptionEnabled</code> to <code>true</code> when you create a
-     * cluster.</p> <p> <b>Required:</b> Only available when creating a replication
-     * group in an Amazon VPC using redis version <code>3.2.6</code>, <code>4.x</code>
-     * or later.</p> <p>Default: <code>false</code> </p>
+     * <p> <b>Required:</b> Only available when creating a replication group in an
+     * Amazon VPC using redis version <code>3.2.6</code>, <code>4.x</code> or
+     * later.</p> <p>Default: <code>false</code> </p>
      */
     inline ReplicationGroup& WithTransitEncryptionEnabled(bool value) { SetTransitEncryptionEnabled(value); return *this;}
 
@@ -1222,6 +1213,147 @@ namespace Model
      */
     inline ReplicationGroup& WithAutoMinorVersionUpgrade(bool value) { SetAutoMinorVersionUpgrade(value); return *this;}
 
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>.</p>
+     */
+    inline const NetworkType& GetNetworkType() const{ return m_networkType; }
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>.</p>
+     */
+    inline bool NetworkTypeHasBeenSet() const { return m_networkTypeHasBeenSet; }
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>.</p>
+     */
+    inline void SetNetworkType(const NetworkType& value) { m_networkTypeHasBeenSet = true; m_networkType = value; }
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>.</p>
+     */
+    inline void SetNetworkType(NetworkType&& value) { m_networkTypeHasBeenSet = true; m_networkType = std::move(value); }
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>.</p>
+     */
+    inline ReplicationGroup& WithNetworkType(const NetworkType& value) { SetNetworkType(value); return *this;}
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>.</p>
+     */
+    inline ReplicationGroup& WithNetworkType(NetworkType&& value) { SetNetworkType(std::move(value)); return *this;}
+
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline const IpDiscovery& GetIpDiscovery() const{ return m_ipDiscovery; }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline bool IpDiscoveryHasBeenSet() const { return m_ipDiscoveryHasBeenSet; }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline void SetIpDiscovery(const IpDiscovery& value) { m_ipDiscoveryHasBeenSet = true; m_ipDiscovery = value; }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline void SetIpDiscovery(IpDiscovery&& value) { m_ipDiscoveryHasBeenSet = true; m_ipDiscovery = std::move(value); }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline ReplicationGroup& WithIpDiscovery(const IpDiscovery& value) { SetIpDiscovery(value); return *this;}
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline ReplicationGroup& WithIpDiscovery(IpDiscovery&& value) { SetIpDiscovery(std::move(value)); return *this;}
+
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p>
+     */
+    inline const TransitEncryptionMode& GetTransitEncryptionMode() const{ return m_transitEncryptionMode; }
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p>
+     */
+    inline bool TransitEncryptionModeHasBeenSet() const { return m_transitEncryptionModeHasBeenSet; }
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p>
+     */
+    inline void SetTransitEncryptionMode(const TransitEncryptionMode& value) { m_transitEncryptionModeHasBeenSet = true; m_transitEncryptionMode = value; }
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p>
+     */
+    inline void SetTransitEncryptionMode(TransitEncryptionMode&& value) { m_transitEncryptionModeHasBeenSet = true; m_transitEncryptionMode = std::move(value); }
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p>
+     */
+    inline ReplicationGroup& WithTransitEncryptionMode(const TransitEncryptionMode& value) { SetTransitEncryptionMode(value); return *this;}
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p>
+     */
+    inline ReplicationGroup& WithTransitEncryptionMode(TransitEncryptionMode&& value) { SetTransitEncryptionMode(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_replicationGroupId;
@@ -1304,6 +1436,15 @@ namespace Model
 
     bool m_autoMinorVersionUpgrade;
     bool m_autoMinorVersionUpgradeHasBeenSet = false;
+
+    NetworkType m_networkType;
+    bool m_networkTypeHasBeenSet = false;
+
+    IpDiscovery m_ipDiscovery;
+    bool m_ipDiscoveryHasBeenSet = false;
+
+    TransitEncryptionMode m_transitEncryptionMode;
+    bool m_transitEncryptionModeHasBeenSet = false;
   };
 
 } // namespace Model

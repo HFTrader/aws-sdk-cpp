@@ -7,6 +7,7 @@
 #include <aws/memorydb/MemoryDB_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/memorydb/MemoryDBServiceClientModel.h>
 
@@ -22,33 +23,60 @@ namespace MemoryDB
    * compatible with Redis, a popular open source data store, enabling you to
    * leverage Redis’ flexible and friendly data structures, APIs, and commands.</p>
    */
-  class AWS_MEMORYDB_API MemoryDBClient : public Aws::Client::AWSJsonClient
+  class AWS_MEMORYDB_API MemoryDBClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<MemoryDBClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        MemoryDBClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        MemoryDBClient(const Aws::MemoryDB::MemoryDBClientConfiguration& clientConfiguration = Aws::MemoryDB::MemoryDBClientConfiguration(),
+                       std::shared_ptr<MemoryDBEndpointProviderBase> endpointProvider = Aws::MakeShared<MemoryDBEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         MemoryDBClient(const Aws::Auth::AWSCredentials& credentials,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<MemoryDBEndpointProviderBase> endpointProvider = Aws::MakeShared<MemoryDBEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::MemoryDB::MemoryDBClientConfiguration& clientConfiguration = Aws::MemoryDB::MemoryDBClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         MemoryDBClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<MemoryDBEndpointProviderBase> endpointProvider = Aws::MakeShared<MemoryDBEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::MemoryDB::MemoryDBClientConfiguration& clientConfiguration = Aws::MemoryDB::MemoryDBClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        MemoryDBClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        MemoryDBClient(const Aws::Auth::AWSCredentials& credentials,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        MemoryDBClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~MemoryDBClient();
-
 
         /**
          * <p>Apply the service update to a list of clusters supplied. For more information
@@ -431,6 +459,41 @@ namespace MemoryDB
         virtual void DescribeParametersAsync(const Model::DescribeParametersRequest& request, const DescribeParametersResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Returns information about reserved nodes for this account, or about a
+         * specified reserved node.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DescribeReservedNodes">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeReservedNodesOutcome DescribeReservedNodes(const Model::DescribeReservedNodesRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeReservedNodes that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeReservedNodesOutcomeCallable DescribeReservedNodesCallable(const Model::DescribeReservedNodesRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeReservedNodes that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeReservedNodesAsync(const Model::DescribeReservedNodesRequest& request, const DescribeReservedNodesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Lists available reserved node offerings.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DescribeReservedNodesOfferings">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeReservedNodesOfferingsOutcome DescribeReservedNodesOfferings(const Model::DescribeReservedNodesOfferingsRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeReservedNodesOfferings that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeReservedNodesOfferingsOutcomeCallable DescribeReservedNodesOfferingsCallable(const Model::DescribeReservedNodesOfferingsRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeReservedNodesOfferings that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeReservedNodesOfferingsAsync(const Model::DescribeReservedNodesOfferingsRequest& request, const DescribeReservedNodesOfferingsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Returns details of the service updates</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DescribeServiceUpdates">AWS
          * API Reference</a></p>
@@ -504,7 +567,11 @@ namespace MemoryDB
         virtual void DescribeUsersAsync(const Model::DescribeUsersRequest& request, const DescribeUsersResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Used to failover a shard</p><p><h3>See Also:</h3>   <a
+         * <p>Used to failover a shard. This API is designed for testing the behavior of
+         * your application in case of MemoryDB failover. It is not designed to be used as
+         * a production-level tool for initiating a failover to overcome a problem you may
+         * have with the cluster. Moreover, in certain conditions such as large scale
+         * operational events, Amazon may block this API. </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/FailoverShard">AWS
          * API Reference</a></p>
          */
@@ -560,6 +627,24 @@ namespace MemoryDB
          * An Async wrapper for ListTags that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void ListTagsAsync(const Model::ListTagsRequest& request, const ListTagsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Allows you to purchase a reserved node offering. Reserved nodes are not
+         * eligible for cancellation and are non-refundable.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/PurchaseReservedNodesOffering">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::PurchaseReservedNodesOfferingOutcome PurchaseReservedNodesOffering(const Model::PurchaseReservedNodesOfferingRequest& request) const;
+
+        /**
+         * A Callable wrapper for PurchaseReservedNodesOffering that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::PurchaseReservedNodesOfferingOutcomeCallable PurchaseReservedNodesOfferingCallable(const Model::PurchaseReservedNodesOfferingRequest& request) const;
+
+        /**
+         * An Async wrapper for PurchaseReservedNodesOffering that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void PurchaseReservedNodesOfferingAsync(const Model::PurchaseReservedNodesOfferingRequest& request, const PurchaseReservedNodesOfferingResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Modifies the parameters of a parameter group to the engine or system default
@@ -721,12 +806,14 @@ namespace MemoryDB
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<MemoryDBEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<MemoryDBClient>;
+      void init(const MemoryDBClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      MemoryDBClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<MemoryDBEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace MemoryDB

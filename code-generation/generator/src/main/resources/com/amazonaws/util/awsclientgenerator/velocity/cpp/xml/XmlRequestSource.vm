@@ -4,8 +4,10 @@
 #set($rootNamespace = $serviceModel.namespace)
 #set($serviceNamespace = $metadata.namespace)
 \#include <aws/${metadata.projectName}/model/${typeInfo.className}.h>
+#if(!$serviceModel.endpointRules)
 #if($operation.hasAccountIdInArn || $operation.hasOutpostIdInArn)
 \#include <aws/${metadata.projectName}/${metadata.classNamePrefix}ARN.h>
+#end
 #end
 \#include <aws/core/utils/xml/XmlSerializer.h>
 \#include <aws/core/utils/memory/stl/AWSStringStream.h>
@@ -117,4 +119,5 @@ Aws::Http::HeaderValueCollection ${typeInfo.className}::GetRequestSpecificHeader
   return headers;
 }
 #end
+#parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/common/model/ModelGetEndpointRulesContextParamDefinition.vm")
 #parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/ModelClassChecksumMembers.vm")

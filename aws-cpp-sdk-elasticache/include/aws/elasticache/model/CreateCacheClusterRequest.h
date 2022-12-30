@@ -10,6 +10,8 @@
 #include <aws/elasticache/model/AZMode.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/elasticache/model/OutpostMode.h>
+#include <aws/elasticache/model/NetworkType.h>
+#include <aws/elasticache/model/IpDiscovery.h>
 #include <aws/elasticache/model/Tag.h>
 #include <aws/elasticache/model/LogDeliveryConfigurationRequest.h>
 #include <utility>
@@ -27,10 +29,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/CreateCacheClusterMessage">AWS
    * API Reference</a></p>
    */
-  class AWS_ELASTICACHE_API CreateCacheClusterRequest : public ElastiCacheRequest
+  class CreateCacheClusterRequest : public ElastiCacheRequest
   {
   public:
-    CreateCacheClusterRequest();
+    AWS_ELASTICACHE_API CreateCacheClusterRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -38,10 +40,10 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "CreateCacheCluster"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
 
   protected:
-    void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+    AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
 
   public:
 
@@ -2246,44 +2248,136 @@ namespace Model
 
 
     /**
-     * <p>A flag that enables in-transit encryption when set to true. You cannot modify
-     * the value of <code>TransitEncryptionEnabled</code> after the cluster is created.
-     * To enable in-transit encryption on a cluster you must set
-     * <code>TransitEncryptionEnabled</code> to true when you create a cluster. </p>
-     * <p> <b>Required:</b> Only available when creating a cache cluster in an Amazon
-     * VPC using Memcached version <code>1.6.12</code> or later.</p>
+     * <p>A flag that enables in-transit encryption when set to true.</p> <p> Only
+     * available when creating a cache cluster in an Amazon VPC using Memcached version
+     * 1.6.12 or later.</p>
      */
     inline bool GetTransitEncryptionEnabled() const{ return m_transitEncryptionEnabled; }
 
     /**
-     * <p>A flag that enables in-transit encryption when set to true. You cannot modify
-     * the value of <code>TransitEncryptionEnabled</code> after the cluster is created.
-     * To enable in-transit encryption on a cluster you must set
-     * <code>TransitEncryptionEnabled</code> to true when you create a cluster. </p>
-     * <p> <b>Required:</b> Only available when creating a cache cluster in an Amazon
-     * VPC using Memcached version <code>1.6.12</code> or later.</p>
+     * <p>A flag that enables in-transit encryption when set to true.</p> <p> Only
+     * available when creating a cache cluster in an Amazon VPC using Memcached version
+     * 1.6.12 or later.</p>
      */
     inline bool TransitEncryptionEnabledHasBeenSet() const { return m_transitEncryptionEnabledHasBeenSet; }
 
     /**
-     * <p>A flag that enables in-transit encryption when set to true. You cannot modify
-     * the value of <code>TransitEncryptionEnabled</code> after the cluster is created.
-     * To enable in-transit encryption on a cluster you must set
-     * <code>TransitEncryptionEnabled</code> to true when you create a cluster. </p>
-     * <p> <b>Required:</b> Only available when creating a cache cluster in an Amazon
-     * VPC using Memcached version <code>1.6.12</code> or later.</p>
+     * <p>A flag that enables in-transit encryption when set to true.</p> <p> Only
+     * available when creating a cache cluster in an Amazon VPC using Memcached version
+     * 1.6.12 or later.</p>
      */
     inline void SetTransitEncryptionEnabled(bool value) { m_transitEncryptionEnabledHasBeenSet = true; m_transitEncryptionEnabled = value; }
 
     /**
-     * <p>A flag that enables in-transit encryption when set to true. You cannot modify
-     * the value of <code>TransitEncryptionEnabled</code> after the cluster is created.
-     * To enable in-transit encryption on a cluster you must set
-     * <code>TransitEncryptionEnabled</code> to true when you create a cluster. </p>
-     * <p> <b>Required:</b> Only available when creating a cache cluster in an Amazon
-     * VPC using Memcached version <code>1.6.12</code> or later.</p>
+     * <p>A flag that enables in-transit encryption when set to true.</p> <p> Only
+     * available when creating a cache cluster in an Amazon VPC using Memcached version
+     * 1.6.12 or later.</p>
      */
     inline CreateCacheClusterRequest& WithTransitEncryptionEnabled(bool value) { SetTransitEncryptionEnabled(value); return *this;}
+
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>. </p>
+     */
+    inline const NetworkType& GetNetworkType() const{ return m_networkType; }
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>. </p>
+     */
+    inline bool NetworkTypeHasBeenSet() const { return m_networkTypeHasBeenSet; }
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>. </p>
+     */
+    inline void SetNetworkType(const NetworkType& value) { m_networkTypeHasBeenSet = true; m_networkType = value; }
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>. </p>
+     */
+    inline void SetNetworkType(NetworkType&& value) { m_networkTypeHasBeenSet = true; m_networkType = std::move(value); }
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>. </p>
+     */
+    inline CreateCacheClusterRequest& WithNetworkType(const NetworkType& value) { SetNetworkType(value); return *this;}
+
+    /**
+     * <p>Must be either <code>ipv4</code> | <code>ipv6</code> |
+     * <code>dual_stack</code>. IPv6 is supported for workloads using Redis engine
+     * version 6.2 onward or Memcached engine version 1.6.6 on all instances built on
+     * the <a href="https://aws.amazon.com/ec2/nitro/">Nitro system</a>. </p>
+     */
+    inline CreateCacheClusterRequest& WithNetworkType(NetworkType&& value) { SetNetworkType(std::move(value)); return *this;}
+
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline const IpDiscovery& GetIpDiscovery() const{ return m_ipDiscovery; }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline bool IpDiscoveryHasBeenSet() const { return m_ipDiscoveryHasBeenSet; }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline void SetIpDiscovery(const IpDiscovery& value) { m_ipDiscoveryHasBeenSet = true; m_ipDiscovery = value; }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline void SetIpDiscovery(IpDiscovery&& value) { m_ipDiscoveryHasBeenSet = true; m_ipDiscovery = std::move(value); }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline CreateCacheClusterRequest& WithIpDiscovery(const IpDiscovery& value) { SetIpDiscovery(value); return *this;}
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline CreateCacheClusterRequest& WithIpDiscovery(IpDiscovery&& value) { SetIpDiscovery(std::move(value)); return *this;}
 
   private:
 
@@ -2370,6 +2464,12 @@ namespace Model
 
     bool m_transitEncryptionEnabled;
     bool m_transitEncryptionEnabledHasBeenSet = false;
+
+    NetworkType m_networkType;
+    bool m_networkTypeHasBeenSet = false;
+
+    IpDiscovery m_ipDiscovery;
+    bool m_ipDiscoveryHasBeenSet = false;
   };
 
 } // namespace Model

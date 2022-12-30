@@ -7,6 +7,7 @@
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/network-firewall/NetworkFirewallServiceClientModel.h>
 
@@ -38,11 +39,11 @@ namespace NetworkFirewall
    * traffic at the perimeter of your VPC. This includes filtering traffic going to
    * and coming from an internet gateway, NAT gateway, or over VPN or Direct Connect.
    * Network Firewall uses rules that are compatible with Suricata, a free, open
-   * source intrusion detection system (IDS) engine. Network Firewall supports
+   * source network analysis and threat detection engine. Network Firewall supports
    * Suricata version 5.0.2. For information about Suricata, see the <a
-   * href="https://suricata-ids.org/">Suricata website</a>.</p> <p>You can use
-   * Network Firewall to monitor and protect your VPC traffic in a number of ways.
-   * The following are just a few examples: </p> <ul> <li> <p>Allow domains or IP
+   * href="https://suricata.io/">Suricata website</a>.</p> <p>You can use Network
+   * Firewall to monitor and protect your VPC traffic in a number of ways. The
+   * following are just a few examples: </p> <ul> <li> <p>Allow domains or IP
    * addresses for known Amazon Web Services service endpoints, such as Amazon S3,
    * and block all other forms of traffic.</p> </li> <li> <p>Use custom lists of
    * known bad domains to limit the types of domain names that your applications can
@@ -67,33 +68,60 @@ namespace NetworkFirewall
    * <p>In Amazon VPC, use ingress routing enhancements to route traffic through the
    * new firewall endpoints.</p> </li> </ol>
    */
-  class AWS_NETWORKFIREWALL_API NetworkFirewallClient : public Aws::Client::AWSJsonClient
+  class AWS_NETWORKFIREWALL_API NetworkFirewallClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<NetworkFirewallClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        NetworkFirewallClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        NetworkFirewallClient(const Aws::NetworkFirewall::NetworkFirewallClientConfiguration& clientConfiguration = Aws::NetworkFirewall::NetworkFirewallClientConfiguration(),
+                              std::shared_ptr<NetworkFirewallEndpointProviderBase> endpointProvider = Aws::MakeShared<NetworkFirewallEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         NetworkFirewallClient(const Aws::Auth::AWSCredentials& credentials,
-                              const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                              std::shared_ptr<NetworkFirewallEndpointProviderBase> endpointProvider = Aws::MakeShared<NetworkFirewallEndpointProvider>(ALLOCATION_TAG),
+                              const Aws::NetworkFirewall::NetworkFirewallClientConfiguration& clientConfiguration = Aws::NetworkFirewall::NetworkFirewallClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         NetworkFirewallClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                              const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                              std::shared_ptr<NetworkFirewallEndpointProviderBase> endpointProvider = Aws::MakeShared<NetworkFirewallEndpointProvider>(ALLOCATION_TAG),
+                              const Aws::NetworkFirewall::NetworkFirewallClientConfiguration& clientConfiguration = Aws::NetworkFirewall::NetworkFirewallClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        NetworkFirewallClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        NetworkFirewallClient(const Aws::Auth::AWSCredentials& credentials,
+                              const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        NetworkFirewallClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                              const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~NetworkFirewallClient();
-
 
         /**
          * <p>Associates a <a>FirewallPolicy</a> to a <a>Firewall</a>. </p> <p>A firewall
@@ -752,12 +780,14 @@ namespace NetworkFirewall
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<NetworkFirewallEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<NetworkFirewallClient>;
+      void init(const NetworkFirewallClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      NetworkFirewallClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<NetworkFirewallEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace NetworkFirewall

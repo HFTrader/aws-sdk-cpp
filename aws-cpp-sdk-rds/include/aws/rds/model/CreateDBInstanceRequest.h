@@ -24,10 +24,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/CreateDBInstanceMessage">AWS
    * API Reference</a></p>
    */
-  class AWS_RDS_API CreateDBInstanceRequest : public RDSRequest
+  class CreateDBInstanceRequest : public RDSRequest
   {
   public:
-    CreateDBInstanceRequest();
+    AWS_RDS_API CreateDBInstanceRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -35,10 +35,10 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "CreateDBInstance"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_RDS_API Aws::String SerializePayload() const override;
 
   protected:
-    void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+    AWS_RDS_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
 
   public:
 
@@ -515,41 +515,41 @@ namespace Model
      * increases, though you are only charged for the space that you use in an Aurora
      * cluster volume.</p> <p> <b>Amazon RDS Custom</b> </p> <p>Constraints to the
      * amount of storage for each storage type are the following:</p> <ul> <li>
-     * <p>General Purpose (SSD) storage (gp2): Must be an integer from 40 to 65536 for
-     * RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> <li>
+     * <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 40 to 65536
+     * for RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> <li>
      * <p>Provisioned IOPS storage (io1): Must be an integer from 40 to 65536 for RDS
      * Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> </ul> <p>
      * <b>MySQL</b> </p> <p>Constraints to the amount of storage for each storage type
-     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2): Must be
-     * an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1):
-     * Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3):
+     * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
+     * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
      * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
      * <b>MariaDB</b> </p> <p>Constraints to the amount of storage for each storage
-     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):
-     * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
-     * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
-     * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
+     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS
+     * storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic
+     * storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
      * <b>PostgreSQL</b> </p> <p>Constraints to the amount of storage for each storage
-     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):
+     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS
+     * storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic
+     * storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
+     * <b>Oracle</b> </p> <p>Constraints to the amount of storage for each storage type
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3):
      * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
      * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
-     * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p> <b>Oracle</b>
-     * </p> <p>Constraints to the amount of storage for each storage type are the
-     * following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2): Must be an
-     * integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must
-     * be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard):
-     * Must be an integer from 10 to 3072.</p> </li> </ul> <p> <b>SQL Server</b> </p>
-     * <p>Constraints to the amount of storage for each storage type are the
-     * following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 20 to 16384.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 20 to 16384.</p>
-     * </li> </ul> </li> <li> <p>Provisioned IOPS storage (io1):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 100 to 16384.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 100 to
-     * 16384.</p> </li> </ul> </li> <li> <p>Magnetic storage (standard):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 20 to 1024.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 20 to 1024.</p>
-     * </li> </ul> </li> </ul>
+     * (standard): Must be an integer from 10 to 3072.</p> </li> </ul> <p> <b>SQL
+     * Server</b> </p> <p>Constraints to the amount of storage for each storage type
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3):</p> <ul> <li> <p>Enterprise and Standard editions: Must be an integer from
+     * 20 to 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from
+     * 20 to 16384.</p> </li> </ul> </li> <li> <p>Provisioned IOPS storage (io1):</p>
+     * <ul> <li> <p>Enterprise and Standard editions: Must be an integer from 100 to
+     * 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from 100
+     * to 16384.</p> </li> </ul> </li> <li> <p>Magnetic storage (standard):</p> <ul>
+     * <li> <p>Enterprise and Standard editions: Must be an integer from 20 to
+     * 1024.</p> </li> <li> <p>Web and Express editions: Must be an integer from 20 to
+     * 1024.</p> </li> </ul> </li> </ul>
      */
     inline int GetAllocatedStorage() const{ return m_allocatedStorage; }
 
@@ -560,41 +560,41 @@ namespace Model
      * increases, though you are only charged for the space that you use in an Aurora
      * cluster volume.</p> <p> <b>Amazon RDS Custom</b> </p> <p>Constraints to the
      * amount of storage for each storage type are the following:</p> <ul> <li>
-     * <p>General Purpose (SSD) storage (gp2): Must be an integer from 40 to 65536 for
-     * RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> <li>
+     * <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 40 to 65536
+     * for RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> <li>
      * <p>Provisioned IOPS storage (io1): Must be an integer from 40 to 65536 for RDS
      * Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> </ul> <p>
      * <b>MySQL</b> </p> <p>Constraints to the amount of storage for each storage type
-     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2): Must be
-     * an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1):
-     * Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3):
+     * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
+     * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
      * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
      * <b>MariaDB</b> </p> <p>Constraints to the amount of storage for each storage
-     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):
-     * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
-     * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
-     * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
+     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS
+     * storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic
+     * storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
      * <b>PostgreSQL</b> </p> <p>Constraints to the amount of storage for each storage
-     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):
+     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS
+     * storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic
+     * storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
+     * <b>Oracle</b> </p> <p>Constraints to the amount of storage for each storage type
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3):
      * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
      * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
-     * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p> <b>Oracle</b>
-     * </p> <p>Constraints to the amount of storage for each storage type are the
-     * following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2): Must be an
-     * integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must
-     * be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard):
-     * Must be an integer from 10 to 3072.</p> </li> </ul> <p> <b>SQL Server</b> </p>
-     * <p>Constraints to the amount of storage for each storage type are the
-     * following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 20 to 16384.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 20 to 16384.</p>
-     * </li> </ul> </li> <li> <p>Provisioned IOPS storage (io1):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 100 to 16384.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 100 to
-     * 16384.</p> </li> </ul> </li> <li> <p>Magnetic storage (standard):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 20 to 1024.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 20 to 1024.</p>
-     * </li> </ul> </li> </ul>
+     * (standard): Must be an integer from 10 to 3072.</p> </li> </ul> <p> <b>SQL
+     * Server</b> </p> <p>Constraints to the amount of storage for each storage type
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3):</p> <ul> <li> <p>Enterprise and Standard editions: Must be an integer from
+     * 20 to 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from
+     * 20 to 16384.</p> </li> </ul> </li> <li> <p>Provisioned IOPS storage (io1):</p>
+     * <ul> <li> <p>Enterprise and Standard editions: Must be an integer from 100 to
+     * 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from 100
+     * to 16384.</p> </li> </ul> </li> <li> <p>Magnetic storage (standard):</p> <ul>
+     * <li> <p>Enterprise and Standard editions: Must be an integer from 20 to
+     * 1024.</p> </li> <li> <p>Web and Express editions: Must be an integer from 20 to
+     * 1024.</p> </li> </ul> </li> </ul>
      */
     inline bool AllocatedStorageHasBeenSet() const { return m_allocatedStorageHasBeenSet; }
 
@@ -605,41 +605,41 @@ namespace Model
      * increases, though you are only charged for the space that you use in an Aurora
      * cluster volume.</p> <p> <b>Amazon RDS Custom</b> </p> <p>Constraints to the
      * amount of storage for each storage type are the following:</p> <ul> <li>
-     * <p>General Purpose (SSD) storage (gp2): Must be an integer from 40 to 65536 for
-     * RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> <li>
+     * <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 40 to 65536
+     * for RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> <li>
      * <p>Provisioned IOPS storage (io1): Must be an integer from 40 to 65536 for RDS
      * Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> </ul> <p>
      * <b>MySQL</b> </p> <p>Constraints to the amount of storage for each storage type
-     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2): Must be
-     * an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1):
-     * Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3):
+     * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
+     * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
      * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
      * <b>MariaDB</b> </p> <p>Constraints to the amount of storage for each storage
-     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):
-     * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
-     * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
-     * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
+     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS
+     * storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic
+     * storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
      * <b>PostgreSQL</b> </p> <p>Constraints to the amount of storage for each storage
-     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):
+     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS
+     * storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic
+     * storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
+     * <b>Oracle</b> </p> <p>Constraints to the amount of storage for each storage type
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3):
      * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
      * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
-     * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p> <b>Oracle</b>
-     * </p> <p>Constraints to the amount of storage for each storage type are the
-     * following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2): Must be an
-     * integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must
-     * be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard):
-     * Must be an integer from 10 to 3072.</p> </li> </ul> <p> <b>SQL Server</b> </p>
-     * <p>Constraints to the amount of storage for each storage type are the
-     * following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 20 to 16384.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 20 to 16384.</p>
-     * </li> </ul> </li> <li> <p>Provisioned IOPS storage (io1):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 100 to 16384.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 100 to
-     * 16384.</p> </li> </ul> </li> <li> <p>Magnetic storage (standard):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 20 to 1024.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 20 to 1024.</p>
-     * </li> </ul> </li> </ul>
+     * (standard): Must be an integer from 10 to 3072.</p> </li> </ul> <p> <b>SQL
+     * Server</b> </p> <p>Constraints to the amount of storage for each storage type
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3):</p> <ul> <li> <p>Enterprise and Standard editions: Must be an integer from
+     * 20 to 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from
+     * 20 to 16384.</p> </li> </ul> </li> <li> <p>Provisioned IOPS storage (io1):</p>
+     * <ul> <li> <p>Enterprise and Standard editions: Must be an integer from 100 to
+     * 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from 100
+     * to 16384.</p> </li> </ul> </li> <li> <p>Magnetic storage (standard):</p> <ul>
+     * <li> <p>Enterprise and Standard editions: Must be an integer from 20 to
+     * 1024.</p> </li> <li> <p>Web and Express editions: Must be an integer from 20 to
+     * 1024.</p> </li> </ul> </li> </ul>
      */
     inline void SetAllocatedStorage(int value) { m_allocatedStorageHasBeenSet = true; m_allocatedStorage = value; }
 
@@ -650,41 +650,41 @@ namespace Model
      * increases, though you are only charged for the space that you use in an Aurora
      * cluster volume.</p> <p> <b>Amazon RDS Custom</b> </p> <p>Constraints to the
      * amount of storage for each storage type are the following:</p> <ul> <li>
-     * <p>General Purpose (SSD) storage (gp2): Must be an integer from 40 to 65536 for
-     * RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> <li>
+     * <p>General Purpose (SSD) storage (gp2, gp3): Must be an integer from 40 to 65536
+     * for RDS Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> <li>
      * <p>Provisioned IOPS storage (io1): Must be an integer from 40 to 65536 for RDS
      * Custom for Oracle, 16384 for RDS Custom for SQL Server.</p> </li> </ul> <p>
      * <b>MySQL</b> </p> <p>Constraints to the amount of storage for each storage type
-     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2): Must be
-     * an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1):
-     * Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3):
+     * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
+     * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
      * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
      * <b>MariaDB</b> </p> <p>Constraints to the amount of storage for each storage
-     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):
-     * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
-     * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
-     * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
+     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS
+     * storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic
+     * storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
      * <b>PostgreSQL</b> </p> <p>Constraints to the amount of storage for each storage
-     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):
+     * type are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3): Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS
+     * storage (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic
+     * storage (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p>
+     * <b>Oracle</b> </p> <p>Constraints to the amount of storage for each storage type
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2, gp3):
      * Must be an integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage
      * (io1): Must be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage
-     * (standard): Must be an integer from 5 to 3072.</p> </li> </ul> <p> <b>Oracle</b>
-     * </p> <p>Constraints to the amount of storage for each storage type are the
-     * following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2): Must be an
-     * integer from 20 to 65536.</p> </li> <li> <p>Provisioned IOPS storage (io1): Must
-     * be an integer from 100 to 65536.</p> </li> <li> <p>Magnetic storage (standard):
-     * Must be an integer from 10 to 3072.</p> </li> </ul> <p> <b>SQL Server</b> </p>
-     * <p>Constraints to the amount of storage for each storage type are the
-     * following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 20 to 16384.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 20 to 16384.</p>
-     * </li> </ul> </li> <li> <p>Provisioned IOPS storage (io1):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 100 to 16384.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 100 to
-     * 16384.</p> </li> </ul> </li> <li> <p>Magnetic storage (standard):</p> <ul> <li>
-     * <p>Enterprise and Standard editions: Must be an integer from 20 to 1024.</p>
-     * </li> <li> <p>Web and Express editions: Must be an integer from 20 to 1024.</p>
-     * </li> </ul> </li> </ul>
+     * (standard): Must be an integer from 10 to 3072.</p> </li> </ul> <p> <b>SQL
+     * Server</b> </p> <p>Constraints to the amount of storage for each storage type
+     * are the following:</p> <ul> <li> <p>General Purpose (SSD) storage (gp2,
+     * gp3):</p> <ul> <li> <p>Enterprise and Standard editions: Must be an integer from
+     * 20 to 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from
+     * 20 to 16384.</p> </li> </ul> </li> <li> <p>Provisioned IOPS storage (io1):</p>
+     * <ul> <li> <p>Enterprise and Standard editions: Must be an integer from 100 to
+     * 16384.</p> </li> <li> <p>Web and Express editions: Must be an integer from 100
+     * to 16384.</p> </li> </ul> </li> <li> <p>Magnetic storage (standard):</p> <ul>
+     * <li> <p>Enterprise and Standard editions: Must be an integer from 20 to
+     * 1024.</p> </li> <li> <p>Web and Express editions: Must be an integer from 20 to
+     * 1024.</p> </li> </ul> </li> </ul>
      */
     inline CreateDBInstanceRequest& WithAllocatedStorage(int value) { SetAllocatedStorage(value); return *this;}
 
@@ -1048,12 +1048,14 @@ namespace Model
      * <p>The password for the master user. The password can include any printable
      * ASCII character except "/", """, or "@".</p> <p> <b>Amazon Aurora</b> </p>
      * <p>Not applicable. The password for the master user is managed by the DB
-     * cluster.</p> <p> <b>MariaDB</b> </p> <p>Constraints: Must contain from 8 to 41
-     * characters.</p> <p> <b>Microsoft SQL Server</b> </p> <p>Constraints: Must
-     * contain from 8 to 128 characters.</p> <p> <b>MySQL</b> </p> <p>Constraints: Must
-     * contain from 8 to 41 characters.</p> <p> <b>Oracle</b> </p> <p>Constraints: Must
-     * contain from 8 to 30 characters.</p> <p> <b>PostgreSQL</b> </p> <p>Constraints:
-     * Must contain from 8 to 128 characters.</p>
+     * cluster.</p> <p>Constraints: Can't be specified if
+     * <code>ManageMasterUserPassword</code> is turned on.</p> <p> <b>MariaDB</b> </p>
+     * <p>Constraints: Must contain from 8 to 41 characters.</p> <p> <b>Microsoft SQL
+     * Server</b> </p> <p>Constraints: Must contain from 8 to 128 characters.</p> <p>
+     * <b>MySQL</b> </p> <p>Constraints: Must contain from 8 to 41 characters.</p> <p>
+     * <b>Oracle</b> </p> <p>Constraints: Must contain from 8 to 30 characters.</p> <p>
+     * <b>PostgreSQL</b> </p> <p>Constraints: Must contain from 8 to 128
+     * characters.</p>
      */
     inline const Aws::String& GetMasterUserPassword() const{ return m_masterUserPassword; }
 
@@ -1061,12 +1063,14 @@ namespace Model
      * <p>The password for the master user. The password can include any printable
      * ASCII character except "/", """, or "@".</p> <p> <b>Amazon Aurora</b> </p>
      * <p>Not applicable. The password for the master user is managed by the DB
-     * cluster.</p> <p> <b>MariaDB</b> </p> <p>Constraints: Must contain from 8 to 41
-     * characters.</p> <p> <b>Microsoft SQL Server</b> </p> <p>Constraints: Must
-     * contain from 8 to 128 characters.</p> <p> <b>MySQL</b> </p> <p>Constraints: Must
-     * contain from 8 to 41 characters.</p> <p> <b>Oracle</b> </p> <p>Constraints: Must
-     * contain from 8 to 30 characters.</p> <p> <b>PostgreSQL</b> </p> <p>Constraints:
-     * Must contain from 8 to 128 characters.</p>
+     * cluster.</p> <p>Constraints: Can't be specified if
+     * <code>ManageMasterUserPassword</code> is turned on.</p> <p> <b>MariaDB</b> </p>
+     * <p>Constraints: Must contain from 8 to 41 characters.</p> <p> <b>Microsoft SQL
+     * Server</b> </p> <p>Constraints: Must contain from 8 to 128 characters.</p> <p>
+     * <b>MySQL</b> </p> <p>Constraints: Must contain from 8 to 41 characters.</p> <p>
+     * <b>Oracle</b> </p> <p>Constraints: Must contain from 8 to 30 characters.</p> <p>
+     * <b>PostgreSQL</b> </p> <p>Constraints: Must contain from 8 to 128
+     * characters.</p>
      */
     inline bool MasterUserPasswordHasBeenSet() const { return m_masterUserPasswordHasBeenSet; }
 
@@ -1074,12 +1078,14 @@ namespace Model
      * <p>The password for the master user. The password can include any printable
      * ASCII character except "/", """, or "@".</p> <p> <b>Amazon Aurora</b> </p>
      * <p>Not applicable. The password for the master user is managed by the DB
-     * cluster.</p> <p> <b>MariaDB</b> </p> <p>Constraints: Must contain from 8 to 41
-     * characters.</p> <p> <b>Microsoft SQL Server</b> </p> <p>Constraints: Must
-     * contain from 8 to 128 characters.</p> <p> <b>MySQL</b> </p> <p>Constraints: Must
-     * contain from 8 to 41 characters.</p> <p> <b>Oracle</b> </p> <p>Constraints: Must
-     * contain from 8 to 30 characters.</p> <p> <b>PostgreSQL</b> </p> <p>Constraints:
-     * Must contain from 8 to 128 characters.</p>
+     * cluster.</p> <p>Constraints: Can't be specified if
+     * <code>ManageMasterUserPassword</code> is turned on.</p> <p> <b>MariaDB</b> </p>
+     * <p>Constraints: Must contain from 8 to 41 characters.</p> <p> <b>Microsoft SQL
+     * Server</b> </p> <p>Constraints: Must contain from 8 to 128 characters.</p> <p>
+     * <b>MySQL</b> </p> <p>Constraints: Must contain from 8 to 41 characters.</p> <p>
+     * <b>Oracle</b> </p> <p>Constraints: Must contain from 8 to 30 characters.</p> <p>
+     * <b>PostgreSQL</b> </p> <p>Constraints: Must contain from 8 to 128
+     * characters.</p>
      */
     inline void SetMasterUserPassword(const Aws::String& value) { m_masterUserPasswordHasBeenSet = true; m_masterUserPassword = value; }
 
@@ -1087,12 +1093,14 @@ namespace Model
      * <p>The password for the master user. The password can include any printable
      * ASCII character except "/", """, or "@".</p> <p> <b>Amazon Aurora</b> </p>
      * <p>Not applicable. The password for the master user is managed by the DB
-     * cluster.</p> <p> <b>MariaDB</b> </p> <p>Constraints: Must contain from 8 to 41
-     * characters.</p> <p> <b>Microsoft SQL Server</b> </p> <p>Constraints: Must
-     * contain from 8 to 128 characters.</p> <p> <b>MySQL</b> </p> <p>Constraints: Must
-     * contain from 8 to 41 characters.</p> <p> <b>Oracle</b> </p> <p>Constraints: Must
-     * contain from 8 to 30 characters.</p> <p> <b>PostgreSQL</b> </p> <p>Constraints:
-     * Must contain from 8 to 128 characters.</p>
+     * cluster.</p> <p>Constraints: Can't be specified if
+     * <code>ManageMasterUserPassword</code> is turned on.</p> <p> <b>MariaDB</b> </p>
+     * <p>Constraints: Must contain from 8 to 41 characters.</p> <p> <b>Microsoft SQL
+     * Server</b> </p> <p>Constraints: Must contain from 8 to 128 characters.</p> <p>
+     * <b>MySQL</b> </p> <p>Constraints: Must contain from 8 to 41 characters.</p> <p>
+     * <b>Oracle</b> </p> <p>Constraints: Must contain from 8 to 30 characters.</p> <p>
+     * <b>PostgreSQL</b> </p> <p>Constraints: Must contain from 8 to 128
+     * characters.</p>
      */
     inline void SetMasterUserPassword(Aws::String&& value) { m_masterUserPasswordHasBeenSet = true; m_masterUserPassword = std::move(value); }
 
@@ -1100,12 +1108,14 @@ namespace Model
      * <p>The password for the master user. The password can include any printable
      * ASCII character except "/", """, or "@".</p> <p> <b>Amazon Aurora</b> </p>
      * <p>Not applicable. The password for the master user is managed by the DB
-     * cluster.</p> <p> <b>MariaDB</b> </p> <p>Constraints: Must contain from 8 to 41
-     * characters.</p> <p> <b>Microsoft SQL Server</b> </p> <p>Constraints: Must
-     * contain from 8 to 128 characters.</p> <p> <b>MySQL</b> </p> <p>Constraints: Must
-     * contain from 8 to 41 characters.</p> <p> <b>Oracle</b> </p> <p>Constraints: Must
-     * contain from 8 to 30 characters.</p> <p> <b>PostgreSQL</b> </p> <p>Constraints:
-     * Must contain from 8 to 128 characters.</p>
+     * cluster.</p> <p>Constraints: Can't be specified if
+     * <code>ManageMasterUserPassword</code> is turned on.</p> <p> <b>MariaDB</b> </p>
+     * <p>Constraints: Must contain from 8 to 41 characters.</p> <p> <b>Microsoft SQL
+     * Server</b> </p> <p>Constraints: Must contain from 8 to 128 characters.</p> <p>
+     * <b>MySQL</b> </p> <p>Constraints: Must contain from 8 to 41 characters.</p> <p>
+     * <b>Oracle</b> </p> <p>Constraints: Must contain from 8 to 30 characters.</p> <p>
+     * <b>PostgreSQL</b> </p> <p>Constraints: Must contain from 8 to 128
+     * characters.</p>
      */
     inline void SetMasterUserPassword(const char* value) { m_masterUserPasswordHasBeenSet = true; m_masterUserPassword.assign(value); }
 
@@ -1113,12 +1123,14 @@ namespace Model
      * <p>The password for the master user. The password can include any printable
      * ASCII character except "/", """, or "@".</p> <p> <b>Amazon Aurora</b> </p>
      * <p>Not applicable. The password for the master user is managed by the DB
-     * cluster.</p> <p> <b>MariaDB</b> </p> <p>Constraints: Must contain from 8 to 41
-     * characters.</p> <p> <b>Microsoft SQL Server</b> </p> <p>Constraints: Must
-     * contain from 8 to 128 characters.</p> <p> <b>MySQL</b> </p> <p>Constraints: Must
-     * contain from 8 to 41 characters.</p> <p> <b>Oracle</b> </p> <p>Constraints: Must
-     * contain from 8 to 30 characters.</p> <p> <b>PostgreSQL</b> </p> <p>Constraints:
-     * Must contain from 8 to 128 characters.</p>
+     * cluster.</p> <p>Constraints: Can't be specified if
+     * <code>ManageMasterUserPassword</code> is turned on.</p> <p> <b>MariaDB</b> </p>
+     * <p>Constraints: Must contain from 8 to 41 characters.</p> <p> <b>Microsoft SQL
+     * Server</b> </p> <p>Constraints: Must contain from 8 to 128 characters.</p> <p>
+     * <b>MySQL</b> </p> <p>Constraints: Must contain from 8 to 41 characters.</p> <p>
+     * <b>Oracle</b> </p> <p>Constraints: Must contain from 8 to 30 characters.</p> <p>
+     * <b>PostgreSQL</b> </p> <p>Constraints: Must contain from 8 to 128
+     * characters.</p>
      */
     inline CreateDBInstanceRequest& WithMasterUserPassword(const Aws::String& value) { SetMasterUserPassword(value); return *this;}
 
@@ -1126,12 +1138,14 @@ namespace Model
      * <p>The password for the master user. The password can include any printable
      * ASCII character except "/", """, or "@".</p> <p> <b>Amazon Aurora</b> </p>
      * <p>Not applicable. The password for the master user is managed by the DB
-     * cluster.</p> <p> <b>MariaDB</b> </p> <p>Constraints: Must contain from 8 to 41
-     * characters.</p> <p> <b>Microsoft SQL Server</b> </p> <p>Constraints: Must
-     * contain from 8 to 128 characters.</p> <p> <b>MySQL</b> </p> <p>Constraints: Must
-     * contain from 8 to 41 characters.</p> <p> <b>Oracle</b> </p> <p>Constraints: Must
-     * contain from 8 to 30 characters.</p> <p> <b>PostgreSQL</b> </p> <p>Constraints:
-     * Must contain from 8 to 128 characters.</p>
+     * cluster.</p> <p>Constraints: Can't be specified if
+     * <code>ManageMasterUserPassword</code> is turned on.</p> <p> <b>MariaDB</b> </p>
+     * <p>Constraints: Must contain from 8 to 41 characters.</p> <p> <b>Microsoft SQL
+     * Server</b> </p> <p>Constraints: Must contain from 8 to 128 characters.</p> <p>
+     * <b>MySQL</b> </p> <p>Constraints: Must contain from 8 to 41 characters.</p> <p>
+     * <b>Oracle</b> </p> <p>Constraints: Must contain from 8 to 30 characters.</p> <p>
+     * <b>PostgreSQL</b> </p> <p>Constraints: Must contain from 8 to 128
+     * characters.</p>
      */
     inline CreateDBInstanceRequest& WithMasterUserPassword(Aws::String&& value) { SetMasterUserPassword(std::move(value)); return *this;}
 
@@ -1139,12 +1153,14 @@ namespace Model
      * <p>The password for the master user. The password can include any printable
      * ASCII character except "/", """, or "@".</p> <p> <b>Amazon Aurora</b> </p>
      * <p>Not applicable. The password for the master user is managed by the DB
-     * cluster.</p> <p> <b>MariaDB</b> </p> <p>Constraints: Must contain from 8 to 41
-     * characters.</p> <p> <b>Microsoft SQL Server</b> </p> <p>Constraints: Must
-     * contain from 8 to 128 characters.</p> <p> <b>MySQL</b> </p> <p>Constraints: Must
-     * contain from 8 to 41 characters.</p> <p> <b>Oracle</b> </p> <p>Constraints: Must
-     * contain from 8 to 30 characters.</p> <p> <b>PostgreSQL</b> </p> <p>Constraints:
-     * Must contain from 8 to 128 characters.</p>
+     * cluster.</p> <p>Constraints: Can't be specified if
+     * <code>ManageMasterUserPassword</code> is turned on.</p> <p> <b>MariaDB</b> </p>
+     * <p>Constraints: Must contain from 8 to 41 characters.</p> <p> <b>Microsoft SQL
+     * Server</b> </p> <p>Constraints: Must contain from 8 to 128 characters.</p> <p>
+     * <b>MySQL</b> </p> <p>Constraints: Must contain from 8 to 41 characters.</p> <p>
+     * <b>Oracle</b> </p> <p>Constraints: Must contain from 8 to 30 characters.</p> <p>
+     * <b>PostgreSQL</b> </p> <p>Constraints: Must contain from 8 to 128
+     * characters.</p>
      */
     inline CreateDBInstanceRequest& WithMasterUserPassword(const char* value) { SetMasterUserPassword(value); return *this;}
 
@@ -1961,8 +1977,8 @@ namespace Model
      * be used by the DB instance is managed by the DB cluster.</p> <p> <b>Amazon RDS
      * Custom for Oracle</b> </p> <p>A custom engine version (CEV) that you have
      * previously created. This setting is required for RDS Custom for Oracle. The CEV
-     * name has the following format: <code>19.<i>customized_string</i> </code>. An
-     * example identifier is <code>19.my_cev1</code>. For more information, see <a
+     * name has the following format: 19.<i>customized_string</i>. A valid CEV name is
+     * <code>19.my_cev1</code>. For more information, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-creating.html#custom-creating.create">
      * Creating an RDS Custom for Oracle DB instance</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p> <b>Amazon RDS Custom for SQL Server</b> </p> <p>See <a
@@ -1997,8 +2013,8 @@ namespace Model
      * be used by the DB instance is managed by the DB cluster.</p> <p> <b>Amazon RDS
      * Custom for Oracle</b> </p> <p>A custom engine version (CEV) that you have
      * previously created. This setting is required for RDS Custom for Oracle. The CEV
-     * name has the following format: <code>19.<i>customized_string</i> </code>. An
-     * example identifier is <code>19.my_cev1</code>. For more information, see <a
+     * name has the following format: 19.<i>customized_string</i>. A valid CEV name is
+     * <code>19.my_cev1</code>. For more information, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-creating.html#custom-creating.create">
      * Creating an RDS Custom for Oracle DB instance</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p> <b>Amazon RDS Custom for SQL Server</b> </p> <p>See <a
@@ -2033,8 +2049,8 @@ namespace Model
      * be used by the DB instance is managed by the DB cluster.</p> <p> <b>Amazon RDS
      * Custom for Oracle</b> </p> <p>A custom engine version (CEV) that you have
      * previously created. This setting is required for RDS Custom for Oracle. The CEV
-     * name has the following format: <code>19.<i>customized_string</i> </code>. An
-     * example identifier is <code>19.my_cev1</code>. For more information, see <a
+     * name has the following format: 19.<i>customized_string</i>. A valid CEV name is
+     * <code>19.my_cev1</code>. For more information, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-creating.html#custom-creating.create">
      * Creating an RDS Custom for Oracle DB instance</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p> <b>Amazon RDS Custom for SQL Server</b> </p> <p>See <a
@@ -2069,8 +2085,8 @@ namespace Model
      * be used by the DB instance is managed by the DB cluster.</p> <p> <b>Amazon RDS
      * Custom for Oracle</b> </p> <p>A custom engine version (CEV) that you have
      * previously created. This setting is required for RDS Custom for Oracle. The CEV
-     * name has the following format: <code>19.<i>customized_string</i> </code>. An
-     * example identifier is <code>19.my_cev1</code>. For more information, see <a
+     * name has the following format: 19.<i>customized_string</i>. A valid CEV name is
+     * <code>19.my_cev1</code>. For more information, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-creating.html#custom-creating.create">
      * Creating an RDS Custom for Oracle DB instance</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p> <b>Amazon RDS Custom for SQL Server</b> </p> <p>See <a
@@ -2105,8 +2121,8 @@ namespace Model
      * be used by the DB instance is managed by the DB cluster.</p> <p> <b>Amazon RDS
      * Custom for Oracle</b> </p> <p>A custom engine version (CEV) that you have
      * previously created. This setting is required for RDS Custom for Oracle. The CEV
-     * name has the following format: <code>19.<i>customized_string</i> </code>. An
-     * example identifier is <code>19.my_cev1</code>. For more information, see <a
+     * name has the following format: 19.<i>customized_string</i>. A valid CEV name is
+     * <code>19.my_cev1</code>. For more information, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-creating.html#custom-creating.create">
      * Creating an RDS Custom for Oracle DB instance</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p> <b>Amazon RDS Custom for SQL Server</b> </p> <p>See <a
@@ -2141,8 +2157,8 @@ namespace Model
      * be used by the DB instance is managed by the DB cluster.</p> <p> <b>Amazon RDS
      * Custom for Oracle</b> </p> <p>A custom engine version (CEV) that you have
      * previously created. This setting is required for RDS Custom for Oracle. The CEV
-     * name has the following format: <code>19.<i>customized_string</i> </code>. An
-     * example identifier is <code>19.my_cev1</code>. For more information, see <a
+     * name has the following format: 19.<i>customized_string</i>. A valid CEV name is
+     * <code>19.my_cev1</code>. For more information, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-creating.html#custom-creating.create">
      * Creating an RDS Custom for Oracle DB instance</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p> <b>Amazon RDS Custom for SQL Server</b> </p> <p>See <a
@@ -2177,8 +2193,8 @@ namespace Model
      * be used by the DB instance is managed by the DB cluster.</p> <p> <b>Amazon RDS
      * Custom for Oracle</b> </p> <p>A custom engine version (CEV) that you have
      * previously created. This setting is required for RDS Custom for Oracle. The CEV
-     * name has the following format: <code>19.<i>customized_string</i> </code>. An
-     * example identifier is <code>19.my_cev1</code>. For more information, see <a
+     * name has the following format: 19.<i>customized_string</i>. A valid CEV name is
+     * <code>19.my_cev1</code>. For more information, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-creating.html#custom-creating.create">
      * Creating an RDS Custom for Oracle DB instance</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p> <b>Amazon RDS Custom for SQL Server</b> </p> <p>See <a
@@ -2213,8 +2229,8 @@ namespace Model
      * be used by the DB instance is managed by the DB cluster.</p> <p> <b>Amazon RDS
      * Custom for Oracle</b> </p> <p>A custom engine version (CEV) that you have
      * previously created. This setting is required for RDS Custom for Oracle. The CEV
-     * name has the following format: <code>19.<i>customized_string</i> </code>. An
-     * example identifier is <code>19.my_cev1</code>. For more information, see <a
+     * name has the following format: 19.<i>customized_string</i>. A valid CEV name is
+     * <code>19.my_cev1</code>. For more information, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-creating.html#custom-creating.create">
      * Creating an RDS Custom for Oracle DB instance</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p> <b>Amazon RDS Custom for SQL Server</b> </p> <p>See <a
@@ -2344,57 +2360,57 @@ namespace Model
 
     /**
      * <p>The amount of Provisioned IOPS (input/output operations per second) to be
-     * initially allocated for the DB instance. For information about valid
-     * <code>Iops</code> values, see <a
-     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS">Amazon
-     * RDS Provisioned IOPS storage to improve performance</a> in the <i>Amazon RDS
-     * User Guide</i>.</p> <p>Constraints: For MariaDB, MySQL, Oracle, and PostgreSQL
-     * DB instances, must be a multiple between .5 and 50 of the storage amount for the
-     * DB instance. For SQL Server DB instances, must be a multiple between 1 and 50 of
-     * the storage amount for the DB instance.</p> <p> <b>Amazon Aurora</b> </p> <p>Not
-     * applicable. Storage is managed by the DB cluster.</p>
+     * initially allocated for the DB instance. For information about valid IOPS
+     * values, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html">Amazon
+     * RDS DB instance storage</a> in the <i>Amazon RDS User Guide</i>.</p>
+     * <p>Constraints: For MariaDB, MySQL, Oracle, and PostgreSQL DB instances, must be
+     * a multiple between .5 and 50 of the storage amount for the DB instance. For SQL
+     * Server DB instances, must be a multiple between 1 and 50 of the storage amount
+     * for the DB instance.</p> <p> <b>Amazon Aurora</b> </p> <p>Not applicable.
+     * Storage is managed by the DB cluster.</p>
      */
     inline int GetIops() const{ return m_iops; }
 
     /**
      * <p>The amount of Provisioned IOPS (input/output operations per second) to be
-     * initially allocated for the DB instance. For information about valid
-     * <code>Iops</code> values, see <a
-     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS">Amazon
-     * RDS Provisioned IOPS storage to improve performance</a> in the <i>Amazon RDS
-     * User Guide</i>.</p> <p>Constraints: For MariaDB, MySQL, Oracle, and PostgreSQL
-     * DB instances, must be a multiple between .5 and 50 of the storage amount for the
-     * DB instance. For SQL Server DB instances, must be a multiple between 1 and 50 of
-     * the storage amount for the DB instance.</p> <p> <b>Amazon Aurora</b> </p> <p>Not
-     * applicable. Storage is managed by the DB cluster.</p>
+     * initially allocated for the DB instance. For information about valid IOPS
+     * values, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html">Amazon
+     * RDS DB instance storage</a> in the <i>Amazon RDS User Guide</i>.</p>
+     * <p>Constraints: For MariaDB, MySQL, Oracle, and PostgreSQL DB instances, must be
+     * a multiple between .5 and 50 of the storage amount for the DB instance. For SQL
+     * Server DB instances, must be a multiple between 1 and 50 of the storage amount
+     * for the DB instance.</p> <p> <b>Amazon Aurora</b> </p> <p>Not applicable.
+     * Storage is managed by the DB cluster.</p>
      */
     inline bool IopsHasBeenSet() const { return m_iopsHasBeenSet; }
 
     /**
      * <p>The amount of Provisioned IOPS (input/output operations per second) to be
-     * initially allocated for the DB instance. For information about valid
-     * <code>Iops</code> values, see <a
-     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS">Amazon
-     * RDS Provisioned IOPS storage to improve performance</a> in the <i>Amazon RDS
-     * User Guide</i>.</p> <p>Constraints: For MariaDB, MySQL, Oracle, and PostgreSQL
-     * DB instances, must be a multiple between .5 and 50 of the storage amount for the
-     * DB instance. For SQL Server DB instances, must be a multiple between 1 and 50 of
-     * the storage amount for the DB instance.</p> <p> <b>Amazon Aurora</b> </p> <p>Not
-     * applicable. Storage is managed by the DB cluster.</p>
+     * initially allocated for the DB instance. For information about valid IOPS
+     * values, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html">Amazon
+     * RDS DB instance storage</a> in the <i>Amazon RDS User Guide</i>.</p>
+     * <p>Constraints: For MariaDB, MySQL, Oracle, and PostgreSQL DB instances, must be
+     * a multiple between .5 and 50 of the storage amount for the DB instance. For SQL
+     * Server DB instances, must be a multiple between 1 and 50 of the storage amount
+     * for the DB instance.</p> <p> <b>Amazon Aurora</b> </p> <p>Not applicable.
+     * Storage is managed by the DB cluster.</p>
      */
     inline void SetIops(int value) { m_iopsHasBeenSet = true; m_iops = value; }
 
     /**
      * <p>The amount of Provisioned IOPS (input/output operations per second) to be
-     * initially allocated for the DB instance. For information about valid
-     * <code>Iops</code> values, see <a
-     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS">Amazon
-     * RDS Provisioned IOPS storage to improve performance</a> in the <i>Amazon RDS
-     * User Guide</i>.</p> <p>Constraints: For MariaDB, MySQL, Oracle, and PostgreSQL
-     * DB instances, must be a multiple between .5 and 50 of the storage amount for the
-     * DB instance. For SQL Server DB instances, must be a multiple between 1 and 50 of
-     * the storage amount for the DB instance.</p> <p> <b>Amazon Aurora</b> </p> <p>Not
-     * applicable. Storage is managed by the DB cluster.</p>
+     * initially allocated for the DB instance. For information about valid IOPS
+     * values, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html">Amazon
+     * RDS DB instance storage</a> in the <i>Amazon RDS User Guide</i>.</p>
+     * <p>Constraints: For MariaDB, MySQL, Oracle, and PostgreSQL DB instances, must be
+     * a multiple between .5 and 50 of the storage amount for the DB instance. For SQL
+     * Server DB instances, must be a multiple between 1 and 50 of the storage amount
+     * for the DB instance.</p> <p> <b>Amazon Aurora</b> </p> <p>Not applicable.
+     * Storage is managed by the DB cluster.</p>
      */
     inline CreateDBInstanceRequest& WithIops(int value) { SetIops(value); return *this;}
 
@@ -2803,81 +2819,89 @@ namespace Model
 
     /**
      * <p>Specifies the storage type to be associated with the DB instance.</p>
-     * <p>Valid values: <code>standard | gp2 | io1</code> </p> <p>If you specify
-     * <code>io1</code>, you must also include a value for the <code>Iops</code>
-     * parameter.</p> <p>Default: <code>io1</code> if the <code>Iops</code> parameter
-     * is specified, otherwise <code>gp2</code> </p> <p> <b>Amazon Aurora</b> </p>
-     * <p>Not applicable. Storage is managed by the DB cluster.</p>
+     * <p>Valid values: <code>gp2 | gp3 | io1 | standard</code> </p> <p>If you specify
+     * <code>io1</code> or <code>gp3</code>, you must also include a value for the
+     * <code>Iops</code> parameter.</p> <p>Default: <code>io1</code> if the
+     * <code>Iops</code> parameter is specified, otherwise <code>gp2</code> </p> <p>
+     * <b>Amazon Aurora</b> </p> <p>Not applicable. Storage is managed by the DB
+     * cluster.</p>
      */
     inline const Aws::String& GetStorageType() const{ return m_storageType; }
 
     /**
      * <p>Specifies the storage type to be associated with the DB instance.</p>
-     * <p>Valid values: <code>standard | gp2 | io1</code> </p> <p>If you specify
-     * <code>io1</code>, you must also include a value for the <code>Iops</code>
-     * parameter.</p> <p>Default: <code>io1</code> if the <code>Iops</code> parameter
-     * is specified, otherwise <code>gp2</code> </p> <p> <b>Amazon Aurora</b> </p>
-     * <p>Not applicable. Storage is managed by the DB cluster.</p>
+     * <p>Valid values: <code>gp2 | gp3 | io1 | standard</code> </p> <p>If you specify
+     * <code>io1</code> or <code>gp3</code>, you must also include a value for the
+     * <code>Iops</code> parameter.</p> <p>Default: <code>io1</code> if the
+     * <code>Iops</code> parameter is specified, otherwise <code>gp2</code> </p> <p>
+     * <b>Amazon Aurora</b> </p> <p>Not applicable. Storage is managed by the DB
+     * cluster.</p>
      */
     inline bool StorageTypeHasBeenSet() const { return m_storageTypeHasBeenSet; }
 
     /**
      * <p>Specifies the storage type to be associated with the DB instance.</p>
-     * <p>Valid values: <code>standard | gp2 | io1</code> </p> <p>If you specify
-     * <code>io1</code>, you must also include a value for the <code>Iops</code>
-     * parameter.</p> <p>Default: <code>io1</code> if the <code>Iops</code> parameter
-     * is specified, otherwise <code>gp2</code> </p> <p> <b>Amazon Aurora</b> </p>
-     * <p>Not applicable. Storage is managed by the DB cluster.</p>
+     * <p>Valid values: <code>gp2 | gp3 | io1 | standard</code> </p> <p>If you specify
+     * <code>io1</code> or <code>gp3</code>, you must also include a value for the
+     * <code>Iops</code> parameter.</p> <p>Default: <code>io1</code> if the
+     * <code>Iops</code> parameter is specified, otherwise <code>gp2</code> </p> <p>
+     * <b>Amazon Aurora</b> </p> <p>Not applicable. Storage is managed by the DB
+     * cluster.</p>
      */
     inline void SetStorageType(const Aws::String& value) { m_storageTypeHasBeenSet = true; m_storageType = value; }
 
     /**
      * <p>Specifies the storage type to be associated with the DB instance.</p>
-     * <p>Valid values: <code>standard | gp2 | io1</code> </p> <p>If you specify
-     * <code>io1</code>, you must also include a value for the <code>Iops</code>
-     * parameter.</p> <p>Default: <code>io1</code> if the <code>Iops</code> parameter
-     * is specified, otherwise <code>gp2</code> </p> <p> <b>Amazon Aurora</b> </p>
-     * <p>Not applicable. Storage is managed by the DB cluster.</p>
+     * <p>Valid values: <code>gp2 | gp3 | io1 | standard</code> </p> <p>If you specify
+     * <code>io1</code> or <code>gp3</code>, you must also include a value for the
+     * <code>Iops</code> parameter.</p> <p>Default: <code>io1</code> if the
+     * <code>Iops</code> parameter is specified, otherwise <code>gp2</code> </p> <p>
+     * <b>Amazon Aurora</b> </p> <p>Not applicable. Storage is managed by the DB
+     * cluster.</p>
      */
     inline void SetStorageType(Aws::String&& value) { m_storageTypeHasBeenSet = true; m_storageType = std::move(value); }
 
     /**
      * <p>Specifies the storage type to be associated with the DB instance.</p>
-     * <p>Valid values: <code>standard | gp2 | io1</code> </p> <p>If you specify
-     * <code>io1</code>, you must also include a value for the <code>Iops</code>
-     * parameter.</p> <p>Default: <code>io1</code> if the <code>Iops</code> parameter
-     * is specified, otherwise <code>gp2</code> </p> <p> <b>Amazon Aurora</b> </p>
-     * <p>Not applicable. Storage is managed by the DB cluster.</p>
+     * <p>Valid values: <code>gp2 | gp3 | io1 | standard</code> </p> <p>If you specify
+     * <code>io1</code> or <code>gp3</code>, you must also include a value for the
+     * <code>Iops</code> parameter.</p> <p>Default: <code>io1</code> if the
+     * <code>Iops</code> parameter is specified, otherwise <code>gp2</code> </p> <p>
+     * <b>Amazon Aurora</b> </p> <p>Not applicable. Storage is managed by the DB
+     * cluster.</p>
      */
     inline void SetStorageType(const char* value) { m_storageTypeHasBeenSet = true; m_storageType.assign(value); }
 
     /**
      * <p>Specifies the storage type to be associated with the DB instance.</p>
-     * <p>Valid values: <code>standard | gp2 | io1</code> </p> <p>If you specify
-     * <code>io1</code>, you must also include a value for the <code>Iops</code>
-     * parameter.</p> <p>Default: <code>io1</code> if the <code>Iops</code> parameter
-     * is specified, otherwise <code>gp2</code> </p> <p> <b>Amazon Aurora</b> </p>
-     * <p>Not applicable. Storage is managed by the DB cluster.</p>
+     * <p>Valid values: <code>gp2 | gp3 | io1 | standard</code> </p> <p>If you specify
+     * <code>io1</code> or <code>gp3</code>, you must also include a value for the
+     * <code>Iops</code> parameter.</p> <p>Default: <code>io1</code> if the
+     * <code>Iops</code> parameter is specified, otherwise <code>gp2</code> </p> <p>
+     * <b>Amazon Aurora</b> </p> <p>Not applicable. Storage is managed by the DB
+     * cluster.</p>
      */
     inline CreateDBInstanceRequest& WithStorageType(const Aws::String& value) { SetStorageType(value); return *this;}
 
     /**
      * <p>Specifies the storage type to be associated with the DB instance.</p>
-     * <p>Valid values: <code>standard | gp2 | io1</code> </p> <p>If you specify
-     * <code>io1</code>, you must also include a value for the <code>Iops</code>
-     * parameter.</p> <p>Default: <code>io1</code> if the <code>Iops</code> parameter
-     * is specified, otherwise <code>gp2</code> </p> <p> <b>Amazon Aurora</b> </p>
-     * <p>Not applicable. Storage is managed by the DB cluster.</p>
+     * <p>Valid values: <code>gp2 | gp3 | io1 | standard</code> </p> <p>If you specify
+     * <code>io1</code> or <code>gp3</code>, you must also include a value for the
+     * <code>Iops</code> parameter.</p> <p>Default: <code>io1</code> if the
+     * <code>Iops</code> parameter is specified, otherwise <code>gp2</code> </p> <p>
+     * <b>Amazon Aurora</b> </p> <p>Not applicable. Storage is managed by the DB
+     * cluster.</p>
      */
     inline CreateDBInstanceRequest& WithStorageType(Aws::String&& value) { SetStorageType(std::move(value)); return *this;}
 
     /**
      * <p>Specifies the storage type to be associated with the DB instance.</p>
-     * <p>Valid values: <code>standard | gp2 | io1</code> </p> <p>If you specify
-     * <code>io1</code>, you must also include a value for the <code>Iops</code>
-     * parameter.</p> <p>Default: <code>io1</code> if the <code>Iops</code> parameter
-     * is specified, otherwise <code>gp2</code> </p> <p> <b>Amazon Aurora</b> </p>
-     * <p>Not applicable. Storage is managed by the DB cluster.</p>
+     * <p>Valid values: <code>gp2 | gp3 | io1 | standard</code> </p> <p>If you specify
+     * <code>io1</code> or <code>gp3</code>, you must also include a value for the
+     * <code>Iops</code> parameter.</p> <p>Default: <code>io1</code> if the
+     * <code>Iops</code> parameter is specified, otherwise <code>gp2</code> </p> <p>
+     * <b>Amazon Aurora</b> </p> <p>Not applicable. Storage is managed by the DB
+     * cluster.</p>
      */
     inline CreateDBInstanceRequest& WithStorageType(const char* value) { SetStorageType(value); return *this;}
 
@@ -4216,7 +4240,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-on-outposts.html">Working
      * with Amazon RDS on Amazon Web Services Outposts</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p>For more information about CoIPs, see <a
-     * href="https://docs.aws.amazon.com/outposts/latest/userguide/outposts-networking-components.html#ip-addressing">Customer-owned
+     * href="https://docs.aws.amazon.com/outposts/latest/userguide/routing.html#ip-addressing">Customer-owned
      * IP addresses</a> in the <i>Amazon Web Services Outposts User Guide</i>.</p>
      */
     inline bool GetEnableCustomerOwnedIp() const{ return m_enableCustomerOwnedIp; }
@@ -4231,7 +4255,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-on-outposts.html">Working
      * with Amazon RDS on Amazon Web Services Outposts</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p>For more information about CoIPs, see <a
-     * href="https://docs.aws.amazon.com/outposts/latest/userguide/outposts-networking-components.html#ip-addressing">Customer-owned
+     * href="https://docs.aws.amazon.com/outposts/latest/userguide/routing.html#ip-addressing">Customer-owned
      * IP addresses</a> in the <i>Amazon Web Services Outposts User Guide</i>.</p>
      */
     inline bool EnableCustomerOwnedIpHasBeenSet() const { return m_enableCustomerOwnedIpHasBeenSet; }
@@ -4246,7 +4270,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-on-outposts.html">Working
      * with Amazon RDS on Amazon Web Services Outposts</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p>For more information about CoIPs, see <a
-     * href="https://docs.aws.amazon.com/outposts/latest/userguide/outposts-networking-components.html#ip-addressing">Customer-owned
+     * href="https://docs.aws.amazon.com/outposts/latest/userguide/routing.html#ip-addressing">Customer-owned
      * IP addresses</a> in the <i>Amazon Web Services Outposts User Guide</i>.</p>
      */
     inline void SetEnableCustomerOwnedIp(bool value) { m_enableCustomerOwnedIpHasBeenSet = true; m_enableCustomerOwnedIp = value; }
@@ -4261,7 +4285,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-on-outposts.html">Working
      * with Amazon RDS on Amazon Web Services Outposts</a> in the <i>Amazon RDS User
      * Guide</i>.</p> <p>For more information about CoIPs, see <a
-     * href="https://docs.aws.amazon.com/outposts/latest/userguide/outposts-networking-components.html#ip-addressing">Customer-owned
+     * href="https://docs.aws.amazon.com/outposts/latest/userguide/routing.html#ip-addressing">Customer-owned
      * IP addresses</a> in the <i>Amazon Web Services Outposts User Guide</i>.</p>
      */
     inline CreateDBInstanceRequest& WithEnableCustomerOwnedIp(bool value) { SetEnableCustomerOwnedIp(value); return *this;}
@@ -4573,6 +4597,225 @@ namespace Model
      */
     inline CreateDBInstanceRequest& WithNetworkType(const char* value) { SetNetworkType(value); return *this;}
 
+
+    /**
+     * <p>Specifies the storage throughput value for the DB instance.</p> <p>This
+     * setting applies only to the <code>gp3</code> storage type.</p> <p>This setting
+     * doesn't apply to RDS Custom or Amazon Aurora.</p>
+     */
+    inline int GetStorageThroughput() const{ return m_storageThroughput; }
+
+    /**
+     * <p>Specifies the storage throughput value for the DB instance.</p> <p>This
+     * setting applies only to the <code>gp3</code> storage type.</p> <p>This setting
+     * doesn't apply to RDS Custom or Amazon Aurora.</p>
+     */
+    inline bool StorageThroughputHasBeenSet() const { return m_storageThroughputHasBeenSet; }
+
+    /**
+     * <p>Specifies the storage throughput value for the DB instance.</p> <p>This
+     * setting applies only to the <code>gp3</code> storage type.</p> <p>This setting
+     * doesn't apply to RDS Custom or Amazon Aurora.</p>
+     */
+    inline void SetStorageThroughput(int value) { m_storageThroughputHasBeenSet = true; m_storageThroughput = value; }
+
+    /**
+     * <p>Specifies the storage throughput value for the DB instance.</p> <p>This
+     * setting applies only to the <code>gp3</code> storage type.</p> <p>This setting
+     * doesn't apply to RDS Custom or Amazon Aurora.</p>
+     */
+    inline CreateDBInstanceRequest& WithStorageThroughput(int value) { SetStorageThroughput(value); return *this;}
+
+
+    /**
+     * <p>A value that indicates whether to manage the master user password with Amazon
+     * Web Services Secrets Manager.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide.</i> </p> <p>Constraints:</p> <ul> <li> <p>Can't manage the master
+     * user password with Amazon Web Services Secrets Manager if
+     * <code>MasterUserPassword</code> is specified.</p> </li> </ul>
+     */
+    inline bool GetManageMasterUserPassword() const{ return m_manageMasterUserPassword; }
+
+    /**
+     * <p>A value that indicates whether to manage the master user password with Amazon
+     * Web Services Secrets Manager.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide.</i> </p> <p>Constraints:</p> <ul> <li> <p>Can't manage the master
+     * user password with Amazon Web Services Secrets Manager if
+     * <code>MasterUserPassword</code> is specified.</p> </li> </ul>
+     */
+    inline bool ManageMasterUserPasswordHasBeenSet() const { return m_manageMasterUserPasswordHasBeenSet; }
+
+    /**
+     * <p>A value that indicates whether to manage the master user password with Amazon
+     * Web Services Secrets Manager.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide.</i> </p> <p>Constraints:</p> <ul> <li> <p>Can't manage the master
+     * user password with Amazon Web Services Secrets Manager if
+     * <code>MasterUserPassword</code> is specified.</p> </li> </ul>
+     */
+    inline void SetManageMasterUserPassword(bool value) { m_manageMasterUserPasswordHasBeenSet = true; m_manageMasterUserPassword = value; }
+
+    /**
+     * <p>A value that indicates whether to manage the master user password with Amazon
+     * Web Services Secrets Manager.</p> <p>For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-secrets-manager.html">Password
+     * management with Amazon Web Services Secrets Manager</a> in the <i>Amazon RDS
+     * User Guide.</i> </p> <p>Constraints:</p> <ul> <li> <p>Can't manage the master
+     * user password with Amazon Web Services Secrets Manager if
+     * <code>MasterUserPassword</code> is specified.</p> </li> </ul>
+     */
+    inline CreateDBInstanceRequest& WithManageMasterUserPassword(bool value) { SetManageMasterUserPassword(value); return *this;}
+
+
+    /**
+     * <p>The Amazon Web Services KMS key identifier to encrypt a secret that is
+     * automatically generated and managed in Amazon Web Services Secrets Manager.</p>
+     * <p>This setting is valid only if the master user password is managed by RDS in
+     * Amazon Web Services Secrets Manager for the DB instance.</p> <p>The Amazon Web
+     * Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for
+     * the KMS key. To use a KMS key in a different Amazon Web Services account,
+     * specify the key ARN or alias ARN.</p> <p>If you don't specify
+     * <code>MasterUserSecretKmsKeyId</code>, then the <code>aws/secretsmanager</code>
+     * KMS key is used to encrypt the secret. If the secret is in a different Amazon
+     * Web Services account, then you can't use the <code>aws/secretsmanager</code> KMS
+     * key to encrypt the secret, and you must use a customer managed KMS key.</p>
+     * <p>There is a default KMS key for your Amazon Web Services account. Your Amazon
+     * Web Services account has a different default KMS key for each Amazon Web
+     * Services Region.</p>
+     */
+    inline const Aws::String& GetMasterUserSecretKmsKeyId() const{ return m_masterUserSecretKmsKeyId; }
+
+    /**
+     * <p>The Amazon Web Services KMS key identifier to encrypt a secret that is
+     * automatically generated and managed in Amazon Web Services Secrets Manager.</p>
+     * <p>This setting is valid only if the master user password is managed by RDS in
+     * Amazon Web Services Secrets Manager for the DB instance.</p> <p>The Amazon Web
+     * Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for
+     * the KMS key. To use a KMS key in a different Amazon Web Services account,
+     * specify the key ARN or alias ARN.</p> <p>If you don't specify
+     * <code>MasterUserSecretKmsKeyId</code>, then the <code>aws/secretsmanager</code>
+     * KMS key is used to encrypt the secret. If the secret is in a different Amazon
+     * Web Services account, then you can't use the <code>aws/secretsmanager</code> KMS
+     * key to encrypt the secret, and you must use a customer managed KMS key.</p>
+     * <p>There is a default KMS key for your Amazon Web Services account. Your Amazon
+     * Web Services account has a different default KMS key for each Amazon Web
+     * Services Region.</p>
+     */
+    inline bool MasterUserSecretKmsKeyIdHasBeenSet() const { return m_masterUserSecretKmsKeyIdHasBeenSet; }
+
+    /**
+     * <p>The Amazon Web Services KMS key identifier to encrypt a secret that is
+     * automatically generated and managed in Amazon Web Services Secrets Manager.</p>
+     * <p>This setting is valid only if the master user password is managed by RDS in
+     * Amazon Web Services Secrets Manager for the DB instance.</p> <p>The Amazon Web
+     * Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for
+     * the KMS key. To use a KMS key in a different Amazon Web Services account,
+     * specify the key ARN or alias ARN.</p> <p>If you don't specify
+     * <code>MasterUserSecretKmsKeyId</code>, then the <code>aws/secretsmanager</code>
+     * KMS key is used to encrypt the secret. If the secret is in a different Amazon
+     * Web Services account, then you can't use the <code>aws/secretsmanager</code> KMS
+     * key to encrypt the secret, and you must use a customer managed KMS key.</p>
+     * <p>There is a default KMS key for your Amazon Web Services account. Your Amazon
+     * Web Services account has a different default KMS key for each Amazon Web
+     * Services Region.</p>
+     */
+    inline void SetMasterUserSecretKmsKeyId(const Aws::String& value) { m_masterUserSecretKmsKeyIdHasBeenSet = true; m_masterUserSecretKmsKeyId = value; }
+
+    /**
+     * <p>The Amazon Web Services KMS key identifier to encrypt a secret that is
+     * automatically generated and managed in Amazon Web Services Secrets Manager.</p>
+     * <p>This setting is valid only if the master user password is managed by RDS in
+     * Amazon Web Services Secrets Manager for the DB instance.</p> <p>The Amazon Web
+     * Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for
+     * the KMS key. To use a KMS key in a different Amazon Web Services account,
+     * specify the key ARN or alias ARN.</p> <p>If you don't specify
+     * <code>MasterUserSecretKmsKeyId</code>, then the <code>aws/secretsmanager</code>
+     * KMS key is used to encrypt the secret. If the secret is in a different Amazon
+     * Web Services account, then you can't use the <code>aws/secretsmanager</code> KMS
+     * key to encrypt the secret, and you must use a customer managed KMS key.</p>
+     * <p>There is a default KMS key for your Amazon Web Services account. Your Amazon
+     * Web Services account has a different default KMS key for each Amazon Web
+     * Services Region.</p>
+     */
+    inline void SetMasterUserSecretKmsKeyId(Aws::String&& value) { m_masterUserSecretKmsKeyIdHasBeenSet = true; m_masterUserSecretKmsKeyId = std::move(value); }
+
+    /**
+     * <p>The Amazon Web Services KMS key identifier to encrypt a secret that is
+     * automatically generated and managed in Amazon Web Services Secrets Manager.</p>
+     * <p>This setting is valid only if the master user password is managed by RDS in
+     * Amazon Web Services Secrets Manager for the DB instance.</p> <p>The Amazon Web
+     * Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for
+     * the KMS key. To use a KMS key in a different Amazon Web Services account,
+     * specify the key ARN or alias ARN.</p> <p>If you don't specify
+     * <code>MasterUserSecretKmsKeyId</code>, then the <code>aws/secretsmanager</code>
+     * KMS key is used to encrypt the secret. If the secret is in a different Amazon
+     * Web Services account, then you can't use the <code>aws/secretsmanager</code> KMS
+     * key to encrypt the secret, and you must use a customer managed KMS key.</p>
+     * <p>There is a default KMS key for your Amazon Web Services account. Your Amazon
+     * Web Services account has a different default KMS key for each Amazon Web
+     * Services Region.</p>
+     */
+    inline void SetMasterUserSecretKmsKeyId(const char* value) { m_masterUserSecretKmsKeyIdHasBeenSet = true; m_masterUserSecretKmsKeyId.assign(value); }
+
+    /**
+     * <p>The Amazon Web Services KMS key identifier to encrypt a secret that is
+     * automatically generated and managed in Amazon Web Services Secrets Manager.</p>
+     * <p>This setting is valid only if the master user password is managed by RDS in
+     * Amazon Web Services Secrets Manager for the DB instance.</p> <p>The Amazon Web
+     * Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for
+     * the KMS key. To use a KMS key in a different Amazon Web Services account,
+     * specify the key ARN or alias ARN.</p> <p>If you don't specify
+     * <code>MasterUserSecretKmsKeyId</code>, then the <code>aws/secretsmanager</code>
+     * KMS key is used to encrypt the secret. If the secret is in a different Amazon
+     * Web Services account, then you can't use the <code>aws/secretsmanager</code> KMS
+     * key to encrypt the secret, and you must use a customer managed KMS key.</p>
+     * <p>There is a default KMS key for your Amazon Web Services account. Your Amazon
+     * Web Services account has a different default KMS key for each Amazon Web
+     * Services Region.</p>
+     */
+    inline CreateDBInstanceRequest& WithMasterUserSecretKmsKeyId(const Aws::String& value) { SetMasterUserSecretKmsKeyId(value); return *this;}
+
+    /**
+     * <p>The Amazon Web Services KMS key identifier to encrypt a secret that is
+     * automatically generated and managed in Amazon Web Services Secrets Manager.</p>
+     * <p>This setting is valid only if the master user password is managed by RDS in
+     * Amazon Web Services Secrets Manager for the DB instance.</p> <p>The Amazon Web
+     * Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for
+     * the KMS key. To use a KMS key in a different Amazon Web Services account,
+     * specify the key ARN or alias ARN.</p> <p>If you don't specify
+     * <code>MasterUserSecretKmsKeyId</code>, then the <code>aws/secretsmanager</code>
+     * KMS key is used to encrypt the secret. If the secret is in a different Amazon
+     * Web Services account, then you can't use the <code>aws/secretsmanager</code> KMS
+     * key to encrypt the secret, and you must use a customer managed KMS key.</p>
+     * <p>There is a default KMS key for your Amazon Web Services account. Your Amazon
+     * Web Services account has a different default KMS key for each Amazon Web
+     * Services Region.</p>
+     */
+    inline CreateDBInstanceRequest& WithMasterUserSecretKmsKeyId(Aws::String&& value) { SetMasterUserSecretKmsKeyId(std::move(value)); return *this;}
+
+    /**
+     * <p>The Amazon Web Services KMS key identifier to encrypt a secret that is
+     * automatically generated and managed in Amazon Web Services Secrets Manager.</p>
+     * <p>This setting is valid only if the master user password is managed by RDS in
+     * Amazon Web Services Secrets Manager for the DB instance.</p> <p>The Amazon Web
+     * Services KMS key identifier is the key ARN, key ID, alias ARN, or alias name for
+     * the KMS key. To use a KMS key in a different Amazon Web Services account,
+     * specify the key ARN or alias ARN.</p> <p>If you don't specify
+     * <code>MasterUserSecretKmsKeyId</code>, then the <code>aws/secretsmanager</code>
+     * KMS key is used to encrypt the secret. If the secret is in a different Amazon
+     * Web Services account, then you can't use the <code>aws/secretsmanager</code> KMS
+     * key to encrypt the secret, and you must use a customer managed KMS key.</p>
+     * <p>There is a default KMS key for your Amazon Web Services account. Your Amazon
+     * Web Services account has a different default KMS key for each Amazon Web
+     * Services Region.</p>
+     */
+    inline CreateDBInstanceRequest& WithMasterUserSecretKmsKeyId(const char* value) { SetMasterUserSecretKmsKeyId(value); return *this;}
+
   private:
 
     Aws::String m_dBName;
@@ -4727,6 +4970,15 @@ namespace Model
 
     Aws::String m_networkType;
     bool m_networkTypeHasBeenSet = false;
+
+    int m_storageThroughput;
+    bool m_storageThroughputHasBeenSet = false;
+
+    bool m_manageMasterUserPassword;
+    bool m_manageMasterUserPasswordHasBeenSet = false;
+
+    Aws::String m_masterUserSecretKmsKeyId;
+    bool m_masterUserSecretKmsKeyIdHasBeenSet = false;
   };
 
 } // namespace Model

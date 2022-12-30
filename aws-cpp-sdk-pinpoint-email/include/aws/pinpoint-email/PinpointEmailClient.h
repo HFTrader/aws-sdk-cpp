@@ -7,6 +7,7 @@
 #include <aws/pinpoint-email/PinpointEmail_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/pinpoint-email/PinpointEmailServiceClientModel.h>
 
@@ -50,33 +51,60 @@ namespace PinpointEmail
    * href="http://aws.amazon.com/about-aws/global-infrastructure/">AWS Global
    * Infrastructure</a>.</p>
    */
-  class AWS_PINPOINTEMAIL_API PinpointEmailClient : public Aws::Client::AWSJsonClient
+  class AWS_PINPOINTEMAIL_API PinpointEmailClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<PinpointEmailClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        PinpointEmailClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        PinpointEmailClient(const Aws::PinpointEmail::PinpointEmailClientConfiguration& clientConfiguration = Aws::PinpointEmail::PinpointEmailClientConfiguration(),
+                            std::shared_ptr<PinpointEmailEndpointProviderBase> endpointProvider = Aws::MakeShared<PinpointEmailEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         PinpointEmailClient(const Aws::Auth::AWSCredentials& credentials,
-                            const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                            std::shared_ptr<PinpointEmailEndpointProviderBase> endpointProvider = Aws::MakeShared<PinpointEmailEndpointProvider>(ALLOCATION_TAG),
+                            const Aws::PinpointEmail::PinpointEmailClientConfiguration& clientConfiguration = Aws::PinpointEmail::PinpointEmailClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         PinpointEmailClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                            const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                            std::shared_ptr<PinpointEmailEndpointProviderBase> endpointProvider = Aws::MakeShared<PinpointEmailEndpointProvider>(ALLOCATION_TAG),
+                            const Aws::PinpointEmail::PinpointEmailClientConfiguration& clientConfiguration = Aws::PinpointEmail::PinpointEmailClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        PinpointEmailClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        PinpointEmailClient(const Aws::Auth::AWSCredentials& credentials,
+                            const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        PinpointEmailClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                            const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~PinpointEmailClient();
-
 
         /**
          * <p>Create a configuration set. <i>Configuration sets</i> are groups of rules
@@ -956,12 +984,14 @@ namespace PinpointEmail
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<PinpointEmailEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<PinpointEmailClient>;
+      void init(const PinpointEmailClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      PinpointEmailClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<PinpointEmailEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace PinpointEmail

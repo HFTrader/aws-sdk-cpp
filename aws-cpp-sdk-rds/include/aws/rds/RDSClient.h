@@ -8,6 +8,7 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/AmazonSerializableWebServiceRequest.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/rds/RDSServiceClientModel.h>
 
@@ -54,31 +55,59 @@ namespace Aws
    * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Using_the_Query_API.html">Using
    * the Query API</a>.</p> </li> </ul>
      */
-                class AWS_RDS_API RDSClient : public Aws::Client::AWSXMLClient
+                class AWS_RDS_API RDSClient : public Aws::Client::AWSXMLClient, public Aws::Client::ClientWithAsyncTemplateMethods<RDSClient>
     {
     public:
     typedef Aws::Client::AWSXMLClient BASECLASS;
+    static const char* SERVICE_NAME;
+    static const char* ALLOCATION_TAG;
 
-           /**
+       /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        RDSClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        RDSClient(const Aws::RDS::RDSClientConfiguration& clientConfiguration = Aws::RDS::RDSClientConfiguration(),
+                  std::shared_ptr<RDSEndpointProviderBase> endpointProvider = Aws::MakeShared<RDSEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         RDSClient(const Aws::Auth::AWSCredentials& credentials,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<RDSEndpointProviderBase> endpointProvider = Aws::MakeShared<RDSEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::RDS::RDSClientConfiguration& clientConfiguration = Aws::RDS::RDSClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         RDSClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<RDSEndpointProviderBase> endpointProvider = Aws::MakeShared<RDSEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::RDS::RDSClientConfiguration& clientConfiguration = Aws::RDS::RDSClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        RDSClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        RDSClient(const Aws::Auth::AWSCredentials& credentials,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        RDSClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~RDSClient();
 
     
@@ -396,36 +425,41 @@ namespace Aws
         virtual void CopyOptionGroupAsync(const Model::CopyOptionGroupRequest& request, const CopyOptionGroupResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Creates a custom DB engine version (CEV). A CEV is a binary volume snapshot
-         * of a database engine and specific AMI. The supported engines are the
-         * following:</p> <ul> <li> <p>Oracle Database 12.1 Enterprise Edition with the
-         * January 2021 or later RU/RUR</p> </li> <li> <p>Oracle Database 19c Enterprise
-         * Edition with the January 2021 or later RU/RUR</p> </li> </ul> <p>Amazon RDS,
-         * which is a fully managed service, supplies the Amazon Machine Image (AMI) and
-         * database software. The Amazon RDS database software is preinstalled, so you need
-         * only select a DB engine and version, and create your database. With Amazon RDS
-         * Custom for Oracle, you upload your database installation files in Amazon S3.</p>
-         * <p>When you create a custom engine version, you specify the files in a JSON
-         * document called a CEV manifest. This document describes installation .zip files
-         * stored in Amazon S3. RDS Custom creates your CEV from the installation files
-         * that you provided. This service model is called Bring Your Own Media (BYOM).</p>
-         * <p>Creation takes approximately two hours. If creation fails, RDS Custom issues
-         * <code>RDS-EVENT-0196</code> with the message <code>Creation failed for custom
-         * engine version</code>, and includes details about the failure. For example, the
-         * event prints missing files.</p> <p>After you create the CEV, it is available for
-         * use. You can create multiple CEVs, and create multiple RDS Custom instances from
-         * any CEV. You can also change the status of a CEV to make it available or
-         * inactive.</p>  <p>The MediaImport service that imports files from Amazon
-         * S3 to create CEVs isn't integrated with Amazon Web Services CloudTrail. If you
-         * turn on data logging for Amazon RDS in CloudTrail, calls to the
-         * <code>CreateCustomDbEngineVersion</code> event aren't logged. However, you might
-         * see calls from the API gateway that accesses your Amazon S3 bucket. These calls
-         * originate from the MediaImport service for the
-         * <code>CreateCustomDbEngineVersion</code> event.</p>  <p>For more
-         * information, see <a
-         * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-cev.html#custom-cev.create">
-         * Creating a CEV</a> in the <i>Amazon RDS User Guide</i>.</p><p><h3>See Also:</h3>
-         * <a
+         * <p>Creates a blue/green deployment.</p> <p>A blue/green deployment creates a
+         * staging environment that copies the production environment. In a blue/green
+         * deployment, the blue environment is the current production environment. The
+         * green environment is the staging environment. The staging environment stays in
+         * sync with the current production environment using logical replication.</p>
+         * <p>You can make changes to the databases in the green environment without
+         * affecting production workloads. For example, you can upgrade the major or minor
+         * DB engine version, change database parameters, or make schema changes in the
+         * staging environment. You can thoroughly test changes in the green environment.
+         * When ready, you can switch over the environments to promote the green
+         * environment to be the new production environment. The switchover typically takes
+         * under a minute.</p> <p>For more information, see <a
+         * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html">Using
+         * Amazon RDS Blue/Green Deployments for database updates</a> in the <i>Amazon RDS
+         * User Guide</i> and <a
+         * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/blue-green-deployments.html">
+         * Using Amazon RDS Blue/Green Deployments for database updates</a> in the
+         * <i>Amazon Aurora User Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/CreateBlueGreenDeployment">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CreateBlueGreenDeploymentOutcome CreateBlueGreenDeployment(const Model::CreateBlueGreenDeploymentRequest& request) const;
+
+        /**
+         * A Callable wrapper for CreateBlueGreenDeployment that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CreateBlueGreenDeploymentOutcomeCallable CreateBlueGreenDeploymentCallable(const Model::CreateBlueGreenDeploymentRequest& request) const;
+
+        /**
+         * An Async wrapper for CreateBlueGreenDeployment that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CreateBlueGreenDeploymentAsync(const Model::CreateBlueGreenDeploymentRequest& request, const CreateBlueGreenDeploymentResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Creates a custom DB engine version (CEV).</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/CreateCustomDBEngineVersion">AWS
          * API Reference</a></p>
          */
@@ -841,6 +875,29 @@ namespace Aws
         virtual void CreateOptionGroupAsync(const Model::CreateOptionGroupRequest& request, const CreateOptionGroupResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Deletes a blue/green deployment.</p> <p>For more information, see <a
+         * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html">Using
+         * Amazon RDS Blue/Green Deployments for database updates</a> in the <i>Amazon RDS
+         * User Guide</i> and <a
+         * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/blue-green-deployments.html">
+         * Using Amazon RDS Blue/Green Deployments for database updates</a> in the
+         * <i>Amazon Aurora User Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/DeleteBlueGreenDeployment">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DeleteBlueGreenDeploymentOutcome DeleteBlueGreenDeployment(const Model::DeleteBlueGreenDeploymentRequest& request) const;
+
+        /**
+         * A Callable wrapper for DeleteBlueGreenDeployment that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DeleteBlueGreenDeploymentOutcomeCallable DeleteBlueGreenDeploymentCallable(const Model::DeleteBlueGreenDeploymentRequest& request) const;
+
+        /**
+         * An Async wrapper for DeleteBlueGreenDeployment that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DeleteBlueGreenDeploymentAsync(const Model::DeleteBlueGreenDeploymentRequest& request, const DeleteBlueGreenDeploymentResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Deletes a custom engine version. To run this command, make sure you meet the
          * following prerequisites:</p> <ul> <li> <p>The CEV must not be the default for
          * RDS Custom. If it is, change the default before running this command.</p> </li>
@@ -1235,6 +1292,30 @@ namespace Aws
          * An Async wrapper for DescribeAccountAttributes that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void DescribeAccountAttributesAsync(const Model::DescribeAccountAttributesRequest& request, const DescribeAccountAttributesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Returns information about blue/green deployments.</p> <p>For more
+         * information, see <a
+         * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html">Using
+         * Amazon RDS Blue/Green Deployments for database updates</a> in the <i>Amazon RDS
+         * User Guide</i> and <a
+         * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/blue-green-deployments.html">
+         * Using Amazon RDS Blue/Green Deployments for database updates</a> in the
+         * <i>Amazon Aurora User Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/DescribeBlueGreenDeployments">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeBlueGreenDeploymentsOutcome DescribeBlueGreenDeployments(const Model::DescribeBlueGreenDeploymentsRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeBlueGreenDeployments that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeBlueGreenDeploymentsOutcomeCallable DescribeBlueGreenDeploymentsCallable(const Model::DescribeBlueGreenDeploymentsRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeBlueGreenDeployments that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeBlueGreenDeploymentsAsync(const Model::DescribeBlueGreenDeploymentsRequest& request, const DescribeBlueGreenDeploymentsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Lists the set of CA certificates provided by Amazon RDS for this Amazon Web
@@ -3317,6 +3398,32 @@ namespace Aws
         virtual void StopDBInstanceAutomatedBackupsReplicationAsync(const Model::StopDBInstanceAutomatedBackupsReplicationRequest& request, const StopDBInstanceAutomatedBackupsReplicationResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Switches over a blue/green deployment.</p> <p>Before you switch over,
+         * production traffic is routed to the databases in the blue environment. After you
+         * switch over, production traffic is routed to the databases in the green
+         * environment.</p> <p>For more information, see <a
+         * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html">Using
+         * Amazon RDS Blue/Green Deployments for database updates</a> in the <i>Amazon RDS
+         * User Guide</i> and <a
+         * href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/blue-green-deployments.html">
+         * Using Amazon RDS Blue/Green Deployments for database updates</a> in the
+         * <i>Amazon Aurora User Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/SwitchoverBlueGreenDeployment">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::SwitchoverBlueGreenDeploymentOutcome SwitchoverBlueGreenDeployment(const Model::SwitchoverBlueGreenDeploymentRequest& request) const;
+
+        /**
+         * A Callable wrapper for SwitchoverBlueGreenDeployment that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::SwitchoverBlueGreenDeploymentOutcomeCallable SwitchoverBlueGreenDeploymentCallable(const Model::SwitchoverBlueGreenDeploymentRequest& request) const;
+
+        /**
+         * An Async wrapper for SwitchoverBlueGreenDeployment that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void SwitchoverBlueGreenDeploymentAsync(const Model::SwitchoverBlueGreenDeploymentRequest& request, const SwitchoverBlueGreenDeploymentResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Switches over an Oracle standby database in an Oracle Data Guard environment,
          * making it the new primary database. Issue this command in the Region that hosts
          * the current standby database.</p><p><h3>See Also:</h3>   <a
@@ -3337,13 +3444,14 @@ namespace Aws
 
 
         void OverrideEndpoint(const Aws::String& endpoint);
+        std::shared_ptr<RDSEndpointProviderBase>& accessEndpointProvider();
     private:
-        void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+        friend class Aws::Client::ClientWithAsyncTemplateMethods<RDSClient>;
+        void init(const RDSClientConfiguration& clientConfiguration);
 
-        Aws::String m_uri;
-        Aws::String m_configScheme;
-        bool m_useDualStack = false;
+        RDSClientConfiguration m_clientConfiguration;
         std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+        std::shared_ptr<RDSEndpointProviderBase> m_endpointProvider;
     };
   } // namespace RDS
 } // namespace Aws

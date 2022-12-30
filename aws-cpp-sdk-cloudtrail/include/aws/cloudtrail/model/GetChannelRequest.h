@@ -18,10 +18,10 @@ namespace Model
 
   /**
    */
-  class AWS_CLOUDTRAIL_API GetChannelRequest : public CloudTrailRequest
+  class GetChannelRequest : public CloudTrailRequest
   {
   public:
-    GetChannelRequest();
+    AWS_CLOUDTRAIL_API GetChannelRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -29,56 +29,48 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "GetChannel"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_CLOUDTRAIL_API Aws::String SerializePayload() const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_CLOUDTRAIL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 
     /**
-     * <p> The Amazon Resource Name (ARN) of the CloudTrail service-linked channel.
-     * </p>
+     * <p>The ARN or <code>UUID</code> of a channel.</p>
      */
     inline const Aws::String& GetChannel() const{ return m_channel; }
 
     /**
-     * <p> The Amazon Resource Name (ARN) of the CloudTrail service-linked channel.
-     * </p>
+     * <p>The ARN or <code>UUID</code> of a channel.</p>
      */
     inline bool ChannelHasBeenSet() const { return m_channelHasBeenSet; }
 
     /**
-     * <p> The Amazon Resource Name (ARN) of the CloudTrail service-linked channel.
-     * </p>
+     * <p>The ARN or <code>UUID</code> of a channel.</p>
      */
     inline void SetChannel(const Aws::String& value) { m_channelHasBeenSet = true; m_channel = value; }
 
     /**
-     * <p> The Amazon Resource Name (ARN) of the CloudTrail service-linked channel.
-     * </p>
+     * <p>The ARN or <code>UUID</code> of a channel.</p>
      */
     inline void SetChannel(Aws::String&& value) { m_channelHasBeenSet = true; m_channel = std::move(value); }
 
     /**
-     * <p> The Amazon Resource Name (ARN) of the CloudTrail service-linked channel.
-     * </p>
+     * <p>The ARN or <code>UUID</code> of a channel.</p>
      */
     inline void SetChannel(const char* value) { m_channelHasBeenSet = true; m_channel.assign(value); }
 
     /**
-     * <p> The Amazon Resource Name (ARN) of the CloudTrail service-linked channel.
-     * </p>
+     * <p>The ARN or <code>UUID</code> of a channel.</p>
      */
     inline GetChannelRequest& WithChannel(const Aws::String& value) { SetChannel(value); return *this;}
 
     /**
-     * <p> The Amazon Resource Name (ARN) of the CloudTrail service-linked channel.
-     * </p>
+     * <p>The ARN or <code>UUID</code> of a channel.</p>
      */
     inline GetChannelRequest& WithChannel(Aws::String&& value) { SetChannel(std::move(value)); return *this;}
 
     /**
-     * <p> The Amazon Resource Name (ARN) of the CloudTrail service-linked channel.
-     * </p>
+     * <p>The ARN or <code>UUID</code> of a channel.</p>
      */
     inline GetChannelRequest& WithChannel(const char* value) { SetChannel(value); return *this;}
 

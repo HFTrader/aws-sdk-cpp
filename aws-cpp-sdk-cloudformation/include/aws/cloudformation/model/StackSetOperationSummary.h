@@ -10,6 +10,8 @@
 #include <aws/cloudformation/model/StackSetOperationAction.h>
 #include <aws/cloudformation/model/StackSetOperationStatus.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/cloudformation/model/StackSetOperationStatusDetails.h>
+#include <aws/cloudformation/model/StackSetOperationPreferences.h>
 #include <utility>
 
 namespace Aws
@@ -32,15 +34,15 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/cloudformation-2010-05-15/StackSetOperationSummary">AWS
    * API Reference</a></p>
    */
-  class AWS_CLOUDFORMATION_API StackSetOperationSummary
+  class StackSetOperationSummary
   {
   public:
-    StackSetOperationSummary();
-    StackSetOperationSummary(const Aws::Utils::Xml::XmlNode& xmlNode);
-    StackSetOperationSummary& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_CLOUDFORMATION_API StackSetOperationSummary();
+    AWS_CLOUDFORMATION_API StackSetOperationSummary(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_CLOUDFORMATION_API StackSetOperationSummary& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
 
-    void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    void OutputToStream(Aws::OStream& oStream, const char* location) const;
+    AWS_CLOUDFORMATION_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+    AWS_CLOUDFORMATION_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
 
 
     /**
@@ -410,6 +412,56 @@ namespace Model
      */
     inline StackSetOperationSummary& WithStatusReason(const char* value) { SetStatusReason(value); return *this;}
 
+
+    /**
+     * <p>Detailed information about the stack set operation.</p>
+     */
+    inline const StackSetOperationStatusDetails& GetStatusDetails() const{ return m_statusDetails; }
+
+    /**
+     * <p>Detailed information about the stack set operation.</p>
+     */
+    inline bool StatusDetailsHasBeenSet() const { return m_statusDetailsHasBeenSet; }
+
+    /**
+     * <p>Detailed information about the stack set operation.</p>
+     */
+    inline void SetStatusDetails(const StackSetOperationStatusDetails& value) { m_statusDetailsHasBeenSet = true; m_statusDetails = value; }
+
+    /**
+     * <p>Detailed information about the stack set operation.</p>
+     */
+    inline void SetStatusDetails(StackSetOperationStatusDetails&& value) { m_statusDetailsHasBeenSet = true; m_statusDetails = std::move(value); }
+
+    /**
+     * <p>Detailed information about the stack set operation.</p>
+     */
+    inline StackSetOperationSummary& WithStatusDetails(const StackSetOperationStatusDetails& value) { SetStatusDetails(value); return *this;}
+
+    /**
+     * <p>Detailed information about the stack set operation.</p>
+     */
+    inline StackSetOperationSummary& WithStatusDetails(StackSetOperationStatusDetails&& value) { SetStatusDetails(std::move(value)); return *this;}
+
+
+    
+    inline const StackSetOperationPreferences& GetOperationPreferences() const{ return m_operationPreferences; }
+
+    
+    inline bool OperationPreferencesHasBeenSet() const { return m_operationPreferencesHasBeenSet; }
+
+    
+    inline void SetOperationPreferences(const StackSetOperationPreferences& value) { m_operationPreferencesHasBeenSet = true; m_operationPreferences = value; }
+
+    
+    inline void SetOperationPreferences(StackSetOperationPreferences&& value) { m_operationPreferencesHasBeenSet = true; m_operationPreferences = std::move(value); }
+
+    
+    inline StackSetOperationSummary& WithOperationPreferences(const StackSetOperationPreferences& value) { SetOperationPreferences(value); return *this;}
+
+    
+    inline StackSetOperationSummary& WithOperationPreferences(StackSetOperationPreferences&& value) { SetOperationPreferences(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_operationId;
@@ -429,6 +481,12 @@ namespace Model
 
     Aws::String m_statusReason;
     bool m_statusReasonHasBeenSet = false;
+
+    StackSetOperationStatusDetails m_statusDetails;
+    bool m_statusDetailsHasBeenSet = false;
+
+    StackSetOperationPreferences m_operationPreferences;
+    bool m_operationPreferencesHasBeenSet = false;
   };
 
 } // namespace Model

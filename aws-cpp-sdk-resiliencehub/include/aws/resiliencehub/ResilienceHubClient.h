@@ -7,6 +7,7 @@
 #include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/resiliencehub/ResilienceHubServiceClientModel.h>
 
@@ -23,33 +24,60 @@ namespace ResilienceHub
    * your applications are met, and resolve issues before they are released into
    * production. </p>
    */
-  class AWS_RESILIENCEHUB_API ResilienceHubClient : public Aws::Client::AWSJsonClient
+  class AWS_RESILIENCEHUB_API ResilienceHubClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<ResilienceHubClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        ResilienceHubClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        ResilienceHubClient(const Aws::ResilienceHub::ResilienceHubClientConfiguration& clientConfiguration = Aws::ResilienceHub::ResilienceHubClientConfiguration(),
+                            std::shared_ptr<ResilienceHubEndpointProviderBase> endpointProvider = Aws::MakeShared<ResilienceHubEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         ResilienceHubClient(const Aws::Auth::AWSCredentials& credentials,
-                            const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                            std::shared_ptr<ResilienceHubEndpointProviderBase> endpointProvider = Aws::MakeShared<ResilienceHubEndpointProvider>(ALLOCATION_TAG),
+                            const Aws::ResilienceHub::ResilienceHubClientConfiguration& clientConfiguration = Aws::ResilienceHub::ResilienceHubClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         ResilienceHubClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                            const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                            std::shared_ptr<ResilienceHubEndpointProviderBase> endpointProvider = Aws::MakeShared<ResilienceHubEndpointProvider>(ALLOCATION_TAG),
+                            const Aws::ResilienceHub::ResilienceHubClientConfiguration& clientConfiguration = Aws::ResilienceHub::ResilienceHubClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ResilienceHubClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ResilienceHubClient(const Aws::Auth::AWSCredentials& credentials,
+                            const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        ResilienceHubClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                            const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~ResilienceHubClient();
-
 
         /**
          * <p>Adds the resource mapping for the draft application version.</p><p><h3>See
@@ -74,13 +102,13 @@ namespace ResilienceHub
          * collection of Amazon Web Services resources structured to prevent and recover
          * Amazon Web Services application disruptions. To describe a Resilience Hub
          * application, you provide an application name, resources from one or more–up to
-         * five–CloudFormation stacks, and an appropriate resiliency policy.</p>
-         * <pre><code> &lt;p&gt;After you create a Resilience Hub application, you publish
-         * it so that you can run a resiliency assessment on it. You can then use
-         * recommendations from the assessment to improve resiliency by running another
-         * assessment, comparing results, and then iterating the process until you achieve
-         * your goals for recovery time objective (RTO) and recovery point objective
-         * (RPO).&lt;/p&gt; </code></pre><p><h3>See Also:</h3>   <a
+         * five–CloudFormation stacks, and an appropriate resiliency policy.</p> <p>After
+         * you create a Resilience Hub application, you publish it so that you can run a
+         * resiliency assessment on it. You can then use recommendations from the
+         * assessment to improve resiliency by running another assessment, comparing
+         * results, and then iterating the process until you achieve your goals for
+         * recovery time objective (RTO) and recovery point objective (RPO).</p><p><h3>See
+         * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/CreateApp">AWS
          * API Reference</a></p>
          */
@@ -763,12 +791,14 @@ namespace ResilienceHub
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<ResilienceHubEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<ResilienceHubClient>;
+      void init(const ResilienceHubClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      ResilienceHubClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<ResilienceHubEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace ResilienceHub

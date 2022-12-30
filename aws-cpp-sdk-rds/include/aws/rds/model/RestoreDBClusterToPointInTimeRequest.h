@@ -26,10 +26,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/RestoreDBClusterToPointInTimeMessage">AWS
    * API Reference</a></p>
    */
-  class AWS_RDS_API RestoreDBClusterToPointInTimeRequest : public RDSRequest
+  class RestoreDBClusterToPointInTimeRequest : public RDSRequest
   {
   public:
-    RestoreDBClusterToPointInTimeRequest();
+    AWS_RDS_API RestoreDBClusterToPointInTimeRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -37,10 +37,10 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "RestoreDBClusterToPointInTime"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_RDS_API Aws::String SerializePayload() const override;
 
   protected:
-    void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+    AWS_RDS_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
 
   public:
 
@@ -1734,48 +1734,44 @@ namespace Model
     /**
      * <p>The amount of Provisioned IOPS (input/output operations per second) to be
      * initially allocated for each DB instance in the Multi-AZ DB cluster.</p> <p>For
-     * information about valid <code>Iops</code> values, see <a
+     * information about valid IOPS values, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS">Amazon
-     * RDS Provisioned IOPS storage to improve performance</a> in the <i>Amazon RDS
-     * User Guide</i>.</p> <p>Constraints: Must be a multiple between .5 and 50 of the
-     * storage amount for the DB instance.</p> <p>Valid for: Multi-AZ DB clusters
-     * only</p>
+     * RDS Provisioned IOPS storage</a> in the <i>Amazon RDS User Guide</i>.</p>
+     * <p>Constraints: Must be a multiple between .5 and 50 of the storage amount for
+     * the DB instance.</p> <p>Valid for: Multi-AZ DB clusters only</p>
      */
     inline int GetIops() const{ return m_iops; }
 
     /**
      * <p>The amount of Provisioned IOPS (input/output operations per second) to be
      * initially allocated for each DB instance in the Multi-AZ DB cluster.</p> <p>For
-     * information about valid <code>Iops</code> values, see <a
+     * information about valid IOPS values, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS">Amazon
-     * RDS Provisioned IOPS storage to improve performance</a> in the <i>Amazon RDS
-     * User Guide</i>.</p> <p>Constraints: Must be a multiple between .5 and 50 of the
-     * storage amount for the DB instance.</p> <p>Valid for: Multi-AZ DB clusters
-     * only</p>
+     * RDS Provisioned IOPS storage</a> in the <i>Amazon RDS User Guide</i>.</p>
+     * <p>Constraints: Must be a multiple between .5 and 50 of the storage amount for
+     * the DB instance.</p> <p>Valid for: Multi-AZ DB clusters only</p>
      */
     inline bool IopsHasBeenSet() const { return m_iopsHasBeenSet; }
 
     /**
      * <p>The amount of Provisioned IOPS (input/output operations per second) to be
      * initially allocated for each DB instance in the Multi-AZ DB cluster.</p> <p>For
-     * information about valid <code>Iops</code> values, see <a
+     * information about valid IOPS values, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS">Amazon
-     * RDS Provisioned IOPS storage to improve performance</a> in the <i>Amazon RDS
-     * User Guide</i>.</p> <p>Constraints: Must be a multiple between .5 and 50 of the
-     * storage amount for the DB instance.</p> <p>Valid for: Multi-AZ DB clusters
-     * only</p>
+     * RDS Provisioned IOPS storage</a> in the <i>Amazon RDS User Guide</i>.</p>
+     * <p>Constraints: Must be a multiple between .5 and 50 of the storage amount for
+     * the DB instance.</p> <p>Valid for: Multi-AZ DB clusters only</p>
      */
     inline void SetIops(int value) { m_iopsHasBeenSet = true; m_iops = value; }
 
     /**
      * <p>The amount of Provisioned IOPS (input/output operations per second) to be
      * initially allocated for each DB instance in the Multi-AZ DB cluster.</p> <p>For
-     * information about valid <code>Iops</code> values, see <a
+     * information about valid IOPS values, see <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#USER_PIOPS">Amazon
-     * RDS Provisioned IOPS storage to improve performance</a> in the <i>Amazon RDS
-     * User Guide</i>.</p> <p>Constraints: Must be a multiple between .5 and 50 of the
-     * storage amount for the DB instance.</p> <p>Valid for: Multi-AZ DB clusters
-     * only</p>
+     * RDS Provisioned IOPS storage</a> in the <i>Amazon RDS User Guide</i>.</p>
+     * <p>Constraints: Must be a multiple between .5 and 50 of the storage amount for
+     * the DB instance.</p> <p>Valid for: Multi-AZ DB clusters only</p>
      */
     inline RestoreDBClusterToPointInTimeRequest& WithIops(int value) { SetIops(value); return *this;}
 

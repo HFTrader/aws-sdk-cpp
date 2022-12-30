@@ -7,10 +7,12 @@
 
 /* Generic header includes */
 #include <aws/workdocs/WorkDocsErrors.h>
+#include <aws/core/client/GenericClientConfiguration.h>
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/client/AsyncCallerContext.h>
 #include <aws/core/http/HttpTypes.h>
+#include <aws/workdocs/WorkDocsEndpointProvider.h>
 #include <future>
 #include <functional>
 /* End of generic header includes */
@@ -78,6 +80,10 @@ namespace Aws
 
   namespace WorkDocs
   {
+    using WorkDocsClientConfiguration = Aws::Client::GenericClientConfiguration<false>;
+    using WorkDocsEndpointProviderBase = Aws::WorkDocs::Endpoint::WorkDocsEndpointProviderBase;
+    using WorkDocsEndpointProvider = Aws::WorkDocs::Endpoint::WorkDocsEndpointProvider;
+
     namespace Model
     {
       /* Service model forward declarations required in WorkDocsClient header */
@@ -94,6 +100,7 @@ namespace Aws
       class DeleteCommentRequest;
       class DeleteCustomMetadataRequest;
       class DeleteDocumentRequest;
+      class DeleteDocumentVersionRequest;
       class DeleteFolderRequest;
       class DeleteFolderContentsRequest;
       class DeleteLabelsRequest;
@@ -118,6 +125,7 @@ namespace Aws
       class InitiateDocumentVersionUploadRequest;
       class RemoveAllResourcePermissionsRequest;
       class RemoveResourcePermissionRequest;
+      class RestoreDocumentVersionsRequest;
       class UpdateDocumentRequest;
       class UpdateDocumentVersionRequest;
       class UpdateFolderRequest;
@@ -138,6 +146,7 @@ namespace Aws
       typedef Aws::Utils::Outcome<Aws::NoResult, WorkDocsError> DeleteCommentOutcome;
       typedef Aws::Utils::Outcome<DeleteCustomMetadataResult, WorkDocsError> DeleteCustomMetadataOutcome;
       typedef Aws::Utils::Outcome<Aws::NoResult, WorkDocsError> DeleteDocumentOutcome;
+      typedef Aws::Utils::Outcome<Aws::NoResult, WorkDocsError> DeleteDocumentVersionOutcome;
       typedef Aws::Utils::Outcome<Aws::NoResult, WorkDocsError> DeleteFolderOutcome;
       typedef Aws::Utils::Outcome<Aws::NoResult, WorkDocsError> DeleteFolderContentsOutcome;
       typedef Aws::Utils::Outcome<DeleteLabelsResult, WorkDocsError> DeleteLabelsOutcome;
@@ -162,6 +171,7 @@ namespace Aws
       typedef Aws::Utils::Outcome<InitiateDocumentVersionUploadResult, WorkDocsError> InitiateDocumentVersionUploadOutcome;
       typedef Aws::Utils::Outcome<Aws::NoResult, WorkDocsError> RemoveAllResourcePermissionsOutcome;
       typedef Aws::Utils::Outcome<Aws::NoResult, WorkDocsError> RemoveResourcePermissionOutcome;
+      typedef Aws::Utils::Outcome<Aws::NoResult, WorkDocsError> RestoreDocumentVersionsOutcome;
       typedef Aws::Utils::Outcome<Aws::NoResult, WorkDocsError> UpdateDocumentOutcome;
       typedef Aws::Utils::Outcome<Aws::NoResult, WorkDocsError> UpdateDocumentVersionOutcome;
       typedef Aws::Utils::Outcome<Aws::NoResult, WorkDocsError> UpdateFolderOutcome;
@@ -182,6 +192,7 @@ namespace Aws
       typedef std::future<DeleteCommentOutcome> DeleteCommentOutcomeCallable;
       typedef std::future<DeleteCustomMetadataOutcome> DeleteCustomMetadataOutcomeCallable;
       typedef std::future<DeleteDocumentOutcome> DeleteDocumentOutcomeCallable;
+      typedef std::future<DeleteDocumentVersionOutcome> DeleteDocumentVersionOutcomeCallable;
       typedef std::future<DeleteFolderOutcome> DeleteFolderOutcomeCallable;
       typedef std::future<DeleteFolderContentsOutcome> DeleteFolderContentsOutcomeCallable;
       typedef std::future<DeleteLabelsOutcome> DeleteLabelsOutcomeCallable;
@@ -206,6 +217,7 @@ namespace Aws
       typedef std::future<InitiateDocumentVersionUploadOutcome> InitiateDocumentVersionUploadOutcomeCallable;
       typedef std::future<RemoveAllResourcePermissionsOutcome> RemoveAllResourcePermissionsOutcomeCallable;
       typedef std::future<RemoveResourcePermissionOutcome> RemoveResourcePermissionOutcomeCallable;
+      typedef std::future<RestoreDocumentVersionsOutcome> RestoreDocumentVersionsOutcomeCallable;
       typedef std::future<UpdateDocumentOutcome> UpdateDocumentOutcomeCallable;
       typedef std::future<UpdateDocumentVersionOutcome> UpdateDocumentVersionOutcomeCallable;
       typedef std::future<UpdateFolderOutcome> UpdateFolderOutcomeCallable;
@@ -229,6 +241,7 @@ namespace Aws
     typedef std::function<void(const WorkDocsClient*, const Model::DeleteCommentRequest&, const Model::DeleteCommentOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DeleteCommentResponseReceivedHandler;
     typedef std::function<void(const WorkDocsClient*, const Model::DeleteCustomMetadataRequest&, const Model::DeleteCustomMetadataOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DeleteCustomMetadataResponseReceivedHandler;
     typedef std::function<void(const WorkDocsClient*, const Model::DeleteDocumentRequest&, const Model::DeleteDocumentOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DeleteDocumentResponseReceivedHandler;
+    typedef std::function<void(const WorkDocsClient*, const Model::DeleteDocumentVersionRequest&, const Model::DeleteDocumentVersionOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DeleteDocumentVersionResponseReceivedHandler;
     typedef std::function<void(const WorkDocsClient*, const Model::DeleteFolderRequest&, const Model::DeleteFolderOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DeleteFolderResponseReceivedHandler;
     typedef std::function<void(const WorkDocsClient*, const Model::DeleteFolderContentsRequest&, const Model::DeleteFolderContentsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DeleteFolderContentsResponseReceivedHandler;
     typedef std::function<void(const WorkDocsClient*, const Model::DeleteLabelsRequest&, const Model::DeleteLabelsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DeleteLabelsResponseReceivedHandler;
@@ -253,6 +266,7 @@ namespace Aws
     typedef std::function<void(const WorkDocsClient*, const Model::InitiateDocumentVersionUploadRequest&, const Model::InitiateDocumentVersionUploadOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > InitiateDocumentVersionUploadResponseReceivedHandler;
     typedef std::function<void(const WorkDocsClient*, const Model::RemoveAllResourcePermissionsRequest&, const Model::RemoveAllResourcePermissionsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > RemoveAllResourcePermissionsResponseReceivedHandler;
     typedef std::function<void(const WorkDocsClient*, const Model::RemoveResourcePermissionRequest&, const Model::RemoveResourcePermissionOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > RemoveResourcePermissionResponseReceivedHandler;
+    typedef std::function<void(const WorkDocsClient*, const Model::RestoreDocumentVersionsRequest&, const Model::RestoreDocumentVersionsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > RestoreDocumentVersionsResponseReceivedHandler;
     typedef std::function<void(const WorkDocsClient*, const Model::UpdateDocumentRequest&, const Model::UpdateDocumentOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > UpdateDocumentResponseReceivedHandler;
     typedef std::function<void(const WorkDocsClient*, const Model::UpdateDocumentVersionRequest&, const Model::UpdateDocumentVersionOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > UpdateDocumentVersionResponseReceivedHandler;
     typedef std::function<void(const WorkDocsClient*, const Model::UpdateFolderRequest&, const Model::UpdateFolderOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > UpdateFolderResponseReceivedHandler;

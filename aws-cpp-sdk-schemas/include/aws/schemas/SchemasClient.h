@@ -7,6 +7,7 @@
 #include <aws/schemas/Schemas_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/schemas/SchemasServiceClientModel.h>
 
@@ -17,33 +18,60 @@ namespace Schemas
   /**
    * <p>Amazon EventBridge Schema Registry</p>
    */
-  class AWS_SCHEMAS_API SchemasClient : public Aws::Client::AWSJsonClient
+  class AWS_SCHEMAS_API SchemasClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<SchemasClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        SchemasClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        SchemasClient(const Aws::Schemas::SchemasClientConfiguration& clientConfiguration = Aws::Schemas::SchemasClientConfiguration(),
+                      std::shared_ptr<SchemasEndpointProviderBase> endpointProvider = Aws::MakeShared<SchemasEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         SchemasClient(const Aws::Auth::AWSCredentials& credentials,
-                      const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                      std::shared_ptr<SchemasEndpointProviderBase> endpointProvider = Aws::MakeShared<SchemasEndpointProvider>(ALLOCATION_TAG),
+                      const Aws::Schemas::SchemasClientConfiguration& clientConfiguration = Aws::Schemas::SchemasClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         SchemasClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                      const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                      std::shared_ptr<SchemasEndpointProviderBase> endpointProvider = Aws::MakeShared<SchemasEndpointProvider>(ALLOCATION_TAG),
+                      const Aws::Schemas::SchemasClientConfiguration& clientConfiguration = Aws::Schemas::SchemasClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SchemasClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SchemasClient(const Aws::Auth::AWSCredentials& credentials,
+                      const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        SchemasClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                      const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~SchemasClient();
-
 
         /**
          * <p>Creates a discoverer.</p><p><h3>See Also:</h3>   <a
@@ -578,12 +606,14 @@ namespace Schemas
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<SchemasEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<SchemasClient>;
+      void init(const SchemasClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      SchemasClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<SchemasEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Schemas

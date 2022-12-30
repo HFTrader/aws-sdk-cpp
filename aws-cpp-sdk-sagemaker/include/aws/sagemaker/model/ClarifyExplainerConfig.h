@@ -31,19 +31,19 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ClarifyExplainerConfig">AWS
    * API Reference</a></p>
    */
-  class AWS_SAGEMAKER_API ClarifyExplainerConfig
+  class ClarifyExplainerConfig
   {
   public:
-    ClarifyExplainerConfig();
-    ClarifyExplainerConfig(Aws::Utils::Json::JsonView jsonValue);
-    ClarifyExplainerConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_SAGEMAKER_API ClarifyExplainerConfig();
+    AWS_SAGEMAKER_API ClarifyExplainerConfig(Aws::Utils::Json::JsonView jsonValue);
+    AWS_SAGEMAKER_API ClarifyExplainerConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
      * <p>A JMESPath boolean expression used to filter which records to explain.
      * Explanations are activated by default. See <a
-     * href="https://docs.aws.amazon.com/sagemaker-dg/src/AWSIronmanApiDoc/build/server-root/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
      * <code>EnableExplanations</code> </a>for additional information.</p>
      */
     inline const Aws::String& GetEnableExplanations() const{ return m_enableExplanations; }
@@ -51,7 +51,7 @@ namespace Model
     /**
      * <p>A JMESPath boolean expression used to filter which records to explain.
      * Explanations are activated by default. See <a
-     * href="https://docs.aws.amazon.com/sagemaker-dg/src/AWSIronmanApiDoc/build/server-root/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
      * <code>EnableExplanations</code> </a>for additional information.</p>
      */
     inline bool EnableExplanationsHasBeenSet() const { return m_enableExplanationsHasBeenSet; }
@@ -59,7 +59,7 @@ namespace Model
     /**
      * <p>A JMESPath boolean expression used to filter which records to explain.
      * Explanations are activated by default. See <a
-     * href="https://docs.aws.amazon.com/sagemaker-dg/src/AWSIronmanApiDoc/build/server-root/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
      * <code>EnableExplanations</code> </a>for additional information.</p>
      */
     inline void SetEnableExplanations(const Aws::String& value) { m_enableExplanationsHasBeenSet = true; m_enableExplanations = value; }
@@ -67,7 +67,7 @@ namespace Model
     /**
      * <p>A JMESPath boolean expression used to filter which records to explain.
      * Explanations are activated by default. See <a
-     * href="https://docs.aws.amazon.com/sagemaker-dg/src/AWSIronmanApiDoc/build/server-root/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
      * <code>EnableExplanations</code> </a>for additional information.</p>
      */
     inline void SetEnableExplanations(Aws::String&& value) { m_enableExplanationsHasBeenSet = true; m_enableExplanations = std::move(value); }
@@ -75,7 +75,7 @@ namespace Model
     /**
      * <p>A JMESPath boolean expression used to filter which records to explain.
      * Explanations are activated by default. See <a
-     * href="https://docs.aws.amazon.com/sagemaker-dg/src/AWSIronmanApiDoc/build/server-root/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
      * <code>EnableExplanations</code> </a>for additional information.</p>
      */
     inline void SetEnableExplanations(const char* value) { m_enableExplanationsHasBeenSet = true; m_enableExplanations.assign(value); }
@@ -83,7 +83,7 @@ namespace Model
     /**
      * <p>A JMESPath boolean expression used to filter which records to explain.
      * Explanations are activated by default. See <a
-     * href="https://docs.aws.amazon.com/sagemaker-dg/src/AWSIronmanApiDoc/build/server-root/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
      * <code>EnableExplanations</code> </a>for additional information.</p>
      */
     inline ClarifyExplainerConfig& WithEnableExplanations(const Aws::String& value) { SetEnableExplanations(value); return *this;}
@@ -91,7 +91,7 @@ namespace Model
     /**
      * <p>A JMESPath boolean expression used to filter which records to explain.
      * Explanations are activated by default. See <a
-     * href="https://docs.aws.amazon.com/sagemaker-dg/src/AWSIronmanApiDoc/build/server-root/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
      * <code>EnableExplanations</code> </a>for additional information.</p>
      */
     inline ClarifyExplainerConfig& WithEnableExplanations(Aws::String&& value) { SetEnableExplanations(std::move(value)); return *this;}
@@ -99,7 +99,7 @@ namespace Model
     /**
      * <p>A JMESPath boolean expression used to filter which records to explain.
      * Explanations are activated by default. See <a
-     * href="https://docs.aws.amazon.com/sagemaker-dg/src/AWSIronmanApiDoc/build/server-root/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
+     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
      * <code>EnableExplanations</code> </a>for additional information.</p>
      */
     inline ClarifyExplainerConfig& WithEnableExplanations(const char* value) { SetEnableExplanations(value); return *this;}

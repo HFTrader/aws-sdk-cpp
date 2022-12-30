@@ -28,12 +28,12 @@ namespace WorkSpaces
 {
 namespace Model
 {
-  class AWS_WORKSPACES_API CreateWorkspaceImageResult
+  class CreateWorkspaceImageResult
   {
   public:
-    CreateWorkspaceImageResult();
-    CreateWorkspaceImageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    CreateWorkspaceImageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+    AWS_WORKSPACES_API CreateWorkspaceImageResult();
+    AWS_WORKSPACES_API CreateWorkspaceImageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+    AWS_WORKSPACES_API CreateWorkspaceImageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
 
     /**
@@ -201,7 +201,7 @@ namespace Model
      * Own License (BYOL) is enabled, this value is set to DEDICATED. For more
      * information, see <a
      * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/byol-windows-images.htm">
-     * Bring Your Own Windows Desktop Images.</a> </p>
+     * Bring Your Own Windows Desktop Images.</a>.</p>
      */
     inline const WorkspaceImageRequiredTenancy& GetRequiredTenancy() const{ return m_requiredTenancy; }
 
@@ -210,7 +210,7 @@ namespace Model
      * Own License (BYOL) is enabled, this value is set to DEDICATED. For more
      * information, see <a
      * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/byol-windows-images.htm">
-     * Bring Your Own Windows Desktop Images.</a> </p>
+     * Bring Your Own Windows Desktop Images.</a>.</p>
      */
     inline void SetRequiredTenancy(const WorkspaceImageRequiredTenancy& value) { m_requiredTenancy = value; }
 
@@ -219,7 +219,7 @@ namespace Model
      * Own License (BYOL) is enabled, this value is set to DEDICATED. For more
      * information, see <a
      * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/byol-windows-images.htm">
-     * Bring Your Own Windows Desktop Images.</a> </p>
+     * Bring Your Own Windows Desktop Images.</a>.</p>
      */
     inline void SetRequiredTenancy(WorkspaceImageRequiredTenancy&& value) { m_requiredTenancy = std::move(value); }
 
@@ -228,7 +228,7 @@ namespace Model
      * Own License (BYOL) is enabled, this value is set to DEDICATED. For more
      * information, see <a
      * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/byol-windows-images.htm">
-     * Bring Your Own Windows Desktop Images.</a> </p>
+     * Bring Your Own Windows Desktop Images.</a>.</p>
      */
     inline CreateWorkspaceImageResult& WithRequiredTenancy(const WorkspaceImageRequiredTenancy& value) { SetRequiredTenancy(value); return *this;}
 
@@ -237,7 +237,7 @@ namespace Model
      * Own License (BYOL) is enabled, this value is set to DEDICATED. For more
      * information, see <a
      * href="https://docs.aws.amazon.com/workspaces/latest/adminguide/byol-windows-images.htm">
-     * Bring Your Own Windows Desktop Images.</a> </p>
+     * Bring Your Own Windows Desktop Images.</a>.</p>
      */
     inline CreateWorkspaceImageResult& WithRequiredTenancy(WorkspaceImageRequiredTenancy&& value) { SetRequiredTenancy(std::move(value)); return *this;}
 

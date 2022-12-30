@@ -19,10 +19,10 @@ namespace Model
 
   /**
    */
-  class AWS_EMR_API CreateStudioSessionMappingRequest : public EMRRequest
+  class CreateStudioSessionMappingRequest : public EMRRequest
   {
   public:
-    CreateStudioSessionMappingRequest();
+    AWS_EMR_API CreateStudioSessionMappingRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -30,9 +30,9 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "CreateStudioSessionMapping"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_EMR_API Aws::String SerializePayload() const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_EMR_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 
     /**
@@ -85,96 +85,96 @@ namespace Model
 
 
     /**
-     * <p>The globally unique identifier (GUID) of the user or group from the Amazon
-     * Web Services SSO Identity Store. For more information, see <a
+     * <p>The globally unique identifier (GUID) of the user or group from the IAM
+     * Identity Center Identity Store. For more information, see <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId">UserId</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId">GroupId</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
     inline const Aws::String& GetIdentityId() const{ return m_identityId; }
 
     /**
-     * <p>The globally unique identifier (GUID) of the user or group from the Amazon
-     * Web Services SSO Identity Store. For more information, see <a
+     * <p>The globally unique identifier (GUID) of the user or group from the IAM
+     * Identity Center Identity Store. For more information, see <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId">UserId</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId">GroupId</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
     inline bool IdentityIdHasBeenSet() const { return m_identityIdHasBeenSet; }
 
     /**
-     * <p>The globally unique identifier (GUID) of the user or group from the Amazon
-     * Web Services SSO Identity Store. For more information, see <a
+     * <p>The globally unique identifier (GUID) of the user or group from the IAM
+     * Identity Center Identity Store. For more information, see <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId">UserId</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId">GroupId</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
     inline void SetIdentityId(const Aws::String& value) { m_identityIdHasBeenSet = true; m_identityId = value; }
 
     /**
-     * <p>The globally unique identifier (GUID) of the user or group from the Amazon
-     * Web Services SSO Identity Store. For more information, see <a
+     * <p>The globally unique identifier (GUID) of the user or group from the IAM
+     * Identity Center Identity Store. For more information, see <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId">UserId</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId">GroupId</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
     inline void SetIdentityId(Aws::String&& value) { m_identityIdHasBeenSet = true; m_identityId = std::move(value); }
 
     /**
-     * <p>The globally unique identifier (GUID) of the user or group from the Amazon
-     * Web Services SSO Identity Store. For more information, see <a
+     * <p>The globally unique identifier (GUID) of the user or group from the IAM
+     * Identity Center Identity Store. For more information, see <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId">UserId</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId">GroupId</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
     inline void SetIdentityId(const char* value) { m_identityIdHasBeenSet = true; m_identityId.assign(value); }
 
     /**
-     * <p>The globally unique identifier (GUID) of the user or group from the Amazon
-     * Web Services SSO Identity Store. For more information, see <a
+     * <p>The globally unique identifier (GUID) of the user or group from the IAM
+     * Identity Center Identity Store. For more information, see <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId">UserId</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId">GroupId</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
     inline CreateStudioSessionMappingRequest& WithIdentityId(const Aws::String& value) { SetIdentityId(value); return *this;}
 
     /**
-     * <p>The globally unique identifier (GUID) of the user or group from the Amazon
-     * Web Services SSO Identity Store. For more information, see <a
+     * <p>The globally unique identifier (GUID) of the user or group from the IAM
+     * Identity Center Identity Store. For more information, see <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId">UserId</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId">GroupId</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
     inline CreateStudioSessionMappingRequest& WithIdentityId(Aws::String&& value) { SetIdentityId(std::move(value)); return *this;}
 
     /**
-     * <p>The globally unique identifier (GUID) of the user or group from the Amazon
-     * Web Services SSO Identity Store. For more information, see <a
+     * <p>The globally unique identifier (GUID) of the user or group from the IAM
+     * Identity Center Identity Store. For more information, see <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId">UserId</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId">GroupId</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
@@ -186,7 +186,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName">UserName</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName">DisplayName</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
@@ -197,7 +197,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName">UserName</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName">DisplayName</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
@@ -208,7 +208,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName">UserName</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName">DisplayName</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
@@ -219,7 +219,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName">UserName</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName">DisplayName</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
@@ -230,7 +230,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName">UserName</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName">DisplayName</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
@@ -241,7 +241,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName">UserName</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName">DisplayName</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
@@ -252,7 +252,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName">UserName</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName">DisplayName</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */
@@ -263,7 +263,7 @@ namespace Model
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName">UserName</a>
      * and <a
      * href="https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName">DisplayName</a>
-     * in the <i>Amazon Web Services SSO Identity Store API Reference</i>. Either
+     * in the <i>IAM Identity Center Identity Store API Reference</i>. Either
      * <code>IdentityName</code> or <code>IdentityId</code> must be specified, but not
      * both.</p>
      */

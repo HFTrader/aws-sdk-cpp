@@ -23,10 +23,10 @@ namespace Model
 
   /**
    */
-  class AWS_IOTSITEWISE_API CreateAccessPolicyRequest : public IoTSiteWiseRequest
+  class CreateAccessPolicyRequest : public IoTSiteWiseRequest
   {
   public:
-    CreateAccessPolicyRequest();
+    AWS_IOTSITEWISE_API CreateAccessPolicyRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -34,42 +34,42 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "CreateAccessPolicy"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_IOTSITEWISE_API Aws::String SerializePayload() const override;
 
 
     /**
-     * <p>The identity for this access policy. Choose an Amazon Web Services SSO user,
-     * an Amazon Web Services SSO group, or an IAM user.</p>
+     * <p>The identity for this access policy. Choose an IAM Identity Center user, an
+     * IAM Identity Center group, or an IAM user.</p>
      */
     inline const Identity& GetAccessPolicyIdentity() const{ return m_accessPolicyIdentity; }
 
     /**
-     * <p>The identity for this access policy. Choose an Amazon Web Services SSO user,
-     * an Amazon Web Services SSO group, or an IAM user.</p>
+     * <p>The identity for this access policy. Choose an IAM Identity Center user, an
+     * IAM Identity Center group, or an IAM user.</p>
      */
     inline bool AccessPolicyIdentityHasBeenSet() const { return m_accessPolicyIdentityHasBeenSet; }
 
     /**
-     * <p>The identity for this access policy. Choose an Amazon Web Services SSO user,
-     * an Amazon Web Services SSO group, or an IAM user.</p>
+     * <p>The identity for this access policy. Choose an IAM Identity Center user, an
+     * IAM Identity Center group, or an IAM user.</p>
      */
     inline void SetAccessPolicyIdentity(const Identity& value) { m_accessPolicyIdentityHasBeenSet = true; m_accessPolicyIdentity = value; }
 
     /**
-     * <p>The identity for this access policy. Choose an Amazon Web Services SSO user,
-     * an Amazon Web Services SSO group, or an IAM user.</p>
+     * <p>The identity for this access policy. Choose an IAM Identity Center user, an
+     * IAM Identity Center group, or an IAM user.</p>
      */
     inline void SetAccessPolicyIdentity(Identity&& value) { m_accessPolicyIdentityHasBeenSet = true; m_accessPolicyIdentity = std::move(value); }
 
     /**
-     * <p>The identity for this access policy. Choose an Amazon Web Services SSO user,
-     * an Amazon Web Services SSO group, or an IAM user.</p>
+     * <p>The identity for this access policy. Choose an IAM Identity Center user, an
+     * IAM Identity Center group, or an IAM user.</p>
      */
     inline CreateAccessPolicyRequest& WithAccessPolicyIdentity(const Identity& value) { SetAccessPolicyIdentity(value); return *this;}
 
     /**
-     * <p>The identity for this access policy. Choose an Amazon Web Services SSO user,
-     * an Amazon Web Services SSO group, or an IAM user.</p>
+     * <p>The identity for this access policy. Choose an IAM Identity Center user, an
+     * IAM Identity Center group, or an IAM user.</p>
      */
     inline CreateAccessPolicyRequest& WithAccessPolicyIdentity(Identity&& value) { SetAccessPolicyIdentity(std::move(value)); return *this;}
 

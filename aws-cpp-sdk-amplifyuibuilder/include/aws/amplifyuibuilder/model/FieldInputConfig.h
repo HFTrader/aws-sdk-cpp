@@ -30,13 +30,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/amplifyuibuilder-2021-08-11/FieldInputConfig">AWS
    * API Reference</a></p>
    */
-  class AWS_AMPLIFYUIBUILDER_API FieldInputConfig
+  class FieldInputConfig
   {
   public:
-    FieldInputConfig();
-    FieldInputConfig(Aws::Utils::Json::JsonView jsonValue);
-    FieldInputConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_AMPLIFYUIBUILDER_API FieldInputConfig();
+    AWS_AMPLIFYUIBUILDER_API FieldInputConfig(Aws::Utils::Json::JsonView jsonValue);
+    AWS_AMPLIFYUIBUILDER_API FieldInputConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_AMPLIFYUIBUILDER_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -181,6 +181,31 @@ namespace Model
      * <p>The text to display to describe the field.</p>
      */
     inline FieldInputConfig& WithDescriptiveText(const char* value) { SetDescriptiveText(value); return *this;}
+
+
+    /**
+     * <p>Specifies whether to render the field as an array. This property is ignored
+     * if the <code>dataSourceType</code> for the form is a Data Store.</p>
+     */
+    inline bool GetIsArray() const{ return m_isArray; }
+
+    /**
+     * <p>Specifies whether to render the field as an array. This property is ignored
+     * if the <code>dataSourceType</code> for the form is a Data Store.</p>
+     */
+    inline bool IsArrayHasBeenSet() const { return m_isArrayHasBeenSet; }
+
+    /**
+     * <p>Specifies whether to render the field as an array. This property is ignored
+     * if the <code>dataSourceType</code> for the form is a Data Store.</p>
+     */
+    inline void SetIsArray(bool value) { m_isArrayHasBeenSet = true; m_isArray = value; }
+
+    /**
+     * <p>Specifies whether to render the field as an array. This property is ignored
+     * if the <code>dataSourceType</code> for the form is a Data Store.</p>
+     */
+    inline FieldInputConfig& WithIsArray(bool value) { SetIsArray(value); return *this;}
 
 
     /**
@@ -501,6 +526,9 @@ namespace Model
 
     Aws::String m_descriptiveText;
     bool m_descriptiveTextHasBeenSet = false;
+
+    bool m_isArray;
+    bool m_isArrayHasBeenSet = false;
 
     double m_maxValue;
     bool m_maxValueHasBeenSet = false;

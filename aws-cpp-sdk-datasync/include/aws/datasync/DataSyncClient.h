@@ -7,6 +7,7 @@
 #include <aws/datasync/DataSync_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/datasync/DataSyncServiceClientModel.h>
 
@@ -17,49 +18,77 @@ namespace DataSync
   /**
    * <fullname>DataSync</fullname> <p>DataSync is a managed data transfer service
    * that makes it simpler for you to automate moving data between on-premises
-   * storage and Amazon Simple Storage Service (Amazon S3) or Amazon Elastic File
-   * System (Amazon EFS). </p> <p>This API interface reference for DataSync contains
-   * documentation for a programming interface that you can use to manage
-   * DataSync.</p>
+   * storage and Amazon Web Services storage services. You also can use DataSync to
+   * transfer data between other cloud providers and Amazon Web Services storage
+   * services.</p> <p>This API interface reference includes documentation for using
+   * DataSync programmatically. For complete information, see the <i> <a
+   * href="https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html">DataSync
+   * User Guide</a> </i>.</p>
    */
-  class AWS_DATASYNC_API DataSyncClient : public Aws::Client::AWSJsonClient
+  class AWS_DATASYNC_API DataSyncClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<DataSyncClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        DataSyncClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        DataSyncClient(const Aws::DataSync::DataSyncClientConfiguration& clientConfiguration = Aws::DataSync::DataSyncClientConfiguration(),
+                       std::shared_ptr<DataSyncEndpointProviderBase> endpointProvider = Aws::MakeShared<DataSyncEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         DataSyncClient(const Aws::Auth::AWSCredentials& credentials,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<DataSyncEndpointProviderBase> endpointProvider = Aws::MakeShared<DataSyncEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::DataSync::DataSyncClientConfiguration& clientConfiguration = Aws::DataSync::DataSyncClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         DataSyncClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<DataSyncEndpointProviderBase> endpointProvider = Aws::MakeShared<DataSyncEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::DataSync::DataSyncClientConfiguration& clientConfiguration = Aws::DataSync::DataSyncClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DataSyncClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DataSyncClient(const Aws::Auth::AWSCredentials& credentials,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        DataSyncClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~DataSyncClient();
 
-
         /**
-         * <p>Cancels execution of a task. </p> <p>When you cancel a task execution, the
-         * transfer of some files is abruptly interrupted. The contents of files that are
-         * transferred to the destination might be incomplete or inconsistent with the
-         * source files. However, if you start a new task execution on the same task and
-         * you allow the task execution to complete, file content on the destination is
-         * complete and consistent. This applies to other unexpected failures that
-         * interrupt a task execution. In all of these cases, DataSync successfully
-         * complete the transfer when you start the next task execution.</p><p><h3>See
-         * Also:</h3>   <a
+         * <p>Stops an DataSync task execution that's in progress. The transfer of some
+         * files are abruptly interrupted. File contents that're transferred to the
+         * destination might be incomplete or inconsistent with the source files.</p>
+         * <p>However, if you start a new task execution using the same task and allow it
+         * to finish, file content on the destination will be complete and consistent. This
+         * applies to other unexpected failures that interrupt a task execution. In all of
+         * these cases, DataSync successfully completes the transfer when you start the
+         * next task execution.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/CancelTaskExecution">AWS
          * API Reference</a></p>
          */
@@ -76,20 +105,21 @@ namespace DataSync
         virtual void CancelTaskExecutionAsync(const Model::CancelTaskExecutionRequest& request, const CancelTaskExecutionResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Activates an DataSync agent that you have deployed on your host. The
-         * activation process associates your agent with your account. In the activation
-         * process, you specify information such as the Amazon Web Services Region that you
-         * want to activate the agent in. You activate the agent in the Amazon Web Services
-         * Region where your target locations (in Amazon S3 or Amazon EFS) reside. Your
-         * tasks are created in this Amazon Web Services Region.</p> <p>You can activate
-         * the agent in a VPC (virtual private cloud) or provide the agent access to a VPC
-         * endpoint so you can run tasks without going over the public internet.</p> <p>You
-         * can use an agent for more than one location. If a task uses multiple agents, all
-         * of them need to have status AVAILABLE for the task to run. If you use multiple
-         * agents for a source location, the status of all the agents must be AVAILABLE for
-         * the task to run. </p> <p>Agents are automatically updated by Amazon Web Services
-         * on a regular basis, using a mechanism that ensures minimal interruption to your
-         * tasks.</p> <p/><p><h3>See Also:</h3>   <a
+         * <p>Activates an DataSync agent that you have deployed in your storage
+         * environment. The activation process associates your agent with your account. In
+         * the activation process, you specify information such as the Amazon Web Services
+         * Region that you want to activate the agent in. You activate the agent in the
+         * Amazon Web Services Region where your target locations (in Amazon S3 or Amazon
+         * EFS) reside. Your tasks are created in this Amazon Web Services Region.</p>
+         * <p>You can activate the agent in a VPC (virtual private cloud) or provide the
+         * agent access to a VPC endpoint so you can run tasks without going over the
+         * public internet.</p> <p>You can use an agent for more than one location. If a
+         * task uses multiple agents, all of them need to have status AVAILABLE for the
+         * task to run. If you use multiple agents for a source location, the status of all
+         * the agents must be AVAILABLE for the task to run. </p> <p>Agents are
+         * automatically updated by Amazon Web Services on a regular basis, using a
+         * mechanism that ensures minimal interruption to your tasks.</p><p><h3>See
+         * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/CreateAgent">AWS
          * API Reference</a></p>
          */
@@ -164,8 +194,12 @@ namespace DataSync
         virtual void CreateLocationFsxOntapAsync(const Model::CreateLocationFsxOntapRequest& request, const CreateLocationFsxOntapResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Creates an endpoint for an Amazon FSx for OpenZFS file system.</p><p><h3>See
-         * Also:</h3>   <a
+         * <p>Creates an endpoint for an Amazon FSx for OpenZFS file system that DataSync
+         * can access for a transfer. For more information, see <a
+         * href="https://docs.aws.amazon.com/datasync/latest/userguide/create-openzfs-location.html">Creating
+         * a location for FSx for OpenZFS</a>.</p>  <p>Request parameters related to
+         * <code>SMB</code> aren't supported with the <code>CreateLocationFsxOpenZfs</code>
+         * operation.</p> <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/CreateLocationFsxOpenZfs">AWS
          * API Reference</a></p>
          */
@@ -256,8 +290,8 @@ namespace DataSync
         virtual void CreateLocationObjectStorageAsync(const Model::CreateLocationObjectStorageRequest& request, const CreateLocationObjectStorageResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Creates an endpoint for an Amazon S3 bucket.</p> <p>For more information, see
-         * <a
+         * <p>Creates an endpoint for an Amazon S3 bucket that DataSync can access for a
+         * transfer.</p> <p>For more information, see <a
          * href="https://docs.aws.amazon.com/datasync/latest/userguide/create-locations-cli.html#create-location-s3-cli">Create
          * an Amazon S3 location</a> in the <i>DataSync User Guide</i>.</p><p><h3>See
          * Also:</h3>   <a
@@ -298,15 +332,7 @@ namespace DataSync
          * <p>Configures a task, which defines where and how DataSync transfers your
          * data.</p> <p>A task includes a source location, a destination location, and the
          * preferences for how and when you want to transfer your data (such as bandwidth
-         * limits, scheduling, among other options).</p> <p>When you create a task that
-         * transfers data between Amazon Web Services services in different Amazon Web
-         * Services Regions, one of your locations must reside in the Region where you're
-         * using DataSync.</p> <p>For more information, see the following topics:</p> <ul>
-         * <li> <p> <a
-         * href="https://docs.aws.amazon.com/datasync/latest/userguide/working-with-locations.html">Working
-         * with DataSync locations</a> </p> </li> <li> <p> <a
-         * href="https://docs.aws.amazon.com/datasync/latest/userguide/create-task.html">Configure
-         * DataSync task settings</a> </p> </li> </ul><p><h3>See Also:</h3>   <a
+         * limits, scheduling, among other options).</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/CreateTask">AWS
          * API Reference</a></p>
          */
@@ -362,7 +388,7 @@ namespace DataSync
         virtual void DeleteLocationAsync(const Model::DeleteLocationRequest& request, const DeleteLocationResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Deletes a task.</p><p><h3>See Also:</h3>   <a
+         * <p>Deletes an DataSync task.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/DeleteTask">AWS
          * API Reference</a></p>
          */
@@ -417,8 +443,8 @@ namespace DataSync
         virtual void DescribeLocationEfsAsync(const Model::DescribeLocationEfsRequest& request, const DescribeLocationEfsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Returns metadata about an Amazon FSx for Lustre location, such as information
-         * about its path.</p><p><h3>See Also:</h3>   <a
+         * <p>Provides details about how an DataSync location for an Amazon FSx for Lustre
+         * file system is configured.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/DescribeLocationFsxLustre">AWS
          * API Reference</a></p>
          */
@@ -436,7 +462,9 @@ namespace DataSync
 
         /**
          * <p>Provides details about how an DataSync location for an Amazon FSx for NetApp
-         * ONTAP file system is configured.</p><p><h3>See Also:</h3>   <a
+         * ONTAP file system is configured.</p>  <p>If your location uses SMB, the
+         * <code>DescribeLocationFsxOntap</code> operation doesn't actually return a
+         * <code>Password</code>.</p> <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/DescribeLocationFsxOntap">AWS
          * API Reference</a></p>
          */
@@ -453,8 +481,11 @@ namespace DataSync
         virtual void DescribeLocationFsxOntapAsync(const Model::DescribeLocationFsxOntapRequest& request, const DescribeLocationFsxOntapResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Returns metadata about an Amazon FSx for OpenZFS location, such as
-         * information about its path.</p><p><h3>See Also:</h3>   <a
+         * <p>Provides details about how an DataSync location for an Amazon FSx for OpenZFS
+         * file system is configured.</p>  <p>Response elements related to
+         * <code>SMB</code> aren't supported with the
+         * <code>DescribeLocationFsxOpenZfs</code> operation.</p> <p><h3>See
+         * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/DescribeLocationFsxOpenZfs">AWS
          * API Reference</a></p>
          */
@@ -660,8 +691,8 @@ namespace DataSync
         virtual void ListLocationsAsync(const Model::ListLocationsRequest& request, const ListLocationsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Returns all the tags associated with a specified resource. </p><p><h3>See
-         * Also:</h3>   <a
+         * <p>Returns all the tags associated with an Amazon Web Services
+         * resource.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/ListTagsForResource">AWS
          * API Reference</a></p>
          */
@@ -713,13 +744,11 @@ namespace DataSync
         virtual void ListTasksAsync(const Model::ListTasksRequest& request, const ListTasksResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Starts a specific invocation of a task. A <code>TaskExecution</code> value
-         * represents an individual run of a task. Each task can have at most one
-         * <code>TaskExecution</code> at a time.</p> <p> <code>TaskExecution</code> has the
-         * following transition phases: INITIALIZING | PREPARING | TRANSFERRING | VERIFYING
-         * | SUCCESS/FAILURE. </p> <p>For detailed information, see the Task Execution
-         * section in the Components and Terminology topic in the <i>DataSync User
-         * Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * <p>Starts an DataSync task. For each task, you can only run one task execution
+         * at a time.</p> <p>There are several phases to a task execution. For more
+         * information, see <a
+         * href="https://docs.aws.amazon.com/datasync/latest/userguide/working-with-task-executions.html#understand-task-execution-statuses">Task
+         * execution statuses</a>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/StartTaskExecution">AWS
          * API Reference</a></p>
          */
@@ -736,8 +765,10 @@ namespace DataSync
         virtual void StartTaskExecutionAsync(const Model::StartTaskExecutionRequest& request, const StartTaskExecutionResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Applies a key-value pair to an Amazon Web Services resource.</p><p><h3>See
-         * Also:</h3>   <a
+         * <p>Applies a <i>tag</i> to an Amazon Web Services resource. Tags are key-value
+         * pairs that can help you manage, filter, and search for your resources.</p>
+         * <p>These include DataSync resources, such as locations, tasks, and task
+         * executions.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/TagResource">AWS
          * API Reference</a></p>
          */
@@ -754,7 +785,7 @@ namespace DataSync
         virtual void TagResourceAsync(const Model::TagResourceRequest& request, const TagResourceResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Removes a tag from an Amazon Web Services resource.</p><p><h3>See Also:</h3> 
+         * <p>Removes tags from an Amazon Web Services resource.</p><p><h3>See Also:</h3>  
          * <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/UntagResource">AWS
          * API Reference</a></p>
@@ -827,9 +858,9 @@ namespace DataSync
         virtual void UpdateLocationNfsAsync(const Model::UpdateLocationNfsRequest& request, const UpdateLocationNfsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Updates some of the parameters of a previously created location for
-         * self-managed object storage server access. For information about creating a
-         * self-managed object storage location, see <a
+         * <p>Updates some parameters of an existing object storage location that DataSync
+         * accesses for a transfer. For information about creating a self-managed object
+         * storage location, see <a
          * href="https://docs.aws.amazon.com/datasync/latest/userguide/create-object-location.html">Creating
          * a location for object storage</a>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/datasync-2018-11-09/UpdateLocationObjectStorage">AWS
@@ -911,12 +942,14 @@ namespace DataSync
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<DataSyncEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<DataSyncClient>;
+      void init(const DataSyncClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      DataSyncClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<DataSyncEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace DataSync

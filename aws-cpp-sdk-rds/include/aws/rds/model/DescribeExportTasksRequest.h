@@ -8,6 +8,7 @@
 #include <aws/rds/RDSRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/rds/model/ExportSourceType.h>
 #include <aws/rds/model/Filter.h>
 #include <utility>
 
@@ -20,10 +21,10 @@ namespace Model
 
   /**
    */
-  class AWS_RDS_API DescribeExportTasksRequest : public RDSRequest
+  class DescribeExportTasksRequest : public RDSRequest
   {
   public:
-    DescribeExportTasksRequest();
+    AWS_RDS_API DescribeExportTasksRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -31,10 +32,10 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "DescribeExportTasks"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_RDS_API Aws::String SerializePayload() const override;
 
   protected:
-    void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+    AWS_RDS_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
 
   public:
 
@@ -358,6 +359,37 @@ namespace Model
      */
     inline DescribeExportTasksRequest& WithMaxRecords(int value) { SetMaxRecords(value); return *this;}
 
+
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline const ExportSourceType& GetSourceType() const{ return m_sourceType; }
+
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline bool SourceTypeHasBeenSet() const { return m_sourceTypeHasBeenSet; }
+
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline void SetSourceType(const ExportSourceType& value) { m_sourceTypeHasBeenSet = true; m_sourceType = value; }
+
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline void SetSourceType(ExportSourceType&& value) { m_sourceTypeHasBeenSet = true; m_sourceType = std::move(value); }
+
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline DescribeExportTasksRequest& WithSourceType(const ExportSourceType& value) { SetSourceType(value); return *this;}
+
+    /**
+     * <p>The type of source for the export.</p>
+     */
+    inline DescribeExportTasksRequest& WithSourceType(ExportSourceType&& value) { SetSourceType(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_exportTaskIdentifier;
@@ -374,6 +406,9 @@ namespace Model
 
     int m_maxRecords;
     bool m_maxRecordsHasBeenSet = false;
+
+    ExportSourceType m_sourceType;
+    bool m_sourceTypeHasBeenSet = false;
   };
 
 } // namespace Model

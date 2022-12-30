@@ -7,10 +7,12 @@
 
 /* Generic header includes */
 #include <aws/elasticmapreduce/EMRErrors.h>
+#include <aws/core/client/GenericClientConfiguration.h>
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/client/AsyncCallerContext.h>
 #include <aws/core/http/HttpTypes.h>
+#include <aws/elasticmapreduce/EMREndpointProvider.h>
 #include <future>
 #include <functional>
 /* End of generic header includes */
@@ -32,6 +34,7 @@
 #include <aws/elasticmapreduce/model/DescribeStudioResult.h>
 #include <aws/elasticmapreduce/model/GetAutoTerminationPolicyResult.h>
 #include <aws/elasticmapreduce/model/GetBlockPublicAccessConfigurationResult.h>
+#include <aws/elasticmapreduce/model/GetClusterSessionCredentialsResult.h>
 #include <aws/elasticmapreduce/model/GetManagedScalingPolicyResult.h>
 #include <aws/elasticmapreduce/model/GetStudioSessionMappingResult.h>
 #include <aws/elasticmapreduce/model/ListBootstrapActionsResult.h>
@@ -90,6 +93,10 @@ namespace Aws
 
   namespace EMR
   {
+    using EMRClientConfiguration = Aws::Client::GenericClientConfiguration<false>;
+    using EMREndpointProviderBase = Aws::EMR::Endpoint::EMREndpointProviderBase;
+    using EMREndpointProvider = Aws::EMR::Endpoint::EMREndpointProvider;
+
     namespace Model
     {
       /* Service model forward declarations required in EMRClient header */
@@ -112,6 +119,7 @@ namespace Aws
       class DescribeStudioRequest;
       class GetAutoTerminationPolicyRequest;
       class GetBlockPublicAccessConfigurationRequest;
+      class GetClusterSessionCredentialsRequest;
       class GetManagedScalingPolicyRequest;
       class GetStudioSessionMappingRequest;
       class ListBootstrapActionsRequest;
@@ -166,6 +174,7 @@ namespace Aws
       typedef Aws::Utils::Outcome<DescribeStudioResult, EMRError> DescribeStudioOutcome;
       typedef Aws::Utils::Outcome<GetAutoTerminationPolicyResult, EMRError> GetAutoTerminationPolicyOutcome;
       typedef Aws::Utils::Outcome<GetBlockPublicAccessConfigurationResult, EMRError> GetBlockPublicAccessConfigurationOutcome;
+      typedef Aws::Utils::Outcome<GetClusterSessionCredentialsResult, EMRError> GetClusterSessionCredentialsOutcome;
       typedef Aws::Utils::Outcome<GetManagedScalingPolicyResult, EMRError> GetManagedScalingPolicyOutcome;
       typedef Aws::Utils::Outcome<GetStudioSessionMappingResult, EMRError> GetStudioSessionMappingOutcome;
       typedef Aws::Utils::Outcome<ListBootstrapActionsResult, EMRError> ListBootstrapActionsOutcome;
@@ -220,6 +229,7 @@ namespace Aws
       typedef std::future<DescribeStudioOutcome> DescribeStudioOutcomeCallable;
       typedef std::future<GetAutoTerminationPolicyOutcome> GetAutoTerminationPolicyOutcomeCallable;
       typedef std::future<GetBlockPublicAccessConfigurationOutcome> GetBlockPublicAccessConfigurationOutcomeCallable;
+      typedef std::future<GetClusterSessionCredentialsOutcome> GetClusterSessionCredentialsOutcomeCallable;
       typedef std::future<GetManagedScalingPolicyOutcome> GetManagedScalingPolicyOutcomeCallable;
       typedef std::future<GetStudioSessionMappingOutcome> GetStudioSessionMappingOutcomeCallable;
       typedef std::future<ListBootstrapActionsOutcome> ListBootstrapActionsOutcomeCallable;
@@ -277,6 +287,7 @@ namespace Aws
     typedef std::function<void(const EMRClient*, const Model::DescribeStudioRequest&, const Model::DescribeStudioOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DescribeStudioResponseReceivedHandler;
     typedef std::function<void(const EMRClient*, const Model::GetAutoTerminationPolicyRequest&, const Model::GetAutoTerminationPolicyOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > GetAutoTerminationPolicyResponseReceivedHandler;
     typedef std::function<void(const EMRClient*, const Model::GetBlockPublicAccessConfigurationRequest&, const Model::GetBlockPublicAccessConfigurationOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > GetBlockPublicAccessConfigurationResponseReceivedHandler;
+    typedef std::function<void(const EMRClient*, const Model::GetClusterSessionCredentialsRequest&, const Model::GetClusterSessionCredentialsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > GetClusterSessionCredentialsResponseReceivedHandler;
     typedef std::function<void(const EMRClient*, const Model::GetManagedScalingPolicyRequest&, const Model::GetManagedScalingPolicyOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > GetManagedScalingPolicyResponseReceivedHandler;
     typedef std::function<void(const EMRClient*, const Model::GetStudioSessionMappingRequest&, const Model::GetStudioSessionMappingOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > GetStudioSessionMappingResponseReceivedHandler;
     typedef std::function<void(const EMRClient*, const Model::ListBootstrapActionsRequest&, const Model::ListBootstrapActionsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > ListBootstrapActionsResponseReceivedHandler;

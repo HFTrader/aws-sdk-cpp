@@ -7,6 +7,7 @@
 #include <aws/comprehendmedical/ComprehendMedical_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/comprehendmedical/ComprehendMedicalServiceClientModel.h>
 
@@ -18,33 +19,60 @@ namespace ComprehendMedical
    * <p> Comprehend Medical; extracts structured information from unstructured
    * clinical text. Use these actions to gain insight in your documents. </p>
    */
-  class AWS_COMPREHENDMEDICAL_API ComprehendMedicalClient : public Aws::Client::AWSJsonClient
+  class AWS_COMPREHENDMEDICAL_API ComprehendMedicalClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<ComprehendMedicalClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        ComprehendMedicalClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        ComprehendMedicalClient(const Aws::ComprehendMedical::ComprehendMedicalClientConfiguration& clientConfiguration = Aws::ComprehendMedical::ComprehendMedicalClientConfiguration(),
+                                std::shared_ptr<ComprehendMedicalEndpointProviderBase> endpointProvider = Aws::MakeShared<ComprehendMedicalEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         ComprehendMedicalClient(const Aws::Auth::AWSCredentials& credentials,
-                                const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                std::shared_ptr<ComprehendMedicalEndpointProviderBase> endpointProvider = Aws::MakeShared<ComprehendMedicalEndpointProvider>(ALLOCATION_TAG),
+                                const Aws::ComprehendMedical::ComprehendMedicalClientConfiguration& clientConfiguration = Aws::ComprehendMedical::ComprehendMedicalClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         ComprehendMedicalClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                                const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                std::shared_ptr<ComprehendMedicalEndpointProviderBase> endpointProvider = Aws::MakeShared<ComprehendMedicalEndpointProvider>(ALLOCATION_TAG),
+                                const Aws::ComprehendMedical::ComprehendMedicalClientConfiguration& clientConfiguration = Aws::ComprehendMedical::ComprehendMedicalClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ComprehendMedicalClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ComprehendMedicalClient(const Aws::Auth::AWSCredentials& credentials,
+                                const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        ComprehendMedicalClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                                const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~ComprehendMedicalClient();
-
 
         /**
          * <p>Gets the properties associated with a medical entities detection job. Use
@@ -521,12 +549,14 @@ namespace ComprehendMedical
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<ComprehendMedicalEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<ComprehendMedicalClient>;
+      void init(const ComprehendMedicalClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      ComprehendMedicalClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<ComprehendMedicalEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace ComprehendMedical

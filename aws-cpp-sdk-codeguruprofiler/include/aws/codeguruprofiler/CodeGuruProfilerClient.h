@@ -7,6 +7,7 @@
 #include <aws/codeguruprofiler/CodeGuruProfiler_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/codeguruprofiler/CodeGuruProfilerServiceClientModel.h>
 
@@ -33,33 +34,60 @@ namespace CodeGuruProfiler
    * is Amazon CodeGuru Profiler</a> in the <i>Amazon CodeGuru Profiler User
    * Guide</i>. </p>
    */
-  class AWS_CODEGURUPROFILER_API CodeGuruProfilerClient : public Aws::Client::AWSJsonClient
+  class AWS_CODEGURUPROFILER_API CodeGuruProfilerClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<CodeGuruProfilerClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        CodeGuruProfilerClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        CodeGuruProfilerClient(const Aws::CodeGuruProfiler::CodeGuruProfilerClientConfiguration& clientConfiguration = Aws::CodeGuruProfiler::CodeGuruProfilerClientConfiguration(),
+                               std::shared_ptr<CodeGuruProfilerEndpointProviderBase> endpointProvider = Aws::MakeShared<CodeGuruProfilerEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         CodeGuruProfilerClient(const Aws::Auth::AWSCredentials& credentials,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<CodeGuruProfilerEndpointProviderBase> endpointProvider = Aws::MakeShared<CodeGuruProfilerEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::CodeGuruProfiler::CodeGuruProfilerClientConfiguration& clientConfiguration = Aws::CodeGuruProfiler::CodeGuruProfilerClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         CodeGuruProfilerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<CodeGuruProfilerEndpointProviderBase> endpointProvider = Aws::MakeShared<CodeGuruProfilerEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::CodeGuruProfiler::CodeGuruProfilerClientConfiguration& clientConfiguration = Aws::CodeGuruProfiler::CodeGuruProfilerClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CodeGuruProfilerClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CodeGuruProfilerClient(const Aws::Auth::AWSCredentials& credentials,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        CodeGuruProfilerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~CodeGuruProfilerClient();
-
 
         /**
          * <p>Add up to 2 anomaly notifications channels for a profiling
@@ -557,12 +585,14 @@ namespace CodeGuruProfiler
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<CodeGuruProfilerEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<CodeGuruProfilerClient>;
+      void init(const CodeGuruProfilerClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      CodeGuruProfilerClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<CodeGuruProfilerEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace CodeGuruProfiler

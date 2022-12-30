@@ -7,6 +7,7 @@
 #include <aws/es/ElasticsearchService_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/es/ElasticsearchServiceServiceClientModel.h>
 
@@ -29,33 +30,60 @@ namespace ElasticsearchService
    * href="http://docs.aws.amazon.com/general/latest/gr/rande.html#elasticsearch-service-regions"
    * target="_blank">Regions and Endpoints</a>.</p>
    */
-  class AWS_ELASTICSEARCHSERVICE_API ElasticsearchServiceClient : public Aws::Client::AWSJsonClient
+  class AWS_ELASTICSEARCHSERVICE_API ElasticsearchServiceClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<ElasticsearchServiceClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        ElasticsearchServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        ElasticsearchServiceClient(const Aws::ElasticsearchService::ElasticsearchServiceClientConfiguration& clientConfiguration = Aws::ElasticsearchService::ElasticsearchServiceClientConfiguration(),
+                                   std::shared_ptr<ElasticsearchServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<ElasticsearchServiceEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         ElasticsearchServiceClient(const Aws::Auth::AWSCredentials& credentials,
-                                   const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                   std::shared_ptr<ElasticsearchServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<ElasticsearchServiceEndpointProvider>(ALLOCATION_TAG),
+                                   const Aws::ElasticsearchService::ElasticsearchServiceClientConfiguration& clientConfiguration = Aws::ElasticsearchService::ElasticsearchServiceClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         ElasticsearchServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                                   const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                   std::shared_ptr<ElasticsearchServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<ElasticsearchServiceEndpointProvider>(ALLOCATION_TAG),
+                                   const Aws::ElasticsearchService::ElasticsearchServiceClientConfiguration& clientConfiguration = Aws::ElasticsearchService::ElasticsearchServiceClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ElasticsearchServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ElasticsearchServiceClient(const Aws::Auth::AWSCredentials& credentials,
+                                   const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        ElasticsearchServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                                   const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~ElasticsearchServiceClient();
-
 
         /**
          * <p>Allows the destination domain owner to accept an inbound cross-cluster search
@@ -113,6 +141,24 @@ namespace ElasticsearchService
          * An Async wrapper for AssociatePackage that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void AssociatePackageAsync(const Model::AssociatePackageRequest& request, const AssociatePackageResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Provides access to an Amazon OpenSearch Service domain through the use of an
+         * interface VPC endpoint.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/AuthorizeVpcEndpointAccess">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::AuthorizeVpcEndpointAccessOutcome AuthorizeVpcEndpointAccess(const Model::AuthorizeVpcEndpointAccessRequest& request) const;
+
+        /**
+         * A Callable wrapper for AuthorizeVpcEndpointAccess that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::AuthorizeVpcEndpointAccessOutcomeCallable AuthorizeVpcEndpointAccessCallable(const Model::AuthorizeVpcEndpointAccessRequest& request) const;
+
+        /**
+         * An Async wrapper for AuthorizeVpcEndpointAccess that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void AuthorizeVpcEndpointAccessAsync(const Model::AuthorizeVpcEndpointAccessRequest& request, const AuthorizeVpcEndpointAccessResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Cancels a scheduled service software update for an Amazon ES domain. You can
@@ -188,6 +234,24 @@ namespace ElasticsearchService
          * An Async wrapper for CreatePackage that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void CreatePackageAsync(const Model::CreatePackageRequest& request, const CreatePackageResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Creates an Amazon OpenSearch Service-managed VPC endpoint.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/CreateVpcEndpoint">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CreateVpcEndpointOutcome CreateVpcEndpoint(const Model::CreateVpcEndpointRequest& request) const;
+
+        /**
+         * A Callable wrapper for CreateVpcEndpoint that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CreateVpcEndpointOutcomeCallable CreateVpcEndpointCallable(const Model::CreateVpcEndpointRequest& request) const;
+
+        /**
+         * An Async wrapper for CreateVpcEndpoint that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CreateVpcEndpointAsync(const Model::CreateVpcEndpointRequest& request, const CreateVpcEndpointResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Permanently deletes the specified Elasticsearch domain and all of its data.
@@ -281,6 +345,24 @@ namespace ElasticsearchService
          * An Async wrapper for DeletePackage that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void DeletePackageAsync(const Model::DeletePackageRequest& request, const DeletePackageResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Deletes an Amazon OpenSearch Service-managed interface VPC
+         * endpoint.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/DeleteVpcEndpoint">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DeleteVpcEndpointOutcome DeleteVpcEndpoint(const Model::DeleteVpcEndpointRequest& request) const;
+
+        /**
+         * A Callable wrapper for DeleteVpcEndpoint that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DeleteVpcEndpointOutcomeCallable DeleteVpcEndpointCallable(const Model::DeleteVpcEndpointRequest& request) const;
+
+        /**
+         * An Async wrapper for DeleteVpcEndpoint that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DeleteVpcEndpointAsync(const Model::DeleteVpcEndpointRequest& request, const DeleteVpcEndpointResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Provides scheduled Auto-Tune action details for the Elasticsearch domain,
@@ -489,6 +571,24 @@ namespace ElasticsearchService
         virtual void DescribeReservedElasticsearchInstancesAsync(const Model::DescribeReservedElasticsearchInstancesRequest& request, const DescribeReservedElasticsearchInstancesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Describes one or more Amazon OpenSearch Service-managed VPC
+         * endpoints.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/DescribeVpcEndpoints">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeVpcEndpointsOutcome DescribeVpcEndpoints(const Model::DescribeVpcEndpointsRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeVpcEndpoints that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeVpcEndpointsOutcomeCallable DescribeVpcEndpointsCallable(const Model::DescribeVpcEndpointsRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeVpcEndpoints that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeVpcEndpointsAsync(const Model::DescribeVpcEndpointsRequest& request, const DescribeVpcEndpointsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Dissociates a package from the Amazon ES domain.</p><p><h3>See Also:</h3>  
          * <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/DissociatePackage">AWS
@@ -686,6 +786,61 @@ namespace ElasticsearchService
         virtual void ListTagsAsync(const Model::ListTagsRequest& request, const ListTagsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Retrieves information about each principal that is allowed to access a given
+         * Amazon OpenSearch Service domain through the use of an interface VPC
+         * endpoint.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/ListVpcEndpointAccess">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListVpcEndpointAccessOutcome ListVpcEndpointAccess(const Model::ListVpcEndpointAccessRequest& request) const;
+
+        /**
+         * A Callable wrapper for ListVpcEndpointAccess that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListVpcEndpointAccessOutcomeCallable ListVpcEndpointAccessCallable(const Model::ListVpcEndpointAccessRequest& request) const;
+
+        /**
+         * An Async wrapper for ListVpcEndpointAccess that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListVpcEndpointAccessAsync(const Model::ListVpcEndpointAccessRequest& request, const ListVpcEndpointAccessResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Retrieves all Amazon OpenSearch Service-managed VPC endpoints in the current
+         * account and Region.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/ListVpcEndpoints">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListVpcEndpointsOutcome ListVpcEndpoints(const Model::ListVpcEndpointsRequest& request) const;
+
+        /**
+         * A Callable wrapper for ListVpcEndpoints that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListVpcEndpointsOutcomeCallable ListVpcEndpointsCallable(const Model::ListVpcEndpointsRequest& request) const;
+
+        /**
+         * An Async wrapper for ListVpcEndpoints that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListVpcEndpointsAsync(const Model::ListVpcEndpointsRequest& request, const ListVpcEndpointsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Retrieves all Amazon OpenSearch Service-managed VPC endpoints associated with
+         * a particular domain.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/ListVpcEndpointsForDomain">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListVpcEndpointsForDomainOutcome ListVpcEndpointsForDomain(const Model::ListVpcEndpointsForDomainRequest& request) const;
+
+        /**
+         * A Callable wrapper for ListVpcEndpointsForDomain that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListVpcEndpointsForDomainOutcomeCallable ListVpcEndpointsForDomainCallable(const Model::ListVpcEndpointsForDomainRequest& request) const;
+
+        /**
+         * An Async wrapper for ListVpcEndpointsForDomain that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListVpcEndpointsForDomainAsync(const Model::ListVpcEndpointsForDomainRequest& request, const ListVpcEndpointsForDomainResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Allows you to purchase reserved Elasticsearch instances.</p><p><h3>See
          * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/PurchaseReservedElasticsearchInstanceOffering">AWS
@@ -738,6 +893,24 @@ namespace ElasticsearchService
          * An Async wrapper for RemoveTags that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void RemoveTagsAsync(const Model::RemoveTagsRequest& request, const RemoveTagsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Revokes access to an Amazon OpenSearch Service domain that was provided
+         * through an interface VPC endpoint.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/RevokeVpcEndpointAccess">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::RevokeVpcEndpointAccessOutcome RevokeVpcEndpointAccess(const Model::RevokeVpcEndpointAccessRequest& request) const;
+
+        /**
+         * A Callable wrapper for RevokeVpcEndpointAccess that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::RevokeVpcEndpointAccessOutcomeCallable RevokeVpcEndpointAccessCallable(const Model::RevokeVpcEndpointAccessRequest& request) const;
+
+        /**
+         * An Async wrapper for RevokeVpcEndpointAccess that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void RevokeVpcEndpointAccessAsync(const Model::RevokeVpcEndpointAccessRequest& request, const RevokeVpcEndpointAccessResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Schedules a service software update for an Amazon ES domain.</p><p><h3>See
@@ -794,6 +967,24 @@ namespace ElasticsearchService
         virtual void UpdatePackageAsync(const Model::UpdatePackageRequest& request, const UpdatePackageResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Modifies an Amazon OpenSearch Service-managed interface VPC
+         * endpoint.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/UpdateVpcEndpoint">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::UpdateVpcEndpointOutcome UpdateVpcEndpoint(const Model::UpdateVpcEndpointRequest& request) const;
+
+        /**
+         * A Callable wrapper for UpdateVpcEndpoint that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::UpdateVpcEndpointOutcomeCallable UpdateVpcEndpointCallable(const Model::UpdateVpcEndpointRequest& request) const;
+
+        /**
+         * An Async wrapper for UpdateVpcEndpoint that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void UpdateVpcEndpointAsync(const Model::UpdateVpcEndpointRequest& request, const UpdateVpcEndpointResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Allows you to either upgrade your domain or perform an Upgrade eligibility
          * check to a compatible Elasticsearch version.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/UpgradeElasticsearchDomain">AWS
@@ -813,12 +1004,14 @@ namespace ElasticsearchService
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<ElasticsearchServiceEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<ElasticsearchServiceClient>;
+      void init(const ElasticsearchServiceClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      ElasticsearchServiceClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<ElasticsearchServiceEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace ElasticsearchService

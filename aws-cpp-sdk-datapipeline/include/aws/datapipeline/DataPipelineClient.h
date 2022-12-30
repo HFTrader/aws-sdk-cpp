@@ -7,6 +7,7 @@
 #include <aws/datapipeline/DataPipeline_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/datapipeline/DataPipelineServiceClientModel.h>
 
@@ -34,33 +35,60 @@ namespace DataPipeline
    * web service as it does so. When the task is done, the task runner reports the
    * final success or failure of the task to the web service.</p>
    */
-  class AWS_DATAPIPELINE_API DataPipelineClient : public Aws::Client::AWSJsonClient
+  class AWS_DATAPIPELINE_API DataPipelineClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<DataPipelineClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        DataPipelineClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        DataPipelineClient(const Aws::DataPipeline::DataPipelineClientConfiguration& clientConfiguration = Aws::DataPipeline::DataPipelineClientConfiguration(),
+                           std::shared_ptr<DataPipelineEndpointProviderBase> endpointProvider = Aws::MakeShared<DataPipelineEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         DataPipelineClient(const Aws::Auth::AWSCredentials& credentials,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<DataPipelineEndpointProviderBase> endpointProvider = Aws::MakeShared<DataPipelineEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::DataPipeline::DataPipelineClientConfiguration& clientConfiguration = Aws::DataPipeline::DataPipelineClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         DataPipelineClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<DataPipelineEndpointProviderBase> endpointProvider = Aws::MakeShared<DataPipelineEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::DataPipeline::DataPipelineClientConfiguration& clientConfiguration = Aws::DataPipeline::DataPipelineClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DataPipelineClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DataPipelineClient(const Aws::Auth::AWSCredentials& credentials,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        DataPipelineClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~DataPipelineClient();
-
 
         /**
          * <p>Validates the specified pipeline and starts processing pipeline tasks. If the
@@ -468,12 +496,14 @@ namespace DataPipeline
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<DataPipelineEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<DataPipelineClient>;
+      void init(const DataPipelineClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      DataPipelineClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<DataPipelineEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace DataPipeline

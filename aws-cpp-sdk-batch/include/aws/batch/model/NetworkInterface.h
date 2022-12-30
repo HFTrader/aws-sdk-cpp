@@ -24,18 +24,18 @@ namespace Model
 {
 
   /**
-   * <p>An object representing the elastic network interface for a multi-node
+   * <p>An object that represents the elastic network interface for a multi-node
    * parallel job node.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/NetworkInterface">AWS
    * API Reference</a></p>
    */
-  class AWS_BATCH_API NetworkInterface
+  class NetworkInterface
   {
   public:
-    NetworkInterface();
-    NetworkInterface(Aws::Utils::Json::JsonView jsonValue);
-    NetworkInterface& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_BATCH_API NetworkInterface();
+    AWS_BATCH_API NetworkInterface(Aws::Utils::Json::JsonView jsonValue);
+    AWS_BATCH_API NetworkInterface& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_BATCH_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**

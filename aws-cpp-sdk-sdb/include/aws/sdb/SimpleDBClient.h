@@ -8,6 +8,7 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/AmazonSerializableWebServiceRequest.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/sdb/SimpleDBServiceClientModel.h>
 
@@ -31,31 +32,59 @@ namespace SimpleDB
    * href="http://aws.amazon.com/simpledb/">http://aws.amazon.com/simpledb/</a> for
    * more information. </p>
    */
-  class AWS_SIMPLEDB_API SimpleDBClient : public Aws::Client::AWSXMLClient
+  class AWS_SIMPLEDB_API SimpleDBClient : public Aws::Client::AWSXMLClient, public Aws::Client::ClientWithAsyncTemplateMethods<SimpleDBClient>
   {
     public:
       typedef Aws::Client::AWSXMLClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        SimpleDBClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        SimpleDBClient(const Aws::SimpleDB::SimpleDBClientConfiguration& clientConfiguration = Aws::SimpleDB::SimpleDBClientConfiguration(),
+                       std::shared_ptr<SimpleDBEndpointProviderBase> endpointProvider = Aws::MakeShared<SimpleDBEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         SimpleDBClient(const Aws::Auth::AWSCredentials& credentials,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<SimpleDBEndpointProviderBase> endpointProvider = Aws::MakeShared<SimpleDBEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::SimpleDB::SimpleDBClientConfiguration& clientConfiguration = Aws::SimpleDB::SimpleDBClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         SimpleDBClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<SimpleDBEndpointProviderBase> endpointProvider = Aws::MakeShared<SimpleDBEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::SimpleDB::SimpleDBClientConfiguration& clientConfiguration = Aws::SimpleDB::SimpleDBClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SimpleDBClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SimpleDBClient(const Aws::Auth::AWSCredentials& credentials,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        SimpleDBClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~SimpleDBClient();
 
 
@@ -348,12 +377,14 @@ namespace SimpleDB
 
 
         void OverrideEndpoint(const Aws::String& endpoint);
+        std::shared_ptr<SimpleDBEndpointProviderBase>& accessEndpointProvider();
   private:
-        void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+        friend class Aws::Client::ClientWithAsyncTemplateMethods<SimpleDBClient>;
+        void init(const SimpleDBClientConfiguration& clientConfiguration);
 
-        Aws::String m_uri;
-        Aws::String m_configScheme;
+        SimpleDBClientConfiguration m_clientConfiguration;
         std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+        std::shared_ptr<SimpleDBEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace SimpleDB

@@ -7,6 +7,7 @@
 #include <aws/glue/Glue_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/glue/GlueServiceClientModel.h>
 
@@ -18,33 +19,60 @@ namespace Glue
    * <fullname>Glue</fullname> <p>Defines the public endpoint for the Glue
    * service.</p>
    */
-  class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient
+  class AWS_GLUE_API GlueClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<GlueClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        GlueClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        GlueClient(const Aws::Glue::GlueClientConfiguration& clientConfiguration = Aws::Glue::GlueClientConfiguration(),
+                   std::shared_ptr<GlueEndpointProviderBase> endpointProvider = Aws::MakeShared<GlueEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         GlueClient(const Aws::Auth::AWSCredentials& credentials,
-                   const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                   std::shared_ptr<GlueEndpointProviderBase> endpointProvider = Aws::MakeShared<GlueEndpointProvider>(ALLOCATION_TAG),
+                   const Aws::Glue::GlueClientConfiguration& clientConfiguration = Aws::Glue::GlueClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         GlueClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                   const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                   std::shared_ptr<GlueEndpointProviderBase> endpointProvider = Aws::MakeShared<GlueEndpointProvider>(ALLOCATION_TAG),
+                   const Aws::Glue::GlueClientConfiguration& clientConfiguration = Aws::Glue::GlueClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GlueClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GlueClient(const Aws::Auth::AWSCredentials& credentials,
+                   const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        GlueClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                   const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~GlueClient();
-
 
         /**
          * <p>Creates one or more partitions in a batch operation.</p><p><h3>See Also:</h3>
@@ -201,6 +229,24 @@ namespace Glue
         virtual void BatchGetCustomEntityTypesAsync(const Model::BatchGetCustomEntityTypesRequest& request, const BatchGetCustomEntityTypesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Retrieves a list of data quality results for the specified result
+         * IDs.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetDataQualityResult">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::BatchGetDataQualityResultOutcome BatchGetDataQualityResult(const Model::BatchGetDataQualityResultRequest& request) const;
+
+        /**
+         * A Callable wrapper for BatchGetDataQualityResult that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::BatchGetDataQualityResultOutcomeCallable BatchGetDataQualityResultCallable(const Model::BatchGetDataQualityResultRequest& request) const;
+
+        /**
+         * An Async wrapper for BatchGetDataQualityResult that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void BatchGetDataQualityResultAsync(const Model::BatchGetDataQualityResultRequest& request, const BatchGetDataQualityResultResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Returns a list of resource metadata for a given list of development endpoint
          * names. After calling the <code>ListDevEndpoints</code> operation, you can call
          * this operation to access the data to which you have been granted permissions.
@@ -336,6 +382,42 @@ namespace Glue
          * An Async wrapper for BatchUpdatePartition that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void BatchUpdatePartitionAsync(const Model::BatchUpdatePartitionRequest& request, const BatchUpdatePartitionResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Cancels the specified recommendation run that was being used to generate
+         * rules.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CancelDataQualityRuleRecommendationRun">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CancelDataQualityRuleRecommendationRunOutcome CancelDataQualityRuleRecommendationRun(const Model::CancelDataQualityRuleRecommendationRunRequest& request) const;
+
+        /**
+         * A Callable wrapper for CancelDataQualityRuleRecommendationRun that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CancelDataQualityRuleRecommendationRunOutcomeCallable CancelDataQualityRuleRecommendationRunCallable(const Model::CancelDataQualityRuleRecommendationRunRequest& request) const;
+
+        /**
+         * An Async wrapper for CancelDataQualityRuleRecommendationRun that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CancelDataQualityRuleRecommendationRunAsync(const Model::CancelDataQualityRuleRecommendationRunRequest& request, const CancelDataQualityRuleRecommendationRunResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Cancels a run where a ruleset is being evaluated against a data
+         * source.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CancelDataQualityRulesetEvaluationRun">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CancelDataQualityRulesetEvaluationRunOutcome CancelDataQualityRulesetEvaluationRun(const Model::CancelDataQualityRulesetEvaluationRunRequest& request) const;
+
+        /**
+         * A Callable wrapper for CancelDataQualityRulesetEvaluationRun that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CancelDataQualityRulesetEvaluationRunOutcomeCallable CancelDataQualityRulesetEvaluationRunCallable(const Model::CancelDataQualityRulesetEvaluationRunRequest& request) const;
+
+        /**
+         * An Async wrapper for CancelDataQualityRulesetEvaluationRun that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CancelDataQualityRulesetEvaluationRunAsync(const Model::CancelDataQualityRulesetEvaluationRunRequest& request, const CancelDataQualityRulesetEvaluationRunResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Cancels (stops) a task run. Machine learning task runs are asynchronous tasks
@@ -491,6 +573,26 @@ namespace Glue
          * An Async wrapper for CreateCustomEntityType that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void CreateCustomEntityTypeAsync(const Model::CreateCustomEntityTypeRequest& request, const CreateCustomEntityTypeResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Creates a data quality ruleset with DQDL rules applied to a specified Glue
+         * table.</p> <p>You create the ruleset using the Data Quality Definition Language
+         * (DQDL). For more information, see the Glue developer guide.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateDataQualityRuleset">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CreateDataQualityRulesetOutcome CreateDataQualityRuleset(const Model::CreateDataQualityRulesetRequest& request) const;
+
+        /**
+         * A Callable wrapper for CreateDataQualityRuleset that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CreateDataQualityRulesetOutcomeCallable CreateDataQualityRulesetCallable(const Model::CreateDataQualityRulesetRequest& request) const;
+
+        /**
+         * An Async wrapper for CreateDataQualityRuleset that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CreateDataQualityRulesetAsync(const Model::CreateDataQualityRulesetRequest& request, const CreateDataQualityRulesetResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Creates a new database in a Data Catalog.</p><p><h3>See Also:</h3>   <a
@@ -902,6 +1004,23 @@ namespace Glue
          * An Async wrapper for DeleteCustomEntityType that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void DeleteCustomEntityTypeAsync(const Model::DeleteCustomEntityTypeRequest& request, const DeleteCustomEntityTypeResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Deletes a data quality ruleset.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteDataQualityRuleset">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DeleteDataQualityRulesetOutcome DeleteDataQualityRuleset(const Model::DeleteDataQualityRulesetRequest& request) const;
+
+        /**
+         * A Callable wrapper for DeleteDataQualityRuleset that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DeleteDataQualityRulesetOutcomeCallable DeleteDataQualityRulesetCallable(const Model::DeleteDataQualityRulesetRequest& request) const;
+
+        /**
+         * An Async wrapper for DeleteDataQualityRuleset that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DeleteDataQualityRulesetAsync(const Model::DeleteDataQualityRulesetRequest& request, const DeleteDataQualityRulesetResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Removes a specified database from a Data Catalog.</p>  <p>After
@@ -1511,6 +1630,78 @@ namespace Glue
         virtual void GetDataCatalogEncryptionSettingsAsync(const Model::GetDataCatalogEncryptionSettingsRequest& request, const GetDataCatalogEncryptionSettingsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Retrieves the result of a data quality rule evaluation.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataQualityResult">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetDataQualityResultOutcome GetDataQualityResult(const Model::GetDataQualityResultRequest& request) const;
+
+        /**
+         * A Callable wrapper for GetDataQualityResult that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetDataQualityResultOutcomeCallable GetDataQualityResultCallable(const Model::GetDataQualityResultRequest& request) const;
+
+        /**
+         * An Async wrapper for GetDataQualityResult that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetDataQualityResultAsync(const Model::GetDataQualityResultRequest& request, const GetDataQualityResultResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Gets the specified recommendation run that was used to generate
+         * rules.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataQualityRuleRecommendationRun">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetDataQualityRuleRecommendationRunOutcome GetDataQualityRuleRecommendationRun(const Model::GetDataQualityRuleRecommendationRunRequest& request) const;
+
+        /**
+         * A Callable wrapper for GetDataQualityRuleRecommendationRun that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetDataQualityRuleRecommendationRunOutcomeCallable GetDataQualityRuleRecommendationRunCallable(const Model::GetDataQualityRuleRecommendationRunRequest& request) const;
+
+        /**
+         * An Async wrapper for GetDataQualityRuleRecommendationRun that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetDataQualityRuleRecommendationRunAsync(const Model::GetDataQualityRuleRecommendationRunRequest& request, const GetDataQualityRuleRecommendationRunResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Returns an existing ruleset by identifier or name.</p><p><h3>See Also:</h3>  
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataQualityRuleset">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetDataQualityRulesetOutcome GetDataQualityRuleset(const Model::GetDataQualityRulesetRequest& request) const;
+
+        /**
+         * A Callable wrapper for GetDataQualityRuleset that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetDataQualityRulesetOutcomeCallable GetDataQualityRulesetCallable(const Model::GetDataQualityRulesetRequest& request) const;
+
+        /**
+         * An Async wrapper for GetDataQualityRuleset that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetDataQualityRulesetAsync(const Model::GetDataQualityRulesetRequest& request, const GetDataQualityRulesetResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Retrieves a specific run where a ruleset is evaluated against a data
+         * source.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDataQualityRulesetEvaluationRun">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetDataQualityRulesetEvaluationRunOutcome GetDataQualityRulesetEvaluationRun(const Model::GetDataQualityRulesetEvaluationRunRequest& request) const;
+
+        /**
+         * A Callable wrapper for GetDataQualityRulesetEvaluationRun that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetDataQualityRulesetEvaluationRunOutcomeCallable GetDataQualityRulesetEvaluationRunCallable(const Model::GetDataQualityRulesetEvaluationRunRequest& request) const;
+
+        /**
+         * An Async wrapper for GetDataQualityRulesetEvaluationRun that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetDataQualityRulesetEvaluationRunAsync(const Model::GetDataQualityRulesetEvaluationRunRequest& request, const GetDataQualityRulesetEvaluationRunResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Retrieves the definition of a specified database.</p><p><h3>See Also:</h3>  
          * <a href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDatabase">AWS
          * API Reference</a></p>
@@ -1585,11 +1776,11 @@ namespace Glue
         virtual void GetDevEndpointAsync(const Model::GetDevEndpointRequest& request, const GetDevEndpointResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Retrieves all the development endpoints in this AWS account.</p> 
-         * <p>When you create a development endpoint in a virtual private cloud (VPC), Glue
-         * returns only a private IP address and the public IP address field is not
-         * populated. When you create a non-VPC development endpoint, Glue returns only a
-         * public IP address.</p> <p><h3>See Also:</h3>   <a
+         * <p>Retrieves all the development endpoints in this Amazon Web Services
+         * account.</p>  <p>When you create a development endpoint in a virtual
+         * private cloud (VPC), Glue returns only a private IP address and the public IP
+         * address field is not populated. When you create a non-VPC development endpoint,
+         * Glue returns only a public IP address.</p> <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetDevEndpoints">AWS
          * API Reference</a></p>
          */
@@ -1623,7 +1814,14 @@ namespace Glue
         virtual void GetJobAsync(const Model::GetJobRequest& request, const GetJobResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Returns information on a job bookmark entry.</p><p><h3>See Also:</h3>   <a
+         * <p>Returns information on a job bookmark entry.</p> <p>For more information
+         * about enabling and using job bookmarks, see:</p> <ul> <li> <p> <a
+         * href="https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html">Tracking
+         * processed data using job bookmarks</a> </p> </li> <li> <p> <a
+         * href="https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html">Job
+         * parameters used by Glue</a> </p> </li> <li> <p> <a
+         * href="https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-jobs-job.html#aws-glue-api-jobs-job-Job">Job
+         * structure</a> </p> </li> </ul><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetJobBookmark">AWS
          * API Reference</a></p>
          */
@@ -2446,6 +2644,78 @@ namespace Glue
         virtual void ListCustomEntityTypesAsync(const Model::ListCustomEntityTypesRequest& request, const ListCustomEntityTypesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Returns all data quality execution results for your account.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListDataQualityResults">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListDataQualityResultsOutcome ListDataQualityResults(const Model::ListDataQualityResultsRequest& request) const;
+
+        /**
+         * A Callable wrapper for ListDataQualityResults that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListDataQualityResultsOutcomeCallable ListDataQualityResultsCallable(const Model::ListDataQualityResultsRequest& request) const;
+
+        /**
+         * An Async wrapper for ListDataQualityResults that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListDataQualityResultsAsync(const Model::ListDataQualityResultsRequest& request, const ListDataQualityResultsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Lists the recommendation runs meeting the filter criteria.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListDataQualityRuleRecommendationRuns">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListDataQualityRuleRecommendationRunsOutcome ListDataQualityRuleRecommendationRuns(const Model::ListDataQualityRuleRecommendationRunsRequest& request) const;
+
+        /**
+         * A Callable wrapper for ListDataQualityRuleRecommendationRuns that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListDataQualityRuleRecommendationRunsOutcomeCallable ListDataQualityRuleRecommendationRunsCallable(const Model::ListDataQualityRuleRecommendationRunsRequest& request) const;
+
+        /**
+         * An Async wrapper for ListDataQualityRuleRecommendationRuns that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListDataQualityRuleRecommendationRunsAsync(const Model::ListDataQualityRuleRecommendationRunsRequest& request, const ListDataQualityRuleRecommendationRunsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Lists all the runs meeting the filter criteria, where a ruleset is evaluated
+         * against a data source.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListDataQualityRulesetEvaluationRuns">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListDataQualityRulesetEvaluationRunsOutcome ListDataQualityRulesetEvaluationRuns(const Model::ListDataQualityRulesetEvaluationRunsRequest& request) const;
+
+        /**
+         * A Callable wrapper for ListDataQualityRulesetEvaluationRuns that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListDataQualityRulesetEvaluationRunsOutcomeCallable ListDataQualityRulesetEvaluationRunsCallable(const Model::ListDataQualityRulesetEvaluationRunsRequest& request) const;
+
+        /**
+         * An Async wrapper for ListDataQualityRulesetEvaluationRuns that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListDataQualityRulesetEvaluationRunsAsync(const Model::ListDataQualityRulesetEvaluationRunsRequest& request, const ListDataQualityRulesetEvaluationRunsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Returns a paginated list of rulesets for the specified list of Glue
+         * tables.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListDataQualityRulesets">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListDataQualityRulesetsOutcome ListDataQualityRulesets(const Model::ListDataQualityRulesetsRequest& request) const;
+
+        /**
+         * A Callable wrapper for ListDataQualityRulesets that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListDataQualityRulesetsOutcomeCallable ListDataQualityRulesetsCallable(const Model::ListDataQualityRulesetsRequest& request) const;
+
+        /**
+         * An Async wrapper for ListDataQualityRulesets that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListDataQualityRulesetsAsync(const Model::ListDataQualityRulesetsRequest& request, const ListDataQualityRulesetsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Retrieves the names of all <code>DevEndpoint</code> resources in this Amazon
          * Web Services account, or the resources with the specified tag. This operation
          * allows you to see which resources are available in your account, and their
@@ -2790,7 +3060,14 @@ namespace Glue
         virtual void RemoveSchemaVersionMetadataAsync(const Model::RemoveSchemaVersionMetadataRequest& request, const RemoveSchemaVersionMetadataResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Resets a bookmark entry.</p><p><h3>See Also:</h3>   <a
+         * <p>Resets a bookmark entry.</p> <p>For more information about enabling and using
+         * job bookmarks, see:</p> <ul> <li> <p> <a
+         * href="https://docs.aws.amazon.com/glue/latest/dg/monitor-continuations.html">Tracking
+         * processed data using job bookmarks</a> </p> </li> <li> <p> <a
+         * href="https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html">Job
+         * parameters used by Glue</a> </p> </li> <li> <p> <a
+         * href="https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-jobs-job.html#aws-glue-api-jobs-job-Job">Job
+         * structure</a> </p> </li> </ul><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ResetJobBookmark">AWS
          * API Reference</a></p>
          */
@@ -2922,6 +3199,46 @@ namespace Glue
          * An Async wrapper for StartCrawlerSchedule that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void StartCrawlerScheduleAsync(const Model::StartCrawlerScheduleRequest& request, const StartCrawlerScheduleResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Starts a recommendation run that is used to generate rules when you don't
+         * know what rules to write. Glue Data Quality analyzes the data and comes up with
+         * recommendations for a potential ruleset. You can then triage the ruleset and
+         * modify the generated ruleset to your liking.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/StartDataQualityRuleRecommendationRun">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::StartDataQualityRuleRecommendationRunOutcome StartDataQualityRuleRecommendationRun(const Model::StartDataQualityRuleRecommendationRunRequest& request) const;
+
+        /**
+         * A Callable wrapper for StartDataQualityRuleRecommendationRun that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::StartDataQualityRuleRecommendationRunOutcomeCallable StartDataQualityRuleRecommendationRunCallable(const Model::StartDataQualityRuleRecommendationRunRequest& request) const;
+
+        /**
+         * An Async wrapper for StartDataQualityRuleRecommendationRun that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void StartDataQualityRuleRecommendationRunAsync(const Model::StartDataQualityRuleRecommendationRunRequest& request, const StartDataQualityRuleRecommendationRunResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Once you have a ruleset definition (either recommended or your own), you call
+         * this operation to evaluate the ruleset against a data source (Glue table). The
+         * evaluation computes results which you can retrieve with the
+         * <code>GetDataQualityResult</code> API.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/StartDataQualityRulesetEvaluationRun">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::StartDataQualityRulesetEvaluationRunOutcome StartDataQualityRulesetEvaluationRun(const Model::StartDataQualityRulesetEvaluationRunRequest& request) const;
+
+        /**
+         * A Callable wrapper for StartDataQualityRulesetEvaluationRun that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::StartDataQualityRulesetEvaluationRunOutcomeCallable StartDataQualityRulesetEvaluationRunCallable(const Model::StartDataQualityRulesetEvaluationRunRequest& request) const;
+
+        /**
+         * An Async wrapper for StartDataQualityRulesetEvaluationRun that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void StartDataQualityRulesetEvaluationRunAsync(const Model::StartDataQualityRulesetEvaluationRunRequest& request, const StartDataQualityRulesetEvaluationRunResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Begins an asynchronous task to export all labeled data for a particular
@@ -3351,6 +3668,23 @@ namespace Glue
         virtual void UpdateCrawlerScheduleAsync(const Model::UpdateCrawlerScheduleRequest& request, const UpdateCrawlerScheduleResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Updates the specified data quality ruleset.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateDataQualityRuleset">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::UpdateDataQualityRulesetOutcome UpdateDataQualityRuleset(const Model::UpdateDataQualityRulesetRequest& request) const;
+
+        /**
+         * A Callable wrapper for UpdateDataQualityRuleset that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::UpdateDataQualityRulesetOutcomeCallable UpdateDataQualityRulesetCallable(const Model::UpdateDataQualityRulesetRequest& request) const;
+
+        /**
+         * An Async wrapper for UpdateDataQualityRuleset that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void UpdateDataQualityRulesetAsync(const Model::UpdateDataQualityRulesetRequest& request, const UpdateDataQualityRulesetResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Updates an existing database definition in a Data Catalog.</p><p><h3>See
          * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateDatabase">AWS
@@ -3402,6 +3736,27 @@ namespace Glue
          * An Async wrapper for UpdateJob that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void UpdateJobAsync(const Model::UpdateJobRequest& request, const UpdateJobResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Synchronizes a job from the source control repository. This operation takes
+         * the job artifacts that are located in the remote repository and updates the Glue
+         * internal stores with these artifacts.</p> <p>This API supports optional
+         * parameters which take in the repository information.</p><p><h3>See Also:</h3>  
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateJobFromSourceControl">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::UpdateJobFromSourceControlOutcome UpdateJobFromSourceControl(const Model::UpdateJobFromSourceControlRequest& request) const;
+
+        /**
+         * A Callable wrapper for UpdateJobFromSourceControl that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::UpdateJobFromSourceControlOutcomeCallable UpdateJobFromSourceControlCallable(const Model::UpdateJobFromSourceControlRequest& request) const;
+
+        /**
+         * An Async wrapper for UpdateJobFromSourceControl that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void UpdateJobFromSourceControlAsync(const Model::UpdateJobFromSourceControlRequest& request, const UpdateJobFromSourceControlResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Updates an existing machine learning transform. Call this operation to tune
@@ -3488,6 +3843,27 @@ namespace Glue
         virtual void UpdateSchemaAsync(const Model::UpdateSchemaRequest& request, const UpdateSchemaResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Synchronizes a job to the source control repository. This operation takes the
+         * job artifacts from the Glue internal stores and makes a commit to the remote
+         * repository that is configured on the job.</p> <p>This API supports optional
+         * parameters which take in the repository information.</p><p><h3>See Also:</h3>  
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateSourceControlFromJob">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::UpdateSourceControlFromJobOutcome UpdateSourceControlFromJob(const Model::UpdateSourceControlFromJobRequest& request) const;
+
+        /**
+         * A Callable wrapper for UpdateSourceControlFromJob that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::UpdateSourceControlFromJobOutcomeCallable UpdateSourceControlFromJobCallable(const Model::UpdateSourceControlFromJobRequest& request) const;
+
+        /**
+         * An Async wrapper for UpdateSourceControlFromJob that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void UpdateSourceControlFromJobAsync(const Model::UpdateSourceControlFromJobRequest& request, const UpdateSourceControlFromJobResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Updates a metadata table in the Data Catalog.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateTable">AWS
          * API Reference</a></p>
@@ -3558,12 +3934,14 @@ namespace Glue
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<GlueEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<GlueClient>;
+      void init(const GlueClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      GlueClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<GlueEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Glue

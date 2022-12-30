@@ -7,6 +7,7 @@
 #include <aws/proton/Proton_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/proton/ProtonServiceClientModel.h>
 
@@ -102,33 +103,60 @@ namespace Proton
    * retry returns an empty response.</p> <p>Asynchronous idempotent delete APIs:</p>
    * <ul> <li> <p>DeleteEnvironment</p> </li> <li> <p>DeleteService</p> </li> </ul>
    */
-  class AWS_PROTON_API ProtonClient : public Aws::Client::AWSJsonClient
+  class AWS_PROTON_API ProtonClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<ProtonClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        ProtonClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        ProtonClient(const Aws::Proton::ProtonClientConfiguration& clientConfiguration = Aws::Proton::ProtonClientConfiguration(),
+                     std::shared_ptr<ProtonEndpointProviderBase> endpointProvider = Aws::MakeShared<ProtonEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         ProtonClient(const Aws::Auth::AWSCredentials& credentials,
-                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                     std::shared_ptr<ProtonEndpointProviderBase> endpointProvider = Aws::MakeShared<ProtonEndpointProvider>(ALLOCATION_TAG),
+                     const Aws::Proton::ProtonClientConfiguration& clientConfiguration = Aws::Proton::ProtonClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         ProtonClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                     std::shared_ptr<ProtonEndpointProviderBase> endpointProvider = Aws::MakeShared<ProtonEndpointProvider>(ALLOCATION_TAG),
+                     const Aws::Proton::ProtonClientConfiguration& clientConfiguration = Aws::Proton::ProtonClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ProtonClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ProtonClient(const Aws::Auth::AWSCredentials& credentials,
+                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        ProtonClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~ProtonClient();
-
 
         /**
          * <p>In a management account, an environment account connection request is
@@ -1213,7 +1241,9 @@ namespace Proton
         virtual void ListServiceInstanceProvisionedResourcesAsync(const Model::ListServiceInstanceProvisionedResourcesRequest& request, const ListServiceInstanceProvisionedResourcesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>List service instances with summary data.</p><p><h3>See Also:</h3>   <a
+         * <p>List service instances with summary data. This action lists service instances
+         * of all services in the Amazon Web Services account.</p><p><h3>See Also:</h3>  
+         * <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/proton-2020-07-20/ListServiceInstances">AWS
          * API Reference</a></p>
          */
@@ -1719,12 +1749,14 @@ namespace Proton
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<ProtonEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<ProtonClient>;
+      void init(const ProtonClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      ProtonClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<ProtonEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Proton

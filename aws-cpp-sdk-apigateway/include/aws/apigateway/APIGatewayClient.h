@@ -7,6 +7,7 @@
 #include <aws/apigateway/APIGateway_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/apigateway/APIGatewayServiceClientModel.h>
 
@@ -21,33 +22,60 @@ namespace APIGateway
    * APIs that run on AWS Lambda, Amazon EC2, or other publicly addressable web
    * services that are hosted outside of AWS.</p>
    */
-  class AWS_APIGATEWAY_API APIGatewayClient : public Aws::Client::AWSJsonClient
+  class AWS_APIGATEWAY_API APIGatewayClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<APIGatewayClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        APIGatewayClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        APIGatewayClient(const Aws::APIGateway::APIGatewayClientConfiguration& clientConfiguration = Aws::APIGateway::APIGatewayClientConfiguration(),
+                         std::shared_ptr<APIGatewayEndpointProviderBase> endpointProvider = Aws::MakeShared<APIGatewayEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         APIGatewayClient(const Aws::Auth::AWSCredentials& credentials,
-                         const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                         std::shared_ptr<APIGatewayEndpointProviderBase> endpointProvider = Aws::MakeShared<APIGatewayEndpointProvider>(ALLOCATION_TAG),
+                         const Aws::APIGateway::APIGatewayClientConfiguration& clientConfiguration = Aws::APIGateway::APIGatewayClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         APIGatewayClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                         const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                         std::shared_ptr<APIGatewayEndpointProviderBase> endpointProvider = Aws::MakeShared<APIGatewayEndpointProvider>(ALLOCATION_TAG),
+                         const Aws::APIGateway::APIGatewayClientConfiguration& clientConfiguration = Aws::APIGateway::APIGatewayClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        APIGatewayClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        APIGatewayClient(const Aws::Auth::AWSCredentials& credentials,
+                         const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        APIGatewayClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                         const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~APIGatewayClient();
-
 
         /**
          * <p>Create an ApiKey resource. </p><p><h3>See Also:</h3>   <a
@@ -2150,12 +2178,14 @@ namespace APIGateway
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<APIGatewayEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<APIGatewayClient>;
+      void init(const APIGatewayClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      APIGatewayClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<APIGatewayEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace APIGateway

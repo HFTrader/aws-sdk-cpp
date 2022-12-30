@@ -45,13 +45,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/Service">AWS API
    * Reference</a></p>
    */
-  class AWS_ECS_API Service
+  class Service
   {
   public:
-    Service();
-    Service(Aws::Utils::Json::JsonView jsonValue);
-    Service& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_ECS_API Service();
+    AWS_ECS_API Service(Aws::Utils::Json::JsonView jsonValue);
+    AWS_ECS_API Service& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_ECS_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -1332,44 +1332,32 @@ namespace Model
 
 
     /**
-     * <p>The deployment controller type the service is using. When using the
-     * DescribeServices API, this field is omitted if the service uses the
-     * <code>ECS</code> deployment controller type.</p>
+     * <p>The deployment controller type the service is using. </p>
      */
     inline const DeploymentController& GetDeploymentController() const{ return m_deploymentController; }
 
     /**
-     * <p>The deployment controller type the service is using. When using the
-     * DescribeServices API, this field is omitted if the service uses the
-     * <code>ECS</code> deployment controller type.</p>
+     * <p>The deployment controller type the service is using. </p>
      */
     inline bool DeploymentControllerHasBeenSet() const { return m_deploymentControllerHasBeenSet; }
 
     /**
-     * <p>The deployment controller type the service is using. When using the
-     * DescribeServices API, this field is omitted if the service uses the
-     * <code>ECS</code> deployment controller type.</p>
+     * <p>The deployment controller type the service is using. </p>
      */
     inline void SetDeploymentController(const DeploymentController& value) { m_deploymentControllerHasBeenSet = true; m_deploymentController = value; }
 
     /**
-     * <p>The deployment controller type the service is using. When using the
-     * DescribeServices API, this field is omitted if the service uses the
-     * <code>ECS</code> deployment controller type.</p>
+     * <p>The deployment controller type the service is using. </p>
      */
     inline void SetDeploymentController(DeploymentController&& value) { m_deploymentControllerHasBeenSet = true; m_deploymentController = std::move(value); }
 
     /**
-     * <p>The deployment controller type the service is using. When using the
-     * DescribeServices API, this field is omitted if the service uses the
-     * <code>ECS</code> deployment controller type.</p>
+     * <p>The deployment controller type the service is using. </p>
      */
     inline Service& WithDeploymentController(const DeploymentController& value) { SetDeploymentController(value); return *this;}
 
     /**
-     * <p>The deployment controller type the service is using. When using the
-     * DescribeServices API, this field is omitted if the service uses the
-     * <code>ECS</code> deployment controller type.</p>
+     * <p>The deployment controller type the service is using. </p>
      */
     inline Service& WithDeploymentController(DeploymentController&& value) { SetDeploymentController(std::move(value)); return *this;}
 

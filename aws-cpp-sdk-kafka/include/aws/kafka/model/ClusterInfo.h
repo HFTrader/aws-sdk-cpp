@@ -17,6 +17,7 @@
 #include <aws/kafka/model/ClusterState.h>
 #include <aws/kafka/model/StateInfo.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/kafka/model/StorageMode.h>
 #include <utility>
 
 namespace Aws
@@ -42,13 +43,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/ClusterInfo">AWS
    * API Reference</a></p>
    */
-  class AWS_KAFKA_API ClusterInfo
+  class ClusterInfo
   {
   public:
-    ClusterInfo();
-    ClusterInfo(Aws::Utils::Json::JsonView jsonValue);
-    ClusterInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_KAFKA_API ClusterInfo();
+    AWS_KAFKA_API ClusterInfo(Aws::Utils::Json::JsonView jsonValue);
+    AWS_KAFKA_API ClusterInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -967,6 +968,55 @@ namespace Model
      */
     inline ClusterInfo& WithZookeeperConnectStringTls(const char* value) { SetZookeeperConnectStringTls(value); return *this;}
 
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline const StorageMode& GetStorageMode() const{ return m_storageMode; }
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline bool StorageModeHasBeenSet() const { return m_storageModeHasBeenSet; }
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline void SetStorageMode(const StorageMode& value) { m_storageModeHasBeenSet = true; m_storageMode = value; }
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline void SetStorageMode(StorageMode&& value) { m_storageModeHasBeenSet = true; m_storageMode = std::move(value); }
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline ClusterInfo& WithStorageMode(const StorageMode& value) { SetStorageMode(value); return *this;}
+
+    /**
+     * 
+            <p>This controls storage mode for supported storage tiers.</p>
+    
+     *     
+     */
+    inline ClusterInfo& WithStorageMode(StorageMode&& value) { SetStorageMode(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_activeOperationArn;
@@ -1022,6 +1072,9 @@ namespace Model
 
     Aws::String m_zookeeperConnectStringTls;
     bool m_zookeeperConnectStringTlsHasBeenSet = false;
+
+    StorageMode m_storageMode;
+    bool m_storageModeHasBeenSet = false;
   };
 
 } // namespace Model

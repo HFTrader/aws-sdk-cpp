@@ -25,10 +25,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/CreateStageRequest">AWS
    * API Reference</a></p>
    */
-  class AWS_APIGATEWAY_API CreateStageRequest : public APIGatewayRequest
+  class CreateStageRequest : public APIGatewayRequest
   {
   public:
-    CreateStageRequest();
+    AWS_APIGATEWAY_API CreateStageRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -36,7 +36,7 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "CreateStage"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_APIGATEWAY_API Aws::String SerializePayload() const override;
 
 
     /**
@@ -233,32 +233,50 @@ namespace Model
 
 
     /**
-     * <p>The stage's cache cluster size.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline const CacheClusterSize& GetCacheClusterSize() const{ return m_cacheClusterSize; }
 
     /**
-     * <p>The stage's cache cluster size.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline bool CacheClusterSizeHasBeenSet() const { return m_cacheClusterSizeHasBeenSet; }
 
     /**
-     * <p>The stage's cache cluster size.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline void SetCacheClusterSize(const CacheClusterSize& value) { m_cacheClusterSizeHasBeenSet = true; m_cacheClusterSize = value; }
 
     /**
-     * <p>The stage's cache cluster size.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline void SetCacheClusterSize(CacheClusterSize&& value) { m_cacheClusterSizeHasBeenSet = true; m_cacheClusterSize = std::move(value); }
 
     /**
-     * <p>The stage's cache cluster size.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline CreateStageRequest& WithCacheClusterSize(const CacheClusterSize& value) { SetCacheClusterSize(value); return *this;}
 
     /**
-     * <p>The stage's cache cluster size.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline CreateStageRequest& WithCacheClusterSize(CacheClusterSize&& value) { SetCacheClusterSize(std::move(value)); return *this;}
 

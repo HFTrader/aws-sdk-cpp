@@ -7,6 +7,7 @@
 #include <aws/databrew/GlueDataBrew_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/databrew/GlueDataBrewServiceClientModel.h>
 
@@ -21,33 +22,60 @@ namespace GlueDataBrew
    * visualize the data and perform one-click data transformations, with no coding
    * required.</p>
    */
-  class AWS_GLUEDATABREW_API GlueDataBrewClient : public Aws::Client::AWSJsonClient
+  class AWS_GLUEDATABREW_API GlueDataBrewClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<GlueDataBrewClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        GlueDataBrewClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        GlueDataBrewClient(const Aws::GlueDataBrew::GlueDataBrewClientConfiguration& clientConfiguration = Aws::GlueDataBrew::GlueDataBrewClientConfiguration(),
+                           std::shared_ptr<GlueDataBrewEndpointProviderBase> endpointProvider = Aws::MakeShared<GlueDataBrewEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         GlueDataBrewClient(const Aws::Auth::AWSCredentials& credentials,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<GlueDataBrewEndpointProviderBase> endpointProvider = Aws::MakeShared<GlueDataBrewEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::GlueDataBrew::GlueDataBrewClientConfiguration& clientConfiguration = Aws::GlueDataBrew::GlueDataBrewClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         GlueDataBrewClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<GlueDataBrewEndpointProviderBase> endpointProvider = Aws::MakeShared<GlueDataBrewEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::GlueDataBrew::GlueDataBrewClientConfiguration& clientConfiguration = Aws::GlueDataBrew::GlueDataBrewClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GlueDataBrewClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GlueDataBrewClient(const Aws::Auth::AWSCredentials& credentials,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        GlueDataBrewClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~GlueDataBrewClient();
-
 
         /**
          * <p>Deletes one or more versions of a recipe at a time.</p> <p>The entire request
@@ -837,12 +865,14 @@ namespace GlueDataBrew
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<GlueDataBrewEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<GlueDataBrewClient>;
+      void init(const GlueDataBrewClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      GlueDataBrewClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<GlueDataBrewEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace GlueDataBrew

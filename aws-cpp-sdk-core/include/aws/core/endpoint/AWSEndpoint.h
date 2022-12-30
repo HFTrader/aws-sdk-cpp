@@ -9,6 +9,8 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 
+#include <aws/core/endpoint/internal/AWSEndpointAttribute.h>
+
 namespace Aws
 {
     namespace Endpoint
@@ -19,48 +21,47 @@ namespace Aws
         class AWS_CORE_API AWSEndpoint
         {
         public:
-            class AWS_CORE_API AWSEndpointAttribute
-            {
-            public:
-                virtual ~AWSEndpointAttribute();
-            };
+            using EndpointAttributes = Internal::Endpoint::EndpointAttributes;
 
+            virtual ~AWSEndpoint()
+            {};
 
-            virtual ~AWSEndpoint();
+            Aws::String GetURL() const;
+            void SetURL(Aws::String url);
 
-            const Aws::String& GetURL() const
-            {
-                return m_url;
-            }
-            void SetURL(Aws::String url)
-            {
-                m_url = std::move(url);
-            }
+            const Aws::Http::URI& GetURI() const;
+            void SetURI(Aws::Http::URI uri);
 
-            const Aws::UnorderedMap<Aws::String, Aws::UniquePtr<AWSEndpointAttribute> >& GetAttributes() const
+            template<typename T>
+            inline void AddPathSegment(T&& pathSegment)
             {
-                return m_attributes;
-            }
-            void SetAttributes(Aws::UnorderedMap<Aws::String, Aws::UniquePtr<AWSEndpointAttribute> > attributes)
-            {
-                m_attributes = std::move(attributes);
+                m_uri.AddPathSegment(std::forward<T>(pathSegment));
             }
 
-            const Aws::UnorderedMap<Aws::String, Aws::String>& GetHeaders() const
+            template<typename T>
+            inline void AddPathSegments(T&& pathSegments)
             {
-                return m_headers;
+                m_uri.AddPathSegments(std::forward<T>(pathSegments));
             }
-            void SetHeaders(Aws::UnorderedMap<Aws::String, Aws::String> headers)
-            {
-                m_headers = std::move(headers);
-            }
+
+            using OptionalError = Crt::Optional<Aws::Client::AWSError<Aws::Client::CoreErrors>>;
+            OptionalError AddPrefixIfMissing(const Aws::String& prefix);
+
+            void SetQueryString(const Aws::String& queryString);
+
+            const Crt::Optional<EndpointAttributes>& GetAttributes() const;
+            Crt::Optional<EndpointAttributes>& AccessAttributes();
+            void SetAttributes(EndpointAttributes&& attributes);
+
+            const Aws::UnorderedMap<Aws::String, Aws::String>& GetHeaders() const;
+            void SetHeaders(Aws::UnorderedMap<Aws::String, Aws::String> headers);
 
         protected:
             // A URI containing at minimum the scheme and host. May optionally include a port and a path.
-            Aws::String m_url;
+            Aws::Http::URI m_uri;
 
             // A grab bag property map of endpoint attributes. The values here are considered unstable.
-            Aws::UnorderedMap<Aws::String, Aws::UniquePtr<AWSEndpointAttribute> > m_attributes;
+            Crt::Optional<EndpointAttributes> m_attributes;
 
             // A map of additional headers to be set when calling the endpoint.
             // Note: the values in these maps are Lists to support multi-value headers.

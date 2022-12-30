@@ -7,6 +7,7 @@
 #include <aws/customer-profiles/CustomerProfiles_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/customer-profiles/CustomerProfilesServiceClientModel.h>
 
@@ -15,46 +16,70 @@ namespace Aws
 namespace CustomerProfiles
 {
   /**
-   * <fullname>Amazon Connect Customer Profiles</fullname> <p>Welcome to the Amazon
-   * Connect Customer Profiles API Reference. This guide provides information about
-   * the Amazon Connect Customer Profiles API, including supported operations, data
-   * types, parameters, and schemas.</p> <p>Amazon Connect Customer Profiles is a
-   * unified customer profile for your contact center that has pre-built connectors
-   * powered by AppFlow that make it easy to combine customer information from third
-   * party applications, such as Salesforce (CRM), ServiceNow (ITSM), and your
-   * enterprise resource planning (ERP), with contact history from your Amazon
-   * Connect contact center.</p> <p>If you're new to Amazon Connect , you might find
-   * it helpful to also review the <a
-   * href="https://docs.aws.amazon.com/connect/latest/adminguide/what-is-amazon-connect.html">Amazon
-   * Connect Administrator Guide</a>.</p>
+   * <fullname>Amazon Connect Customer Profiles</fullname> <p>Amazon Connect Customer
+   * Profiles is a unified customer profile for your contact center that has
+   * pre-built connectors powered by AppFlow that make it easy to combine customer
+   * information from third party applications, such as Salesforce (CRM), ServiceNow
+   * (ITSM), and your enterprise resource planning (ERP), with contact history from
+   * your Amazon Connect contact center. If you're new to Amazon Connect, you might
+   * find it helpful to review the <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/">Amazon Connect
+   * Administrator Guide</a>.</p>
    */
-  class AWS_CUSTOMERPROFILES_API CustomerProfilesClient : public Aws::Client::AWSJsonClient
+  class AWS_CUSTOMERPROFILES_API CustomerProfilesClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<CustomerProfilesClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        CustomerProfilesClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        CustomerProfilesClient(const Aws::CustomerProfiles::CustomerProfilesClientConfiguration& clientConfiguration = Aws::CustomerProfiles::CustomerProfilesClientConfiguration(),
+                               std::shared_ptr<CustomerProfilesEndpointProviderBase> endpointProvider = Aws::MakeShared<CustomerProfilesEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         CustomerProfilesClient(const Aws::Auth::AWSCredentials& credentials,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<CustomerProfilesEndpointProviderBase> endpointProvider = Aws::MakeShared<CustomerProfilesEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::CustomerProfiles::CustomerProfilesClientConfiguration& clientConfiguration = Aws::CustomerProfiles::CustomerProfilesClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         CustomerProfilesClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<CustomerProfilesEndpointProviderBase> endpointProvider = Aws::MakeShared<CustomerProfilesEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::CustomerProfiles::CustomerProfilesClientConfiguration& clientConfiguration = Aws::CustomerProfiles::CustomerProfilesClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CustomerProfilesClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CustomerProfilesClient(const Aws::Auth::AWSCredentials& credentials,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        CustomerProfilesClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~CustomerProfilesClient();
-
 
         /**
          * <p>Associates a new key value with a specific profile, such as a Contact Record
@@ -742,9 +767,13 @@ namespace CustomerProfiles
         virtual void PutProfileObjectTypeAsync(const Model::PutProfileObjectTypeRequest& request, const PutProfileObjectTypeResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Searches for profiles within a specific domain name using name, phone number,
-         * email address, account number, or a custom defined index.</p><p><h3>See
-         * Also:</h3>   <a
+         * <p>Searches for profiles within a specific domain using one or more predefined
+         * search keys (e.g., _fullName, _phone, _email, _account, etc.) and/or
+         * custom-defined search keys. A search key is a data type pair that consists of a
+         * <code>KeyName</code> and <code>Values</code> list.</p> <p>This operation
+         * supports searching for profiles with a minimum of 1 key-value(s) pair and up to
+         * 5 key-value(s) pairs using either <code>AND</code> or <code>OR</code>
+         * logic.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/SearchProfiles">AWS
          * API Reference</a></p>
          */
@@ -860,12 +889,14 @@ namespace CustomerProfiles
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<CustomerProfilesEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<CustomerProfilesClient>;
+      void init(const CustomerProfilesClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      CustomerProfilesClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<CustomerProfilesEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace CustomerProfiles

@@ -20,13 +20,15 @@ namespace Model
 
 DecoderManifestValidationException::DecoderManifestValidationException() : 
     m_invalidSignalsHasBeenSet(false),
-    m_invalidNetworkInterfacesHasBeenSet(false)
+    m_invalidNetworkInterfacesHasBeenSet(false),
+    m_messageHasBeenSet(false)
 {
 }
 
 DecoderManifestValidationException::DecoderManifestValidationException(JsonView jsonValue) : 
     m_invalidSignalsHasBeenSet(false),
-    m_invalidNetworkInterfacesHasBeenSet(false)
+    m_invalidNetworkInterfacesHasBeenSet(false),
+    m_messageHasBeenSet(false)
 {
   *this = jsonValue;
 }
@@ -35,7 +37,7 @@ DecoderManifestValidationException& DecoderManifestValidationException::operator
 {
   if(jsonValue.ValueExists("invalidSignals"))
   {
-    Array<JsonView> invalidSignalsJsonList = jsonValue.GetArray("invalidSignals");
+    Aws::Utils::Array<JsonView> invalidSignalsJsonList = jsonValue.GetArray("invalidSignals");
     for(unsigned invalidSignalsIndex = 0; invalidSignalsIndex < invalidSignalsJsonList.GetLength(); ++invalidSignalsIndex)
     {
       m_invalidSignals.push_back(invalidSignalsJsonList[invalidSignalsIndex].AsObject());
@@ -45,12 +47,19 @@ DecoderManifestValidationException& DecoderManifestValidationException::operator
 
   if(jsonValue.ValueExists("invalidNetworkInterfaces"))
   {
-    Array<JsonView> invalidNetworkInterfacesJsonList = jsonValue.GetArray("invalidNetworkInterfaces");
+    Aws::Utils::Array<JsonView> invalidNetworkInterfacesJsonList = jsonValue.GetArray("invalidNetworkInterfaces");
     for(unsigned invalidNetworkInterfacesIndex = 0; invalidNetworkInterfacesIndex < invalidNetworkInterfacesJsonList.GetLength(); ++invalidNetworkInterfacesIndex)
     {
       m_invalidNetworkInterfaces.push_back(invalidNetworkInterfacesJsonList[invalidNetworkInterfacesIndex].AsObject());
     }
     m_invalidNetworkInterfacesHasBeenSet = true;
+  }
+
+  if(jsonValue.ValueExists("message"))
+  {
+    m_message = jsonValue.GetString("message");
+
+    m_messageHasBeenSet = true;
   }
 
   return *this;
@@ -62,7 +71,7 @@ JsonValue DecoderManifestValidationException::Jsonize() const
 
   if(m_invalidSignalsHasBeenSet)
   {
-   Array<JsonValue> invalidSignalsJsonList(m_invalidSignals.size());
+   Aws::Utils::Array<JsonValue> invalidSignalsJsonList(m_invalidSignals.size());
    for(unsigned invalidSignalsIndex = 0; invalidSignalsIndex < invalidSignalsJsonList.GetLength(); ++invalidSignalsIndex)
    {
      invalidSignalsJsonList[invalidSignalsIndex].AsObject(m_invalidSignals[invalidSignalsIndex].Jsonize());
@@ -73,12 +82,18 @@ JsonValue DecoderManifestValidationException::Jsonize() const
 
   if(m_invalidNetworkInterfacesHasBeenSet)
   {
-   Array<JsonValue> invalidNetworkInterfacesJsonList(m_invalidNetworkInterfaces.size());
+   Aws::Utils::Array<JsonValue> invalidNetworkInterfacesJsonList(m_invalidNetworkInterfaces.size());
    for(unsigned invalidNetworkInterfacesIndex = 0; invalidNetworkInterfacesIndex < invalidNetworkInterfacesJsonList.GetLength(); ++invalidNetworkInterfacesIndex)
    {
      invalidNetworkInterfacesJsonList[invalidNetworkInterfacesIndex].AsObject(m_invalidNetworkInterfaces[invalidNetworkInterfacesIndex].Jsonize());
    }
    payload.WithArray("invalidNetworkInterfaces", std::move(invalidNetworkInterfacesJsonList));
+
+  }
+
+  if(m_messageHasBeenSet)
+  {
+   payload.WithString("message", m_message);
 
   }
 

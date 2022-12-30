@@ -25,17 +25,19 @@ namespace Model
 {
 
   /**
-   * <p>Specify the driver that the job runs on.</p><p><h3>See Also:</h3>   <a
+   * <p>Specify the driver that the job runs on. Exactly one of the two available job
+   * drivers is required, either sparkSqlJobDriver or
+   * sparkSubmitJobDriver.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/JobDriver">AWS
    * API Reference</a></p>
    */
-  class AWS_EMRCONTAINERS_API JobDriver
+  class JobDriver
   {
   public:
-    JobDriver();
-    JobDriver(Aws::Utils::Json::JsonView jsonValue);
-    JobDriver& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_EMRCONTAINERS_API JobDriver();
+    AWS_EMRCONTAINERS_API JobDriver(Aws::Utils::Json::JsonView jsonValue);
+    AWS_EMRCONTAINERS_API JobDriver& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_EMRCONTAINERS_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**

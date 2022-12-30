@@ -42,6 +42,7 @@ protected:
     void SetUp() override {
         // Create client
         m_UUID = Aws::Utils::UUID::RandomUUID();
+        streamName = BuildResourceName("stream");
         Client::ClientConfiguration config;
         config.region = Aws::Region::US_EAST_1;
         m_client.reset(Aws::New<KinesisClient>(ALLOC_TAG, config));
@@ -70,7 +71,7 @@ protected:
 
     void TearDown() override {
         // Delete stream
-        auto deleteStream = m_client->DeleteStream(DeleteStreamRequest().WithStreamName(streamName));
+        auto deleteStream = m_client->DeleteStream(DeleteStreamRequest().WithStreamName(streamName).WithEnforceConsumerDeletion(true));
         AWS_ASSERT_SUCCESS(deleteStream);
     }
 
@@ -106,7 +107,7 @@ protected:
 
     Aws::UniquePtr<KinesisClient> m_client;
     Aws::String m_UUID;
-    Aws::String streamName = BuildResourceName("stream");
+    Aws::String streamName;
 };
 
 TEST_F(KinesisTest, EnhancedFanOut)
@@ -158,7 +159,7 @@ TEST_F(KinesisTest, EnhancedFanOut)
         .WithShardId(shardId)
         .WithStartingPosition(position);
     subscribeRequest.SetEventStreamHandler(handler);
-    const auto subscribeOutcome = m_client->SubscribeToShard(subscribeRequest);
+    const auto subscribeOutcome = m_client->SubmitCallable(&KinesisClient::SubscribeToShard, subscribeRequest).get();
     AWS_ASSERT_SUCCESS(subscribeOutcome);
 
     // Deregister the consumer from fan-out (we're only allowed 5, so we must cleanup)

@@ -24,18 +24,18 @@ namespace Model
 {
 
   /**
-   * <p>The Amazon S3 location for importing the package specified as
-   * <code>S3BucketName</code> and <code>S3Key</code> </p><p><h3>See Also:</h3>   <a
+   * <p>The Amazon S3 location to import the package from.</p><p><h3>See Also:</h3>  
+   * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/PackageSource">AWS
    * API Reference</a></p>
    */
-  class AWS_OPENSEARCHSERVICE_API PackageSource
+  class PackageSource
   {
   public:
-    PackageSource();
-    PackageSource(Aws::Utils::Json::JsonView jsonValue);
-    PackageSource& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_OPENSEARCHSERVICE_API PackageSource();
+    AWS_OPENSEARCHSERVICE_API PackageSource(Aws::Utils::Json::JsonView jsonValue);
+    AWS_OPENSEARCHSERVICE_API PackageSource& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_OPENSEARCHSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**

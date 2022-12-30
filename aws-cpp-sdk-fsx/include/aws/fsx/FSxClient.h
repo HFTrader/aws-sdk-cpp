@@ -7,6 +7,7 @@
 #include <aws/fsx/FSx_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/fsx/FSxServiceClientModel.h>
 
@@ -18,33 +19,60 @@ namespace FSx
    * <p>Amazon FSx is a fully managed service that makes it easy for storage and
    * application administrators to launch and use shared file storage.</p>
    */
-  class AWS_FSX_API FSxClient : public Aws::Client::AWSJsonClient
+  class AWS_FSX_API FSxClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<FSxClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        FSxClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        FSxClient(const Aws::FSx::FSxClientConfiguration& clientConfiguration = Aws::FSx::FSxClientConfiguration(),
+                  std::shared_ptr<FSxEndpointProviderBase> endpointProvider = Aws::MakeShared<FSxEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         FSxClient(const Aws::Auth::AWSCredentials& credentials,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<FSxEndpointProviderBase> endpointProvider = Aws::MakeShared<FSxEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::FSx::FSxClientConfiguration& clientConfiguration = Aws::FSx::FSxClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         FSxClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<FSxEndpointProviderBase> endpointProvider = Aws::MakeShared<FSxEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::FSx::FSxClientConfiguration& clientConfiguration = Aws::FSx::FSxClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        FSxClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        FSxClient(const Aws::Auth::AWSCredentials& credentials,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        FSxClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~FSxClient();
-
 
         /**
          * <p>Use this action to associate one or more Domain Name Server (DNS) aliases
@@ -986,7 +1014,7 @@ namespace FSx
 
         /**
          * <p>Returns an Amazon FSx for OpenZFS volume to the state saved by the specified
-         * snapshot. </p><p><h3>See Also:</h3>   <a
+         * snapshot.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/RestoreVolumeFromSnapshot">AWS
          * API Reference</a></p>
          */
@@ -1179,12 +1207,14 @@ namespace FSx
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<FSxEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<FSxClient>;
+      void init(const FSxClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      FSxClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<FSxEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace FSx

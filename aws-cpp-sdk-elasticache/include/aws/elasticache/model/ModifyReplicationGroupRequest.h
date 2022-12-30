@@ -9,6 +9,8 @@
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/elasticache/model/AuthTokenUpdateStrategyType.h>
+#include <aws/elasticache/model/IpDiscovery.h>
+#include <aws/elasticache/model/TransitEncryptionMode.h>
 #include <aws/elasticache/model/LogDeliveryConfigurationRequest.h>
 #include <utility>
 
@@ -25,10 +27,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/ModifyReplicationGroupMessage">AWS
    * API Reference</a></p>
    */
-  class AWS_ELASTICACHE_API ModifyReplicationGroupRequest : public ElastiCacheRequest
+  class ModifyReplicationGroupRequest : public ElastiCacheRequest
   {
   public:
-    ModifyReplicationGroupRequest();
+    AWS_ELASTICACHE_API ModifyReplicationGroupRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -36,10 +38,10 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "ModifyReplicationGroup"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
 
   protected:
-    void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+    AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
 
   public:
 
@@ -1378,6 +1380,181 @@ namespace Model
      */
     inline ModifyReplicationGroupRequest& AddLogDeliveryConfigurations(LogDeliveryConfigurationRequest&& value) { m_logDeliveryConfigurationsHasBeenSet = true; m_logDeliveryConfigurations.push_back(std::move(value)); return *this; }
 
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline const IpDiscovery& GetIpDiscovery() const{ return m_ipDiscovery; }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline bool IpDiscoveryHasBeenSet() const { return m_ipDiscoveryHasBeenSet; }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline void SetIpDiscovery(const IpDiscovery& value) { m_ipDiscoveryHasBeenSet = true; m_ipDiscovery = value; }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline void SetIpDiscovery(IpDiscovery&& value) { m_ipDiscoveryHasBeenSet = true; m_ipDiscovery = std::move(value); }
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline ModifyReplicationGroupRequest& WithIpDiscovery(const IpDiscovery& value) { SetIpDiscovery(value); return *this;}
+
+    /**
+     * <p>The network type you choose when modifying a cluster, either
+     * <code>ipv4</code> | <code>ipv6</code>. IPv6 is supported for workloads using
+     * Redis engine version 6.2 onward or Memcached engine version 1.6.6 on all
+     * instances built on the <a href="https://aws.amazon.com/ec2/nitro/">Nitro
+     * system</a>.</p>
+     */
+    inline ModifyReplicationGroupRequest& WithIpDiscovery(IpDiscovery&& value) { SetIpDiscovery(std::move(value)); return *this;}
+
+
+    /**
+     * <p>A flag that enables in-transit encryption when set to true. If you are
+     * enabling in-transit encryption for an existing cluster, you must also set
+     * <code>TransitEncryptionMode</code> to <code>preferred</code>.</p>
+     */
+    inline bool GetTransitEncryptionEnabled() const{ return m_transitEncryptionEnabled; }
+
+    /**
+     * <p>A flag that enables in-transit encryption when set to true. If you are
+     * enabling in-transit encryption for an existing cluster, you must also set
+     * <code>TransitEncryptionMode</code> to <code>preferred</code>.</p>
+     */
+    inline bool TransitEncryptionEnabledHasBeenSet() const { return m_transitEncryptionEnabledHasBeenSet; }
+
+    /**
+     * <p>A flag that enables in-transit encryption when set to true. If you are
+     * enabling in-transit encryption for an existing cluster, you must also set
+     * <code>TransitEncryptionMode</code> to <code>preferred</code>.</p>
+     */
+    inline void SetTransitEncryptionEnabled(bool value) { m_transitEncryptionEnabledHasBeenSet = true; m_transitEncryptionEnabled = value; }
+
+    /**
+     * <p>A flag that enables in-transit encryption when set to true. If you are
+     * enabling in-transit encryption for an existing cluster, you must also set
+     * <code>TransitEncryptionMode</code> to <code>preferred</code>.</p>
+     */
+    inline ModifyReplicationGroupRequest& WithTransitEncryptionEnabled(bool value) { SetTransitEncryptionEnabled(value); return *this;}
+
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p> <p>You must set
+     * <code>TransitEncryptionEnabled</code> to <code>true</code>, for your existing
+     * cluster, and set <code>TransitEncryptionMode</code> to <code>preferred</code> in
+     * the same request to allow both encrypted and unencrypted connections at the same
+     * time. Once you migrate all your Redis clients to use encrypted connections you
+     * can set the value to <code>required</code> to allow encrypted connections
+     * only.</p> <p>Setting <code>TransitEncryptionMode</code> to <code>required</code>
+     * is a two-step process that requires you to first set the
+     * <code>TransitEncryptionMode</code> to <code>preferred</code> first, after that
+     * you can set <code>TransitEncryptionMode</code> to <code>required</code>. </p>
+     */
+    inline const TransitEncryptionMode& GetTransitEncryptionMode() const{ return m_transitEncryptionMode; }
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p> <p>You must set
+     * <code>TransitEncryptionEnabled</code> to <code>true</code>, for your existing
+     * cluster, and set <code>TransitEncryptionMode</code> to <code>preferred</code> in
+     * the same request to allow both encrypted and unencrypted connections at the same
+     * time. Once you migrate all your Redis clients to use encrypted connections you
+     * can set the value to <code>required</code> to allow encrypted connections
+     * only.</p> <p>Setting <code>TransitEncryptionMode</code> to <code>required</code>
+     * is a two-step process that requires you to first set the
+     * <code>TransitEncryptionMode</code> to <code>preferred</code> first, after that
+     * you can set <code>TransitEncryptionMode</code> to <code>required</code>. </p>
+     */
+    inline bool TransitEncryptionModeHasBeenSet() const { return m_transitEncryptionModeHasBeenSet; }
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p> <p>You must set
+     * <code>TransitEncryptionEnabled</code> to <code>true</code>, for your existing
+     * cluster, and set <code>TransitEncryptionMode</code> to <code>preferred</code> in
+     * the same request to allow both encrypted and unencrypted connections at the same
+     * time. Once you migrate all your Redis clients to use encrypted connections you
+     * can set the value to <code>required</code> to allow encrypted connections
+     * only.</p> <p>Setting <code>TransitEncryptionMode</code> to <code>required</code>
+     * is a two-step process that requires you to first set the
+     * <code>TransitEncryptionMode</code> to <code>preferred</code> first, after that
+     * you can set <code>TransitEncryptionMode</code> to <code>required</code>. </p>
+     */
+    inline void SetTransitEncryptionMode(const TransitEncryptionMode& value) { m_transitEncryptionModeHasBeenSet = true; m_transitEncryptionMode = value; }
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p> <p>You must set
+     * <code>TransitEncryptionEnabled</code> to <code>true</code>, for your existing
+     * cluster, and set <code>TransitEncryptionMode</code> to <code>preferred</code> in
+     * the same request to allow both encrypted and unencrypted connections at the same
+     * time. Once you migrate all your Redis clients to use encrypted connections you
+     * can set the value to <code>required</code> to allow encrypted connections
+     * only.</p> <p>Setting <code>TransitEncryptionMode</code> to <code>required</code>
+     * is a two-step process that requires you to first set the
+     * <code>TransitEncryptionMode</code> to <code>preferred</code> first, after that
+     * you can set <code>TransitEncryptionMode</code> to <code>required</code>. </p>
+     */
+    inline void SetTransitEncryptionMode(TransitEncryptionMode&& value) { m_transitEncryptionModeHasBeenSet = true; m_transitEncryptionMode = std::move(value); }
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p> <p>You must set
+     * <code>TransitEncryptionEnabled</code> to <code>true</code>, for your existing
+     * cluster, and set <code>TransitEncryptionMode</code> to <code>preferred</code> in
+     * the same request to allow both encrypted and unencrypted connections at the same
+     * time. Once you migrate all your Redis clients to use encrypted connections you
+     * can set the value to <code>required</code> to allow encrypted connections
+     * only.</p> <p>Setting <code>TransitEncryptionMode</code> to <code>required</code>
+     * is a two-step process that requires you to first set the
+     * <code>TransitEncryptionMode</code> to <code>preferred</code> first, after that
+     * you can set <code>TransitEncryptionMode</code> to <code>required</code>. </p>
+     */
+    inline ModifyReplicationGroupRequest& WithTransitEncryptionMode(const TransitEncryptionMode& value) { SetTransitEncryptionMode(value); return *this;}
+
+    /**
+     * <p>A setting that allows you to migrate your clients to use in-transit
+     * encryption, with no downtime.</p> <p>You must set
+     * <code>TransitEncryptionEnabled</code> to <code>true</code>, for your existing
+     * cluster, and set <code>TransitEncryptionMode</code> to <code>preferred</code> in
+     * the same request to allow both encrypted and unencrypted connections at the same
+     * time. Once you migrate all your Redis clients to use encrypted connections you
+     * can set the value to <code>required</code> to allow encrypted connections
+     * only.</p> <p>Setting <code>TransitEncryptionMode</code> to <code>required</code>
+     * is a two-step process that requires you to first set the
+     * <code>TransitEncryptionMode</code> to <code>preferred</code> first, after that
+     * you can set <code>TransitEncryptionMode</code> to <code>required</code>. </p>
+     */
+    inline ModifyReplicationGroupRequest& WithTransitEncryptionMode(TransitEncryptionMode&& value) { SetTransitEncryptionMode(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_replicationGroupId;
@@ -1451,6 +1628,15 @@ namespace Model
 
     Aws::Vector<LogDeliveryConfigurationRequest> m_logDeliveryConfigurations;
     bool m_logDeliveryConfigurationsHasBeenSet = false;
+
+    IpDiscovery m_ipDiscovery;
+    bool m_ipDiscoveryHasBeenSet = false;
+
+    bool m_transitEncryptionEnabled;
+    bool m_transitEncryptionEnabledHasBeenSet = false;
+
+    TransitEncryptionMode m_transitEncryptionMode;
+    bool m_transitEncryptionModeHasBeenSet = false;
   };
 
 } // namespace Model

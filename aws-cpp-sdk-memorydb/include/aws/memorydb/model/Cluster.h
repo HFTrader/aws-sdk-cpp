@@ -10,6 +10,7 @@
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/memorydb/model/AZStatus.h>
 #include <aws/memorydb/model/Endpoint.h>
+#include <aws/memorydb/model/DataTieringStatus.h>
 #include <aws/memorydb/model/Shard.h>
 #include <aws/memorydb/model/SecurityGroupMembership.h>
 #include <utility>
@@ -35,13 +36,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/Cluster">AWS
    * API Reference</a></p>
    */
-  class AWS_MEMORYDB_API Cluster
+  class Cluster
   {
   public:
-    Cluster();
-    Cluster(Aws::Utils::Json::JsonView jsonValue);
-    Cluster& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_MEMORYDB_API Cluster();
+    AWS_MEMORYDB_API Cluster(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEMORYDB_API Cluster& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEMORYDB_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -1024,6 +1025,61 @@ namespace Model
      */
     inline Cluster& WithAutoMinorVersionUpgrade(bool value) { SetAutoMinorVersionUpgrade(value); return *this;}
 
+
+    /**
+     * <p>Enables data tiering. Data tiering is only supported for clusters using the
+     * r6gd node type. This parameter must be set when using r6gd nodes. For more
+     * information, see <a
+     * href="https://docs.aws.amazon.com/memorydb/latest/devguide/data-tiering.html">Data
+     * tiering</a>.</p>
+     */
+    inline const DataTieringStatus& GetDataTiering() const{ return m_dataTiering; }
+
+    /**
+     * <p>Enables data tiering. Data tiering is only supported for clusters using the
+     * r6gd node type. This parameter must be set when using r6gd nodes. For more
+     * information, see <a
+     * href="https://docs.aws.amazon.com/memorydb/latest/devguide/data-tiering.html">Data
+     * tiering</a>.</p>
+     */
+    inline bool DataTieringHasBeenSet() const { return m_dataTieringHasBeenSet; }
+
+    /**
+     * <p>Enables data tiering. Data tiering is only supported for clusters using the
+     * r6gd node type. This parameter must be set when using r6gd nodes. For more
+     * information, see <a
+     * href="https://docs.aws.amazon.com/memorydb/latest/devguide/data-tiering.html">Data
+     * tiering</a>.</p>
+     */
+    inline void SetDataTiering(const DataTieringStatus& value) { m_dataTieringHasBeenSet = true; m_dataTiering = value; }
+
+    /**
+     * <p>Enables data tiering. Data tiering is only supported for clusters using the
+     * r6gd node type. This parameter must be set when using r6gd nodes. For more
+     * information, see <a
+     * href="https://docs.aws.amazon.com/memorydb/latest/devguide/data-tiering.html">Data
+     * tiering</a>.</p>
+     */
+    inline void SetDataTiering(DataTieringStatus&& value) { m_dataTieringHasBeenSet = true; m_dataTiering = std::move(value); }
+
+    /**
+     * <p>Enables data tiering. Data tiering is only supported for clusters using the
+     * r6gd node type. This parameter must be set when using r6gd nodes. For more
+     * information, see <a
+     * href="https://docs.aws.amazon.com/memorydb/latest/devguide/data-tiering.html">Data
+     * tiering</a>.</p>
+     */
+    inline Cluster& WithDataTiering(const DataTieringStatus& value) { SetDataTiering(value); return *this;}
+
+    /**
+     * <p>Enables data tiering. Data tiering is only supported for clusters using the
+     * r6gd node type. This parameter must be set when using r6gd nodes. For more
+     * information, see <a
+     * href="https://docs.aws.amazon.com/memorydb/latest/devguide/data-tiering.html">Data
+     * tiering</a>.</p>
+     */
+    inline Cluster& WithDataTiering(DataTieringStatus&& value) { SetDataTiering(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_name;
@@ -1100,6 +1156,9 @@ namespace Model
 
     bool m_autoMinorVersionUpgrade;
     bool m_autoMinorVersionUpgradeHasBeenSet = false;
+
+    DataTieringStatus m_dataTiering;
+    bool m_dataTieringHasBeenSet = false;
   };
 
 } // namespace Model

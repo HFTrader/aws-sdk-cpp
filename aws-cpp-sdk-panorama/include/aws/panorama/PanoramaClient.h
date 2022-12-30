@@ -7,6 +7,7 @@
 #include <aws/panorama/Panorama_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/panorama/PanoramaServiceClientModel.h>
 
@@ -20,33 +21,60 @@ namespace Panorama
    * href="https://docs.aws.amazon.com/panorama/latest/dev/panorama-welcome.html">What
    * is AWS Panorama?</a> in the <i>AWS Panorama Developer Guide</i>.</p></p>
    */
-  class AWS_PANORAMA_API PanoramaClient : public Aws::Client::AWSJsonClient
+  class AWS_PANORAMA_API PanoramaClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<PanoramaClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        PanoramaClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        PanoramaClient(const Aws::Panorama::PanoramaClientConfiguration& clientConfiguration = Aws::Panorama::PanoramaClientConfiguration(),
+                       std::shared_ptr<PanoramaEndpointProviderBase> endpointProvider = Aws::MakeShared<PanoramaEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         PanoramaClient(const Aws::Auth::AWSCredentials& credentials,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<PanoramaEndpointProviderBase> endpointProvider = Aws::MakeShared<PanoramaEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::Panorama::PanoramaClientConfiguration& clientConfiguration = Aws::Panorama::PanoramaClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         PanoramaClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<PanoramaEndpointProviderBase> endpointProvider = Aws::MakeShared<PanoramaEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::Panorama::PanoramaClientConfiguration& clientConfiguration = Aws::Panorama::PanoramaClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        PanoramaClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        PanoramaClient(const Aws::Auth::AWSCredentials& credentials,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        PanoramaClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~PanoramaClient();
-
 
         /**
          * <p>Creates an application instance and deploys it to a device.</p><p><h3>See
@@ -67,7 +95,8 @@ namespace Panorama
         virtual void CreateApplicationInstanceAsync(const Model::CreateApplicationInstanceRequest& request, const CreateApplicationInstanceResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Creates a job to run on one or more devices.</p><p><h3>See Also:</h3>   <a
+         * <p>Creates a job to run on one or more devices. A job can update a device's
+         * software or reboot it.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/panorama-2019-07-24/CreateJobForDevices">AWS
          * API Reference</a></p>
          */
@@ -572,6 +601,23 @@ namespace Panorama
         virtual void RemoveApplicationInstanceAsync(const Model::RemoveApplicationInstanceRequest& request, const RemoveApplicationInstanceResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Signal camera nodes to stop or resume.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/panorama-2019-07-24/SignalApplicationInstanceNodeInstances">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::SignalApplicationInstanceNodeInstancesOutcome SignalApplicationInstanceNodeInstances(const Model::SignalApplicationInstanceNodeInstancesRequest& request) const;
+
+        /**
+         * A Callable wrapper for SignalApplicationInstanceNodeInstances that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::SignalApplicationInstanceNodeInstancesOutcomeCallable SignalApplicationInstanceNodeInstancesCallable(const Model::SignalApplicationInstanceNodeInstancesRequest& request) const;
+
+        /**
+         * An Async wrapper for SignalApplicationInstanceNodeInstances that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void SignalApplicationInstanceNodeInstancesAsync(const Model::SignalApplicationInstanceNodeInstancesRequest& request, const SignalApplicationInstanceNodeInstancesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Tags a resource.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/panorama-2019-07-24/TagResource">AWS
          * API Reference</a></p>
@@ -624,12 +670,14 @@ namespace Panorama
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<PanoramaEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<PanoramaClient>;
+      void init(const PanoramaClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      PanoramaClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<PanoramaEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Panorama

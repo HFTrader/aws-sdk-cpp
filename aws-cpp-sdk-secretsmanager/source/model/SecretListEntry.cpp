@@ -31,6 +31,7 @@ SecretListEntry::SecretListEntry() :
     m_lastChangedDateHasBeenSet(false),
     m_lastAccessedDateHasBeenSet(false),
     m_deletedDateHasBeenSet(false),
+    m_nextRotationDateHasBeenSet(false),
     m_tagsHasBeenSet(false),
     m_secretVersionsToStagesHasBeenSet(false),
     m_owningServiceHasBeenSet(false),
@@ -52,6 +53,7 @@ SecretListEntry::SecretListEntry(JsonView jsonValue) :
     m_lastChangedDateHasBeenSet(false),
     m_lastAccessedDateHasBeenSet(false),
     m_deletedDateHasBeenSet(false),
+    m_nextRotationDateHasBeenSet(false),
     m_tagsHasBeenSet(false),
     m_secretVersionsToStagesHasBeenSet(false),
     m_owningServiceHasBeenSet(false),
@@ -140,9 +142,16 @@ SecretListEntry& SecretListEntry::operator =(JsonView jsonValue)
     m_deletedDateHasBeenSet = true;
   }
 
+  if(jsonValue.ValueExists("NextRotationDate"))
+  {
+    m_nextRotationDate = jsonValue.GetDouble("NextRotationDate");
+
+    m_nextRotationDateHasBeenSet = true;
+  }
+
   if(jsonValue.ValueExists("Tags"))
   {
-    Array<JsonView> tagsJsonList = jsonValue.GetArray("Tags");
+    Aws::Utils::Array<JsonView> tagsJsonList = jsonValue.GetArray("Tags");
     for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
     {
       m_tags.push_back(tagsJsonList[tagsIndex].AsObject());
@@ -155,7 +164,7 @@ SecretListEntry& SecretListEntry::operator =(JsonView jsonValue)
     Aws::Map<Aws::String, JsonView> secretVersionsToStagesJsonMap = jsonValue.GetObject("SecretVersionsToStages").GetAllObjects();
     for(auto& secretVersionsToStagesItem : secretVersionsToStagesJsonMap)
     {
-      Array<JsonView> secretVersionStagesTypeJsonList = secretVersionsToStagesItem.second.AsArray();
+      Aws::Utils::Array<JsonView> secretVersionStagesTypeJsonList = secretVersionsToStagesItem.second.AsArray();
       Aws::Vector<Aws::String> secretVersionStagesTypeList;
       secretVersionStagesTypeList.reserve((size_t)secretVersionStagesTypeJsonList.GetLength());
       for(unsigned secretVersionStagesTypeIndex = 0; secretVersionStagesTypeIndex < secretVersionStagesTypeJsonList.GetLength(); ++secretVersionStagesTypeIndex)
@@ -257,9 +266,14 @@ JsonValue SecretListEntry::Jsonize() const
    payload.WithDouble("DeletedDate", m_deletedDate.SecondsWithMSPrecision());
   }
 
+  if(m_nextRotationDateHasBeenSet)
+  {
+   payload.WithDouble("NextRotationDate", m_nextRotationDate.SecondsWithMSPrecision());
+  }
+
   if(m_tagsHasBeenSet)
   {
-   Array<JsonValue> tagsJsonList(m_tags.size());
+   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
    for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
    {
      tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
@@ -273,7 +287,7 @@ JsonValue SecretListEntry::Jsonize() const
    JsonValue secretVersionsToStagesJsonMap;
    for(auto& secretVersionsToStagesItem : m_secretVersionsToStages)
    {
-     Array<JsonValue> secretVersionStagesTypeJsonList(secretVersionsToStagesItem.second.size());
+     Aws::Utils::Array<JsonValue> secretVersionStagesTypeJsonList(secretVersionsToStagesItem.second.size());
      for(unsigned secretVersionStagesTypeIndex = 0; secretVersionStagesTypeIndex < secretVersionStagesTypeJsonList.GetLength(); ++secretVersionStagesTypeIndex)
      {
        secretVersionStagesTypeJsonList[secretVersionStagesTypeIndex].AsString(secretVersionsToStagesItem.second[secretVersionStagesTypeIndex]);

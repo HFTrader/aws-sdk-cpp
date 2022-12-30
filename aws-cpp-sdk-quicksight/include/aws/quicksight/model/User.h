@@ -30,13 +30,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/User">AWS API
    * Reference</a></p>
    */
-  class AWS_QUICKSIGHT_API User
+  class User
   {
   public:
-    User();
-    User(Aws::Utils::Json::JsonView jsonValue);
-    User& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_QUICKSIGHT_API User();
+    AWS_QUICKSIGHT_API User(Aws::Utils::Json::JsonView jsonValue);
+    AWS_QUICKSIGHT_API User& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_QUICKSIGHT_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -81,58 +81,74 @@ namespace Model
 
 
     /**
-     * <p>The user's user name. In the output, the value for <code>UserName</code> is
-     * <code>N/A</code> when the value for <code>IdentityType</code> is
-     * <code>IAM</code> and the corresponding IAM user is deleted.</p>
+     * <p>The user's user name. This value is required if you are registering a user
+     * that will be managed in Amazon QuickSight. In the output, the value for
+     * <code>UserName</code> is <code>N/A</code> when the value for
+     * <code>IdentityType</code> is <code>IAM</code> and the corresponding IAM user is
+     * deleted.</p>
      */
     inline const Aws::String& GetUserName() const{ return m_userName; }
 
     /**
-     * <p>The user's user name. In the output, the value for <code>UserName</code> is
-     * <code>N/A</code> when the value for <code>IdentityType</code> is
-     * <code>IAM</code> and the corresponding IAM user is deleted.</p>
+     * <p>The user's user name. This value is required if you are registering a user
+     * that will be managed in Amazon QuickSight. In the output, the value for
+     * <code>UserName</code> is <code>N/A</code> when the value for
+     * <code>IdentityType</code> is <code>IAM</code> and the corresponding IAM user is
+     * deleted.</p>
      */
     inline bool UserNameHasBeenSet() const { return m_userNameHasBeenSet; }
 
     /**
-     * <p>The user's user name. In the output, the value for <code>UserName</code> is
-     * <code>N/A</code> when the value for <code>IdentityType</code> is
-     * <code>IAM</code> and the corresponding IAM user is deleted.</p>
+     * <p>The user's user name. This value is required if you are registering a user
+     * that will be managed in Amazon QuickSight. In the output, the value for
+     * <code>UserName</code> is <code>N/A</code> when the value for
+     * <code>IdentityType</code> is <code>IAM</code> and the corresponding IAM user is
+     * deleted.</p>
      */
     inline void SetUserName(const Aws::String& value) { m_userNameHasBeenSet = true; m_userName = value; }
 
     /**
-     * <p>The user's user name. In the output, the value for <code>UserName</code> is
-     * <code>N/A</code> when the value for <code>IdentityType</code> is
-     * <code>IAM</code> and the corresponding IAM user is deleted.</p>
+     * <p>The user's user name. This value is required if you are registering a user
+     * that will be managed in Amazon QuickSight. In the output, the value for
+     * <code>UserName</code> is <code>N/A</code> when the value for
+     * <code>IdentityType</code> is <code>IAM</code> and the corresponding IAM user is
+     * deleted.</p>
      */
     inline void SetUserName(Aws::String&& value) { m_userNameHasBeenSet = true; m_userName = std::move(value); }
 
     /**
-     * <p>The user's user name. In the output, the value for <code>UserName</code> is
-     * <code>N/A</code> when the value for <code>IdentityType</code> is
-     * <code>IAM</code> and the corresponding IAM user is deleted.</p>
+     * <p>The user's user name. This value is required if you are registering a user
+     * that will be managed in Amazon QuickSight. In the output, the value for
+     * <code>UserName</code> is <code>N/A</code> when the value for
+     * <code>IdentityType</code> is <code>IAM</code> and the corresponding IAM user is
+     * deleted.</p>
      */
     inline void SetUserName(const char* value) { m_userNameHasBeenSet = true; m_userName.assign(value); }
 
     /**
-     * <p>The user's user name. In the output, the value for <code>UserName</code> is
-     * <code>N/A</code> when the value for <code>IdentityType</code> is
-     * <code>IAM</code> and the corresponding IAM user is deleted.</p>
+     * <p>The user's user name. This value is required if you are registering a user
+     * that will be managed in Amazon QuickSight. In the output, the value for
+     * <code>UserName</code> is <code>N/A</code> when the value for
+     * <code>IdentityType</code> is <code>IAM</code> and the corresponding IAM user is
+     * deleted.</p>
      */
     inline User& WithUserName(const Aws::String& value) { SetUserName(value); return *this;}
 
     /**
-     * <p>The user's user name. In the output, the value for <code>UserName</code> is
-     * <code>N/A</code> when the value for <code>IdentityType</code> is
-     * <code>IAM</code> and the corresponding IAM user is deleted.</p>
+     * <p>The user's user name. This value is required if you are registering a user
+     * that will be managed in Amazon QuickSight. In the output, the value for
+     * <code>UserName</code> is <code>N/A</code> when the value for
+     * <code>IdentityType</code> is <code>IAM</code> and the corresponding IAM user is
+     * deleted.</p>
      */
     inline User& WithUserName(Aws::String&& value) { SetUserName(std::move(value)); return *this;}
 
     /**
-     * <p>The user's user name. In the output, the value for <code>UserName</code> is
-     * <code>N/A</code> when the value for <code>IdentityType</code> is
-     * <code>IAM</code> and the corresponding IAM user is deleted.</p>
+     * <p>The user's user name. This value is required if you are registering a user
+     * that will be managed in Amazon QuickSight. In the output, the value for
+     * <code>UserName</code> is <code>N/A</code> when the value for
+     * <code>IdentityType</code> is <code>IAM</code> and the corresponding IAM user is
+     * deleted.</p>
      */
     inline User& WithUserName(const char* value) { SetUserName(value); return *this;}
 

@@ -7,6 +7,7 @@
 #include <aws/secretsmanager/SecretsManager_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/secretsmanager/SecretsManagerServiceClientModel.h>
 
@@ -46,33 +47,60 @@ namespace SecretsManager
    * href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/what_is_cloud_trail_top_level.html">Amazon
    * Web Services CloudTrail User Guide</a>.</p>
    */
-  class AWS_SECRETSMANAGER_API SecretsManagerClient : public Aws::Client::AWSJsonClient
+  class AWS_SECRETSMANAGER_API SecretsManagerClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<SecretsManagerClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        SecretsManagerClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        SecretsManagerClient(const Aws::SecretsManager::SecretsManagerClientConfiguration& clientConfiguration = Aws::SecretsManager::SecretsManagerClientConfiguration(),
+                             std::shared_ptr<SecretsManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<SecretsManagerEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         SecretsManagerClient(const Aws::Auth::AWSCredentials& credentials,
-                             const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                             std::shared_ptr<SecretsManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<SecretsManagerEndpointProvider>(ALLOCATION_TAG),
+                             const Aws::SecretsManager::SecretsManagerClientConfiguration& clientConfiguration = Aws::SecretsManager::SecretsManagerClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         SecretsManagerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                             const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                             std::shared_ptr<SecretsManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<SecretsManagerEndpointProvider>(ALLOCATION_TAG),
+                             const Aws::SecretsManager::SecretsManagerClientConfiguration& clientConfiguration = Aws::SecretsManager::SecretsManagerClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SecretsManagerClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SecretsManagerClient(const Aws::Auth::AWSCredentials& credentials,
+                             const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        SecretsManagerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                             const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~SecretsManagerClient();
-
 
         /**
          * <p>Turns off automatic rotation, and if a rotation is currently in progress,
@@ -647,9 +675,14 @@ namespace SecretsManager
          * the <code>AWSPENDING</code> staging label is present but not attached to the
          * same version as <code>AWSCURRENT</code>, then any later invocation of
          * <code>RotateSecret</code> assumes that a previous rotation request is still in
-         * progress and returns an error.</p> <p>Secrets Manager generates a CloudTrail log
-         * entry when you call this action. Do not include sensitive information in request
-         * parameters because it might be logged. For more information, see <a
+         * progress and returns an error.</p> <p>When rotation is unsuccessful, the
+         * <code>AWSPENDING</code> staging label might be attached to an empty secret
+         * version. For more information, see <a
+         * href="https://docs.aws.amazon.com/secretsmanager/latest/userguide/troubleshoot_rotation.html">Troubleshoot
+         * rotation</a> in the <i>Secrets Manager User Guide</i>.</p> <p>Secrets Manager
+         * generates a CloudTrail log entry when you call this action. Do not include
+         * sensitive information in request parameters because it might be logged. For more
+         * information, see <a
          * href="https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieve-ct-entries.html">Logging
          * Secrets Manager events with CloudTrail</a>.</p> <p> <b>Required permissions:
          * </b> <code>secretsmanager:RotateSecret</code>. For more information, see <a
@@ -914,12 +947,14 @@ namespace SecretsManager
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<SecretsManagerEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<SecretsManagerClient>;
+      void init(const SecretsManagerClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      SecretsManagerClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<SecretsManagerEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace SecretsManager

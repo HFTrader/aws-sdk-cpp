@@ -26,18 +26,22 @@ namespace Model
 {
 
   /**
-   * <p>A complex type that contains prefetch schedule information.</p><p><h3>See
+   * <p>A prefetch schedule allows you to tell MediaTailor to fetch and prepare
+   * certain ads before an ad break happens. For more information about ad
+   * prefetching, see <a
+   * href="https://docs.aws.amazon.com/mediatailor/latest/ug/prefetching-ads.html">Using
+   * ad prefetching</a> in the <i>MediaTailor User Guide</i>.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/PrefetchSchedule">AWS
    * API Reference</a></p>
    */
-  class AWS_MEDIATAILOR_API PrefetchSchedule
+  class PrefetchSchedule
   {
   public:
-    PrefetchSchedule();
-    PrefetchSchedule(Aws::Utils::Json::JsonView jsonValue);
-    PrefetchSchedule& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_MEDIATAILOR_API PrefetchSchedule();
+    AWS_MEDIATAILOR_API PrefetchSchedule(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEDIATAILOR_API PrefetchSchedule& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEDIATAILOR_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**

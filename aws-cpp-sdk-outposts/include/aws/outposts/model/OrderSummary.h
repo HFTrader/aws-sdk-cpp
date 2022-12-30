@@ -33,13 +33,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/outposts-2019-12-03/OrderSummary">AWS
    * API Reference</a></p>
    */
-  class AWS_OUTPOSTS_API OrderSummary
+  class OrderSummary
   {
   public:
-    OrderSummary();
-    OrderSummary(Aws::Utils::Json::JsonView jsonValue);
-    OrderSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_OUTPOSTS_API OrderSummary();
+    AWS_OUTPOSTS_API OrderSummary(Aws::Utils::Json::JsonView jsonValue);
+    AWS_OUTPOSTS_API OrderSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_OUTPOSTS_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -276,63 +276,63 @@ namespace Model
 
 
     /**
-     * <p> Submission date for the order. </p>
+     * <p> The submission date for the order. </p>
      */
     inline const Aws::Utils::DateTime& GetOrderSubmissionDate() const{ return m_orderSubmissionDate; }
 
     /**
-     * <p> Submission date for the order. </p>
+     * <p> The submission date for the order. </p>
      */
     inline bool OrderSubmissionDateHasBeenSet() const { return m_orderSubmissionDateHasBeenSet; }
 
     /**
-     * <p> Submission date for the order. </p>
+     * <p> The submission date for the order. </p>
      */
     inline void SetOrderSubmissionDate(const Aws::Utils::DateTime& value) { m_orderSubmissionDateHasBeenSet = true; m_orderSubmissionDate = value; }
 
     /**
-     * <p> Submission date for the order. </p>
+     * <p> The submission date for the order. </p>
      */
     inline void SetOrderSubmissionDate(Aws::Utils::DateTime&& value) { m_orderSubmissionDateHasBeenSet = true; m_orderSubmissionDate = std::move(value); }
 
     /**
-     * <p> Submission date for the order. </p>
+     * <p> The submission date for the order. </p>
      */
     inline OrderSummary& WithOrderSubmissionDate(const Aws::Utils::DateTime& value) { SetOrderSubmissionDate(value); return *this;}
 
     /**
-     * <p> Submission date for the order. </p>
+     * <p> The submission date for the order. </p>
      */
     inline OrderSummary& WithOrderSubmissionDate(Aws::Utils::DateTime&& value) { SetOrderSubmissionDate(std::move(value)); return *this;}
 
 
     /**
-     * <p> Fulfilment date for the order. </p>
+     * <p> The fulfilment date for the order. </p>
      */
     inline const Aws::Utils::DateTime& GetOrderFulfilledDate() const{ return m_orderFulfilledDate; }
 
     /**
-     * <p> Fulfilment date for the order. </p>
+     * <p> The fulfilment date for the order. </p>
      */
     inline bool OrderFulfilledDateHasBeenSet() const { return m_orderFulfilledDateHasBeenSet; }
 
     /**
-     * <p> Fulfilment date for the order. </p>
+     * <p> The fulfilment date for the order. </p>
      */
     inline void SetOrderFulfilledDate(const Aws::Utils::DateTime& value) { m_orderFulfilledDateHasBeenSet = true; m_orderFulfilledDate = value; }
 
     /**
-     * <p> Fulfilment date for the order. </p>
+     * <p> The fulfilment date for the order. </p>
      */
     inline void SetOrderFulfilledDate(Aws::Utils::DateTime&& value) { m_orderFulfilledDateHasBeenSet = true; m_orderFulfilledDate = std::move(value); }
 
     /**
-     * <p> Fulfilment date for the order. </p>
+     * <p> The fulfilment date for the order. </p>
      */
     inline OrderSummary& WithOrderFulfilledDate(const Aws::Utils::DateTime& value) { SetOrderFulfilledDate(value); return *this;}
 
     /**
-     * <p> Fulfilment date for the order. </p>
+     * <p> The fulfilment date for the order. </p>
      */
     inline OrderSummary& WithOrderFulfilledDate(Aws::Utils::DateTime&& value) { SetOrderFulfilledDate(std::move(value)); return *this;}
 

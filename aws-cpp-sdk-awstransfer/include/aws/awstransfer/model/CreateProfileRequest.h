@@ -21,10 +21,10 @@ namespace Model
 
   /**
    */
-  class AWS_TRANSFER_API CreateProfileRequest : public TransferRequest
+  class CreateProfileRequest : public TransferRequest
   {
   public:
-    CreateProfileRequest();
+    AWS_TRANSFER_API CreateProfileRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -32,9 +32,9 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "CreateProfile"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_TRANSFER_API Aws::String SerializePayload() const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_TRANSFER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 
     /**
@@ -119,44 +119,56 @@ namespace Model
 
 
     /**
-     * <p>Indicates whether to list only <code>LOCAL</code> type profiles or only
-     * <code>PARTNER</code> type profiles. If not supplied in the request, the command
-     * lists all types of profiles.</p>
+     * <p>Determines the type of profile to create:</p> <ul> <li> <p>Specify
+     * <code>LOCAL</code> to create a local profile. A local profile represents the
+     * AS2-enabled Transfer Family server organization or party.</p> </li> <li>
+     * <p>Specify <code>PARTNER</code> to create a partner profile. A partner profile
+     * represents a remote organization, external to Transfer Family.</p> </li> </ul>
      */
     inline const ProfileType& GetProfileType() const{ return m_profileType; }
 
     /**
-     * <p>Indicates whether to list only <code>LOCAL</code> type profiles or only
-     * <code>PARTNER</code> type profiles. If not supplied in the request, the command
-     * lists all types of profiles.</p>
+     * <p>Determines the type of profile to create:</p> <ul> <li> <p>Specify
+     * <code>LOCAL</code> to create a local profile. A local profile represents the
+     * AS2-enabled Transfer Family server organization or party.</p> </li> <li>
+     * <p>Specify <code>PARTNER</code> to create a partner profile. A partner profile
+     * represents a remote organization, external to Transfer Family.</p> </li> </ul>
      */
     inline bool ProfileTypeHasBeenSet() const { return m_profileTypeHasBeenSet; }
 
     /**
-     * <p>Indicates whether to list only <code>LOCAL</code> type profiles or only
-     * <code>PARTNER</code> type profiles. If not supplied in the request, the command
-     * lists all types of profiles.</p>
+     * <p>Determines the type of profile to create:</p> <ul> <li> <p>Specify
+     * <code>LOCAL</code> to create a local profile. A local profile represents the
+     * AS2-enabled Transfer Family server organization or party.</p> </li> <li>
+     * <p>Specify <code>PARTNER</code> to create a partner profile. A partner profile
+     * represents a remote organization, external to Transfer Family.</p> </li> </ul>
      */
     inline void SetProfileType(const ProfileType& value) { m_profileTypeHasBeenSet = true; m_profileType = value; }
 
     /**
-     * <p>Indicates whether to list only <code>LOCAL</code> type profiles or only
-     * <code>PARTNER</code> type profiles. If not supplied in the request, the command
-     * lists all types of profiles.</p>
+     * <p>Determines the type of profile to create:</p> <ul> <li> <p>Specify
+     * <code>LOCAL</code> to create a local profile. A local profile represents the
+     * AS2-enabled Transfer Family server organization or party.</p> </li> <li>
+     * <p>Specify <code>PARTNER</code> to create a partner profile. A partner profile
+     * represents a remote organization, external to Transfer Family.</p> </li> </ul>
      */
     inline void SetProfileType(ProfileType&& value) { m_profileTypeHasBeenSet = true; m_profileType = std::move(value); }
 
     /**
-     * <p>Indicates whether to list only <code>LOCAL</code> type profiles or only
-     * <code>PARTNER</code> type profiles. If not supplied in the request, the command
-     * lists all types of profiles.</p>
+     * <p>Determines the type of profile to create:</p> <ul> <li> <p>Specify
+     * <code>LOCAL</code> to create a local profile. A local profile represents the
+     * AS2-enabled Transfer Family server organization or party.</p> </li> <li>
+     * <p>Specify <code>PARTNER</code> to create a partner profile. A partner profile
+     * represents a remote organization, external to Transfer Family.</p> </li> </ul>
      */
     inline CreateProfileRequest& WithProfileType(const ProfileType& value) { SetProfileType(value); return *this;}
 
     /**
-     * <p>Indicates whether to list only <code>LOCAL</code> type profiles or only
-     * <code>PARTNER</code> type profiles. If not supplied in the request, the command
-     * lists all types of profiles.</p>
+     * <p>Determines the type of profile to create:</p> <ul> <li> <p>Specify
+     * <code>LOCAL</code> to create a local profile. A local profile represents the
+     * AS2-enabled Transfer Family server organization or party.</p> </li> <li>
+     * <p>Specify <code>PARTNER</code> to create a partner profile. A partner profile
+     * represents a remote organization, external to Transfer Family.</p> </li> </ul>
      */
     inline CreateProfileRequest& WithProfileType(ProfileType&& value) { SetProfileType(std::move(value)); return *this;}
 

@@ -7,6 +7,7 @@
 #include <aws/iotevents/IoTEvents_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/iotevents/IoTEventsServiceClientModel.h>
 
@@ -20,33 +21,60 @@ namespace IoTEvents
    * AWS IoT Events API operations to create, read, update, and delete inputs and
    * detector models, and to list their versions.</p>
    */
-  class AWS_IOTEVENTS_API IoTEventsClient : public Aws::Client::AWSJsonClient
+  class AWS_IOTEVENTS_API IoTEventsClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<IoTEventsClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        IoTEventsClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        IoTEventsClient(const Aws::IoTEvents::IoTEventsClientConfiguration& clientConfiguration = Aws::IoTEvents::IoTEventsClientConfiguration(),
+                        std::shared_ptr<IoTEventsEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTEventsEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         IoTEventsClient(const Aws::Auth::AWSCredentials& credentials,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<IoTEventsEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTEventsEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::IoTEvents::IoTEventsClientConfiguration& clientConfiguration = Aws::IoTEvents::IoTEventsClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         IoTEventsClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<IoTEventsEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTEventsEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::IoTEvents::IoTEventsClientConfiguration& clientConfiguration = Aws::IoTEvents::IoTEventsClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IoTEventsClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IoTEventsClient(const Aws::Auth::AWSCredentials& credentials,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        IoTEventsClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~IoTEventsClient();
-
 
         /**
          * <p>Creates an alarm model to monitor an AWS IoT Events input attribute. You can
@@ -528,12 +556,14 @@ namespace IoTEvents
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<IoTEventsEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<IoTEventsClient>;
+      void init(const IoTEventsClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      IoTEventsClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<IoTEventsEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace IoTEvents

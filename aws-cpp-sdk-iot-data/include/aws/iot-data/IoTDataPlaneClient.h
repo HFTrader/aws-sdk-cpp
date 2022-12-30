@@ -7,6 +7,7 @@
 #include <aws/iot-data/IoTDataPlane_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/iot-data/IoTDataPlaneServiceClientModel.h>
 
@@ -28,33 +29,60 @@ namespace IoTDataPlane
    * Web ServicesSignature Version 4</a> to sign requests is:
    * <i>iotdevicegateway</i>.</p>
    */
-  class AWS_IOTDATAPLANE_API IoTDataPlaneClient : public Aws::Client::AWSJsonClient
+  class AWS_IOTDATAPLANE_API IoTDataPlaneClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<IoTDataPlaneClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        IoTDataPlaneClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        IoTDataPlaneClient(const Aws::IoTDataPlane::IoTDataPlaneClientConfiguration& clientConfiguration = Aws::IoTDataPlane::IoTDataPlaneClientConfiguration(),
+                           std::shared_ptr<IoTDataPlaneEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTDataPlaneEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         IoTDataPlaneClient(const Aws::Auth::AWSCredentials& credentials,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<IoTDataPlaneEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTDataPlaneEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::IoTDataPlane::IoTDataPlaneClientConfiguration& clientConfiguration = Aws::IoTDataPlane::IoTDataPlaneClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         IoTDataPlaneClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<IoTDataPlaneEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTDataPlaneEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::IoTDataPlane::IoTDataPlaneClientConfiguration& clientConfiguration = Aws::IoTDataPlane::IoTDataPlaneClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IoTDataPlaneClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IoTDataPlaneClient(const Aws::Auth::AWSCredentials& credentials,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        IoTDataPlaneClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~IoTDataPlaneClient();
-
 
         /**
          * <p>Deletes the shadow for the specified thing.</p> <p>Requires permission to
@@ -222,12 +250,14 @@ namespace IoTDataPlane
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<IoTDataPlaneEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<IoTDataPlaneClient>;
+      void init(const IoTDataPlaneClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      IoTDataPlaneClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<IoTDataPlaneEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace IoTDataPlane

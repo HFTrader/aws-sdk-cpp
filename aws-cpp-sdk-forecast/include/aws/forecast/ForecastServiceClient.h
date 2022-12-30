@@ -7,6 +7,7 @@
 #include <aws/forecast/ForecastService_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/forecast/ForecastServiceServiceClientModel.h>
 
@@ -17,33 +18,60 @@ namespace ForecastService
   /**
    * <p>Provides APIs for creating and managing Amazon Forecast resources.</p>
    */
-  class AWS_FORECASTSERVICE_API ForecastServiceClient : public Aws::Client::AWSJsonClient
+  class AWS_FORECASTSERVICE_API ForecastServiceClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<ForecastServiceClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        ForecastServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        ForecastServiceClient(const Aws::ForecastService::ForecastServiceClientConfiguration& clientConfiguration = Aws::ForecastService::ForecastServiceClientConfiguration(),
+                              std::shared_ptr<ForecastServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<ForecastServiceEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         ForecastServiceClient(const Aws::Auth::AWSCredentials& credentials,
-                              const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                              std::shared_ptr<ForecastServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<ForecastServiceEndpointProvider>(ALLOCATION_TAG),
+                              const Aws::ForecastService::ForecastServiceClientConfiguration& clientConfiguration = Aws::ForecastService::ForecastServiceClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         ForecastServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                              const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                              std::shared_ptr<ForecastServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<ForecastServiceEndpointProvider>(ALLOCATION_TAG),
+                              const Aws::ForecastService::ForecastServiceClientConfiguration& clientConfiguration = Aws::ForecastService::ForecastServiceClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ForecastServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ForecastServiceClient(const Aws::Auth::AWSCredentials& credentials,
+                              const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        ForecastServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                              const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~ForecastServiceClient();
-
 
         /**
          * <p>Creates an Amazon Forecast predictor.</p> <p>Amazon Forecast creates
@@ -1628,12 +1656,14 @@ namespace ForecastService
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<ForecastServiceEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<ForecastServiceClient>;
+      void init(const ForecastServiceClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      ForecastServiceClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<ForecastServiceEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace ForecastService

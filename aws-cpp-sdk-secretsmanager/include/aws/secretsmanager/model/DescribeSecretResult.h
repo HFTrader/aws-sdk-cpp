@@ -30,12 +30,12 @@ namespace SecretsManager
 {
 namespace Model
 {
-  class AWS_SECRETSMANAGER_API DescribeSecretResult
+  class DescribeSecretResult
   {
   public:
-    DescribeSecretResult();
-    DescribeSecretResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    DescribeSecretResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+    AWS_SECRETSMANAGER_API DescribeSecretResult();
+    AWS_SECRETSMANAGER_API DescribeSecretResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+    AWS_SECRETSMANAGER_API DescribeSecretResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
 
     /**
@@ -451,6 +451,22 @@ namespace Model
      * deletion and restore access to the secret, use <a>RestoreSecret</a>.</p>
      */
     inline DescribeSecretResult& WithDeletedDate(Aws::Utils::DateTime&& value) { SetDeletedDate(std::move(value)); return *this;}
+
+
+    
+    inline const Aws::Utils::DateTime& GetNextRotationDate() const{ return m_nextRotationDate; }
+
+    
+    inline void SetNextRotationDate(const Aws::Utils::DateTime& value) { m_nextRotationDate = value; }
+
+    
+    inline void SetNextRotationDate(Aws::Utils::DateTime&& value) { m_nextRotationDate = std::move(value); }
+
+    
+    inline DescribeSecretResult& WithNextRotationDate(const Aws::Utils::DateTime& value) { SetNextRotationDate(value); return *this;}
+
+    
+    inline DescribeSecretResult& WithNextRotationDate(Aws::Utils::DateTime&& value) { SetNextRotationDate(std::move(value)); return *this;}
 
 
     /**
@@ -922,6 +938,8 @@ namespace Model
     Aws::Utils::DateTime m_lastAccessedDate;
 
     Aws::Utils::DateTime m_deletedDate;
+
+    Aws::Utils::DateTime m_nextRotationDate;
 
     Aws::Vector<Tag> m_tags;
 

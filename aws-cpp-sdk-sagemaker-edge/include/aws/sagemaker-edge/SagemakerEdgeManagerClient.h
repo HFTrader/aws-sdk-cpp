@@ -7,6 +7,7 @@
 #include <aws/sagemaker-edge/SagemakerEdgeManager_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/sagemaker-edge/SagemakerEdgeManagerServiceClientModel.h>
 
@@ -18,33 +19,60 @@ namespace SagemakerEdgeManager
    * <p>SageMaker Edge Manager dataplane service for communicating with active
    * agents.</p>
    */
-  class AWS_SAGEMAKEREDGEMANAGER_API SagemakerEdgeManagerClient : public Aws::Client::AWSJsonClient
+  class AWS_SAGEMAKEREDGEMANAGER_API SagemakerEdgeManagerClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<SagemakerEdgeManagerClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        SagemakerEdgeManagerClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        SagemakerEdgeManagerClient(const Aws::SagemakerEdgeManager::SagemakerEdgeManagerClientConfiguration& clientConfiguration = Aws::SagemakerEdgeManager::SagemakerEdgeManagerClientConfiguration(),
+                                   std::shared_ptr<SagemakerEdgeManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<SagemakerEdgeManagerEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         SagemakerEdgeManagerClient(const Aws::Auth::AWSCredentials& credentials,
-                                   const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                   std::shared_ptr<SagemakerEdgeManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<SagemakerEdgeManagerEndpointProvider>(ALLOCATION_TAG),
+                                   const Aws::SagemakerEdgeManager::SagemakerEdgeManagerClientConfiguration& clientConfiguration = Aws::SagemakerEdgeManager::SagemakerEdgeManagerClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         SagemakerEdgeManagerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                                   const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                   std::shared_ptr<SagemakerEdgeManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<SagemakerEdgeManagerEndpointProvider>(ALLOCATION_TAG),
+                                   const Aws::SagemakerEdgeManager::SagemakerEdgeManagerClientConfiguration& clientConfiguration = Aws::SagemakerEdgeManager::SagemakerEdgeManagerClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SagemakerEdgeManagerClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SagemakerEdgeManagerClient(const Aws::Auth::AWSCredentials& credentials,
+                                   const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        SagemakerEdgeManagerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                                   const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~SagemakerEdgeManagerClient();
-
 
         /**
          * <p>Use to get the active deployments from a device.</p><p><h3>See Also:</h3>  
@@ -102,12 +130,14 @@ namespace SagemakerEdgeManager
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<SagemakerEdgeManagerEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<SagemakerEdgeManagerClient>;
+      void init(const SagemakerEdgeManagerClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      SagemakerEdgeManagerClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<SagemakerEdgeManagerEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace SagemakerEdgeManager

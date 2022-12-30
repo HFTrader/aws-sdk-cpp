@@ -7,6 +7,7 @@
 #include <aws/snowball/Snowball_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/snowball/SnowballServiceClientModel.h>
 
@@ -27,33 +28,60 @@ namespace Snowball
    * href="https://docs.aws.amazon.com/AWSImportExport/latest/ug/api-reference.html">User
    * Guide</a>.</p>
    */
-  class AWS_SNOWBALL_API SnowballClient : public Aws::Client::AWSJsonClient
+  class AWS_SNOWBALL_API SnowballClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<SnowballClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        SnowballClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        SnowballClient(const Aws::Snowball::SnowballClientConfiguration& clientConfiguration = Aws::Snowball::SnowballClientConfiguration(),
+                       std::shared_ptr<SnowballEndpointProviderBase> endpointProvider = Aws::MakeShared<SnowballEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         SnowballClient(const Aws::Auth::AWSCredentials& credentials,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<SnowballEndpointProviderBase> endpointProvider = Aws::MakeShared<SnowballEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::Snowball::SnowballClientConfiguration& clientConfiguration = Aws::Snowball::SnowballClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         SnowballClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<SnowballEndpointProviderBase> endpointProvider = Aws::MakeShared<SnowballEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::Snowball::SnowballClientConfiguration& clientConfiguration = Aws::Snowball::SnowballClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SnowballClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SnowballClient(const Aws::Auth::AWSCredentials& credentials,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        SnowballClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~SnowballClient();
-
 
         /**
          * <p>Cancels a cluster job. You can only cancel a cluster job while it's in the
@@ -147,7 +175,7 @@ namespace Snowball
          * availability, see <a
          * href="https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/?p=ngi&amp;loc=4">Amazon
          * Web Services Regional Services</a>.</p>  <p/> <p class="title"> <b>Snow
-         * Family Devices and their capacities.</b> </p> <ul> <li> <p>Snow Family device
+         * Family devices and their capacities.</b> </p> <ul> <li> <p>Snow Family device
          * type: <b>SNC1_SSD</b> </p> <ul> <li> <p>Capacity: T14</p> </li> <li>
          * <p>Description: Snowcone </p> </li> </ul> <p/> </li> <li> <p>Snow Family device
          * type: <b>SNC1_HDD</b> </p> <ul> <li> <p>Capacity: T8</p> </li> <li>
@@ -160,14 +188,17 @@ namespace Snowball
          * T42</p> </li> <li> <p>Description: Snowball Edge Compute Optimized without
          * GPU</p> </li> </ul> <p/> </li> <li> <p>Device type: <b>EDGE</b> </p> <ul> <li>
          * <p>Capacity: T100</p> </li> <li> <p>Description: Snowball Edge Storage Optimized
-         * with EC2 Compute</p> </li> </ul> <p/> </li> <li> <p>Device type: <b>STANDARD</b>
-         * </p> <ul> <li> <p>Capacity: T50</p> </li> <li> <p>Description: Original Snowball
-         * device</p>  <p>This device is only available in the Ningxia, Beijing, and
-         * Singapore Amazon Web Services Region </p>  </li> </ul> <p/> </li> <li>
-         * <p>Device type: <b>STANDARD</b> </p> <ul> <li> <p>Capacity: T80</p> </li> <li>
-         * <p>Description: Original Snowball device</p>  <p>This device is only
-         * available in the Ningxia, Beijing, and Singapore Amazon Web Services Region.
-         * </p>  </li> </ul> <p/> </li> </ul><p><h3>See Also:</h3>   <a
+         * with EC2 Compute</p> </li> </ul> <p/> </li> <li> <p>Device type: <b>V3_5C</b>
+         * </p> <ul> <li> <p>Capacity: T32</p> </li> <li> <p>Description: Snowball Edge
+         * Compute Optimized without GPU</p> </li> </ul> <p/> </li> <li> <p>Device type:
+         * <b>STANDARD</b> </p> <ul> <li> <p>Capacity: T50</p> </li> <li> <p>Description:
+         * Original Snowball device</p>  <p>This device is only available in the
+         * Ningxia, Beijing, and Singapore Amazon Web Services Region </p>  </li>
+         * </ul> <p/> </li> <li> <p>Device type: <b>STANDARD</b> </p> <ul> <li>
+         * <p>Capacity: T80</p> </li> <li> <p>Description: Original Snowball device</p>
+         *  <p>This device is only available in the Ningxia, Beijing, and Singapore
+         * Amazon Web Services Region. </p>  </li> </ul> <p/> </li> </ul><p><h3>See
+         * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/snowball-2016-06-30/CreateJob">AWS
          * API Reference</a></p>
          */
@@ -320,15 +351,17 @@ namespace Snowball
          * file after 60 minutes have passed, you'll have to make another call to the
          * <code>GetJobManifest</code> action.</p> <p>The manifest is an encrypted file
          * that you can download after your job enters the <code>WithCustomer</code>
-         * status. The manifest is decrypted by using the <code>UnlockCode</code> code
-         * value, when you pass both values to the Snow device through the Snowball client
-         * when the client is started for the first time.</p> <p>As a best practice, we
-         * recommend that you don't save a copy of an <code>UnlockCode</code> value in the
-         * same location as the manifest file for that job. Saving these separately helps
-         * prevent unauthorized parties from gaining access to the Snow device associated
-         * with that job.</p> <p>The credentials of a given job, including its manifest
-         * file and unlock code, expire 360 days after the job is created.</p><p><h3>See
-         * Also:</h3>   <a
+         * status. This is the only valid status for calling this API as the manifest and
+         * <code>UnlockCode</code> code value are used for securing your device and should
+         * only be used when you have the device. The manifest is decrypted by using the
+         * <code>UnlockCode</code> code value, when you pass both values to the Snow device
+         * through the Snowball client when the client is started for the first time. </p>
+         * <p>As a best practice, we recommend that you don't save a copy of an
+         * <code>UnlockCode</code> value in the same location as the manifest file for that
+         * job. Saving these separately helps prevent unauthorized parties from gaining
+         * access to the Snow device associated with that job.</p> <p>The credentials of a
+         * given job, including its manifest file and unlock code, expire 360 days after
+         * the job is created.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/snowball-2016-06-30/GetJobManifest">AWS
          * API Reference</a></p>
          */
@@ -351,11 +384,14 @@ namespace Snowball
          * value is a 29-character code with 25 alphanumeric characters and 4 hyphens. This
          * code is used to decrypt the manifest file when it is passed along with the
          * manifest to the Snow device through the Snowball client when the client is
-         * started for the first time.</p> <p>As a best practice, we recommend that you
-         * don't save a copy of the <code>UnlockCode</code> in the same location as the
-         * manifest file for that job. Saving these separately helps prevent unauthorized
-         * parties from gaining access to the Snow device associated with that
-         * job.</p><p><h3>See Also:</h3>   <a
+         * started for the first time. The only valid status for calling this API is
+         * <code>WithCustomer</code> as the manifest and <code>Unlock</code> code values
+         * are used for securing your device and should only be used when you have the
+         * device.</p> <p>As a best practice, we recommend that you don't save a copy of
+         * the <code>UnlockCode</code> in the same location as the manifest file for that
+         * job. Saving these separately helps prevent unauthorized parties from gaining
+         * access to the Snow device associated with that job.</p><p><h3>See Also:</h3>  
+         * <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/snowball-2016-06-30/GetJobUnlockCode">AWS
          * API Reference</a></p>
          */
@@ -589,12 +625,14 @@ namespace Snowball
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<SnowballEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<SnowballClient>;
+      void init(const SnowballClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      SnowballClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<SnowballEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Snowball

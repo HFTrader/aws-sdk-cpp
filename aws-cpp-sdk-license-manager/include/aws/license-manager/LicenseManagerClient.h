@@ -7,6 +7,7 @@
 #include <aws/license-manager/LicenseManager_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/license-manager/LicenseManagerServiceClientModel.h>
 
@@ -18,33 +19,60 @@ namespace LicenseManager
    * <p>License Manager makes it easier to manage licenses from software vendors
    * across multiple Amazon Web Services accounts and on-premises servers.</p>
    */
-  class AWS_LICENSEMANAGER_API LicenseManagerClient : public Aws::Client::AWSJsonClient
+  class AWS_LICENSEMANAGER_API LicenseManagerClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<LicenseManagerClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        LicenseManagerClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        LicenseManagerClient(const Aws::LicenseManager::LicenseManagerClientConfiguration& clientConfiguration = Aws::LicenseManager::LicenseManagerClientConfiguration(),
+                             std::shared_ptr<LicenseManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<LicenseManagerEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         LicenseManagerClient(const Aws::Auth::AWSCredentials& credentials,
-                             const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                             std::shared_ptr<LicenseManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<LicenseManagerEndpointProvider>(ALLOCATION_TAG),
+                             const Aws::LicenseManager::LicenseManagerClientConfiguration& clientConfiguration = Aws::LicenseManager::LicenseManagerClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         LicenseManagerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                             const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                             std::shared_ptr<LicenseManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<LicenseManagerEndpointProvider>(ALLOCATION_TAG),
+                             const Aws::LicenseManager::LicenseManagerClientConfiguration& clientConfiguration = Aws::LicenseManager::LicenseManagerClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        LicenseManagerClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        LicenseManagerClient(const Aws::Auth::AWSCredentials& credentials,
+                             const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        LicenseManagerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                             const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~LicenseManagerClient();
-
 
         /**
          * <p>Accepts the specified grant.</p><p><h3>See Also:</h3>   <a
@@ -100,7 +128,9 @@ namespace LicenseManager
         virtual void CheckoutBorrowLicenseAsync(const Model::CheckoutBorrowLicenseRequest& request, const CheckoutBorrowLicenseResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Checks out the specified license.</p><p><h3>See Also:</h3>   <a
+         * <p>Checks out the specified license.</p>  <p>If the account that created
+         * the license is the same that is performing the check out, you must specify the
+         * account as the beneficiary.</p> <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/license-manager-2018-08-01/CheckoutLicense">AWS
          * API Reference</a></p>
          */
@@ -695,6 +725,24 @@ namespace LicenseManager
         virtual void ListReceivedGrantsAsync(const Model::ListReceivedGrantsRequest& request, const ListReceivedGrantsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Lists the grants received for all accounts in the organization.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/license-manager-2018-08-01/ListReceivedGrantsForOrganization">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListReceivedGrantsForOrganizationOutcome ListReceivedGrantsForOrganization(const Model::ListReceivedGrantsForOrganizationRequest& request) const;
+
+        /**
+         * A Callable wrapper for ListReceivedGrantsForOrganization that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListReceivedGrantsForOrganizationOutcomeCallable ListReceivedGrantsForOrganizationCallable(const Model::ListReceivedGrantsForOrganizationRequest& request) const;
+
+        /**
+         * An Async wrapper for ListReceivedGrantsForOrganization that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListReceivedGrantsForOrganizationAsync(const Model::ListReceivedGrantsForOrganizationRequest& request, const ListReceivedGrantsForOrganizationResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Lists received licenses.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/license-manager-2018-08-01/ListReceivedLicenses">AWS
          * API Reference</a></p>
@@ -710,6 +758,24 @@ namespace LicenseManager
          * An Async wrapper for ListReceivedLicenses that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void ListReceivedLicensesAsync(const Model::ListReceivedLicensesRequest& request, const ListReceivedLicensesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Lists the licenses received for all accounts in the
+         * organization.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/license-manager-2018-08-01/ListReceivedLicensesForOrganization">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListReceivedLicensesForOrganizationOutcome ListReceivedLicensesForOrganization(const Model::ListReceivedLicensesForOrganizationRequest& request) const;
+
+        /**
+         * A Callable wrapper for ListReceivedLicensesForOrganization that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListReceivedLicensesForOrganizationOutcomeCallable ListReceivedLicensesForOrganizationCallable(const Model::ListReceivedLicensesForOrganizationRequest& request) const;
+
+        /**
+         * An Async wrapper for ListReceivedLicensesForOrganization that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListReceivedLicensesForOrganizationAsync(const Model::ListReceivedLicensesForOrganizationRequest& request, const ListReceivedLicensesForOrganizationResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Lists resources managed using Systems Manager inventory.</p><p><h3>See
@@ -915,12 +981,14 @@ namespace LicenseManager
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<LicenseManagerEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<LicenseManagerClient>;
+      void init(const LicenseManagerClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      LicenseManagerClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<LicenseManagerEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace LicenseManager

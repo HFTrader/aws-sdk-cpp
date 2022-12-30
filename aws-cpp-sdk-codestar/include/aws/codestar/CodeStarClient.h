@@ -7,6 +7,7 @@
 #include <aws/codestar/CodeStar_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/codestar/CodeStarServiceClientModel.h>
 
@@ -46,33 +47,60 @@ namespace CodeStar
    * <code>UpdateUserProfile</code>, which updates the profile for a user.</p> </li>
    * </ul>
    */
-  class AWS_CODESTAR_API CodeStarClient : public Aws::Client::AWSJsonClient
+  class AWS_CODESTAR_API CodeStarClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<CodeStarClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        CodeStarClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        CodeStarClient(const Aws::CodeStar::CodeStarClientConfiguration& clientConfiguration = Aws::CodeStar::CodeStarClientConfiguration(),
+                       std::shared_ptr<CodeStarEndpointProviderBase> endpointProvider = Aws::MakeShared<CodeStarEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         CodeStarClient(const Aws::Auth::AWSCredentials& credentials,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<CodeStarEndpointProviderBase> endpointProvider = Aws::MakeShared<CodeStarEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::CodeStar::CodeStarClientConfiguration& clientConfiguration = Aws::CodeStar::CodeStarClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         CodeStarClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<CodeStarEndpointProviderBase> endpointProvider = Aws::MakeShared<CodeStarEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::CodeStar::CodeStarClientConfiguration& clientConfiguration = Aws::CodeStar::CodeStarClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CodeStarClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CodeStarClient(const Aws::Auth::AWSCredentials& credentials,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        CodeStarClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~CodeStarClient();
-
 
         /**
          * <p>Adds an IAM user to the team for an AWS CodeStar project.</p><p><h3>See
@@ -409,12 +437,14 @@ namespace CodeStar
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<CodeStarEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<CodeStarClient>;
+      void init(const CodeStarClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      CodeStarClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<CodeStarEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace CodeStar

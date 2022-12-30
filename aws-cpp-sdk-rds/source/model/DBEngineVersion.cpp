@@ -27,6 +27,8 @@ DBEngineVersion::DBEngineVersion() :
     m_dBEngineDescriptionHasBeenSet(false),
     m_dBEngineVersionDescriptionHasBeenSet(false),
     m_defaultCharacterSetHasBeenSet(false),
+    m_imageHasBeenSet(false),
+    m_dBEngineMediaTypeHasBeenSet(false),
     m_supportedCharacterSetsHasBeenSet(false),
     m_supportedNcharCharacterSetsHasBeenSet(false),
     m_validUpgradeTargetHasBeenSet(false),
@@ -52,6 +54,7 @@ DBEngineVersion::DBEngineVersion() :
     m_tagListHasBeenSet(false),
     m_supportsBabelfish(false),
     m_supportsBabelfishHasBeenSet(false),
+    m_customDBEngineVersionManifestHasBeenSet(false),
     m_responseMetadataHasBeenSet(false)
 {
 }
@@ -63,6 +66,8 @@ DBEngineVersion::DBEngineVersion(const XmlNode& xmlNode) :
     m_dBEngineDescriptionHasBeenSet(false),
     m_dBEngineVersionDescriptionHasBeenSet(false),
     m_defaultCharacterSetHasBeenSet(false),
+    m_imageHasBeenSet(false),
+    m_dBEngineMediaTypeHasBeenSet(false),
     m_supportedCharacterSetsHasBeenSet(false),
     m_supportedNcharCharacterSetsHasBeenSet(false),
     m_validUpgradeTargetHasBeenSet(false),
@@ -88,6 +93,7 @@ DBEngineVersion::DBEngineVersion(const XmlNode& xmlNode) :
     m_tagListHasBeenSet(false),
     m_supportsBabelfish(false),
     m_supportsBabelfishHasBeenSet(false),
+    m_customDBEngineVersionManifestHasBeenSet(false),
     m_responseMetadataHasBeenSet(false)
 {
   *this = xmlNode;
@@ -134,6 +140,18 @@ DBEngineVersion& DBEngineVersion::operator =(const XmlNode& xmlNode)
     {
       m_defaultCharacterSet = defaultCharacterSetNode;
       m_defaultCharacterSetHasBeenSet = true;
+    }
+    XmlNode imageNode = resultNode.FirstChild("Image");
+    if(!imageNode.IsNull())
+    {
+      m_image = imageNode;
+      m_imageHasBeenSet = true;
+    }
+    XmlNode dBEngineMediaTypeNode = resultNode.FirstChild("DBEngineMediaType");
+    if(!dBEngineMediaTypeNode.IsNull())
+    {
+      m_dBEngineMediaType = Aws::Utils::Xml::DecodeEscapedXmlText(dBEngineMediaTypeNode.GetText());
+      m_dBEngineMediaTypeHasBeenSet = true;
     }
     XmlNode supportedCharacterSetsNode = resultNode.FirstChild("SupportedCharacterSets");
     if(!supportedCharacterSetsNode.IsNull())
@@ -303,6 +321,12 @@ DBEngineVersion& DBEngineVersion::operator =(const XmlNode& xmlNode)
       m_supportsBabelfish = StringUtils::ConvertToBool(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(supportsBabelfishNode.GetText()).c_str()).c_str());
       m_supportsBabelfishHasBeenSet = true;
     }
+    XmlNode customDBEngineVersionManifestNode = resultNode.FirstChild("CustomDBEngineVersionManifest");
+    if(!customDBEngineVersionManifestNode.IsNull())
+    {
+      m_customDBEngineVersionManifest = Aws::Utils::Xml::DecodeEscapedXmlText(customDBEngineVersionManifestNode.GetText());
+      m_customDBEngineVersionManifestHasBeenSet = true;
+    }
   }
 
   return *this;
@@ -340,6 +364,18 @@ void DBEngineVersion::OutputToStream(Aws::OStream& oStream, const char* location
       Aws::StringStream defaultCharacterSetLocationAndMemberSs;
       defaultCharacterSetLocationAndMemberSs << location << index << locationValue << ".DefaultCharacterSet";
       m_defaultCharacterSet.OutputToStream(oStream, defaultCharacterSetLocationAndMemberSs.str().c_str());
+  }
+
+  if(m_imageHasBeenSet)
+  {
+      Aws::StringStream imageLocationAndMemberSs;
+      imageLocationAndMemberSs << location << index << locationValue << ".Image";
+      m_image.OutputToStream(oStream, imageLocationAndMemberSs.str().c_str());
+  }
+
+  if(m_dBEngineMediaTypeHasBeenSet)
+  {
+      oStream << location << index << locationValue << ".DBEngineMediaType=" << StringUtils::URLEncode(m_dBEngineMediaType.c_str()) << "&";
   }
 
   if(m_supportedCharacterSetsHasBeenSet)
@@ -484,6 +520,11 @@ void DBEngineVersion::OutputToStream(Aws::OStream& oStream, const char* location
       oStream << location << index << locationValue << ".SupportsBabelfish=" << std::boolalpha << m_supportsBabelfish << "&";
   }
 
+  if(m_customDBEngineVersionManifestHasBeenSet)
+  {
+      oStream << location << index << locationValue << ".CustomDBEngineVersionManifest=" << StringUtils::URLEncode(m_customDBEngineVersionManifest.c_str()) << "&";
+  }
+
   if(m_responseMetadataHasBeenSet)
   {
       Aws::StringStream responseMetadataLocationAndMemberSs;
@@ -520,6 +561,16 @@ void DBEngineVersion::OutputToStream(Aws::OStream& oStream, const char* location
       Aws::String defaultCharacterSetLocationAndMember(location);
       defaultCharacterSetLocationAndMember += ".DefaultCharacterSet";
       m_defaultCharacterSet.OutputToStream(oStream, defaultCharacterSetLocationAndMember.c_str());
+  }
+  if(m_imageHasBeenSet)
+  {
+      Aws::String imageLocationAndMember(location);
+      imageLocationAndMember += ".Image";
+      m_image.OutputToStream(oStream, imageLocationAndMember.c_str());
+  }
+  if(m_dBEngineMediaTypeHasBeenSet)
+  {
+      oStream << location << ".DBEngineMediaType=" << StringUtils::URLEncode(m_dBEngineMediaType.c_str()) << "&";
   }
   if(m_supportedCharacterSetsHasBeenSet)
   {
@@ -642,6 +693,10 @@ void DBEngineVersion::OutputToStream(Aws::OStream& oStream, const char* location
   if(m_supportsBabelfishHasBeenSet)
   {
       oStream << location << ".SupportsBabelfish=" << std::boolalpha << m_supportsBabelfish << "&";
+  }
+  if(m_customDBEngineVersionManifestHasBeenSet)
+  {
+      oStream << location << ".CustomDBEngineVersionManifest=" << StringUtils::URLEncode(m_customDBEngineVersionManifest.c_str()) << "&";
   }
   if(m_responseMetadataHasBeenSet)
   {

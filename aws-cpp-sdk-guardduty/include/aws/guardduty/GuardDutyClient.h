@@ -7,6 +7,7 @@
 #include <aws/guardduty/GuardDuty_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/guardduty/GuardDutyServiceClientModel.h>
 
@@ -16,51 +17,80 @@ namespace GuardDuty
 {
   /**
    * <p>Amazon GuardDuty is a continuous security monitoring service that analyzes
-   * and processes the following data sources: VPC Flow Logs, AWS CloudTrail
-   * management event logs, CloudTrail S3 data event logs, EKS audit logs, and DNS
-   * logs. It uses threat intelligence feeds (such as lists of malicious IPs and
-   * domains) and machine learning to identify unexpected, potentially unauthorized,
-   * and malicious activity within your Amazon Web Services environment. This can
-   * include issues like escalations of privileges, uses of exposed credentials, or
-   * communication with malicious IPs, URLs, or domains. For example, GuardDuty can
-   * detect compromised EC2 instances that serve malware or mine bitcoin. </p>
-   * <p>GuardDuty also monitors Amazon Web Services account access behavior for signs
-   * of compromise. Some examples of this are unauthorized infrastructure deployments
-   * such as EC2 instances deployed in a Region that has never been used, or unusual
-   * API calls like a password policy change to reduce password strength. </p>
-   * <p>GuardDuty informs you of the status of your Amazon Web Services environment
-   * by producing security findings that you can view in the GuardDuty console or
-   * through Amazon CloudWatch events. For more information, see the <i> <a
+   * and processes the following data sources: VPC flow logs, Amazon Web Services
+   * CloudTrail management event logs, CloudTrail S3 data event logs, EKS audit logs,
+   * DNS logs, and Amazon EBS volume data. It uses threat intelligence feeds, such as
+   * lists of malicious IPs and domains, and machine learning to identify unexpected,
+   * potentially unauthorized, and malicious activity within your Amazon Web Services
+   * environment. This can include issues like escalations of privileges, uses of
+   * exposed credentials, or communication with malicious IPs, domains, or presence
+   * of malware on your Amazon EC2 instances and container workloads. For example,
+   * GuardDuty can detect compromised EC2 instances and container workloads serving
+   * malware, or mining bitcoin. </p> <p>GuardDuty also monitors Amazon Web Services
+   * account access behavior for signs of compromise, such as unauthorized
+   * infrastructure deployments like EC2 instances deployed in a Region that has
+   * never been used, or unusual API calls like a password policy change to reduce
+   * password strength. </p> <p>GuardDuty informs you about the status of your Amazon
+   * Web Services environment by producing security findings that you can view in the
+   * GuardDuty console or through Amazon EventBridge. For more information, see the
+   * <i> <a
    * href="https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html">Amazon
    * GuardDuty User Guide</a> </i>. </p>
    */
-  class AWS_GUARDDUTY_API GuardDutyClient : public Aws::Client::AWSJsonClient
+  class AWS_GUARDDUTY_API GuardDutyClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<GuardDutyClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        GuardDutyClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        GuardDutyClient(const Aws::GuardDuty::GuardDutyClientConfiguration& clientConfiguration = Aws::GuardDuty::GuardDutyClientConfiguration(),
+                        std::shared_ptr<GuardDutyEndpointProviderBase> endpointProvider = Aws::MakeShared<GuardDutyEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         GuardDutyClient(const Aws::Auth::AWSCredentials& credentials,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<GuardDutyEndpointProviderBase> endpointProvider = Aws::MakeShared<GuardDutyEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::GuardDuty::GuardDutyClientConfiguration& clientConfiguration = Aws::GuardDuty::GuardDutyClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         GuardDutyClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<GuardDutyEndpointProviderBase> endpointProvider = Aws::MakeShared<GuardDutyEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::GuardDuty::GuardDutyClientConfiguration& clientConfiguration = Aws::GuardDuty::GuardDutyClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GuardDutyClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GuardDutyClient(const Aws::Auth::AWSCredentials& credentials,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        GuardDutyClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~GuardDutyClient();
-
 
         /**
          * <p>Accepts the invitation to be a member account and get monitored by a
@@ -391,7 +421,9 @@ namespace GuardDuty
         virtual void DeleteThreatIntelSetAsync(const Model::DeleteThreatIntelSetRequest& request, const DeleteThreatIntelSetResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Returns a list of malware scans.</p><p><h3>See Also:</h3>   <a
+         * <p>Returns a list of malware scans. Each member account can view the malware
+         * scans for their own accounts. An administrator can view the malware scans for
+         * all the member accounts.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/DescribeMalwareScans">AWS
          * API Reference</a></p>
          */
@@ -480,9 +512,8 @@ namespace GuardDuty
         virtual void DisassociateFromAdministratorAccountAsync(const Model::DisassociateFromAdministratorAccountRequest& request, const DisassociateFromAdministratorAccountResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Disassociates GuardDuty member accounts (to the current GuardDuty
-         * administrator account) specified by the account IDs.</p><p><h3>See Also:</h3>  
-         * <a
+         * <p>Disassociates GuardDuty member accounts (to the current administrator
+         * account) specified by the account IDs.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/DisassociateMembers">AWS
          * API Reference</a></p>
          */
@@ -1214,12 +1245,14 @@ namespace GuardDuty
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<GuardDutyEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<GuardDutyClient>;
+      void init(const GuardDutyClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      GuardDutyClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<GuardDutyEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace GuardDuty

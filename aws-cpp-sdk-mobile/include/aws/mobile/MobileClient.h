@@ -7,6 +7,7 @@
 #include <aws/mobile/Mobile_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/mobile/MobileServiceClientModel.h>
 
@@ -20,33 +21,60 @@ namespace Mobile
    * desktop projects with the necessary SDKs, constants, tools and samples to make
    * use of those resources. </p>
    */
-  class AWS_MOBILE_API MobileClient : public Aws::Client::AWSJsonClient
+  class AWS_MOBILE_API MobileClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<MobileClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        MobileClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        MobileClient(const Aws::Mobile::MobileClientConfiguration& clientConfiguration = Aws::Mobile::MobileClientConfiguration(),
+                     std::shared_ptr<MobileEndpointProviderBase> endpointProvider = Aws::MakeShared<MobileEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         MobileClient(const Aws::Auth::AWSCredentials& credentials,
-                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                     std::shared_ptr<MobileEndpointProviderBase> endpointProvider = Aws::MakeShared<MobileEndpointProvider>(ALLOCATION_TAG),
+                     const Aws::Mobile::MobileClientConfiguration& clientConfiguration = Aws::Mobile::MobileClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         MobileClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                     std::shared_ptr<MobileEndpointProviderBase> endpointProvider = Aws::MakeShared<MobileEndpointProvider>(ALLOCATION_TAG),
+                     const Aws::Mobile::MobileClientConfiguration& clientConfiguration = Aws::Mobile::MobileClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        MobileClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        MobileClient(const Aws::Auth::AWSCredentials& credentials,
+                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        MobileClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~MobileClient();
-
 
         /**
          * <p> Creates an AWS Mobile Hub project. </p><p><h3>See Also:</h3>   <a
@@ -210,12 +238,14 @@ namespace Mobile
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<MobileEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<MobileClient>;
+      void init(const MobileClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      MobileClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<MobileEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Mobile

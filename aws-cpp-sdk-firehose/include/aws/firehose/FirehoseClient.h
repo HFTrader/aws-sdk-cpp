@@ -7,6 +7,7 @@
 #include <aws/firehose/Firehose_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/firehose/FirehoseServiceClientModel.h>
 
@@ -18,50 +19,78 @@ namespace Firehose
    * <fullname>Amazon Kinesis Data Firehose API Reference</fullname> <p>Amazon
    * Kinesis Data Firehose is a fully managed service that delivers real-time
    * streaming data to destinations such as Amazon Simple Storage Service (Amazon
-   * S3), Amazon Elasticsearch Service (Amazon ES), Amazon Redshift, and Splunk.</p>
+   * S3), Amazon OpenSearch Service, Amazon Redshift, Splunk, and various other
+   * supportd destinations.</p>
    */
-  class AWS_FIREHOSE_API FirehoseClient : public Aws::Client::AWSJsonClient
+  class AWS_FIREHOSE_API FirehoseClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<FirehoseClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        FirehoseClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        FirehoseClient(const Aws::Firehose::FirehoseClientConfiguration& clientConfiguration = Aws::Firehose::FirehoseClientConfiguration(),
+                       std::shared_ptr<FirehoseEndpointProviderBase> endpointProvider = Aws::MakeShared<FirehoseEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         FirehoseClient(const Aws::Auth::AWSCredentials& credentials,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<FirehoseEndpointProviderBase> endpointProvider = Aws::MakeShared<FirehoseEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::Firehose::FirehoseClientConfiguration& clientConfiguration = Aws::Firehose::FirehoseClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         FirehoseClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<FirehoseEndpointProviderBase> endpointProvider = Aws::MakeShared<FirehoseEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::Firehose::FirehoseClientConfiguration& clientConfiguration = Aws::Firehose::FirehoseClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        FirehoseClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        FirehoseClient(const Aws::Auth::AWSCredentials& credentials,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        FirehoseClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~FirehoseClient();
-
 
         /**
          * <p>Creates a Kinesis Data Firehose delivery stream.</p> <p>By default, you can
-         * create up to 50 delivery streams per AWS Region.</p> <p>This is an asynchronous
-         * operation that immediately returns. The initial status of the delivery stream is
-         * <code>CREATING</code>. After the delivery stream is created, its status is
-         * <code>ACTIVE</code> and it now accepts data. If the delivery stream creation
-         * fails, the status transitions to <code>CREATING_FAILED</code>. Attempts to send
-         * data to a delivery stream that is not in the <code>ACTIVE</code> state cause an
-         * exception. To check the state of a delivery stream, use
-         * <a>DescribeDeliveryStream</a>.</p> <p>If the status of a delivery stream is
-         * <code>CREATING_FAILED</code>, this status doesn't change, and you can't invoke
-         * <code>CreateDeliveryStream</code> again on it. However, you can invoke the
-         * <a>DeleteDeliveryStream</a> operation to delete it.</p> <p>A Kinesis Data
-         * Firehose delivery stream can be configured to receive records directly from
+         * create up to 50 delivery streams per Amazon Web Services Region.</p> <p>This is
+         * an asynchronous operation that immediately returns. The initial status of the
+         * delivery stream is <code>CREATING</code>. After the delivery stream is created,
+         * its status is <code>ACTIVE</code> and it now accepts data. If the delivery
+         * stream creation fails, the status transitions to <code>CREATING_FAILED</code>.
+         * Attempts to send data to a delivery stream that is not in the
+         * <code>ACTIVE</code> state cause an exception. To check the state of a delivery
+         * stream, use <a>DescribeDeliveryStream</a>.</p> <p>If the status of a delivery
+         * stream is <code>CREATING_FAILED</code>, this status doesn't change, and you
+         * can't invoke <code>CreateDeliveryStream</code> again on it. However, you can
+         * invoke the <a>DeleteDeliveryStream</a> operation to delete it.</p> <p>A Kinesis
+         * Data Firehose delivery stream can be configured to receive records directly from
          * providers using <a>PutRecord</a> or <a>PutRecordBatch</a>, or it can be
          * configured to use an existing Kinesis stream as its source. To specify a Kinesis
          * data stream as input, set the <code>DeliveryStreamType</code> parameter to
@@ -431,15 +460,15 @@ namespace Firehose
 
         /**
          * <p>Adds or updates tags for the specified delivery stream. A tag is a key-value
-         * pair that you can define and assign to AWS resources. If you specify a tag that
-         * already exists, the tag value is replaced with the value that you specify in the
-         * request. Tags are metadata. For example, you can add friendly names and
-         * descriptions or other types of information that can help you distinguish the
-         * delivery stream. For more information about tags, see <a
+         * pair that you can define and assign to Amazon Web Services resources. If you
+         * specify a tag that already exists, the tag value is replaced with the value that
+         * you specify in the request. Tags are metadata. For example, you can add friendly
+         * names and descriptions or other types of information that can help you
+         * distinguish the delivery stream. For more information about tags, see <a
          * href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html">Using
-         * Cost Allocation Tags</a> in the <i>AWS Billing and Cost Management User
-         * Guide</i>. </p> <p>Each delivery stream can have up to 50 tags. </p> <p>This
-         * operation has a limit of five transactions per second per account.
+         * Cost Allocation Tags</a> in the <i>Amazon Web Services Billing and Cost
+         * Management User Guide</i>. </p> <p>Each delivery stream can have up to 50 tags.
+         * </p> <p>This operation has a limit of five transactions per second per account.
          * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/firehose-2015-08-04/TagDeliveryStream">AWS
          * API Reference</a></p>
@@ -521,12 +550,14 @@ namespace Firehose
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<FirehoseEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<FirehoseClient>;
+      void init(const FirehoseClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      FirehoseClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<FirehoseEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Firehose

@@ -22,10 +22,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/DescribeCacheEngineVersionsMessage">AWS
    * API Reference</a></p>
    */
-  class AWS_ELASTICACHE_API DescribeCacheEngineVersionsRequest : public ElastiCacheRequest
+  class DescribeCacheEngineVersionsRequest : public ElastiCacheRequest
   {
   public:
-    DescribeCacheEngineVersionsRequest();
+    AWS_ELASTICACHE_API DescribeCacheEngineVersionsRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -33,10 +33,10 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "DescribeCacheEngineVersions"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
 
   protected:
-    void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+    AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
 
   public:
 
@@ -135,10 +135,11 @@ namespace Model
      * for.</p> <p>Valid values are: <code>memcached1.4</code> |
      * <code>memcached1.5</code> | <code>memcached1.6</code> | <code>redis2.6</code> |
      * <code>redis2.8</code> | <code>redis3.2</code> | <code>redis4.0</code> |
-     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> </p>
-     * <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 alphanumeric characters</p>
-     * </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with
-     * a hyphen or contain two consecutive hyphens</p> </li> </ul>
+     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> |
+     * <code>redis7</code> </p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255
+     * alphanumeric characters</p> </li> <li> <p>First character must be a letter</p>
+     * </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p>
+     * </li> </ul>
      */
     inline const Aws::String& GetCacheParameterGroupFamily() const{ return m_cacheParameterGroupFamily; }
 
@@ -147,10 +148,11 @@ namespace Model
      * for.</p> <p>Valid values are: <code>memcached1.4</code> |
      * <code>memcached1.5</code> | <code>memcached1.6</code> | <code>redis2.6</code> |
      * <code>redis2.8</code> | <code>redis3.2</code> | <code>redis4.0</code> |
-     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> </p>
-     * <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 alphanumeric characters</p>
-     * </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with
-     * a hyphen or contain two consecutive hyphens</p> </li> </ul>
+     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> |
+     * <code>redis7</code> </p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255
+     * alphanumeric characters</p> </li> <li> <p>First character must be a letter</p>
+     * </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p>
+     * </li> </ul>
      */
     inline bool CacheParameterGroupFamilyHasBeenSet() const { return m_cacheParameterGroupFamilyHasBeenSet; }
 
@@ -159,10 +161,11 @@ namespace Model
      * for.</p> <p>Valid values are: <code>memcached1.4</code> |
      * <code>memcached1.5</code> | <code>memcached1.6</code> | <code>redis2.6</code> |
      * <code>redis2.8</code> | <code>redis3.2</code> | <code>redis4.0</code> |
-     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> </p>
-     * <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 alphanumeric characters</p>
-     * </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with
-     * a hyphen or contain two consecutive hyphens</p> </li> </ul>
+     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> |
+     * <code>redis7</code> </p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255
+     * alphanumeric characters</p> </li> <li> <p>First character must be a letter</p>
+     * </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p>
+     * </li> </ul>
      */
     inline void SetCacheParameterGroupFamily(const Aws::String& value) { m_cacheParameterGroupFamilyHasBeenSet = true; m_cacheParameterGroupFamily = value; }
 
@@ -171,10 +174,11 @@ namespace Model
      * for.</p> <p>Valid values are: <code>memcached1.4</code> |
      * <code>memcached1.5</code> | <code>memcached1.6</code> | <code>redis2.6</code> |
      * <code>redis2.8</code> | <code>redis3.2</code> | <code>redis4.0</code> |
-     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> </p>
-     * <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 alphanumeric characters</p>
-     * </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with
-     * a hyphen or contain two consecutive hyphens</p> </li> </ul>
+     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> |
+     * <code>redis7</code> </p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255
+     * alphanumeric characters</p> </li> <li> <p>First character must be a letter</p>
+     * </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p>
+     * </li> </ul>
      */
     inline void SetCacheParameterGroupFamily(Aws::String&& value) { m_cacheParameterGroupFamilyHasBeenSet = true; m_cacheParameterGroupFamily = std::move(value); }
 
@@ -183,10 +187,11 @@ namespace Model
      * for.</p> <p>Valid values are: <code>memcached1.4</code> |
      * <code>memcached1.5</code> | <code>memcached1.6</code> | <code>redis2.6</code> |
      * <code>redis2.8</code> | <code>redis3.2</code> | <code>redis4.0</code> |
-     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> </p>
-     * <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 alphanumeric characters</p>
-     * </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with
-     * a hyphen or contain two consecutive hyphens</p> </li> </ul>
+     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> |
+     * <code>redis7</code> </p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255
+     * alphanumeric characters</p> </li> <li> <p>First character must be a letter</p>
+     * </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p>
+     * </li> </ul>
      */
     inline void SetCacheParameterGroupFamily(const char* value) { m_cacheParameterGroupFamilyHasBeenSet = true; m_cacheParameterGroupFamily.assign(value); }
 
@@ -195,10 +200,11 @@ namespace Model
      * for.</p> <p>Valid values are: <code>memcached1.4</code> |
      * <code>memcached1.5</code> | <code>memcached1.6</code> | <code>redis2.6</code> |
      * <code>redis2.8</code> | <code>redis3.2</code> | <code>redis4.0</code> |
-     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> </p>
-     * <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 alphanumeric characters</p>
-     * </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with
-     * a hyphen or contain two consecutive hyphens</p> </li> </ul>
+     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> |
+     * <code>redis7</code> </p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255
+     * alphanumeric characters</p> </li> <li> <p>First character must be a letter</p>
+     * </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p>
+     * </li> </ul>
      */
     inline DescribeCacheEngineVersionsRequest& WithCacheParameterGroupFamily(const Aws::String& value) { SetCacheParameterGroupFamily(value); return *this;}
 
@@ -207,10 +213,11 @@ namespace Model
      * for.</p> <p>Valid values are: <code>memcached1.4</code> |
      * <code>memcached1.5</code> | <code>memcached1.6</code> | <code>redis2.6</code> |
      * <code>redis2.8</code> | <code>redis3.2</code> | <code>redis4.0</code> |
-     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> </p>
-     * <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 alphanumeric characters</p>
-     * </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with
-     * a hyphen or contain two consecutive hyphens</p> </li> </ul>
+     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> |
+     * <code>redis7</code> </p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255
+     * alphanumeric characters</p> </li> <li> <p>First character must be a letter</p>
+     * </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p>
+     * </li> </ul>
      */
     inline DescribeCacheEngineVersionsRequest& WithCacheParameterGroupFamily(Aws::String&& value) { SetCacheParameterGroupFamily(std::move(value)); return *this;}
 
@@ -219,10 +226,11 @@ namespace Model
      * for.</p> <p>Valid values are: <code>memcached1.4</code> |
      * <code>memcached1.5</code> | <code>memcached1.6</code> | <code>redis2.6</code> |
      * <code>redis2.8</code> | <code>redis3.2</code> | <code>redis4.0</code> |
-     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> </p>
-     * <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255 alphanumeric characters</p>
-     * </li> <li> <p>First character must be a letter</p> </li> <li> <p>Cannot end with
-     * a hyphen or contain two consecutive hyphens</p> </li> </ul>
+     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis6.2</code> |
+     * <code>redis7</code> </p> <p>Constraints:</p> <ul> <li> <p>Must be 1 to 255
+     * alphanumeric characters</p> </li> <li> <p>First character must be a letter</p>
+     * </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens</p>
+     * </li> </ul>
      */
     inline DescribeCacheEngineVersionsRequest& WithCacheParameterGroupFamily(const char* value) { SetCacheParameterGroupFamily(value); return *this;}
 

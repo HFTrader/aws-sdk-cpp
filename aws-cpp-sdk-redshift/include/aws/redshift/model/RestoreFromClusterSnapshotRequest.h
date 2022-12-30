@@ -23,10 +23,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/RestoreFromClusterSnapshotMessage">AWS
    * API Reference</a></p>
    */
-  class AWS_REDSHIFT_API RestoreFromClusterSnapshotRequest : public RedshiftRequest
+  class RestoreFromClusterSnapshotRequest : public RedshiftRequest
   {
   public:
-    RestoreFromClusterSnapshotRequest();
+    AWS_REDSHIFT_API RestoreFromClusterSnapshotRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -34,10 +34,10 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "RestoreFromClusterSnapshot"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_REDSHIFT_API Aws::String SerializePayload() const override;
 
   protected:
-    void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+    AWS_REDSHIFT_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
 
   public:
 
@@ -658,42 +658,58 @@ namespace Model
 
 
     /**
-     * <p>The elastic IP (EIP) address for the cluster.</p>
+     * <p>The Elastic IP (EIP) address for the cluster. Don't specify the Elastic IP
+     * address for a publicly accessible cluster with availability zone relocation
+     * turned on.</p>
      */
     inline const Aws::String& GetElasticIp() const{ return m_elasticIp; }
 
     /**
-     * <p>The elastic IP (EIP) address for the cluster.</p>
+     * <p>The Elastic IP (EIP) address for the cluster. Don't specify the Elastic IP
+     * address for a publicly accessible cluster with availability zone relocation
+     * turned on.</p>
      */
     inline bool ElasticIpHasBeenSet() const { return m_elasticIpHasBeenSet; }
 
     /**
-     * <p>The elastic IP (EIP) address for the cluster.</p>
+     * <p>The Elastic IP (EIP) address for the cluster. Don't specify the Elastic IP
+     * address for a publicly accessible cluster with availability zone relocation
+     * turned on.</p>
      */
     inline void SetElasticIp(const Aws::String& value) { m_elasticIpHasBeenSet = true; m_elasticIp = value; }
 
     /**
-     * <p>The elastic IP (EIP) address for the cluster.</p>
+     * <p>The Elastic IP (EIP) address for the cluster. Don't specify the Elastic IP
+     * address for a publicly accessible cluster with availability zone relocation
+     * turned on.</p>
      */
     inline void SetElasticIp(Aws::String&& value) { m_elasticIpHasBeenSet = true; m_elasticIp = std::move(value); }
 
     /**
-     * <p>The elastic IP (EIP) address for the cluster.</p>
+     * <p>The Elastic IP (EIP) address for the cluster. Don't specify the Elastic IP
+     * address for a publicly accessible cluster with availability zone relocation
+     * turned on.</p>
      */
     inline void SetElasticIp(const char* value) { m_elasticIpHasBeenSet = true; m_elasticIp.assign(value); }
 
     /**
-     * <p>The elastic IP (EIP) address for the cluster.</p>
+     * <p>The Elastic IP (EIP) address for the cluster. Don't specify the Elastic IP
+     * address for a publicly accessible cluster with availability zone relocation
+     * turned on.</p>
      */
     inline RestoreFromClusterSnapshotRequest& WithElasticIp(const Aws::String& value) { SetElasticIp(value); return *this;}
 
     /**
-     * <p>The elastic IP (EIP) address for the cluster.</p>
+     * <p>The Elastic IP (EIP) address for the cluster. Don't specify the Elastic IP
+     * address for a publicly accessible cluster with availability zone relocation
+     * turned on.</p>
      */
     inline RestoreFromClusterSnapshotRequest& WithElasticIp(Aws::String&& value) { SetElasticIp(std::move(value)); return *this;}
 
     /**
-     * <p>The elastic IP (EIP) address for the cluster.</p>
+     * <p>The Elastic IP (EIP) address for the cluster. Don't specify the Elastic IP
+     * address for a publicly accessible cluster with availability zone relocation
+     * turned on.</p>
      */
     inline RestoreFromClusterSnapshotRequest& WithElasticIp(const char* value) { SetElasticIp(value); return *this;}
 

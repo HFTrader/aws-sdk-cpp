@@ -18,10 +18,10 @@ namespace Model
 
   /**
    */
-  class AWS_CLOUDFRONT_API CreateResponseHeadersPolicy2020_05_31Request : public CloudFrontRequest
+  class CreateResponseHeadersPolicy2020_05_31Request : public CloudFrontRequest
   {
   public:
-    CreateResponseHeadersPolicy2020_05_31Request();
+    AWS_CLOUDFRONT_API CreateResponseHeadersPolicy2020_05_31Request();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -29,42 +29,42 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "CreateResponseHeadersPolicy"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_CLOUDFRONT_API Aws::String SerializePayload() const override;
 
 
     /**
      * <p>Contains metadata about the response headers policy, and a set of
-     * configurations that specify the response headers.</p>
+     * configurations that specify the HTTP headers.</p>
      */
     inline const ResponseHeadersPolicyConfig& GetResponseHeadersPolicyConfig() const{ return m_responseHeadersPolicyConfig; }
 
     /**
      * <p>Contains metadata about the response headers policy, and a set of
-     * configurations that specify the response headers.</p>
+     * configurations that specify the HTTP headers.</p>
      */
     inline bool ResponseHeadersPolicyConfigHasBeenSet() const { return m_responseHeadersPolicyConfigHasBeenSet; }
 
     /**
      * <p>Contains metadata about the response headers policy, and a set of
-     * configurations that specify the response headers.</p>
+     * configurations that specify the HTTP headers.</p>
      */
     inline void SetResponseHeadersPolicyConfig(const ResponseHeadersPolicyConfig& value) { m_responseHeadersPolicyConfigHasBeenSet = true; m_responseHeadersPolicyConfig = value; }
 
     /**
      * <p>Contains metadata about the response headers policy, and a set of
-     * configurations that specify the response headers.</p>
+     * configurations that specify the HTTP headers.</p>
      */
     inline void SetResponseHeadersPolicyConfig(ResponseHeadersPolicyConfig&& value) { m_responseHeadersPolicyConfigHasBeenSet = true; m_responseHeadersPolicyConfig = std::move(value); }
 
     /**
      * <p>Contains metadata about the response headers policy, and a set of
-     * configurations that specify the response headers.</p>
+     * configurations that specify the HTTP headers.</p>
      */
     inline CreateResponseHeadersPolicy2020_05_31Request& WithResponseHeadersPolicyConfig(const ResponseHeadersPolicyConfig& value) { SetResponseHeadersPolicyConfig(value); return *this;}
 
     /**
      * <p>Contains metadata about the response headers policy, and a set of
-     * configurations that specify the response headers.</p>
+     * configurations that specify the HTTP headers.</p>
      */
     inline CreateResponseHeadersPolicy2020_05_31Request& WithResponseHeadersPolicyConfig(ResponseHeadersPolicyConfig&& value) { SetResponseHeadersPolicyConfig(std::move(value)); return *this;}
 

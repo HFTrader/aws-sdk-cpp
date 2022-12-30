@@ -7,6 +7,7 @@
 #include <aws/cloud9/Cloud9_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/cloud9/Cloud9ServiceClientModel.h>
 
@@ -42,33 +43,60 @@ namespace Cloud9
    * Changes the settings of an existing environment member for an environment.</p>
    * </li> </ul>
    */
-  class AWS_CLOUD9_API Cloud9Client : public Aws::Client::AWSJsonClient
+  class AWS_CLOUD9_API Cloud9Client : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<Cloud9Client>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        Cloud9Client(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        Cloud9Client(const Aws::Cloud9::Cloud9ClientConfiguration& clientConfiguration = Aws::Cloud9::Cloud9ClientConfiguration(),
+                     std::shared_ptr<Cloud9EndpointProviderBase> endpointProvider = Aws::MakeShared<Cloud9EndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         Cloud9Client(const Aws::Auth::AWSCredentials& credentials,
-                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                     std::shared_ptr<Cloud9EndpointProviderBase> endpointProvider = Aws::MakeShared<Cloud9EndpointProvider>(ALLOCATION_TAG),
+                     const Aws::Cloud9::Cloud9ClientConfiguration& clientConfiguration = Aws::Cloud9::Cloud9ClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         Cloud9Client(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                     std::shared_ptr<Cloud9EndpointProviderBase> endpointProvider = Aws::MakeShared<Cloud9EndpointProvider>(ALLOCATION_TAG),
+                     const Aws::Cloud9::Cloud9ClientConfiguration& clientConfiguration = Aws::Cloud9::Cloud9ClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        Cloud9Client(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        Cloud9Client(const Aws::Auth::AWSCredentials& credentials,
+                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        Cloud9Client(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~Cloud9Client();
-
 
         /**
          * <p>Creates an Cloud9 development environment, launches an Amazon Elastic Compute
@@ -127,8 +155,8 @@ namespace Cloud9
         virtual void DeleteEnvironmentAsync(const Model::DeleteEnvironmentRequest& request, const DeleteEnvironmentResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Deletes an environment member from an Cloud9 development
-         * environment.</p><p><h3>See Also:</h3>   <a
+         * <p>Deletes an environment member from a development environment.</p><p><h3>See
+         * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloud9-2017-09-23/DeleteEnvironmentMembership">AWS
          * API Reference</a></p>
          */
@@ -309,12 +337,14 @@ namespace Cloud9
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<Cloud9EndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<Cloud9Client>;
+      void init(const Cloud9ClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      Cloud9ClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<Cloud9EndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Cloud9

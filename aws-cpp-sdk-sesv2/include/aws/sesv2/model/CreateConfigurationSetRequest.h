@@ -13,6 +13,7 @@
 #include <aws/sesv2/model/SendingOptions.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/sesv2/model/SuppressionOptions.h>
+#include <aws/sesv2/model/VdmOptions.h>
 #include <aws/sesv2/model/Tag.h>
 #include <utility>
 
@@ -28,10 +29,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/CreateConfigurationSetRequest">AWS
    * API Reference</a></p>
    */
-  class AWS_SESV2_API CreateConfigurationSetRequest : public SESV2Request
+  class CreateConfigurationSetRequest : public SESV2Request
   {
   public:
-    CreateConfigurationSetRequest();
+    AWS_SESV2_API CreateConfigurationSetRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -39,7 +40,7 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "CreateConfigurationSet"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_SESV2_API Aws::String SerializePayload() const override;
 
 
     /**
@@ -314,6 +315,43 @@ namespace Model
     
     inline CreateConfigurationSetRequest& WithSuppressionOptions(SuppressionOptions&& value) { SetSuppressionOptions(std::move(value)); return *this;}
 
+
+    /**
+     * <p>An object that defines the VDM options for emails that you send using the
+     * configuration set.</p>
+     */
+    inline const VdmOptions& GetVdmOptions() const{ return m_vdmOptions; }
+
+    /**
+     * <p>An object that defines the VDM options for emails that you send using the
+     * configuration set.</p>
+     */
+    inline bool VdmOptionsHasBeenSet() const { return m_vdmOptionsHasBeenSet; }
+
+    /**
+     * <p>An object that defines the VDM options for emails that you send using the
+     * configuration set.</p>
+     */
+    inline void SetVdmOptions(const VdmOptions& value) { m_vdmOptionsHasBeenSet = true; m_vdmOptions = value; }
+
+    /**
+     * <p>An object that defines the VDM options for emails that you send using the
+     * configuration set.</p>
+     */
+    inline void SetVdmOptions(VdmOptions&& value) { m_vdmOptionsHasBeenSet = true; m_vdmOptions = std::move(value); }
+
+    /**
+     * <p>An object that defines the VDM options for emails that you send using the
+     * configuration set.</p>
+     */
+    inline CreateConfigurationSetRequest& WithVdmOptions(const VdmOptions& value) { SetVdmOptions(value); return *this;}
+
+    /**
+     * <p>An object that defines the VDM options for emails that you send using the
+     * configuration set.</p>
+     */
+    inline CreateConfigurationSetRequest& WithVdmOptions(VdmOptions&& value) { SetVdmOptions(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_configurationSetName;
@@ -336,6 +374,9 @@ namespace Model
 
     SuppressionOptions m_suppressionOptions;
     bool m_suppressionOptionsHasBeenSet = false;
+
+    VdmOptions m_vdmOptions;
+    bool m_vdmOptionsHasBeenSet = false;
   };
 
 } // namespace Model

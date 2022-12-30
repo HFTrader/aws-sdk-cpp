@@ -8,6 +8,7 @@
 \#include <aws/$metadata.projectName/${metadata.classNamePrefix}_EXPORTS.h>
 \#include <aws/core/client/ClientConfiguration.h>
 \#include <aws/core/client/AWSClient.h>
+\#include <aws/core/client/AWSClientAsyncCRTP.h>
 \#include <aws/core/utils/json/JsonSerializer.h>
 \#include <aws/$metadata.projectName/${metadata.classNamePrefix}ServiceClientModel.h>
 
@@ -24,22 +25,32 @@ namespace ${serviceNamespace}
 #if($serviceModel.enableVirtualOperations)
 #set($finalClass = "")
 #end
-  class ${CppViewHelper.computeExportValue($metadata.classNamePrefix)} ${className}${finalClass} : public Aws::Client::AWSJsonClient
+  class ${CppViewHelper.computeExportValue($metadata.classNamePrefix)} ${className}${finalClass} : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<${className}>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
 #parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/ServiceClientHeaderConstructors.vm")
-
 #parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/ServiceClientHeaderOperations.vm")
 
       void OverrideEndpoint(const Aws::String& endpoint);
+#if($serviceModel.endpointRules)
+      std::shared_ptr<${metadata.classNamePrefix}EndpointProviderBase>& accessEndpointProvider();
+#end
     private:
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<${className}>;
+#if(!$serviceModel.endpointRules)
       void init(const Aws::Client::ClientConfiguration& clientConfiguration);
-#if($metadata.hasEndpointDiscoveryTrait)
+#else
+      void init(const ${metadata.classNamePrefix}ClientConfiguration& clientConfiguration);
+#end
+#if($metadata.hasEndpointDiscoveryTrait && !$serviceModel.endpointRules)
       void Load${metadata.classNamePrefix}SpecificConfig(const Aws::Client::ClientConfiguration& clientConfiguration);
 #end
 
+#if(!$serviceModel.endpointRules)
 #if($metadata.hasEndpointTrait)
       Aws::String m_baseUri;
       Aws::String m_scheme;
@@ -50,15 +61,23 @@ namespace ${serviceNamespace}
 #if($customEndpointUsed)
       bool m_useCustomEndpoint = false;
 #end
-#if($serviceModel.endpointRules)
-      std::shared_ptr<${metadata.classNamePrefix}EndpointProvider> m_endpointProvider;
 #end
 #if($metadata.hasEndpointDiscoveryTrait)
       mutable Aws::Utils::ConcurrentCache<Aws::String, Aws::String> m_endpointsCache;
-      bool m_enableEndpointDiscovery = false;
+#if(!$serviceModel.endpointRules)
+        bool m_enableEndpointDiscovery = false;
 #end
+#end
+#if(!$serviceModel.endpointRules)
       Aws::String m_configScheme;
+#end
+#if($serviceModel.endpointRules)
+      ${metadata.classNamePrefix}ClientConfiguration m_clientConfiguration;
+#end
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+#if($serviceModel.endpointRules)
+      std::shared_ptr<${metadata.classNamePrefix}EndpointProviderBase> m_endpointProvider;
+#end
   };
 
 } // namespace ${serviceNamespace}

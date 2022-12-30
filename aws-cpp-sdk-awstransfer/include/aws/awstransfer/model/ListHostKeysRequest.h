@@ -18,10 +18,10 @@ namespace Model
 
   /**
    */
-  class AWS_TRANSFER_API ListHostKeysRequest : public TransferRequest
+  class ListHostKeysRequest : public TransferRequest
   {
   public:
-    ListHostKeysRequest();
+    AWS_TRANSFER_API ListHostKeysRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -29,9 +29,9 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "ListHostKeys"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_TRANSFER_API Aws::String SerializePayload() const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_TRANSFER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 
     /**
@@ -113,49 +113,49 @@ namespace Model
 
 
     /**
-     * <p>Provide the ID of the server that contains the host keys that you want to
+     * <p>The identifier of the server that contains the host keys that you want to
      * view.</p>
      */
     inline const Aws::String& GetServerId() const{ return m_serverId; }
 
     /**
-     * <p>Provide the ID of the server that contains the host keys that you want to
+     * <p>The identifier of the server that contains the host keys that you want to
      * view.</p>
      */
     inline bool ServerIdHasBeenSet() const { return m_serverIdHasBeenSet; }
 
     /**
-     * <p>Provide the ID of the server that contains the host keys that you want to
+     * <p>The identifier of the server that contains the host keys that you want to
      * view.</p>
      */
     inline void SetServerId(const Aws::String& value) { m_serverIdHasBeenSet = true; m_serverId = value; }
 
     /**
-     * <p>Provide the ID of the server that contains the host keys that you want to
+     * <p>The identifier of the server that contains the host keys that you want to
      * view.</p>
      */
     inline void SetServerId(Aws::String&& value) { m_serverIdHasBeenSet = true; m_serverId = std::move(value); }
 
     /**
-     * <p>Provide the ID of the server that contains the host keys that you want to
+     * <p>The identifier of the server that contains the host keys that you want to
      * view.</p>
      */
     inline void SetServerId(const char* value) { m_serverIdHasBeenSet = true; m_serverId.assign(value); }
 
     /**
-     * <p>Provide the ID of the server that contains the host keys that you want to
+     * <p>The identifier of the server that contains the host keys that you want to
      * view.</p>
      */
     inline ListHostKeysRequest& WithServerId(const Aws::String& value) { SetServerId(value); return *this;}
 
     /**
-     * <p>Provide the ID of the server that contains the host keys that you want to
+     * <p>The identifier of the server that contains the host keys that you want to
      * view.</p>
      */
     inline ListHostKeysRequest& WithServerId(Aws::String&& value) { SetServerId(std::move(value)); return *this;}
 
     /**
-     * <p>Provide the ID of the server that contains the host keys that you want to
+     * <p>The identifier of the server that contains the host keys that you want to
      * view.</p>
      */
     inline ListHostKeysRequest& WithServerId(const char* value) { SetServerId(value); return *this;}

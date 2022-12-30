@@ -7,6 +7,7 @@
 #include <aws/directconnect/DirectConnect_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/directconnect/DirectConnectServiceClientModel.h>
 
@@ -25,33 +26,60 @@ namespace DirectConnect
    * Regions. Amazon Web Services resources in the China Regions can only be accessed
    * through locations associated with those Regions.</p>
    */
-  class AWS_DIRECTCONNECT_API DirectConnectClient : public Aws::Client::AWSJsonClient
+  class AWS_DIRECTCONNECT_API DirectConnectClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<DirectConnectClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        DirectConnectClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        DirectConnectClient(const Aws::DirectConnect::DirectConnectClientConfiguration& clientConfiguration = Aws::DirectConnect::DirectConnectClientConfiguration(),
+                            std::shared_ptr<DirectConnectEndpointProviderBase> endpointProvider = Aws::MakeShared<DirectConnectEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         DirectConnectClient(const Aws::Auth::AWSCredentials& credentials,
-                            const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                            std::shared_ptr<DirectConnectEndpointProviderBase> endpointProvider = Aws::MakeShared<DirectConnectEndpointProvider>(ALLOCATION_TAG),
+                            const Aws::DirectConnect::DirectConnectClientConfiguration& clientConfiguration = Aws::DirectConnect::DirectConnectClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         DirectConnectClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                            const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                            std::shared_ptr<DirectConnectEndpointProviderBase> endpointProvider = Aws::MakeShared<DirectConnectEndpointProvider>(ALLOCATION_TAG),
+                            const Aws::DirectConnect::DirectConnectClientConfiguration& clientConfiguration = Aws::DirectConnect::DirectConnectClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DirectConnectClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DirectConnectClient(const Aws::Auth::AWSCredentials& credentials,
+                            const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        DirectConnectClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                            const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~DirectConnectClient();
-
 
         /**
          * <p>Accepts a proposal request to attach a virtual private gateway or transit
@@ -1350,12 +1378,14 @@ namespace DirectConnect
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<DirectConnectEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<DirectConnectClient>;
+      void init(const DirectConnectClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      DirectConnectClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<DirectConnectEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace DirectConnect

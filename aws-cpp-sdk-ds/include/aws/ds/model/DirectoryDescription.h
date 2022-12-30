@@ -20,6 +20,7 @@
 #include <aws/ds/model/RadiusStatus.h>
 #include <aws/ds/model/OwnerDirectoryDescription.h>
 #include <aws/ds/model/RegionsInfo.h>
+#include <aws/ds/model/OSVersion.h>
 #include <utility>
 
 namespace Aws
@@ -43,13 +44,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/ds-2015-04-16/DirectoryDescription">AWS
    * API Reference</a></p>
    */
-  class AWS_DIRECTORYSERVICE_API DirectoryDescription
+  class DirectoryDescription
   {
   public:
-    DirectoryDescription();
-    DirectoryDescription(Aws::Utils::Json::JsonView jsonValue);
-    DirectoryDescription& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_DIRECTORYSERVICE_API DirectoryDescription();
+    AWS_DIRECTORYSERVICE_API DirectoryDescription(Aws::Utils::Json::JsonView jsonValue);
+    AWS_DIRECTORYSERVICE_API DirectoryDescription& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_DIRECTORYSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -1055,6 +1056,37 @@ namespace Model
      */
     inline DirectoryDescription& WithRegionsInfo(RegionsInfo&& value) { SetRegionsInfo(std::move(value)); return *this;}
 
+
+    /**
+     * <p>The operating system (OS) version of the directory.</p>
+     */
+    inline const OSVersion& GetOsVersion() const{ return m_osVersion; }
+
+    /**
+     * <p>The operating system (OS) version of the directory.</p>
+     */
+    inline bool OsVersionHasBeenSet() const { return m_osVersionHasBeenSet; }
+
+    /**
+     * <p>The operating system (OS) version of the directory.</p>
+     */
+    inline void SetOsVersion(const OSVersion& value) { m_osVersionHasBeenSet = true; m_osVersion = value; }
+
+    /**
+     * <p>The operating system (OS) version of the directory.</p>
+     */
+    inline void SetOsVersion(OSVersion&& value) { m_osVersionHasBeenSet = true; m_osVersion = std::move(value); }
+
+    /**
+     * <p>The operating system (OS) version of the directory.</p>
+     */
+    inline DirectoryDescription& WithOsVersion(const OSVersion& value) { SetOsVersion(value); return *this;}
+
+    /**
+     * <p>The operating system (OS) version of the directory.</p>
+     */
+    inline DirectoryDescription& WithOsVersion(OSVersion&& value) { SetOsVersion(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_directoryId;
@@ -1131,6 +1163,9 @@ namespace Model
 
     RegionsInfo m_regionsInfo;
     bool m_regionsInfoHasBeenSet = false;
+
+    OSVersion m_osVersion;
+    bool m_osVersionHasBeenSet = false;
   };
 
 } // namespace Model

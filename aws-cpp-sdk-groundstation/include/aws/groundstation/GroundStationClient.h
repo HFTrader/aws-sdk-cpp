@@ -7,6 +7,7 @@
 #include <aws/groundstation/GroundStation_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/groundstation/GroundStationServiceClientModel.h>
 
@@ -21,33 +22,60 @@ namespace GroundStation
    * efficiently and cost-effectively without having to build or manage your own
    * ground station infrastructure.</p>
    */
-  class AWS_GROUNDSTATION_API GroundStationClient : public Aws::Client::AWSJsonClient
+  class AWS_GROUNDSTATION_API GroundStationClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<GroundStationClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        GroundStationClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        GroundStationClient(const Aws::GroundStation::GroundStationClientConfiguration& clientConfiguration = Aws::GroundStation::GroundStationClientConfiguration(),
+                            std::shared_ptr<GroundStationEndpointProviderBase> endpointProvider = Aws::MakeShared<GroundStationEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         GroundStationClient(const Aws::Auth::AWSCredentials& credentials,
-                            const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                            std::shared_ptr<GroundStationEndpointProviderBase> endpointProvider = Aws::MakeShared<GroundStationEndpointProvider>(ALLOCATION_TAG),
+                            const Aws::GroundStation::GroundStationClientConfiguration& clientConfiguration = Aws::GroundStation::GroundStationClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         GroundStationClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                            const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                            std::shared_ptr<GroundStationEndpointProviderBase> endpointProvider = Aws::MakeShared<GroundStationEndpointProvider>(ALLOCATION_TAG),
+                            const Aws::GroundStation::GroundStationClientConfiguration& clientConfiguration = Aws::GroundStation::GroundStationClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GroundStationClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GroundStationClient(const Aws::Auth::AWSCredentials& credentials,
+                            const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        GroundStationClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                            const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~GroundStationClient();
-
 
         /**
          * <p>Cancels a contact with a specified contact ID.</p><p><h3>See Also:</h3>   <a
@@ -109,6 +137,24 @@ namespace GroundStation
         virtual void CreateDataflowEndpointGroupAsync(const Model::CreateDataflowEndpointGroupRequest& request, const CreateDataflowEndpointGroupResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Creates an Ephemeris with the specified
+         * <code>EphemerisData</code>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/CreateEphemeris">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CreateEphemerisOutcome CreateEphemeris(const Model::CreateEphemerisRequest& request) const;
+
+        /**
+         * A Callable wrapper for CreateEphemeris that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CreateEphemerisOutcomeCallable CreateEphemerisCallable(const Model::CreateEphemerisRequest& request) const;
+
+        /**
+         * An Async wrapper for CreateEphemeris that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CreateEphemerisAsync(const Model::CreateEphemerisRequest& request, const CreateEphemerisResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Creates a mission profile.</p> <p> <code>dataflowEdges</code> is a list of
          * lists of strings. Each lower level list of strings has two elements: a
          * <i>from</i> ARN and a <i>to</i> ARN.</p><p><h3>See Also:</h3>   <a
@@ -162,6 +208,23 @@ namespace GroundStation
         virtual void DeleteDataflowEndpointGroupAsync(const Model::DeleteDataflowEndpointGroupRequest& request, const DeleteDataflowEndpointGroupResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Deletes an ephemeris</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/DeleteEphemeris">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DeleteEphemerisOutcome DeleteEphemeris(const Model::DeleteEphemerisRequest& request) const;
+
+        /**
+         * A Callable wrapper for DeleteEphemeris that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DeleteEphemerisOutcomeCallable DeleteEphemerisCallable(const Model::DeleteEphemerisRequest& request) const;
+
+        /**
+         * An Async wrapper for DeleteEphemeris that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DeleteEphemerisAsync(const Model::DeleteEphemerisRequest& request, const DeleteEphemerisResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Deletes a mission profile.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/DeleteMissionProfile">AWS
          * API Reference</a></p>
@@ -194,6 +257,23 @@ namespace GroundStation
          * An Async wrapper for DescribeContact that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void DescribeContactAsync(const Model::DescribeContactRequest& request, const DescribeContactResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Describes an existing ephemeris.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/DescribeEphemeris">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeEphemerisOutcome DescribeEphemeris(const Model::DescribeEphemerisRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeEphemeris that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeEphemerisOutcomeCallable DescribeEphemerisCallable(const Model::DescribeEphemerisRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeEphemeris that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeEphemerisAsync(const Model::DescribeEphemerisRequest& request, const DescribeEphemerisResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Returns <code>Config</code> information.</p> <p>Only one <code>Config</code>
@@ -337,6 +417,23 @@ namespace GroundStation
         virtual void ListDataflowEndpointGroupsAsync(const Model::ListDataflowEndpointGroupsRequest& request, const ListDataflowEndpointGroupsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>List existing ephemerides.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/ListEphemerides">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListEphemeridesOutcome ListEphemerides(const Model::ListEphemeridesRequest& request) const;
+
+        /**
+         * A Callable wrapper for ListEphemerides that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListEphemeridesOutcomeCallable ListEphemeridesCallable(const Model::ListEphemeridesRequest& request) const;
+
+        /**
+         * An Async wrapper for ListEphemerides that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListEphemeridesAsync(const Model::ListEphemeridesRequest& request, const ListEphemeridesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Returns a list of ground stations. </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/ListGroundStations">AWS
          * API Reference</a></p>
@@ -477,6 +574,23 @@ namespace GroundStation
         virtual void UpdateConfigAsync(const Model::UpdateConfigRequest& request, const UpdateConfigResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Updates an existing ephemeris</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/UpdateEphemeris">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::UpdateEphemerisOutcome UpdateEphemeris(const Model::UpdateEphemerisRequest& request) const;
+
+        /**
+         * A Callable wrapper for UpdateEphemeris that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::UpdateEphemerisOutcomeCallable UpdateEphemerisCallable(const Model::UpdateEphemerisRequest& request) const;
+
+        /**
+         * An Async wrapper for UpdateEphemeris that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void UpdateEphemerisAsync(const Model::UpdateEphemerisRequest& request, const UpdateEphemerisResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Updates a mission profile.</p> <p>Updating a mission profile will not update
          * the execution parameters for existing future contacts.</p><p><h3>See Also:</h3> 
          * <a
@@ -497,12 +611,14 @@ namespace GroundStation
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<GroundStationEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<GroundStationClient>;
+      void init(const GroundStationClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      GroundStationClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<GroundStationEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace GroundStation

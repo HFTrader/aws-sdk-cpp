@@ -24,10 +24,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/ListContactsRequest">AWS
    * API Reference</a></p>
    */
-  class AWS_GROUNDSTATION_API ListContactsRequest : public GroundStationRequest
+  class ListContactsRequest : public GroundStationRequest
   {
   public:
-    ListContactsRequest();
+    AWS_GROUNDSTATION_API ListContactsRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -35,36 +35,36 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "ListContacts"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_GROUNDSTATION_API Aws::String SerializePayload() const override;
 
 
     /**
-     * <p>End time of a contact.</p>
+     * <p>End time of a contact in UTC.</p>
      */
     inline const Aws::Utils::DateTime& GetEndTime() const{ return m_endTime; }
 
     /**
-     * <p>End time of a contact.</p>
+     * <p>End time of a contact in UTC.</p>
      */
     inline bool EndTimeHasBeenSet() const { return m_endTimeHasBeenSet; }
 
     /**
-     * <p>End time of a contact.</p>
+     * <p>End time of a contact in UTC.</p>
      */
     inline void SetEndTime(const Aws::Utils::DateTime& value) { m_endTimeHasBeenSet = true; m_endTime = value; }
 
     /**
-     * <p>End time of a contact.</p>
+     * <p>End time of a contact in UTC.</p>
      */
     inline void SetEndTime(Aws::Utils::DateTime&& value) { m_endTimeHasBeenSet = true; m_endTime = std::move(value); }
 
     /**
-     * <p>End time of a contact.</p>
+     * <p>End time of a contact in UTC.</p>
      */
     inline ListContactsRequest& WithEndTime(const Aws::Utils::DateTime& value) { SetEndTime(value); return *this;}
 
     /**
-     * <p>End time of a contact.</p>
+     * <p>End time of a contact in UTC.</p>
      */
     inline ListContactsRequest& WithEndTime(Aws::Utils::DateTime&& value) { SetEndTime(std::move(value)); return *this;}
 
@@ -263,32 +263,32 @@ namespace Model
 
 
     /**
-     * <p>Start time of a contact.</p>
+     * <p>Start time of a contact in UTC.</p>
      */
     inline const Aws::Utils::DateTime& GetStartTime() const{ return m_startTime; }
 
     /**
-     * <p>Start time of a contact.</p>
+     * <p>Start time of a contact in UTC.</p>
      */
     inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
 
     /**
-     * <p>Start time of a contact.</p>
+     * <p>Start time of a contact in UTC.</p>
      */
     inline void SetStartTime(const Aws::Utils::DateTime& value) { m_startTimeHasBeenSet = true; m_startTime = value; }
 
     /**
-     * <p>Start time of a contact.</p>
+     * <p>Start time of a contact in UTC.</p>
      */
     inline void SetStartTime(Aws::Utils::DateTime&& value) { m_startTimeHasBeenSet = true; m_startTime = std::move(value); }
 
     /**
-     * <p>Start time of a contact.</p>
+     * <p>Start time of a contact in UTC.</p>
      */
     inline ListContactsRequest& WithStartTime(const Aws::Utils::DateTime& value) { SetStartTime(value); return *this;}
 
     /**
-     * <p>Start time of a contact.</p>
+     * <p>Start time of a contact in UTC.</p>
      */
     inline ListContactsRequest& WithStartTime(Aws::Utils::DateTime&& value) { SetStartTime(std::move(value)); return *this;}
 

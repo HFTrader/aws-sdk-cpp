@@ -8,6 +8,7 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/AmazonSerializableWebServiceRequest.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/cloudformation/CloudFormationServiceClientModel.h>
 
@@ -34,31 +35,59 @@ namespace CloudFormation
    * Services product, you can find the product's technical documentation at <a
    * href="https://docs.aws.amazon.com/"> <code>docs.aws.amazon.com</code> </a>.</p>
    */
-  class AWS_CLOUDFORMATION_API CloudFormationClient : public Aws::Client::AWSXMLClient
+  class AWS_CLOUDFORMATION_API CloudFormationClient : public Aws::Client::AWSXMLClient, public Aws::Client::ClientWithAsyncTemplateMethods<CloudFormationClient>
   {
     public:
       typedef Aws::Client::AWSXMLClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        CloudFormationClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        CloudFormationClient(const Aws::CloudFormation::CloudFormationClientConfiguration& clientConfiguration = Aws::CloudFormation::CloudFormationClientConfiguration(),
+                             std::shared_ptr<CloudFormationEndpointProviderBase> endpointProvider = Aws::MakeShared<CloudFormationEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         CloudFormationClient(const Aws::Auth::AWSCredentials& credentials,
-                             const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                             std::shared_ptr<CloudFormationEndpointProviderBase> endpointProvider = Aws::MakeShared<CloudFormationEndpointProvider>(ALLOCATION_TAG),
+                             const Aws::CloudFormation::CloudFormationClientConfiguration& clientConfiguration = Aws::CloudFormation::CloudFormationClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         CloudFormationClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                             const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                             std::shared_ptr<CloudFormationEndpointProviderBase> endpointProvider = Aws::MakeShared<CloudFormationEndpointProvider>(ALLOCATION_TAG),
+                             const Aws::CloudFormation::CloudFormationClientConfiguration& clientConfiguration = Aws::CloudFormation::CloudFormationClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CloudFormationClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CloudFormationClient(const Aws::Auth::AWSCredentials& credentials,
+                             const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        CloudFormationClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                             const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~CloudFormationClient();
 
 
@@ -1486,7 +1515,7 @@ namespace CloudFormation
          * the type was registered. For more information, see <a
          * href="AWSCloudFormation/latest/APIReference/API_RegisterType.html">RegisterType</a>.</p>
          * <p>Once you've initiated testing on an extension using <code>TestType</code>,
-         * you can use <a
+         * you can pass the returned <code>TypeVersionArn</code> into <a
          * href="https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_DescribeType.html">DescribeType</a>
          * to monitor the current test status and test status description for the
          * extension.</p> <p>An extension must have a test status of <code>PASSED</code>
@@ -1637,12 +1666,14 @@ namespace CloudFormation
 
 
         void OverrideEndpoint(const Aws::String& endpoint);
+        std::shared_ptr<CloudFormationEndpointProviderBase>& accessEndpointProvider();
   private:
-        void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+        friend class Aws::Client::ClientWithAsyncTemplateMethods<CloudFormationClient>;
+        void init(const CloudFormationClientConfiguration& clientConfiguration);
 
-        Aws::String m_uri;
-        Aws::String m_configScheme;
+        CloudFormationClientConfiguration m_clientConfiguration;
         std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+        std::shared_ptr<CloudFormationEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace CloudFormation

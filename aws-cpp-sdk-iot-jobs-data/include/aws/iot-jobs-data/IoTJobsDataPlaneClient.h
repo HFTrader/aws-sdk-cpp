@@ -7,6 +7,7 @@
 #include <aws/iot-jobs-data/IoTJobsDataPlane_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/iot-jobs-data/IoTJobsDataPlaneServiceClientModel.h>
 
@@ -29,33 +30,60 @@ namespace IoTJobsDataPlane
    * The Jobs service provides commands to track the progress of a job on a specific
    * target and for all the targets of the job</p>
    */
-  class AWS_IOTJOBSDATAPLANE_API IoTJobsDataPlaneClient : public Aws::Client::AWSJsonClient
+  class AWS_IOTJOBSDATAPLANE_API IoTJobsDataPlaneClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<IoTJobsDataPlaneClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        IoTJobsDataPlaneClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        IoTJobsDataPlaneClient(const Aws::IoTJobsDataPlane::IoTJobsDataPlaneClientConfiguration& clientConfiguration = Aws::IoTJobsDataPlane::IoTJobsDataPlaneClientConfiguration(),
+                               std::shared_ptr<IoTJobsDataPlaneEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTJobsDataPlaneEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         IoTJobsDataPlaneClient(const Aws::Auth::AWSCredentials& credentials,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<IoTJobsDataPlaneEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTJobsDataPlaneEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::IoTJobsDataPlane::IoTJobsDataPlaneClientConfiguration& clientConfiguration = Aws::IoTJobsDataPlane::IoTJobsDataPlaneClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         IoTJobsDataPlaneClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<IoTJobsDataPlaneEndpointProviderBase> endpointProvider = Aws::MakeShared<IoTJobsDataPlaneEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::IoTJobsDataPlane::IoTJobsDataPlaneClientConfiguration& clientConfiguration = Aws::IoTJobsDataPlane::IoTJobsDataPlaneClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IoTJobsDataPlaneClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IoTJobsDataPlaneClient(const Aws::Auth::AWSCredentials& credentials,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        IoTJobsDataPlaneClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~IoTJobsDataPlaneClient();
-
 
         /**
          * <p>Gets details of a job execution.</p><p><h3>See Also:</h3>   <a
@@ -129,12 +157,14 @@ namespace IoTJobsDataPlane
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<IoTJobsDataPlaneEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<IoTJobsDataPlaneClient>;
+      void init(const IoTJobsDataPlaneClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      IoTJobsDataPlaneClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<IoTJobsDataPlaneEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace IoTJobsDataPlane

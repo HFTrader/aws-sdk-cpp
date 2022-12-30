@@ -8,6 +8,7 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/AmazonSerializableWebServiceRequest.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/elasticloadbalancingv2/ElasticLoadBalancingv2ServiceClientModel.h>
 
@@ -39,31 +40,59 @@ namespace ElasticLoadBalancingv2
    * idempotent, which means that they complete at most one time. If you repeat an
    * operation, it succeeds.</p>
    */
-  class AWS_ELASTICLOADBALANCINGV2_API ElasticLoadBalancingv2Client : public Aws::Client::AWSXMLClient
+  class AWS_ELASTICLOADBALANCINGV2_API ElasticLoadBalancingv2Client : public Aws::Client::AWSXMLClient, public Aws::Client::ClientWithAsyncTemplateMethods<ElasticLoadBalancingv2Client>
   {
     public:
       typedef Aws::Client::AWSXMLClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        ElasticLoadBalancingv2Client(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        ElasticLoadBalancingv2Client(const Aws::ElasticLoadBalancingv2::ElasticLoadBalancingv2ClientConfiguration& clientConfiguration = Aws::ElasticLoadBalancingv2::ElasticLoadBalancingv2ClientConfiguration(),
+                                     std::shared_ptr<ElasticLoadBalancingv2EndpointProviderBase> endpointProvider = Aws::MakeShared<ElasticLoadBalancingv2EndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         ElasticLoadBalancingv2Client(const Aws::Auth::AWSCredentials& credentials,
-                                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                     std::shared_ptr<ElasticLoadBalancingv2EndpointProviderBase> endpointProvider = Aws::MakeShared<ElasticLoadBalancingv2EndpointProvider>(ALLOCATION_TAG),
+                                     const Aws::ElasticLoadBalancingv2::ElasticLoadBalancingv2ClientConfiguration& clientConfiguration = Aws::ElasticLoadBalancingv2::ElasticLoadBalancingv2ClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         ElasticLoadBalancingv2Client(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                     std::shared_ptr<ElasticLoadBalancingv2EndpointProviderBase> endpointProvider = Aws::MakeShared<ElasticLoadBalancingv2EndpointProvider>(ALLOCATION_TAG),
+                                     const Aws::ElasticLoadBalancingv2::ElasticLoadBalancingv2ClientConfiguration& clientConfiguration = Aws::ElasticLoadBalancingv2::ElasticLoadBalancingv2ClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ElasticLoadBalancingv2Client(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ElasticLoadBalancingv2Client(const Aws::Auth::AWSCredentials& credentials,
+                                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        ElasticLoadBalancingv2Client(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~ElasticLoadBalancingv2Client();
 
 
@@ -641,9 +670,7 @@ namespace ElasticLoadBalancingv2
 
         /**
          * <p>Modifies the health checks used when evaluating the health state of the
-         * targets in the specified target group.</p> <p>If the protocol of the target
-         * group is TCP, TLS, UDP, or TCP_UDP, you can't modify the health check protocol,
-         * interval, timeout, or success codes.</p><p><h3>See Also:</h3>   <a
+         * targets in the specified target group.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/ModifyTargetGroup">AWS
          * API Reference</a></p>
          */
@@ -742,9 +769,8 @@ namespace ElasticLoadBalancingv2
         virtual void RemoveTagsAsync(const Model::RemoveTagsRequest& request, const RemoveTagsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Sets the type of IP addresses used by the subnets of the specified
-         * Application Load Balancer or Network Load Balancer.</p><p><h3>See Also:</h3>  
-         * <a
+         * <p>Sets the type of IP addresses used by the subnets of the specified load
+         * balancer.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/SetIpAddressType">AWS
          * API Reference</a></p>
          */
@@ -824,12 +850,14 @@ namespace ElasticLoadBalancingv2
 
 
         void OverrideEndpoint(const Aws::String& endpoint);
+        std::shared_ptr<ElasticLoadBalancingv2EndpointProviderBase>& accessEndpointProvider();
   private:
-        void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+        friend class Aws::Client::ClientWithAsyncTemplateMethods<ElasticLoadBalancingv2Client>;
+        void init(const ElasticLoadBalancingv2ClientConfiguration& clientConfiguration);
 
-        Aws::String m_uri;
-        Aws::String m_configScheme;
+        ElasticLoadBalancingv2ClientConfiguration m_clientConfiguration;
         std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+        std::shared_ptr<ElasticLoadBalancingv2EndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace ElasticLoadBalancingv2

@@ -7,6 +7,7 @@
 #include <aws/alexaforbusiness/AlexaForBusiness_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/alexaforbusiness/AlexaForBusinessServiceClientModel.h>
 
@@ -26,33 +27,60 @@ namespace AlexaForBusiness
    * solutions, register their products with Alexa for Business, and manage them as
    * shared devices in their organization. </p>
    */
-  class AWS_ALEXAFORBUSINESS_API AlexaForBusinessClient : public Aws::Client::AWSJsonClient
+  class AWS_ALEXAFORBUSINESS_API AlexaForBusinessClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<AlexaForBusinessClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        AlexaForBusinessClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        AlexaForBusinessClient(const Aws::AlexaForBusiness::AlexaForBusinessClientConfiguration& clientConfiguration = Aws::AlexaForBusiness::AlexaForBusinessClientConfiguration(),
+                               std::shared_ptr<AlexaForBusinessEndpointProviderBase> endpointProvider = Aws::MakeShared<AlexaForBusinessEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         AlexaForBusinessClient(const Aws::Auth::AWSCredentials& credentials,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<AlexaForBusinessEndpointProviderBase> endpointProvider = Aws::MakeShared<AlexaForBusinessEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::AlexaForBusiness::AlexaForBusinessClientConfiguration& clientConfiguration = Aws::AlexaForBusiness::AlexaForBusinessClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         AlexaForBusinessClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<AlexaForBusinessEndpointProviderBase> endpointProvider = Aws::MakeShared<AlexaForBusinessEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::AlexaForBusiness::AlexaForBusinessClientConfiguration& clientConfiguration = Aws::AlexaForBusiness::AlexaForBusinessClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        AlexaForBusinessClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        AlexaForBusinessClient(const Aws::Auth::AWSCredentials& credentials,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        AlexaForBusinessClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~AlexaForBusinessClient();
-
 
         /**
          * <p>Associates a skill with the organization under the customer's AWS account. If
@@ -1734,12 +1762,14 @@ namespace AlexaForBusiness
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<AlexaForBusinessEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<AlexaForBusinessClient>;
+      void init(const AlexaForBusinessClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      AlexaForBusinessClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<AlexaForBusinessEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace AlexaForBusiness

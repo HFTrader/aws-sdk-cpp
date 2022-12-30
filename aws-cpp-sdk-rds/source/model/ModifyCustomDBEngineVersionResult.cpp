@@ -78,6 +78,16 @@ ModifyCustomDBEngineVersionResult& ModifyCustomDBEngineVersionResult::operator =
     {
       m_defaultCharacterSet = defaultCharacterSetNode;
     }
+    XmlNode imageNode = resultNode.FirstChild("Image");
+    if(!imageNode.IsNull())
+    {
+      m_image = imageNode;
+    }
+    XmlNode dBEngineMediaTypeNode = resultNode.FirstChild("DBEngineMediaType");
+    if(!dBEngineMediaTypeNode.IsNull())
+    {
+      m_dBEngineMediaType = Aws::Utils::Xml::DecodeEscapedXmlText(dBEngineMediaTypeNode.GetText());
+    }
     XmlNode supportedCharacterSetsNode = resultNode.FirstChild("SupportedCharacterSets");
     if(!supportedCharacterSetsNode.IsNull())
     {
@@ -225,6 +235,11 @@ ModifyCustomDBEngineVersionResult& ModifyCustomDBEngineVersionResult::operator =
     if(!supportsBabelfishNode.IsNull())
     {
       m_supportsBabelfish = StringUtils::ConvertToBool(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(supportsBabelfishNode.GetText()).c_str()).c_str());
+    }
+    XmlNode customDBEngineVersionManifestNode = resultNode.FirstChild("CustomDBEngineVersionManifest");
+    if(!customDBEngineVersionManifestNode.IsNull())
+    {
+      m_customDBEngineVersionManifest = Aws::Utils::Xml::DecodeEscapedXmlText(customDBEngineVersionManifestNode.GetText());
     }
   }
 

@@ -7,6 +7,7 @@
 #include <aws/eventbridge/EventBridge_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/eventbridge/EventBridgeServiceClientModel.h>
 
@@ -30,33 +31,60 @@ namespace EventBridge
    * href="https://docs.aws.amazon.com/eventbridge/latest/userguide">Amazon
    * EventBridge User Guide</a>.</p>
    */
-  class AWS_EVENTBRIDGE_API EventBridgeClient : public Aws::Client::AWSJsonClient
+  class AWS_EVENTBRIDGE_API EventBridgeClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<EventBridgeClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        EventBridgeClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        EventBridgeClient(const Aws::EventBridge::EventBridgeClientConfiguration& clientConfiguration = Aws::EventBridge::EventBridgeClientConfiguration(),
+                          std::shared_ptr<EventBridgeEndpointProviderBase> endpointProvider = Aws::MakeShared<EventBridgeEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         EventBridgeClient(const Aws::Auth::AWSCredentials& credentials,
-                          const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                          std::shared_ptr<EventBridgeEndpointProviderBase> endpointProvider = Aws::MakeShared<EventBridgeEndpointProvider>(ALLOCATION_TAG),
+                          const Aws::EventBridge::EventBridgeClientConfiguration& clientConfiguration = Aws::EventBridge::EventBridgeClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         EventBridgeClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                          const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                          std::shared_ptr<EventBridgeEndpointProviderBase> endpointProvider = Aws::MakeShared<EventBridgeEndpointProvider>(ALLOCATION_TAG),
+                          const Aws::EventBridge::EventBridgeClientConfiguration& clientConfiguration = Aws::EventBridge::EventBridgeClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        EventBridgeClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        EventBridgeClient(const Aws::Auth::AWSCredentials& credentials,
+                          const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        EventBridgeClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                          const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~EventBridgeClient();
-
 
         /**
          * <p>Activates a partner event source that has been deactivated. Once activated,
@@ -1354,13 +1382,14 @@ namespace EventBridge
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<EventBridgeEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<EventBridgeClient>;
+      void init(const EventBridgeClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      bool m_useCustomEndpoint = false;
-      Aws::String m_configScheme;
+      EventBridgeClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<EventBridgeEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace EventBridge

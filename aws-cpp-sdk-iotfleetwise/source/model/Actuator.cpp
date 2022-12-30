@@ -28,8 +28,7 @@ Actuator::Actuator() :
     m_min(0.0),
     m_minHasBeenSet(false),
     m_max(0.0),
-    m_maxHasBeenSet(false),
-    m_assignedValueHasBeenSet(false)
+    m_maxHasBeenSet(false)
 {
 }
 
@@ -43,8 +42,7 @@ Actuator::Actuator(JsonView jsonValue) :
     m_min(0.0),
     m_minHasBeenSet(false),
     m_max(0.0),
-    m_maxHasBeenSet(false),
-    m_assignedValueHasBeenSet(false)
+    m_maxHasBeenSet(false)
 {
   *this = jsonValue;
 }
@@ -81,7 +79,7 @@ Actuator& Actuator::operator =(JsonView jsonValue)
 
   if(jsonValue.ValueExists("allowedValues"))
   {
-    Array<JsonView> allowedValuesJsonList = jsonValue.GetArray("allowedValues");
+    Aws::Utils::Array<JsonView> allowedValuesJsonList = jsonValue.GetArray("allowedValues");
     for(unsigned allowedValuesIndex = 0; allowedValuesIndex < allowedValuesJsonList.GetLength(); ++allowedValuesIndex)
     {
       m_allowedValues.push_back(allowedValuesJsonList[allowedValuesIndex].AsString());
@@ -101,13 +99,6 @@ Actuator& Actuator::operator =(JsonView jsonValue)
     m_max = jsonValue.GetDouble("max");
 
     m_maxHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("assignedValue"))
-  {
-    m_assignedValue = jsonValue.GetString("assignedValue");
-
-    m_assignedValueHasBeenSet = true;
   }
 
   return *this;
@@ -142,7 +133,7 @@ JsonValue Actuator::Jsonize() const
 
   if(m_allowedValuesHasBeenSet)
   {
-   Array<JsonValue> allowedValuesJsonList(m_allowedValues.size());
+   Aws::Utils::Array<JsonValue> allowedValuesJsonList(m_allowedValues.size());
    for(unsigned allowedValuesIndex = 0; allowedValuesIndex < allowedValuesJsonList.GetLength(); ++allowedValuesIndex)
    {
      allowedValuesJsonList[allowedValuesIndex].AsString(m_allowedValues[allowedValuesIndex]);
@@ -160,12 +151,6 @@ JsonValue Actuator::Jsonize() const
   if(m_maxHasBeenSet)
   {
    payload.WithDouble("max", m_max);
-
-  }
-
-  if(m_assignedValueHasBeenSet)
-  {
-   payload.WithString("assignedValue", m_assignedValue);
 
   }
 

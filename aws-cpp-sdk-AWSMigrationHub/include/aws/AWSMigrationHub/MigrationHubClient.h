@@ -7,6 +7,7 @@
 #include <aws/AWSMigrationHub/MigrationHub_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/AWSMigrationHub/MigrationHubServiceClientModel.h>
 
@@ -22,33 +23,60 @@ namespace MigrationHub
    * or a <code>HomeRegionNotSetException</code> error will be returned. Also, you
    * must make the API calls while in your home region.</p>
    */
-  class AWS_MIGRATIONHUB_API MigrationHubClient : public Aws::Client::AWSJsonClient
+  class AWS_MIGRATIONHUB_API MigrationHubClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<MigrationHubClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        MigrationHubClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        MigrationHubClient(const Aws::MigrationHub::MigrationHubClientConfiguration& clientConfiguration = Aws::MigrationHub::MigrationHubClientConfiguration(),
+                           std::shared_ptr<MigrationHubEndpointProviderBase> endpointProvider = Aws::MakeShared<MigrationHubEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         MigrationHubClient(const Aws::Auth::AWSCredentials& credentials,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<MigrationHubEndpointProviderBase> endpointProvider = Aws::MakeShared<MigrationHubEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::MigrationHub::MigrationHubClientConfiguration& clientConfiguration = Aws::MigrationHub::MigrationHubClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         MigrationHubClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<MigrationHubEndpointProviderBase> endpointProvider = Aws::MakeShared<MigrationHubEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::MigrationHub::MigrationHubClientConfiguration& clientConfiguration = Aws::MigrationHub::MigrationHubClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        MigrationHubClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        MigrationHubClient(const Aws::Auth::AWSCredentials& credentials,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        MigrationHubClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~MigrationHubClient();
-
 
         /**
          * <p>Associates a created artifact of an AWS cloud resource, the target receiving
@@ -427,12 +455,14 @@ namespace MigrationHub
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<MigrationHubEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<MigrationHubClient>;
+      void init(const MigrationHubClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      MigrationHubClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<MigrationHubEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace MigrationHub

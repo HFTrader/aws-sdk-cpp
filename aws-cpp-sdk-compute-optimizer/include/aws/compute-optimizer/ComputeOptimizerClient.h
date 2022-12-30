@@ -7,6 +7,7 @@
 #include <aws/compute-optimizer/ComputeOptimizer_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/compute-optimizer/ComputeOptimizerServiceClientModel.h>
 
@@ -17,46 +18,74 @@ namespace ComputeOptimizer
   /**
    * <p>Compute Optimizer is a service that analyzes the configuration and
    * utilization metrics of your Amazon Web Services compute resources, such as
-   * Amazon EC2 instances, Amazon EC2 Auto Scaling groups, Lambda functions, and
-   * Amazon EBS volumes. It reports whether your resources are optimal, and generates
-   * optimization recommendations to reduce the cost and improve the performance of
-   * your workloads. Compute Optimizer also provides recent utilization metric data,
-   * in addition to projected utilization metric data for the recommendations, which
-   * you can use to evaluate which recommendation provides the best price-performance
-   * trade-off. The analysis of your usage patterns can help you decide when to move
-   * or resize your running resources, and still meet your performance and capacity
-   * requirements. For more information about Compute Optimizer, including the
-   * required permissions to use the service, see the <a
+   * Amazon EC2 instances, Amazon EC2 Auto Scaling groups, Lambda functions, Amazon
+   * EBS volumes, and Amazon ECS services on Fargate. It reports whether your
+   * resources are optimal, and generates optimization recommendations to reduce the
+   * cost and improve the performance of your workloads. Compute Optimizer also
+   * provides recent utilization metric data, in addition to projected utilization
+   * metric data for the recommendations, which you can use to evaluate which
+   * recommendation provides the best price-performance trade-off. The analysis of
+   * your usage patterns can help you decide when to move or resize your running
+   * resources, and still meet your performance and capacity requirements. For more
+   * information about Compute Optimizer, including the required permissions to use
+   * the service, see the <a
    * href="https://docs.aws.amazon.com/compute-optimizer/latest/ug/">Compute
    * Optimizer User Guide</a>.</p>
    */
-  class AWS_COMPUTEOPTIMIZER_API ComputeOptimizerClient : public Aws::Client::AWSJsonClient
+  class AWS_COMPUTEOPTIMIZER_API ComputeOptimizerClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<ComputeOptimizerClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        ComputeOptimizerClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        ComputeOptimizerClient(const Aws::ComputeOptimizer::ComputeOptimizerClientConfiguration& clientConfiguration = Aws::ComputeOptimizer::ComputeOptimizerClientConfiguration(),
+                               std::shared_ptr<ComputeOptimizerEndpointProviderBase> endpointProvider = Aws::MakeShared<ComputeOptimizerEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         ComputeOptimizerClient(const Aws::Auth::AWSCredentials& credentials,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<ComputeOptimizerEndpointProviderBase> endpointProvider = Aws::MakeShared<ComputeOptimizerEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::ComputeOptimizer::ComputeOptimizerClientConfiguration& clientConfiguration = Aws::ComputeOptimizer::ComputeOptimizerClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         ComputeOptimizerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<ComputeOptimizerEndpointProviderBase> endpointProvider = Aws::MakeShared<ComputeOptimizerEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::ComputeOptimizer::ComputeOptimizerClientConfiguration& clientConfiguration = Aws::ComputeOptimizer::ComputeOptimizerClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ComputeOptimizerClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ComputeOptimizerClient(const Aws::Auth::AWSCredentials& credentials,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        ComputeOptimizerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~ComputeOptimizerClient();
-
 
         /**
          * <p>Deletes a recommendation preference, such as enhanced infrastructure
@@ -176,6 +205,30 @@ namespace ComputeOptimizer
         virtual void ExportEC2InstanceRecommendationsAsync(const Model::ExportEC2InstanceRecommendationsRequest& request, const ExportEC2InstanceRecommendationsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p> Exports optimization recommendations for Amazon ECS services on Fargate.
+         * </p> <p>Recommendations are exported in a CSV file, and its metadata in a JSON
+         * file, to an existing Amazon Simple Storage Service (Amazon S3) bucket that you
+         * specify. For more information, see <a
+         * href="https://docs.aws.amazon.com/compute-optimizer/latest/ug/exporting-recommendations.html">Exporting
+         * Recommendations</a> in the <i>Compute Optimizer User Guide</i>.</p> <p>You can
+         * only have one Amazon ECS service export job in progress per Amazon Web Services
+         * Region.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/ExportECSServiceRecommendations">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ExportECSServiceRecommendationsOutcome ExportECSServiceRecommendations(const Model::ExportECSServiceRecommendationsRequest& request) const;
+
+        /**
+         * A Callable wrapper for ExportECSServiceRecommendations that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ExportECSServiceRecommendationsOutcomeCallable ExportECSServiceRecommendationsCallable(const Model::ExportECSServiceRecommendationsRequest& request) const;
+
+        /**
+         * An Async wrapper for ExportECSServiceRecommendations that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ExportECSServiceRecommendationsAsync(const Model::ExportECSServiceRecommendationsRequest& request, const ExportECSServiceRecommendationsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Exports optimization recommendations for Lambda functions.</p>
          * <p>Recommendations are exported in a comma-separated values (.csv) file, and its
          * metadata in a JavaScript Object Notation (JSON) (.json) file, to an existing
@@ -291,6 +344,46 @@ namespace ComputeOptimizer
          * An Async wrapper for GetEC2RecommendationProjectedMetrics that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void GetEC2RecommendationProjectedMetricsAsync(const Model::GetEC2RecommendationProjectedMetricsRequest& request, const GetEC2RecommendationProjectedMetricsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p> Returns the projected metrics of Amazon ECS service recommendations.
+         * </p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/GetECSServiceRecommendationProjectedMetrics">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetECSServiceRecommendationProjectedMetricsOutcome GetECSServiceRecommendationProjectedMetrics(const Model::GetECSServiceRecommendationProjectedMetricsRequest& request) const;
+
+        /**
+         * A Callable wrapper for GetECSServiceRecommendationProjectedMetrics that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetECSServiceRecommendationProjectedMetricsOutcomeCallable GetECSServiceRecommendationProjectedMetricsCallable(const Model::GetECSServiceRecommendationProjectedMetricsRequest& request) const;
+
+        /**
+         * An Async wrapper for GetECSServiceRecommendationProjectedMetrics that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetECSServiceRecommendationProjectedMetricsAsync(const Model::GetECSServiceRecommendationProjectedMetricsRequest& request, const GetECSServiceRecommendationProjectedMetricsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p> Returns Amazon ECS service recommendations. </p> <p> Compute Optimizer
+         * generates recommendations for Amazon ECS services on Fargate that meet a
+         * specific set of requirements. For more information, see the <a
+         * href="https://docs.aws.amazon.com/compute-optimizer/latest/ug/requirements.html">Supported
+         * resources and requirements</a> in the <i>Compute Optimizer User Guide</i>.
+         * </p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/GetECSServiceRecommendations">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetECSServiceRecommendationsOutcome GetECSServiceRecommendations(const Model::GetECSServiceRecommendationsRequest& request) const;
+
+        /**
+         * A Callable wrapper for GetECSServiceRecommendations that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetECSServiceRecommendationsOutcomeCallable GetECSServiceRecommendationsCallable(const Model::GetECSServiceRecommendationsRequest& request) const;
+
+        /**
+         * An Async wrapper for GetECSServiceRecommendations that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetECSServiceRecommendationsAsync(const Model::GetECSServiceRecommendationsRequest& request, const GetECSServiceRecommendationsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Returns the recommendation preferences that are in effect for a given
@@ -411,7 +504,9 @@ namespace ComputeOptimizer
          * are <code>NotOptimized</code>, or <code>Optimized</code>.</p> </li> <li>
          * <p>Amazon EBS volumes in an account that are <code>NotOptimized</code>, or
          * <code>Optimized</code>.</p> </li> <li> <p>Lambda functions in an account that
-         * are <code>NotOptimized</code>, or <code>Optimized</code>.</p> </li>
+         * are <code>NotOptimized</code>, or <code>Optimized</code>.</p> </li> <li>
+         * <p>Amazon ECS services in an account that are <code>Underprovisioned</code>,
+         * <code>Overprovisioned</code>, or <code>Optimized</code>.</p> </li>
          * </ul><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/GetRecommendationSummaries">AWS
          * API Reference</a></p>
@@ -482,12 +577,14 @@ namespace ComputeOptimizer
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<ComputeOptimizerEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<ComputeOptimizerClient>;
+      void init(const ComputeOptimizerClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      ComputeOptimizerClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<ComputeOptimizerEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace ComputeOptimizer

@@ -7,6 +7,7 @@
 #include <aws/cloudcontrol/CloudControlApi_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/cloudcontrol/CloudControlApiServiceClientModel.h>
 
@@ -19,33 +20,60 @@ namespace CloudControlApi
    * href="https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html">Amazon
    * Web Services Cloud Control API User Guide</a>.</p>
    */
-  class AWS_CLOUDCONTROLAPI_API CloudControlApiClient : public Aws::Client::AWSJsonClient
+  class AWS_CLOUDCONTROLAPI_API CloudControlApiClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<CloudControlApiClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        CloudControlApiClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        CloudControlApiClient(const Aws::CloudControlApi::CloudControlApiClientConfiguration& clientConfiguration = Aws::CloudControlApi::CloudControlApiClientConfiguration(),
+                              std::shared_ptr<CloudControlApiEndpointProviderBase> endpointProvider = Aws::MakeShared<CloudControlApiEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         CloudControlApiClient(const Aws::Auth::AWSCredentials& credentials,
-                              const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                              std::shared_ptr<CloudControlApiEndpointProviderBase> endpointProvider = Aws::MakeShared<CloudControlApiEndpointProvider>(ALLOCATION_TAG),
+                              const Aws::CloudControlApi::CloudControlApiClientConfiguration& clientConfiguration = Aws::CloudControlApi::CloudControlApiClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         CloudControlApiClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                              const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                              std::shared_ptr<CloudControlApiEndpointProviderBase> endpointProvider = Aws::MakeShared<CloudControlApiEndpointProvider>(ALLOCATION_TAG),
+                              const Aws::CloudControlApi::CloudControlApiClientConfiguration& clientConfiguration = Aws::CloudControlApi::CloudControlApiClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CloudControlApiClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CloudControlApiClient(const Aws::Auth::AWSCredentials& credentials,
+                              const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        CloudControlApiClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                              const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~CloudControlApiClient();
-
 
         /**
          * <p>Cancels the specified resource operation request. For more information, see
@@ -243,12 +271,14 @@ namespace CloudControlApi
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<CloudControlApiEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<CloudControlApiClient>;
+      void init(const CloudControlApiClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      CloudControlApiClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<CloudControlApiEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace CloudControlApi

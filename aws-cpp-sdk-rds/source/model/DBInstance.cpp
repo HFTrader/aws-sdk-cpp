@@ -119,7 +119,11 @@ DBInstance::DBInstance() :
     m_backupTargetHasBeenSet(false),
     m_networkTypeHasBeenSet(false),
     m_activityStreamPolicyStatus(ActivityStreamPolicyStatus::NOT_SET),
-    m_activityStreamPolicyStatusHasBeenSet(false)
+    m_activityStreamPolicyStatusHasBeenSet(false),
+    m_storageThroughput(0),
+    m_storageThroughputHasBeenSet(false),
+    m_dBSystemIdHasBeenSet(false),
+    m_masterUserSecretHasBeenSet(false)
 {
 }
 
@@ -222,7 +226,11 @@ DBInstance::DBInstance(const XmlNode& xmlNode) :
     m_backupTargetHasBeenSet(false),
     m_networkTypeHasBeenSet(false),
     m_activityStreamPolicyStatus(ActivityStreamPolicyStatus::NOT_SET),
-    m_activityStreamPolicyStatusHasBeenSet(false)
+    m_activityStreamPolicyStatusHasBeenSet(false),
+    m_storageThroughput(0),
+    m_storageThroughputHasBeenSet(false),
+    m_dBSystemIdHasBeenSet(false),
+    m_masterUserSecretHasBeenSet(false)
 {
   *this = xmlNode;
 }
@@ -767,6 +775,24 @@ DBInstance& DBInstance::operator =(const XmlNode& xmlNode)
       m_activityStreamPolicyStatus = ActivityStreamPolicyStatusMapper::GetActivityStreamPolicyStatusForName(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(activityStreamPolicyStatusNode.GetText()).c_str()).c_str());
       m_activityStreamPolicyStatusHasBeenSet = true;
     }
+    XmlNode storageThroughputNode = resultNode.FirstChild("StorageThroughput");
+    if(!storageThroughputNode.IsNull())
+    {
+      m_storageThroughput = StringUtils::ConvertToInt32(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(storageThroughputNode.GetText()).c_str()).c_str());
+      m_storageThroughputHasBeenSet = true;
+    }
+    XmlNode dBSystemIdNode = resultNode.FirstChild("DBSystemId");
+    if(!dBSystemIdNode.IsNull())
+    {
+      m_dBSystemId = Aws::Utils::Xml::DecodeEscapedXmlText(dBSystemIdNode.GetText());
+      m_dBSystemIdHasBeenSet = true;
+    }
+    XmlNode masterUserSecretNode = resultNode.FirstChild("MasterUserSecret");
+    if(!masterUserSecretNode.IsNull())
+    {
+      m_masterUserSecret = masterUserSecretNode;
+      m_masterUserSecretHasBeenSet = true;
+    }
   }
 
   return *this;
@@ -1234,6 +1260,23 @@ void DBInstance::OutputToStream(Aws::OStream& oStream, const char* location, uns
       oStream << location << index << locationValue << ".ActivityStreamPolicyStatus=" << ActivityStreamPolicyStatusMapper::GetNameForActivityStreamPolicyStatus(m_activityStreamPolicyStatus) << "&";
   }
 
+  if(m_storageThroughputHasBeenSet)
+  {
+      oStream << location << index << locationValue << ".StorageThroughput=" << m_storageThroughput << "&";
+  }
+
+  if(m_dBSystemIdHasBeenSet)
+  {
+      oStream << location << index << locationValue << ".DBSystemId=" << StringUtils::URLEncode(m_dBSystemId.c_str()) << "&";
+  }
+
+  if(m_masterUserSecretHasBeenSet)
+  {
+      Aws::StringStream masterUserSecretLocationAndMemberSs;
+      masterUserSecretLocationAndMemberSs << location << index << locationValue << ".MasterUserSecret";
+      m_masterUserSecret.OutputToStream(oStream, masterUserSecretLocationAndMemberSs.str().c_str());
+  }
+
 }
 
 void DBInstance::OutputToStream(Aws::OStream& oStream, const char* location) const
@@ -1621,6 +1664,20 @@ void DBInstance::OutputToStream(Aws::OStream& oStream, const char* location) con
   if(m_activityStreamPolicyStatusHasBeenSet)
   {
       oStream << location << ".ActivityStreamPolicyStatus=" << ActivityStreamPolicyStatusMapper::GetNameForActivityStreamPolicyStatus(m_activityStreamPolicyStatus) << "&";
+  }
+  if(m_storageThroughputHasBeenSet)
+  {
+      oStream << location << ".StorageThroughput=" << m_storageThroughput << "&";
+  }
+  if(m_dBSystemIdHasBeenSet)
+  {
+      oStream << location << ".DBSystemId=" << StringUtils::URLEncode(m_dBSystemId.c_str()) << "&";
+  }
+  if(m_masterUserSecretHasBeenSet)
+  {
+      Aws::String masterUserSecretLocationAndMember(location);
+      masterUserSecretLocationAndMember += ".MasterUserSecret";
+      m_masterUserSecret.OutputToStream(oStream, masterUserSecretLocationAndMember.c_str());
   }
 }
 

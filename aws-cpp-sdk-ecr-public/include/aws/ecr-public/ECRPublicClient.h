@@ -7,6 +7,7 @@
 #include <aws/ecr-public/ECRPublic_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/ecr-public/ECRPublicServiceClientModel.h>
 
@@ -26,33 +27,60 @@ namespace ECRPublic
    * href="https://docs.aws.amazon.com/AmazonECR/latest/APIReference/Welcome.html">Amazon
    * Elastic Container Registry API Reference</a>.</p>
    */
-  class AWS_ECRPUBLIC_API ECRPublicClient : public Aws::Client::AWSJsonClient
+  class AWS_ECRPUBLIC_API ECRPublicClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<ECRPublicClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        ECRPublicClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        ECRPublicClient(const Aws::ECRPublic::ECRPublicClientConfiguration& clientConfiguration = Aws::ECRPublic::ECRPublicClientConfiguration(),
+                        std::shared_ptr<ECRPublicEndpointProviderBase> endpointProvider = Aws::MakeShared<ECRPublicEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         ECRPublicClient(const Aws::Auth::AWSCredentials& credentials,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<ECRPublicEndpointProviderBase> endpointProvider = Aws::MakeShared<ECRPublicEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::ECRPublic::ECRPublicClientConfiguration& clientConfiguration = Aws::ECRPublic::ECRPublicClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         ECRPublicClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<ECRPublicEndpointProviderBase> endpointProvider = Aws::MakeShared<ECRPublicEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::ECRPublic::ECRPublicClientConfiguration& clientConfiguration = Aws::ECRPublic::ECRPublicClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ECRPublicClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        ECRPublicClient(const Aws::Auth::AWSCredentials& credentials,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        ECRPublicClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~ECRPublicClient();
-
 
         /**
          * <p>Checks the availability of one or more image layers within a repository in a
@@ -519,12 +547,14 @@ namespace ECRPublic
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<ECRPublicEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<ECRPublicClient>;
+      void init(const ECRPublicClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      ECRPublicClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<ECRPublicEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace ECRPublic

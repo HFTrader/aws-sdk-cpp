@@ -14,6 +14,7 @@
 #include <aws/glue/model/NotificationProperty.h>
 #include <aws/glue/model/WorkerType.h>
 #include <aws/glue/model/ExecutionClass.h>
+#include <aws/glue/model/SourceControlDetails.h>
 #include <aws/glue/model/CodeGenConfigurationNode.h>
 #include <utility>
 
@@ -26,10 +27,10 @@ namespace Model
 
   /**
    */
-  class AWS_GLUE_API CreateJobRequest : public GlueRequest
+  class CreateJobRequest : public GlueRequest
   {
   public:
-    CreateJobRequest();
+    AWS_GLUE_API CreateJobRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -37,9 +38,9 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "CreateJob"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_GLUE_API Aws::String SerializePayload() const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_GLUE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 
     /**
@@ -1278,6 +1279,43 @@ namespace Model
      */
     inline CreateJobRequest& WithExecutionClass(ExecutionClass&& value) { SetExecutionClass(std::move(value)); return *this;}
 
+
+    /**
+     * <p>The details for a source control configuration for a job, allowing
+     * synchronization of job artifacts to or from a remote repository.</p>
+     */
+    inline const SourceControlDetails& GetSourceControlDetails() const{ return m_sourceControlDetails; }
+
+    /**
+     * <p>The details for a source control configuration for a job, allowing
+     * synchronization of job artifacts to or from a remote repository.</p>
+     */
+    inline bool SourceControlDetailsHasBeenSet() const { return m_sourceControlDetailsHasBeenSet; }
+
+    /**
+     * <p>The details for a source control configuration for a job, allowing
+     * synchronization of job artifacts to or from a remote repository.</p>
+     */
+    inline void SetSourceControlDetails(const SourceControlDetails& value) { m_sourceControlDetailsHasBeenSet = true; m_sourceControlDetails = value; }
+
+    /**
+     * <p>The details for a source control configuration for a job, allowing
+     * synchronization of job artifacts to or from a remote repository.</p>
+     */
+    inline void SetSourceControlDetails(SourceControlDetails&& value) { m_sourceControlDetailsHasBeenSet = true; m_sourceControlDetails = std::move(value); }
+
+    /**
+     * <p>The details for a source control configuration for a job, allowing
+     * synchronization of job artifacts to or from a remote repository.</p>
+     */
+    inline CreateJobRequest& WithSourceControlDetails(const SourceControlDetails& value) { SetSourceControlDetails(value); return *this;}
+
+    /**
+     * <p>The details for a source control configuration for a job, allowing
+     * synchronization of job artifacts to or from a remote repository.</p>
+     */
+    inline CreateJobRequest& WithSourceControlDetails(SourceControlDetails&& value) { SetSourceControlDetails(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_name;
@@ -1339,6 +1377,9 @@ namespace Model
 
     ExecutionClass m_executionClass;
     bool m_executionClassHasBeenSet = false;
+
+    SourceControlDetails m_sourceControlDetails;
+    bool m_sourceControlDetailsHasBeenSet = false;
   };
 
 } // namespace Model

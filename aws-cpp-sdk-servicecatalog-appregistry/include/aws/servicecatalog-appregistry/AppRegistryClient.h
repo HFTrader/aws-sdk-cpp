@@ -7,6 +7,7 @@
 #include <aws/servicecatalog-appregistry/AppRegistry_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/servicecatalog-appregistry/AppRegistryServiceClientModel.h>
 
@@ -20,33 +21,60 @@ namespace AppRegistry
    * AppRegistry provides a repository of your applications, their resources, and the
    * application metadata that you use within your enterprise.</p>
    */
-  class AWS_APPREGISTRY_API AppRegistryClient : public Aws::Client::AWSJsonClient
+  class AWS_APPREGISTRY_API AppRegistryClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<AppRegistryClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        AppRegistryClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        AppRegistryClient(const Aws::AppRegistry::AppRegistryClientConfiguration& clientConfiguration = Aws::AppRegistry::AppRegistryClientConfiguration(),
+                          std::shared_ptr<AppRegistryEndpointProviderBase> endpointProvider = Aws::MakeShared<AppRegistryEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         AppRegistryClient(const Aws::Auth::AWSCredentials& credentials,
-                          const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                          std::shared_ptr<AppRegistryEndpointProviderBase> endpointProvider = Aws::MakeShared<AppRegistryEndpointProvider>(ALLOCATION_TAG),
+                          const Aws::AppRegistry::AppRegistryClientConfiguration& clientConfiguration = Aws::AppRegistry::AppRegistryClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         AppRegistryClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                          const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                          std::shared_ptr<AppRegistryEndpointProviderBase> endpointProvider = Aws::MakeShared<AppRegistryEndpointProvider>(ALLOCATION_TAG),
+                          const Aws::AppRegistry::AppRegistryClientConfiguration& clientConfiguration = Aws::AppRegistry::AppRegistryClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        AppRegistryClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        AppRegistryClient(const Aws::Auth::AWSCredentials& credentials,
+                          const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        AppRegistryClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                          const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~AppRegistryClient();
-
 
         /**
          * <p>Associates an attribute group with an application to augment the
@@ -260,6 +288,23 @@ namespace AppRegistry
         virtual void GetAttributeGroupAsync(const Model::GetAttributeGroupRequest& request, const GetAttributeGroupResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p> Retrieves a <code>TagKey</code> configuration from an account.
+         * </p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/AWS242AppRegistry-2020-06-24/GetConfiguration">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetConfigurationOutcome GetConfiguration() const;
+
+        /**
+         * A Callable wrapper for GetConfiguration that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetConfigurationOutcomeCallable GetConfigurationCallable() const;
+
+        /**
+         * An Async wrapper for GetConfiguration that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetConfigurationAsync(const GetConfigurationResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+        /**
          * <p>Retrieves a list of all of your applications. Results are
          * paginated.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/AWS242AppRegistry-2020-06-24/ListApplications">AWS
@@ -296,8 +341,12 @@ namespace AppRegistry
         virtual void ListAssociatedAttributeGroupsAsync(const Model::ListAssociatedAttributeGroupsRequest& request, const ListAssociatedAttributeGroupsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Lists all resources that are associated with specified application. Results
-         * are paginated.</p><p><h3>See Also:</h3>   <a
+         * <p> Lists all of the resources that are associated with the specified
+         * application. Results are paginated. </p>  <p> If you share an application,
+         * and a consumer account associates a tag query to the application, all of the
+         * users who can access the application can also view the tag values in all
+         * accounts that are associated with it using this API. </p> <p><h3>See
+         * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/AWS242AppRegistry-2020-06-24/ListAssociatedResources">AWS
          * API Reference</a></p>
          */
@@ -365,6 +414,24 @@ namespace AppRegistry
          * An Async wrapper for ListTagsForResource that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void ListTagsForResourceAsync(const Model::ListTagsForResourceRequest& request, const ListTagsForResourceResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p> Associates a <code>TagKey</code> configuration to an account. </p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/AWS242AppRegistry-2020-06-24/PutConfiguration">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::PutConfigurationOutcome PutConfiguration(const Model::PutConfigurationRequest& request) const;
+
+        /**
+         * A Callable wrapper for PutConfiguration that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::PutConfigurationOutcomeCallable PutConfigurationCallable(const Model::PutConfigurationRequest& request) const;
+
+        /**
+         * An Async wrapper for PutConfiguration that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void PutConfigurationAsync(const Model::PutConfigurationRequest& request, const PutConfigurationResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Syncs the resource with current AppRegistry records.</p> <p>Specifically, the
@@ -464,12 +531,14 @@ namespace AppRegistry
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<AppRegistryEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<AppRegistryClient>;
+      void init(const AppRegistryClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      AppRegistryClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<AppRegistryEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace AppRegistry

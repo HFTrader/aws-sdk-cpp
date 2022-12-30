@@ -7,10 +7,12 @@
 
 /* Generic header includes */
 #include <aws/iot/IoTErrors.h>
+#include <aws/core/client/GenericClientConfiguration.h>
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/client/AsyncCallerContext.h>
 #include <aws/core/http/HttpTypes.h>
+#include <aws/iot/IoTEndpointProvider.h>
 #include <future>
 #include <functional>
 /* End of generic header includes */
@@ -161,6 +163,7 @@
 #include <aws/iot/model/ListPrincipalThingsResult.h>
 #include <aws/iot/model/ListProvisioningTemplateVersionsResult.h>
 #include <aws/iot/model/ListProvisioningTemplatesResult.h>
+#include <aws/iot/model/ListRelatedResourcesForAuditFindingResult.h>
 #include <aws/iot/model/ListRoleAliasesResult.h>
 #include <aws/iot/model/ListScheduledAuditsResult.h>
 #include <aws/iot/model/ListSecurityProfilesResult.h>
@@ -256,6 +259,10 @@ namespace Aws
 
   namespace IoT
   {
+    using IoTClientConfiguration = Aws::Client::GenericClientConfiguration<false>;
+    using IoTEndpointProviderBase = Aws::IoT::Endpoint::IoTEndpointProviderBase;
+    using IoTEndpointProvider = Aws::IoT::Endpoint::IoTEndpointProvider;
+
     namespace Model
     {
       /* Service model forward declarations required in IoTClient header */
@@ -421,6 +428,7 @@ namespace Aws
       class ListPrincipalThingsRequest;
       class ListProvisioningTemplateVersionsRequest;
       class ListProvisioningTemplatesRequest;
+      class ListRelatedResourcesForAuditFindingRequest;
       class ListRoleAliasesRequest;
       class ListScheduledAuditsRequest;
       class ListSecurityProfilesRequest;
@@ -657,6 +665,7 @@ namespace Aws
       typedef Aws::Utils::Outcome<ListPrincipalThingsResult, IoTError> ListPrincipalThingsOutcome;
       typedef Aws::Utils::Outcome<ListProvisioningTemplateVersionsResult, IoTError> ListProvisioningTemplateVersionsOutcome;
       typedef Aws::Utils::Outcome<ListProvisioningTemplatesResult, IoTError> ListProvisioningTemplatesOutcome;
+      typedef Aws::Utils::Outcome<ListRelatedResourcesForAuditFindingResult, IoTError> ListRelatedResourcesForAuditFindingOutcome;
       typedef Aws::Utils::Outcome<ListRoleAliasesResult, IoTError> ListRoleAliasesOutcome;
       typedef Aws::Utils::Outcome<ListScheduledAuditsResult, IoTError> ListScheduledAuditsOutcome;
       typedef Aws::Utils::Outcome<ListSecurityProfilesResult, IoTError> ListSecurityProfilesOutcome;
@@ -893,6 +902,7 @@ namespace Aws
       typedef std::future<ListPrincipalThingsOutcome> ListPrincipalThingsOutcomeCallable;
       typedef std::future<ListProvisioningTemplateVersionsOutcome> ListProvisioningTemplateVersionsOutcomeCallable;
       typedef std::future<ListProvisioningTemplatesOutcome> ListProvisioningTemplatesOutcomeCallable;
+      typedef std::future<ListRelatedResourcesForAuditFindingOutcome> ListRelatedResourcesForAuditFindingOutcomeCallable;
       typedef std::future<ListRoleAliasesOutcome> ListRoleAliasesOutcomeCallable;
       typedef std::future<ListScheduledAuditsOutcome> ListScheduledAuditsOutcomeCallable;
       typedef std::future<ListSecurityProfilesOutcome> ListSecurityProfilesOutcomeCallable;
@@ -1132,6 +1142,7 @@ namespace Aws
     typedef std::function<void(const IoTClient*, const Model::ListPrincipalThingsRequest&, const Model::ListPrincipalThingsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > ListPrincipalThingsResponseReceivedHandler;
     typedef std::function<void(const IoTClient*, const Model::ListProvisioningTemplateVersionsRequest&, const Model::ListProvisioningTemplateVersionsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > ListProvisioningTemplateVersionsResponseReceivedHandler;
     typedef std::function<void(const IoTClient*, const Model::ListProvisioningTemplatesRequest&, const Model::ListProvisioningTemplatesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > ListProvisioningTemplatesResponseReceivedHandler;
+    typedef std::function<void(const IoTClient*, const Model::ListRelatedResourcesForAuditFindingRequest&, const Model::ListRelatedResourcesForAuditFindingOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > ListRelatedResourcesForAuditFindingResponseReceivedHandler;
     typedef std::function<void(const IoTClient*, const Model::ListRoleAliasesRequest&, const Model::ListRoleAliasesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > ListRoleAliasesResponseReceivedHandler;
     typedef std::function<void(const IoTClient*, const Model::ListScheduledAuditsRequest&, const Model::ListScheduledAuditsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > ListScheduledAuditsResponseReceivedHandler;
     typedef std::function<void(const IoTClient*, const Model::ListSecurityProfilesRequest&, const Model::ListSecurityProfilesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > ListSecurityProfilesResponseReceivedHandler;

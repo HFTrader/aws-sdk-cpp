@@ -7,6 +7,7 @@
 #include <aws/workdocs/WorkDocs_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/workdocs/WorkDocsServiceClientModel.h>
 
@@ -39,35 +40,69 @@ namespace WorkDocs
    * limited to, the ability to modify file permissions and upload any file to any
    * user. This allows developers to perform the three use cases above, as well as
    * give users the ability to grant access on a selective basis using the IAM
-   * model.</p>
+   * model.</p>  <p>The pricing for Amazon WorkDocs APIs varies depending on
+   * the API call type for these actions:</p> <ul> <li> <p> <code>READ (Get*)</code>
+   * </p> </li> <li> <p> <code>WRITE (Activate*, Add*, Create*, Deactivate*,
+   * Initiate*, Update*)</code> </p> </li> <li> <p> <code>LIST (Describe*)</code>
+   * </p> </li> <li> <p> <code>DELETE*, CANCEL</code> </p> </li> </ul> <p>For
+   * information about Amazon WorkDocs API pricing, see <a
+   * href="https://aws.amazon.com/workdocs/pricing/">Amazon WorkDocs Pricing</a>.</p>
+   * 
    */
-  class AWS_WORKDOCS_API WorkDocsClient : public Aws::Client::AWSJsonClient
+  class AWS_WORKDOCS_API WorkDocsClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<WorkDocsClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        WorkDocsClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        WorkDocsClient(const Aws::WorkDocs::WorkDocsClientConfiguration& clientConfiguration = Aws::WorkDocs::WorkDocsClientConfiguration(),
+                       std::shared_ptr<WorkDocsEndpointProviderBase> endpointProvider = Aws::MakeShared<WorkDocsEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         WorkDocsClient(const Aws::Auth::AWSCredentials& credentials,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<WorkDocsEndpointProviderBase> endpointProvider = Aws::MakeShared<WorkDocsEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::WorkDocs::WorkDocsClientConfiguration& clientConfiguration = Aws::WorkDocs::WorkDocsClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         WorkDocsClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<WorkDocsEndpointProviderBase> endpointProvider = Aws::MakeShared<WorkDocsEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::WorkDocs::WorkDocsClientConfiguration& clientConfiguration = Aws::WorkDocs::WorkDocsClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        WorkDocsClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        WorkDocsClient(const Aws::Auth::AWSCredentials& credentials,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        WorkDocsClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~WorkDocsClient();
-
 
         /**
          * <p>Aborts the upload of the specified document version that was previously
@@ -202,8 +237,8 @@ namespace WorkDocs
          * <p>Configure Amazon WorkDocs to use Amazon SNS notifications. The endpoint
          * receives a confirmation message, and must confirm the subscription.</p> <p>For
          * more information, see <a
-         * href="https://docs.aws.amazon.com/workdocs/latest/developerguide/subscribe-notifications.html">Subscribe
-         * to Notifications</a> in the <i>Amazon WorkDocs Developer
+         * href="https://docs.aws.amazon.com/workdocs/latest/developerguide/manage-notifications.html">Setting
+         * up notifications for an IAM user or role</a> in the <i>Amazon WorkDocs Developer
          * Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/workdocs-2016-05-01/CreateNotificationSubscription">AWS
          * API Reference</a></p>
@@ -310,6 +345,25 @@ namespace WorkDocs
          * An Async wrapper for DeleteDocument that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void DeleteDocumentAsync(const Model::DeleteDocumentRequest& request, const DeleteDocumentResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Deletes a version of an Amazon WorkDocs document. Use the
+         * <code>DeletePriorVersions</code> parameter to delete prior
+         * versions.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/workdocs-2016-05-01/DeleteDocumentVersion">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DeleteDocumentVersionOutcome DeleteDocumentVersion(const Model::DeleteDocumentVersionRequest& request) const;
+
+        /**
+         * A Callable wrapper for DeleteDocumentVersion that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DeleteDocumentVersionOutcomeCallable DeleteDocumentVersionCallable(const Model::DeleteDocumentVersionRequest& request) const;
+
+        /**
+         * An Async wrapper for DeleteDocumentVersion that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DeleteDocumentVersionAsync(const Model::DeleteDocumentVersionRequest& request, const DeleteDocumentVersionResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Permanently deletes the specified folder and its contents.</p><p><h3>See
@@ -771,6 +825,24 @@ namespace WorkDocs
         virtual void RemoveResourcePermissionAsync(const Model::RemoveResourcePermissionRequest& request, const RemoveResourcePermissionResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Recovers a deleted version of an Amazon WorkDocs document.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/workdocs-2016-05-01/RestoreDocumentVersions">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::RestoreDocumentVersionsOutcome RestoreDocumentVersions(const Model::RestoreDocumentVersionsRequest& request) const;
+
+        /**
+         * A Callable wrapper for RestoreDocumentVersions that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::RestoreDocumentVersionsOutcomeCallable RestoreDocumentVersionsCallable(const Model::RestoreDocumentVersionsRequest& request) const;
+
+        /**
+         * An Async wrapper for RestoreDocumentVersions that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void RestoreDocumentVersionsAsync(const Model::RestoreDocumentVersionsRequest& request, const RestoreDocumentVersionsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Updates the specified attributes of a document. The user must have access to
          * both the document and its parent folder, if applicable.</p><p><h3>See Also:</h3>
          * <a
@@ -849,12 +921,14 @@ namespace WorkDocs
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<WorkDocsEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<WorkDocsClient>;
+      void init(const WorkDocsClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      WorkDocsClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<WorkDocsEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace WorkDocs

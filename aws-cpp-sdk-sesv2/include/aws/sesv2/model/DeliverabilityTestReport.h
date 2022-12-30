@@ -31,13 +31,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/DeliverabilityTestReport">AWS
    * API Reference</a></p>
    */
-  class AWS_SESV2_API DeliverabilityTestReport
+  class DeliverabilityTestReport
   {
   public:
-    DeliverabilityTestReport();
-    DeliverabilityTestReport(Aws::Utils::Json::JsonView jsonValue);
-    DeliverabilityTestReport& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_SESV2_API DeliverabilityTestReport();
+    AWS_SESV2_API DeliverabilityTestReport(Aws::Utils::Json::JsonView jsonValue);
+    AWS_SESV2_API DeliverabilityTestReport& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_SESV2_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -221,38 +221,32 @@ namespace Model
 
 
     /**
-     * <p>The date and time when the predictive inbox placement test was created, in
-     * Unix time format.</p>
+     * <p>The date and time when the predictive inbox placement test was created.</p>
      */
     inline const Aws::Utils::DateTime& GetCreateDate() const{ return m_createDate; }
 
     /**
-     * <p>The date and time when the predictive inbox placement test was created, in
-     * Unix time format.</p>
+     * <p>The date and time when the predictive inbox placement test was created.</p>
      */
     inline bool CreateDateHasBeenSet() const { return m_createDateHasBeenSet; }
 
     /**
-     * <p>The date and time when the predictive inbox placement test was created, in
-     * Unix time format.</p>
+     * <p>The date and time when the predictive inbox placement test was created.</p>
      */
     inline void SetCreateDate(const Aws::Utils::DateTime& value) { m_createDateHasBeenSet = true; m_createDate = value; }
 
     /**
-     * <p>The date and time when the predictive inbox placement test was created, in
-     * Unix time format.</p>
+     * <p>The date and time when the predictive inbox placement test was created.</p>
      */
     inline void SetCreateDate(Aws::Utils::DateTime&& value) { m_createDateHasBeenSet = true; m_createDate = std::move(value); }
 
     /**
-     * <p>The date and time when the predictive inbox placement test was created, in
-     * Unix time format.</p>
+     * <p>The date and time when the predictive inbox placement test was created.</p>
      */
     inline DeliverabilityTestReport& WithCreateDate(const Aws::Utils::DateTime& value) { SetCreateDate(value); return *this;}
 
     /**
-     * <p>The date and time when the predictive inbox placement test was created, in
-     * Unix time format.</p>
+     * <p>The date and time when the predictive inbox placement test was created.</p>
      */
     inline DeliverabilityTestReport& WithCreateDate(Aws::Utils::DateTime&& value) { SetCreateDate(std::move(value)); return *this;}
 

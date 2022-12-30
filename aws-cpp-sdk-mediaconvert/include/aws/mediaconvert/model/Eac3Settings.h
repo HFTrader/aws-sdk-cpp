@@ -42,13 +42,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/Eac3Settings">AWS
    * API Reference</a></p>
    */
-  class AWS_MEDIACONVERT_API Eac3Settings
+  class Eac3Settings
   {
   public:
-    Eac3Settings();
-    Eac3Settings(Aws::Utils::Json::JsonView jsonValue);
-    Eac3Settings& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_MEDIACONVERT_API Eac3Settings();
+    AWS_MEDIACONVERT_API Eac3Settings(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEDIACONVERT_API Eac3Settings& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEDIACONVERT_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -89,26 +89,46 @@ namespace Model
 
 
     /**
-     * Specify the average bitrate in bits per second. Valid bitrates depend on the
-     * coding mode.
+     * Specify the average bitrate in bits per second. The bitrate that you specify
+     * must be a multiple of 8000 within the allowed minimum and maximum values.  Leave
+     * blank to use the default bitrate for the coding mode you select according ETSI
+     * TS 102 366. Valid bitrates for coding mode 1/0: Default: 96000. Minimum: 32000.
+     * Maximum: 3024000. Valid bitrates for coding mode 2/0: Default: 192000. Minimum:
+     * 96000. Maximum: 3024000. Valid bitrates for coding mode 3/2: Default: 384000.
+     * Minimum: 192000. Maximum: 3024000.
      */
     inline int GetBitrate() const{ return m_bitrate; }
 
     /**
-     * Specify the average bitrate in bits per second. Valid bitrates depend on the
-     * coding mode.
+     * Specify the average bitrate in bits per second. The bitrate that you specify
+     * must be a multiple of 8000 within the allowed minimum and maximum values.  Leave
+     * blank to use the default bitrate for the coding mode you select according ETSI
+     * TS 102 366. Valid bitrates for coding mode 1/0: Default: 96000. Minimum: 32000.
+     * Maximum: 3024000. Valid bitrates for coding mode 2/0: Default: 192000. Minimum:
+     * 96000. Maximum: 3024000. Valid bitrates for coding mode 3/2: Default: 384000.
+     * Minimum: 192000. Maximum: 3024000.
      */
     inline bool BitrateHasBeenSet() const { return m_bitrateHasBeenSet; }
 
     /**
-     * Specify the average bitrate in bits per second. Valid bitrates depend on the
-     * coding mode.
+     * Specify the average bitrate in bits per second. The bitrate that you specify
+     * must be a multiple of 8000 within the allowed minimum and maximum values.  Leave
+     * blank to use the default bitrate for the coding mode you select according ETSI
+     * TS 102 366. Valid bitrates for coding mode 1/0: Default: 96000. Minimum: 32000.
+     * Maximum: 3024000. Valid bitrates for coding mode 2/0: Default: 192000. Minimum:
+     * 96000. Maximum: 3024000. Valid bitrates for coding mode 3/2: Default: 384000.
+     * Minimum: 192000. Maximum: 3024000.
      */
     inline void SetBitrate(int value) { m_bitrateHasBeenSet = true; m_bitrate = value; }
 
     /**
-     * Specify the average bitrate in bits per second. Valid bitrates depend on the
-     * coding mode.
+     * Specify the average bitrate in bits per second. The bitrate that you specify
+     * must be a multiple of 8000 within the allowed minimum and maximum values.  Leave
+     * blank to use the default bitrate for the coding mode you select according ETSI
+     * TS 102 366. Valid bitrates for coding mode 1/0: Default: 96000. Minimum: 32000.
+     * Maximum: 3024000. Valid bitrates for coding mode 2/0: Default: 192000. Minimum:
+     * 96000. Maximum: 3024000. Valid bitrates for coding mode 3/2: Default: 384000.
+     * Minimum: 192000. Maximum: 3024000.
      */
     inline Eac3Settings& WithBitrate(int value) { SetBitrate(value); return *this;}
 

@@ -26,18 +26,17 @@ namespace Model
 {
 
   /**
-   * <p>This response includes only the "property" : "type" property.</p><p><h3>See
-   * Also:</h3>   <a
+   * <p>The output item response.</p><p><h3>See Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/mediatailor-2018-04-23/ResponseOutputItem">AWS
    * API Reference</a></p>
    */
-  class AWS_MEDIATAILOR_API ResponseOutputItem
+  class ResponseOutputItem
   {
   public:
-    ResponseOutputItem();
-    ResponseOutputItem(Aws::Utils::Json::JsonView jsonValue);
-    ResponseOutputItem& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_MEDIATAILOR_API ResponseOutputItem();
+    AWS_MEDIATAILOR_API ResponseOutputItem(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEDIATAILOR_API ResponseOutputItem& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_MEDIATAILOR_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**

@@ -7,6 +7,7 @@
 #include <aws/route53-recovery-control-config/Route53RecoveryControlConfig_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/route53-recovery-control-config/Route53RecoveryControlConfigServiceClientModel.h>
 
@@ -18,33 +19,60 @@ namespace Route53RecoveryControlConfig
    * <p>Recovery Control Configuration API Reference for Amazon Route 53 Application
    * Recovery Controller</p>
    */
-  class AWS_ROUTE53RECOVERYCONTROLCONFIG_API Route53RecoveryControlConfigClient : public Aws::Client::AWSJsonClient
+  class AWS_ROUTE53RECOVERYCONTROLCONFIG_API Route53RecoveryControlConfigClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<Route53RecoveryControlConfigClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        Route53RecoveryControlConfigClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        Route53RecoveryControlConfigClient(const Aws::Route53RecoveryControlConfig::Route53RecoveryControlConfigClientConfiguration& clientConfiguration = Aws::Route53RecoveryControlConfig::Route53RecoveryControlConfigClientConfiguration(),
+                                           std::shared_ptr<Route53RecoveryControlConfigEndpointProviderBase> endpointProvider = Aws::MakeShared<Route53RecoveryControlConfigEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         Route53RecoveryControlConfigClient(const Aws::Auth::AWSCredentials& credentials,
-                                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                           std::shared_ptr<Route53RecoveryControlConfigEndpointProviderBase> endpointProvider = Aws::MakeShared<Route53RecoveryControlConfigEndpointProvider>(ALLOCATION_TAG),
+                                           const Aws::Route53RecoveryControlConfig::Route53RecoveryControlConfigClientConfiguration& clientConfiguration = Aws::Route53RecoveryControlConfig::Route53RecoveryControlConfigClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         Route53RecoveryControlConfigClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                           std::shared_ptr<Route53RecoveryControlConfigEndpointProviderBase> endpointProvider = Aws::MakeShared<Route53RecoveryControlConfigEndpointProvider>(ALLOCATION_TAG),
+                                           const Aws::Route53RecoveryControlConfig::Route53RecoveryControlConfigClientConfiguration& clientConfiguration = Aws::Route53RecoveryControlConfig::Route53RecoveryControlConfigClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        Route53RecoveryControlConfigClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        Route53RecoveryControlConfigClient(const Aws::Auth::AWSCredentials& credentials,
+                                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        Route53RecoveryControlConfigClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~Route53RecoveryControlConfigClient();
-
 
         /**
          * <p>Create a new cluster. A cluster is a set of redundant Regional endpoints
@@ -119,7 +147,7 @@ namespace Route53RecoveryControlConfig
          * safety rules: assertion rules and gating rules.</p> <p>Assertion rule: An
          * assertion rule enforces that, when you change a routing control state, that a
          * certain criteria is met. For example, the criteria might be that at least one
-         * routing control state is On after the transation so that traffic continues to
+         * routing control state is On after the transaction so that traffic continues to
          * flow to at least one cell for the application. This ensures that you avoid a
          * fail-open scenario.</p> <p>Gating rule: A gating rule lets you configure a
          * gating routing control as an overall "on/off" switch for a group of routing
@@ -490,12 +518,14 @@ namespace Route53RecoveryControlConfig
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<Route53RecoveryControlConfigEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<Route53RecoveryControlConfigClient>;
+      void init(const Route53RecoveryControlConfigClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      Route53RecoveryControlConfigClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<Route53RecoveryControlConfigEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Route53RecoveryControlConfig

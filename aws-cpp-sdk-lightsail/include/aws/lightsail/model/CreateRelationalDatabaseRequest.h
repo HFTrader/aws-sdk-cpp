@@ -20,10 +20,10 @@ namespace Model
 
   /**
    */
-  class AWS_LIGHTSAIL_API CreateRelationalDatabaseRequest : public LightsailRequest
+  class CreateRelationalDatabaseRequest : public LightsailRequest
   {
   public:
-    CreateRelationalDatabaseRequest();
+    AWS_LIGHTSAIL_API CreateRelationalDatabaseRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -31,9 +31,9 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "CreateRelationalDatabase"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_LIGHTSAIL_API Aws::String SerializePayload() const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_LIGHTSAIL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 
     /**
@@ -850,7 +850,7 @@ namespace Model
      * more information about the preferred backup window time blocks for each region,
      * see the <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupWindow">Working
-     * With Backups</a> guide in the Amazon Relational Database Service (Amazon RDS)
+     * With Backups</a> guide in the Amazon Relational Database Service
      * documentation.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the
      * <code>hh24:mi-hh24:mi</code> format.</p> <p>Example: <code>16:00-16:30</code>
      * </p> </li> <li> <p>Specified in Coordinated Universal Time (UTC).</p> </li> <li>
@@ -866,7 +866,7 @@ namespace Model
      * more information about the preferred backup window time blocks for each region,
      * see the <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupWindow">Working
-     * With Backups</a> guide in the Amazon Relational Database Service (Amazon RDS)
+     * With Backups</a> guide in the Amazon Relational Database Service
      * documentation.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the
      * <code>hh24:mi-hh24:mi</code> format.</p> <p>Example: <code>16:00-16:30</code>
      * </p> </li> <li> <p>Specified in Coordinated Universal Time (UTC).</p> </li> <li>
@@ -882,7 +882,7 @@ namespace Model
      * more information about the preferred backup window time blocks for each region,
      * see the <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupWindow">Working
-     * With Backups</a> guide in the Amazon Relational Database Service (Amazon RDS)
+     * With Backups</a> guide in the Amazon Relational Database Service
      * documentation.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the
      * <code>hh24:mi-hh24:mi</code> format.</p> <p>Example: <code>16:00-16:30</code>
      * </p> </li> <li> <p>Specified in Coordinated Universal Time (UTC).</p> </li> <li>
@@ -898,7 +898,7 @@ namespace Model
      * more information about the preferred backup window time blocks for each region,
      * see the <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupWindow">Working
-     * With Backups</a> guide in the Amazon Relational Database Service (Amazon RDS)
+     * With Backups</a> guide in the Amazon Relational Database Service
      * documentation.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the
      * <code>hh24:mi-hh24:mi</code> format.</p> <p>Example: <code>16:00-16:30</code>
      * </p> </li> <li> <p>Specified in Coordinated Universal Time (UTC).</p> </li> <li>
@@ -914,7 +914,7 @@ namespace Model
      * more information about the preferred backup window time blocks for each region,
      * see the <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupWindow">Working
-     * With Backups</a> guide in the Amazon Relational Database Service (Amazon RDS)
+     * With Backups</a> guide in the Amazon Relational Database Service
      * documentation.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the
      * <code>hh24:mi-hh24:mi</code> format.</p> <p>Example: <code>16:00-16:30</code>
      * </p> </li> <li> <p>Specified in Coordinated Universal Time (UTC).</p> </li> <li>
@@ -930,7 +930,7 @@ namespace Model
      * more information about the preferred backup window time blocks for each region,
      * see the <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupWindow">Working
-     * With Backups</a> guide in the Amazon Relational Database Service (Amazon RDS)
+     * With Backups</a> guide in the Amazon Relational Database Service
      * documentation.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the
      * <code>hh24:mi-hh24:mi</code> format.</p> <p>Example: <code>16:00-16:30</code>
      * </p> </li> <li> <p>Specified in Coordinated Universal Time (UTC).</p> </li> <li>
@@ -946,7 +946,7 @@ namespace Model
      * more information about the preferred backup window time blocks for each region,
      * see the <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupWindow">Working
-     * With Backups</a> guide in the Amazon Relational Database Service (Amazon RDS)
+     * With Backups</a> guide in the Amazon Relational Database Service
      * documentation.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the
      * <code>hh24:mi-hh24:mi</code> format.</p> <p>Example: <code>16:00-16:30</code>
      * </p> </li> <li> <p>Specified in Coordinated Universal Time (UTC).</p> </li> <li>
@@ -962,7 +962,7 @@ namespace Model
      * more information about the preferred backup window time blocks for each region,
      * see the <a
      * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupWindow">Working
-     * With Backups</a> guide in the Amazon Relational Database Service (Amazon RDS)
+     * With Backups</a> guide in the Amazon Relational Database Service
      * documentation.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the
      * <code>hh24:mi-hh24:mi</code> format.</p> <p>Example: <code>16:00-16:30</code>
      * </p> </li> <li> <p>Specified in Coordinated Universal Time (UTC).</p> </li> <li>

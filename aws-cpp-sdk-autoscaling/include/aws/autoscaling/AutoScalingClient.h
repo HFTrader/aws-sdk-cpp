@@ -8,6 +8,7 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/AmazonSerializableWebServiceRequest.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/autoscaling/AutoScalingServiceClientModel.h>
 
@@ -25,31 +26,59 @@ namespace AutoScaling
    * href="https://docs.aws.amazon.com/autoscaling/ec2/APIReference/Welcome.html">Amazon
    * EC2 Auto Scaling API Reference</a>.</p>
    */
-  class AWS_AUTOSCALING_API AutoScalingClient : public Aws::Client::AWSXMLClient
+  class AWS_AUTOSCALING_API AutoScalingClient : public Aws::Client::AWSXMLClient, public Aws::Client::ClientWithAsyncTemplateMethods<AutoScalingClient>
   {
     public:
       typedef Aws::Client::AWSXMLClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        AutoScalingClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        AutoScalingClient(const Aws::AutoScaling::AutoScalingClientConfiguration& clientConfiguration = Aws::AutoScaling::AutoScalingClientConfiguration(),
+                          std::shared_ptr<AutoScalingEndpointProviderBase> endpointProvider = Aws::MakeShared<AutoScalingEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         AutoScalingClient(const Aws::Auth::AWSCredentials& credentials,
-                          const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                          std::shared_ptr<AutoScalingEndpointProviderBase> endpointProvider = Aws::MakeShared<AutoScalingEndpointProvider>(ALLOCATION_TAG),
+                          const Aws::AutoScaling::AutoScalingClientConfiguration& clientConfiguration = Aws::AutoScaling::AutoScalingClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         AutoScalingClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                          const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                          std::shared_ptr<AutoScalingEndpointProviderBase> endpointProvider = Aws::MakeShared<AutoScalingEndpointProvider>(ALLOCATION_TAG),
+                          const Aws::AutoScaling::AutoScalingClientConfiguration& clientConfiguration = Aws::AutoScaling::AutoScalingClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        AutoScalingClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        AutoScalingClient(const Aws::Auth::AWSCredentials& credentials,
+                          const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        AutoScalingClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                          const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~AutoScalingClient();
 
 
@@ -148,6 +177,30 @@ namespace AutoScaling
          * An Async wrapper for AttachLoadBalancers that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void AttachLoadBalancersAsync(const Model::AttachLoadBalancersRequest& request, const AttachLoadBalancersResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p> <b>Reserved for use with Amazon VPC Lattice, which is in preview and subject
+         * to change. Do not use this API for production workloads. This API is also
+         * subject to change.</b> </p> <p>Attaches one or more traffic sources to the
+         * specified Auto Scaling group.</p> <p>To describe the traffic sources for an Auto
+         * Scaling group, call the <a>DescribeTrafficSources</a> API. To detach a traffic
+         * source from the Auto Scaling group, call the <a>DetachTrafficSources</a>
+         * API.</p> <p>This operation is additive and does not detach existing traffic
+         * sources from the Auto Scaling group.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/AttachTrafficSources">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::AttachTrafficSourcesOutcome AttachTrafficSources(const Model::AttachTrafficSourcesRequest& request) const;
+
+        /**
+         * A Callable wrapper for AttachTrafficSources that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::AttachTrafficSourcesOutcomeCallable AttachTrafficSourcesCallable(const Model::AttachTrafficSourcesRequest& request) const;
+
+        /**
+         * An Async wrapper for AttachTrafficSources that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void AttachTrafficSourcesAsync(const Model::AttachTrafficSourcesRequest& request, const AttachTrafficSourcesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Deletes one or more scheduled actions for the specified Auto Scaling
@@ -292,8 +345,15 @@ namespace AutoScaling
          * for Amazon EC2 Auto Scaling</a> in the <i>Amazon EC2 Auto Scaling User
          * Guide</i>.</p> <p>For more information, see <a
          * href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/LaunchConfiguration.html">Launch
-         * configurations</a> in the <i>Amazon EC2 Auto Scaling User
-         * Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * configurations</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p> 
+         * <p>Amazon EC2 Auto Scaling configures instances launched as part of an Auto
+         * Scaling group using either a launch template or a launch configuration. We
+         * strongly recommend that you do not use launch configurations. They do not
+         * provide full functionality for Amazon EC2 Auto Scaling or Amazon EC2. For
+         * information about using launch templates, see <a
+         * href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/launch-templates.html">Launch
+         * templates</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>
+         * <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/CreateLaunchConfiguration">AWS
          * API Reference</a></p>
          */
@@ -335,15 +395,21 @@ namespace AutoScaling
         /**
          * <p>Deletes the specified Auto Scaling group.</p> <p>If the group has instances
          * or scaling activities in progress, you must specify the option to force the
-         * deletion in order for it to succeed.</p> <p>If the group has policies, deleting
-         * the group deletes the policies, the underlying alarm actions, and any alarm that
-         * no longer has an associated action.</p> <p>To remove instances from the Auto
+         * deletion in order for it to succeed. The force delete operation will also
+         * terminate the EC2 instances. If the group has a warm pool, the force delete
+         * option also deletes the warm pool.</p> <p>To remove instances from the Auto
          * Scaling group before deleting it, call the <a>DetachInstances</a> API with the
          * list of instances and the option to decrement the desired capacity. This ensures
          * that Amazon EC2 Auto Scaling does not launch replacement instances.</p> <p>To
          * terminate all instances before deleting the Auto Scaling group, call the
          * <a>UpdateAutoScalingGroup</a> API and set the minimum size and desired capacity
-         * of the Auto Scaling group to zero.</p><p><h3>See Also:</h3>   <a
+         * of the Auto Scaling group to zero.</p> <p>If the group has scaling policies,
+         * deleting the group deletes the policies, the underlying alarm actions, and any
+         * alarm that no longer has an associated action.</p> <p>For more information, see
+         * <a
+         * href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-process-shutdown.html">Delete
+         * your Auto Scaling infrastructure</a> in the <i>Amazon EC2 Auto Scaling User
+         * Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/DeleteAutoScalingGroup">AWS
          * API Reference</a></p>
          */
@@ -716,8 +782,11 @@ namespace AutoScaling
          * User Guide</i>. For more information, see <a
          * href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-load-balancer.html">Use
          * Elastic Load Balancing to distribute traffic across the instances in your Auto
-         * Scaling group</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.
-         * </p><p><h3>See Also:</h3>   <a
+         * Scaling group</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>. </p> 
+         * <p>You can use this operation to describe target groups that were attached by
+         * using <a>AttachLoadBalancerTargetGroups</a>, but not for target groups that were
+         * attached by using <a>AttachTrafficSources</a>.</p> <p><h3>See Also:</h3> 
+         * <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/DescribeLoadBalancerTargetGroups">AWS
          * API Reference</a></p>
          */
@@ -946,6 +1015,26 @@ namespace AutoScaling
         virtual void DescribeTerminationPolicyTypesAsync(const Model::DescribeTerminationPolicyTypesRequest& request, const DescribeTerminationPolicyTypesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p> <b>Reserved for use with Amazon VPC Lattice, which is in preview and subject
+         * to change. Do not use this API for production workloads. This API is also
+         * subject to change.</b> </p> <p>Gets information about the traffic sources for
+         * the specified Auto Scaling group.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/DescribeTrafficSources">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeTrafficSourcesOutcome DescribeTrafficSources(const Model::DescribeTrafficSourcesRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeTrafficSources that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeTrafficSourcesOutcomeCallable DescribeTrafficSourcesCallable(const Model::DescribeTrafficSourcesRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeTrafficSources that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeTrafficSourcesAsync(const Model::DescribeTrafficSourcesRequest& request, const DescribeTrafficSourcesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Gets information about a warm pool and its instances.</p> <p>For more
          * information, see <a
          * href="https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-warm-pools.html">Warm
@@ -999,7 +1088,10 @@ namespace AutoScaling
          * while deregistering the instances in the group. When all instances are
          * deregistered, then you can no longer describe the target group using the
          * <a>DescribeLoadBalancerTargetGroups</a> API call. The instances remain
-         * running.</p><p><h3>See Also:</h3>   <a
+         * running.</p>  <p>You can use this operation to detach target groups that
+         * were attached by using <a>AttachLoadBalancerTargetGroups</a>, but not for target
+         * groups that were attached by using <a>AttachTrafficSources</a>.</p>
+         * <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/DetachLoadBalancerTargetGroups">AWS
          * API Reference</a></p>
          */
@@ -1039,6 +1131,26 @@ namespace AutoScaling
          * An Async wrapper for DetachLoadBalancers that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void DetachLoadBalancersAsync(const Model::DetachLoadBalancersRequest& request, const DetachLoadBalancersResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p> <b>Reserved for use with Amazon VPC Lattice, which is in preview and subject
+         * to change. Do not use this API for production workloads. This API is also
+         * subject to change.</b> </p> <p>Detaches one or more traffic sources from the
+         * specified Auto Scaling group.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/DetachTrafficSources">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DetachTrafficSourcesOutcome DetachTrafficSources(const Model::DetachTrafficSourcesRequest& request) const;
+
+        /**
+         * A Callable wrapper for DetachTrafficSources that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DetachTrafficSourcesOutcomeCallable DetachTrafficSourcesCallable(const Model::DetachTrafficSourcesRequest& request) const;
+
+        /**
+         * An Async wrapper for DetachTrafficSources that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DetachTrafficSourcesAsync(const Model::DetachTrafficSourcesRequest& request, const DetachTrafficSourcesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Disables group metrics collection for the specified Auto Scaling
@@ -1600,12 +1712,14 @@ namespace AutoScaling
 
 
         void OverrideEndpoint(const Aws::String& endpoint);
+        std::shared_ptr<AutoScalingEndpointProviderBase>& accessEndpointProvider();
   private:
-        void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+        friend class Aws::Client::ClientWithAsyncTemplateMethods<AutoScalingClient>;
+        void init(const AutoScalingClientConfiguration& clientConfiguration);
 
-        Aws::String m_uri;
-        Aws::String m_configScheme;
+        AutoScalingClientConfiguration m_clientConfiguration;
         std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+        std::shared_ptr<AutoScalingEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace AutoScaling

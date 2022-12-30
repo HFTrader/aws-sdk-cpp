@@ -8,6 +8,7 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/AmazonSerializableWebServiceRequest.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/iam/IAMServiceClientModel.h>
 
@@ -26,31 +27,59 @@ namespace IAM
    * href="https://docs.aws.amazon.com/IAM/latest/UserGuide/">Identity and Access
    * Management User Guide</a>.</p>
    */
-  class AWS_IAM_API IAMClient : public Aws::Client::AWSXMLClient
+  class AWS_IAM_API IAMClient : public Aws::Client::AWSXMLClient, public Aws::Client::ClientWithAsyncTemplateMethods<IAMClient>
   {
     public:
       typedef Aws::Client::AWSXMLClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        IAMClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        IAMClient(const Aws::IAM::IAMClientConfiguration& clientConfiguration = Aws::IAM::IAMClientConfiguration(),
+                  std::shared_ptr<IAMEndpointProviderBase> endpointProvider = Aws::MakeShared<IAMEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         IAMClient(const Aws::Auth::AWSCredentials& credentials,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<IAMEndpointProviderBase> endpointProvider = Aws::MakeShared<IAMEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::IAM::IAMClientConfiguration& clientConfiguration = Aws::IAM::IAMClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         IAMClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<IAMEndpointProviderBase> endpointProvider = Aws::MakeShared<IAMEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::IAM::IAMClientConfiguration& clientConfiguration = Aws::IAM::IAMClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IAMClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IAMClient(const Aws::Auth::AWSCredentials& credentials,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        IAMClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~IAMClient();
 
 
@@ -777,18 +806,18 @@ namespace IAM
         virtual void DeleteInstanceProfileAsync(const Model::DeleteInstanceProfileRequest& request, const DeleteInstanceProfileResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Deletes the password for the specified IAM user, which terminates the user's
-         * ability to access Amazon Web Services services through the Amazon Web Services
-         * Management Console.</p> <p>You can use the CLI, the Amazon Web Services API, or
-         * the <b>Users</b> page in the IAM console to delete a password for any IAM user.
-         * You can use <a>ChangePassword</a> to update, but not delete, your own password
-         * in the <b>My Security Credentials</b> page in the Amazon Web Services Management
-         * Console.</p>  <p> Deleting a user's password does not prevent a user
-         * from accessing Amazon Web Services through the command line interface or the
-         * API. To prevent all user access, you must also either make any access keys
-         * inactive or delete them. For more information about making keys inactive or
-         * deleting them, see <a>UpdateAccessKey</a> and <a>DeleteAccessKey</a>. </p>
-         * <p><h3>See Also:</h3>   <a
+         * <p>Deletes the password for the specified IAM user, For more information, see <a
+         * href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_admin-change-user.html">Managing
+         * passwords for IAM users</a>.</p> <p>You can use the CLI, the Amazon Web Services
+         * API, or the <b>Users</b> page in the IAM console to delete a password for any
+         * IAM user. You can use <a>ChangePassword</a> to update, but not delete, your own
+         * password in the <b>My Security Credentials</b> page in the Amazon Web Services
+         * Management Console.</p>  <p>Deleting a user's password does not
+         * prevent a user from accessing Amazon Web Services through the command line
+         * interface or the API. To prevent all user access, you must also either make any
+         * access keys inactive or delete them. For more information about making keys
+         * inactive or deleting them, see <a>UpdateAccessKey</a> and
+         * <a>DeleteAccessKey</a>.</p> <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/iam-2010-05-08/DeleteLoginProfile">AWS
          * API Reference</a></p>
          */
@@ -4389,12 +4418,14 @@ namespace IAM
 
 
         void OverrideEndpoint(const Aws::String& endpoint);
+        std::shared_ptr<IAMEndpointProviderBase>& accessEndpointProvider();
   private:
-        void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+        friend class Aws::Client::ClientWithAsyncTemplateMethods<IAMClient>;
+        void init(const IAMClientConfiguration& clientConfiguration);
 
-        Aws::String m_uri;
-        Aws::String m_configScheme;
+        IAMClientConfiguration m_clientConfiguration;
         std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+        std::shared_ptr<IAMEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace IAM

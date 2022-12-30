@@ -13,6 +13,7 @@
 #include <aws/core/utils/DateTime.h>
 #include <aws/cloudformation/model/DeploymentTargets.h>
 #include <aws/cloudformation/model/StackSetDriftDetectionDetails.h>
+#include <aws/cloudformation/model/StackSetOperationStatusDetails.h>
 #include <utility>
 
 namespace Aws
@@ -35,15 +36,15 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/cloudformation-2010-05-15/StackSetOperation">AWS
    * API Reference</a></p>
    */
-  class AWS_CLOUDFORMATION_API StackSetOperation
+  class StackSetOperation
   {
   public:
-    StackSetOperation();
-    StackSetOperation(const Aws::Utils::Xml::XmlNode& xmlNode);
-    StackSetOperation& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_CLOUDFORMATION_API StackSetOperation();
+    AWS_CLOUDFORMATION_API StackSetOperation(const Aws::Utils::Xml::XmlNode& xmlNode);
+    AWS_CLOUDFORMATION_API StackSetOperation& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
 
-    void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    void OutputToStream(Aws::OStream& oStream, const char* location) const;
+    AWS_CLOUDFORMATION_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+    AWS_CLOUDFORMATION_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
 
 
     /**
@@ -768,6 +769,37 @@ namespace Model
      */
     inline StackSetOperation& WithStatusReason(const char* value) { SetStatusReason(value); return *this;}
 
+
+    /**
+     * <p>Detailed information about the StackSet operation.</p>
+     */
+    inline const StackSetOperationStatusDetails& GetStatusDetails() const{ return m_statusDetails; }
+
+    /**
+     * <p>Detailed information about the StackSet operation.</p>
+     */
+    inline bool StatusDetailsHasBeenSet() const { return m_statusDetailsHasBeenSet; }
+
+    /**
+     * <p>Detailed information about the StackSet operation.</p>
+     */
+    inline void SetStatusDetails(const StackSetOperationStatusDetails& value) { m_statusDetailsHasBeenSet = true; m_statusDetails = value; }
+
+    /**
+     * <p>Detailed information about the StackSet operation.</p>
+     */
+    inline void SetStatusDetails(StackSetOperationStatusDetails&& value) { m_statusDetailsHasBeenSet = true; m_statusDetails = std::move(value); }
+
+    /**
+     * <p>Detailed information about the StackSet operation.</p>
+     */
+    inline StackSetOperation& WithStatusDetails(const StackSetOperationStatusDetails& value) { SetStatusDetails(value); return *this;}
+
+    /**
+     * <p>Detailed information about the StackSet operation.</p>
+     */
+    inline StackSetOperation& WithStatusDetails(StackSetOperationStatusDetails&& value) { SetStatusDetails(std::move(value)); return *this;}
+
   private:
 
     Aws::String m_operationId;
@@ -808,6 +840,9 @@ namespace Model
 
     Aws::String m_statusReason;
     bool m_statusReasonHasBeenSet = false;
+
+    StackSetOperationStatusDetails m_statusDetails;
+    bool m_statusDetailsHasBeenSet = false;
   };
 
 } // namespace Model

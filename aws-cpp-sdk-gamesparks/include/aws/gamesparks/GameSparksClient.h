@@ -7,6 +7,7 @@
 #include <aws/gamesparks/GameSparks_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/gamesparks/GameSparksServiceClientModel.h>
 
@@ -17,33 +18,60 @@ namespace GameSparks
   /**
    * <p/>
    */
-  class AWS_GAMESPARKS_API GameSparksClient : public Aws::Client::AWSJsonClient
+  class AWS_GAMESPARKS_API GameSparksClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<GameSparksClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        GameSparksClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        GameSparksClient(const Aws::GameSparks::GameSparksClientConfiguration& clientConfiguration = Aws::GameSparks::GameSparksClientConfiguration(),
+                         std::shared_ptr<GameSparksEndpointProviderBase> endpointProvider = Aws::MakeShared<GameSparksEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         GameSparksClient(const Aws::Auth::AWSCredentials& credentials,
-                         const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                         std::shared_ptr<GameSparksEndpointProviderBase> endpointProvider = Aws::MakeShared<GameSparksEndpointProvider>(ALLOCATION_TAG),
+                         const Aws::GameSparks::GameSparksClientConfiguration& clientConfiguration = Aws::GameSparks::GameSparksClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         GameSparksClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                         const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                         std::shared_ptr<GameSparksEndpointProviderBase> endpointProvider = Aws::MakeShared<GameSparksEndpointProvider>(ALLOCATION_TAG),
+                         const Aws::GameSparks::GameSparksClientConfiguration& clientConfiguration = Aws::GameSparks::GameSparksClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GameSparksClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GameSparksClient(const Aws::Auth::AWSCredentials& credentials,
+                         const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        GameSparksClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                         const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~GameSparksClient();
-
 
         /**
          * <p> Creates a new game with an empty configuration. After creating your game,
@@ -642,12 +670,14 @@ namespace GameSparks
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<GameSparksEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<GameSparksClient>;
+      void init(const GameSparksClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      GameSparksClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<GameSparksEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace GameSparks

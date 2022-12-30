@@ -22,18 +22,18 @@ namespace Model
 {
 
   /**
-   * <p>An object representing the array properties of a job.</p><p><h3>See
+   * <p>An object that represents the array properties of a job.</p><p><h3>See
    * Also:</h3>   <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ArrayPropertiesSummary">AWS
    * API Reference</a></p>
    */
-  class AWS_BATCH_API ArrayPropertiesSummary
+  class ArrayPropertiesSummary
   {
   public:
-    ArrayPropertiesSummary();
-    ArrayPropertiesSummary(Aws::Utils::Json::JsonView jsonValue);
-    ArrayPropertiesSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_BATCH_API ArrayPropertiesSummary();
+    AWS_BATCH_API ArrayPropertiesSummary(Aws::Utils::Json::JsonView jsonValue);
+    AWS_BATCH_API ArrayPropertiesSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_BATCH_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**

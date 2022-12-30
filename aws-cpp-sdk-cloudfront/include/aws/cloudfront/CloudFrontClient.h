@@ -8,6 +8,7 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/AmazonSerializableWebServiceRequest.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/cloudfront/CloudFrontServiceClientModel.h>
 
@@ -21,38 +22,66 @@ namespace CloudFront
    * CloudFront API actions, data types, and errors. For detailed information about
    * CloudFront features, see the <i>Amazon CloudFront Developer Guide</i>.</p>
    */
-  class AWS_CLOUDFRONT_API CloudFrontClient : public Aws::Client::AWSXMLClient
+  class AWS_CLOUDFRONT_API CloudFrontClient : public Aws::Client::AWSXMLClient, public Aws::Client::ClientWithAsyncTemplateMethods<CloudFrontClient>
   {
     public:
       typedef Aws::Client::AWSXMLClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        CloudFrontClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        CloudFrontClient(const Aws::CloudFront::CloudFrontClientConfiguration& clientConfiguration = Aws::CloudFront::CloudFrontClientConfiguration(),
+                         std::shared_ptr<CloudFrontEndpointProviderBase> endpointProvider = Aws::MakeShared<CloudFrontEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         CloudFrontClient(const Aws::Auth::AWSCredentials& credentials,
-                         const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                         std::shared_ptr<CloudFrontEndpointProviderBase> endpointProvider = Aws::MakeShared<CloudFrontEndpointProvider>(ALLOCATION_TAG),
+                         const Aws::CloudFront::CloudFrontClientConfiguration& clientConfiguration = Aws::CloudFront::CloudFrontClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         CloudFrontClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                         const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                         std::shared_ptr<CloudFrontEndpointProviderBase> endpointProvider = Aws::MakeShared<CloudFrontEndpointProvider>(ALLOCATION_TAG),
+                         const Aws::CloudFront::CloudFrontClientConfiguration& clientConfiguration = Aws::CloudFront::CloudFrontClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CloudFrontClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CloudFrontClient(const Aws::Auth::AWSCredentials& credentials,
+                         const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        CloudFrontClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                         const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~CloudFrontClient();
 
 
         /**
          * <p>Associates an alias (also known as a CNAME or an alternate domain name) with
          * a CloudFront distribution.</p> <p>With this operation you can move an alias
-         * that’s already in use on a CloudFront distribution to a different distribution
+         * that's already in use on a CloudFront distribution to a different distribution
          * in one step. This prevents the downtime that could occur if you first remove the
          * alias from one distribution and then separately add the alias to another
          * distribution.</p> <p>To use this operation to associate an alias with a
@@ -79,8 +108,32 @@ namespace CloudFront
         virtual void AssociateAlias2020_05_31Async(const Model::AssociateAlias2020_05_31Request& request, const AssociateAlias2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Creates a staging distribution using the configuration of the provided
+         * primary distribution. A staging distribution is a copy of an existing
+         * distribution (called the primary distribution) that you can use in a continuous
+         * deployment workflow.</p> <p>After you create a staging distribution, you can use
+         * <code>UpdateDistribution</code> to modify the staging distribution's
+         * configuration. Then you can use <code>CreateContinuousDeploymentPolicy</code> to
+         * incrementally move traffic to the staging distribution.</p><p><h3>See Also:</h3>
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CopyDistribution2020_05_31">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CopyDistribution2020_05_31Outcome CopyDistribution2020_05_31(const Model::CopyDistribution2020_05_31Request& request) const;
+
+        /**
+         * A Callable wrapper for CopyDistribution2020_05_31 that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CopyDistribution2020_05_31OutcomeCallable CopyDistribution2020_05_31Callable(const Model::CopyDistribution2020_05_31Request& request) const;
+
+        /**
+         * An Async wrapper for CopyDistribution2020_05_31 that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CopyDistribution2020_05_31Async(const Model::CopyDistribution2020_05_31Request& request, const CopyDistribution2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Creates a cache policy.</p> <p>After you create a cache policy, you can
-         * attach it to one or more cache behaviors. When it’s attached to a cache
+         * attach it to one or more cache behaviors. When it's attached to a cache
          * behavior, the cache policy determines the following:</p> <ul> <li> <p>The values
          * that CloudFront includes in the <i>cache key</i>. These values can include HTTP
          * headers, cookies, and URL query strings. CloudFront uses the cache key to find
@@ -89,7 +142,7 @@ namespace CloudFront
          * stay in the CloudFront cache.</p> </li> </ul> <p>The headers, cookies, and query
          * strings that are included in the cache key are automatically included in
          * requests that CloudFront sends to the origin. CloudFront sends a request when it
-         * can’t find an object in its cache that matches the request’s cache key. If you
+         * can't find an object in its cache that matches the request's cache key. If you
          * want to send values to the origin but <i>not</i> include them in the cache key,
          * use <code>OriginRequestPolicy</code>.</p> <p>For more information about cache
          * policies, see <a
@@ -135,20 +188,33 @@ namespace CloudFront
         virtual void CreateCloudFrontOriginAccessIdentity2020_05_31Async(const Model::CreateCloudFrontOriginAccessIdentity2020_05_31Request& request, const CreateCloudFrontOriginAccessIdentity2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Creates a new web distribution. You create a CloudFront distribution to tell
-         * CloudFront where you want content to be delivered from, and the details about
-         * how to track and manage content delivery. Send a <code>POST</code> request to
-         * the <code>/<i>CloudFront API version</i>/distribution</code>/<code>distribution
-         * ID</code> resource.</p>  <p>When you update a distribution, there are
-         * more required fields than when you create a distribution. When you update your
-         * distribution by using <a
-         * href="https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateDistribution.html">UpdateDistribution</a>,
-         * follow the steps included in the documentation to get the current configuration
-         * and then make your updates. This helps to make sure that you include all of the
-         * required fields. To view a summary, see <a
-         * href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-overview-required-fields.html">Required
-         * Fields for Create Distribution and Update Distribution</a> in the <i>Amazon
-         * CloudFront Developer Guide</i>.</p> <p><h3>See Also:</h3>   <a
+         * <p>Creates a continuous deployment policy that distributes traffic for a custom
+         * domain name to two different CloudFront distributions.</p> <p>To use a
+         * continuous deployment policy, first use <code>CopyDistribution</code> to create
+         * a staging distribution, then use <code>UpdateDistribution</code> to modify the
+         * staging distribution's configuration.</p> <p>After you create and update a
+         * staging distribution, you can use a continuous deployment policy to
+         * incrementally move traffic to the staging distribution. This workflow enables
+         * you to test changes to a distribution's configuration before moving all of your
+         * domain's production traffic to the new configuration.</p><p><h3>See Also:</h3>  
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CreateContinuousDeploymentPolicy2020_05_31">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CreateContinuousDeploymentPolicy2020_05_31Outcome CreateContinuousDeploymentPolicy2020_05_31(const Model::CreateContinuousDeploymentPolicy2020_05_31Request& request) const;
+
+        /**
+         * A Callable wrapper for CreateContinuousDeploymentPolicy2020_05_31 that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CreateContinuousDeploymentPolicy2020_05_31OutcomeCallable CreateContinuousDeploymentPolicy2020_05_31Callable(const Model::CreateContinuousDeploymentPolicy2020_05_31Request& request) const;
+
+        /**
+         * An Async wrapper for CreateContinuousDeploymentPolicy2020_05_31 that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CreateContinuousDeploymentPolicy2020_05_31Async(const Model::CreateContinuousDeploymentPolicy2020_05_31Request& request, const CreateContinuousDeploymentPolicy2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Creates a CloudFront distribution.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CreateDistribution2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -220,13 +286,13 @@ namespace CloudFront
          * <p>Creates a CloudFront function.</p> <p>To create a function, you provide the
          * function code and some configuration information about the function. The
          * response contains an Amazon Resource Name (ARN) that uniquely identifies the
-         * function.</p> <p>When you create a function, it’s in the
+         * function.</p> <p>When you create a function, it's in the
          * <code>DEVELOPMENT</code> stage. In this stage, you can test the function with
          * <code>TestFunction</code>, and update it with <code>UpdateFunction</code>.</p>
-         * <p>When you’re ready to use your function with a CloudFront distribution, use
+         * <p>When you're ready to use your function with a CloudFront distribution, use
          * <code>PublishFunction</code> to copy the function from the
-         * <code>DEVELOPMENT</code> stage to <code>LIVE</code>. When it’s live, you can
-         * attach the function to a distribution’s cache behavior, using the function’s
+         * <code>DEVELOPMENT</code> stage to <code>LIVE</code>. When it's live, you can
+         * attach the function to a distribution's cache behavior, using the function's
          * ARN.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CreateFunction2020_05_31">AWS
          * API Reference</a></p>
@@ -244,7 +310,7 @@ namespace CloudFront
         virtual void CreateFunction2020_05_31Async(const Model::CreateFunction2020_05_31Request& request, const CreateFunction2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Create a new invalidation. </p><p><h3>See Also:</h3>   <a
+         * <p>Create a new invalidation.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CreateInvalidation2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -339,7 +405,7 @@ namespace CloudFront
 
         /**
          * <p>Creates an origin request policy.</p> <p>After you create an origin request
-         * policy, you can attach it to one or more cache behaviors. When it’s attached to
+         * policy, you can attach it to one or more cache behaviors. When it's attached to
          * a cache behavior, the origin request policy determines the values that
          * CloudFront includes in requests that it sends to the origin. Each request that
          * CloudFront sends to the origin includes the following:</p> <ul> <li> <p>The
@@ -350,7 +416,7 @@ namespace CloudFront
          * query strings that are specified in the cache policy or the origin request
          * policy. These can include items from the viewer request and, in the case of
          * headers, additional ones that are added by CloudFront.</p> </li> </ul>
-         * <p>CloudFront sends a request when it can’t find a valid object in its cache
+         * <p>CloudFront sends a request when it can't find a valid object in its cache
          * that matches the request. If you want to send values to the origin and also
          * include them in the cache key, use <code>CachePolicy</code>.</p> <p>For more
          * information about origin request policies, see <a
@@ -418,13 +484,18 @@ namespace CloudFront
 
         /**
          * <p>Creates a response headers policy.</p> <p>A response headers policy contains
-         * information about a set of HTTP response headers and their values. To create a
-         * response headers policy, you provide some metadata about the policy, and a set
-         * of configurations that specify the response headers.</p> <p>After you create a
-         * response headers policy, you can use its ID to attach it to one or more cache
-         * behaviors in a CloudFront distribution. When it’s attached to a cache behavior,
-         * CloudFront adds the headers in the policy to HTTP responses that it sends for
-         * requests that match the cache behavior.</p><p><h3>See Also:</h3>   <a
+         * information about a set of HTTP headers. To create a response headers policy,
+         * you provide some metadata about the policy and a set of configurations that
+         * specify the headers.</p> <p>After you create a response headers policy, you can
+         * use its ID to attach it to one or more cache behaviors in a CloudFront
+         * distribution. When it's attached to a cache behavior, the response headers
+         * policy affects the HTTP headers that CloudFront includes in HTTP responses to
+         * requests that match the cache behavior. CloudFront adds or removes response
+         * headers according to the configuration of the response headers policy.</p>
+         * <p>For more information, see <a
+         * href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/modifying-response-headers.html">Adding
+         * or removing HTTP headers in CloudFront responses</a> in the <i>Amazon CloudFront
+         * Developer Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CreateResponseHeadersPolicy2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -483,10 +554,10 @@ namespace CloudFront
         virtual void CreateStreamingDistributionWithTags2020_05_31Async(const Model::CreateStreamingDistributionWithTags2020_05_31Request& request, const CreateStreamingDistributionWithTags2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Deletes a cache policy.</p> <p>You cannot delete a cache policy if it’s
+         * <p>Deletes a cache policy.</p> <p>You cannot delete a cache policy if it's
          * attached to a cache behavior. First update your distributions to remove the
          * cache policy from all cache behaviors, then delete the cache policy.</p> <p>To
-         * delete a cache policy, you must provide the policy’s identifier and version. To
+         * delete a cache policy, you must provide the policy's identifier and version. To
          * get these values, you can use <code>ListCachePolicies</code> or
          * <code>GetCachePolicy</code>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteCachePolicy2020_05_31">AWS
@@ -505,7 +576,7 @@ namespace CloudFront
         virtual void DeleteCachePolicy2020_05_31Async(const Model::DeleteCachePolicy2020_05_31Request& request, const DeleteCachePolicy2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Delete an origin access identity. </p><p><h3>See Also:</h3>   <a
+         * <p>Delete an origin access identity.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteCloudFrontOriginAccessIdentity2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -522,7 +593,27 @@ namespace CloudFront
         virtual void DeleteCloudFrontOriginAccessIdentity2020_05_31Async(const Model::DeleteCloudFrontOriginAccessIdentity2020_05_31Request& request, const DeleteCloudFrontOriginAccessIdentity2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Delete a distribution. </p><p><h3>See Also:</h3>   <a
+         * <p>Deletes a continuous deployment policy.</p> <p>You cannot delete a continuous
+         * deployment policy that's attached to a primary distribution. First update your
+         * distribution to remove the continuous deployment policy, then you can delete the
+         * policy.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteContinuousDeploymentPolicy2020_05_31">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DeleteContinuousDeploymentPolicy2020_05_31Outcome DeleteContinuousDeploymentPolicy2020_05_31(const Model::DeleteContinuousDeploymentPolicy2020_05_31Request& request) const;
+
+        /**
+         * A Callable wrapper for DeleteContinuousDeploymentPolicy2020_05_31 that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DeleteContinuousDeploymentPolicy2020_05_31OutcomeCallable DeleteContinuousDeploymentPolicy2020_05_31Callable(const Model::DeleteContinuousDeploymentPolicy2020_05_31Request& request) const;
+
+        /**
+         * An Async wrapper for DeleteContinuousDeploymentPolicy2020_05_31 that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DeleteContinuousDeploymentPolicy2020_05_31Async(const Model::DeleteContinuousDeploymentPolicy2020_05_31Request& request, const DeleteContinuousDeploymentPolicy2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Delete a distribution.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteDistribution2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -573,10 +664,10 @@ namespace CloudFront
         virtual void DeleteFieldLevelEncryptionProfile2020_05_31Async(const Model::DeleteFieldLevelEncryptionProfile2020_05_31Request& request, const DeleteFieldLevelEncryptionProfile2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Deletes a CloudFront function.</p> <p>You cannot delete a function if it’s
+         * <p>Deletes a CloudFront function.</p> <p>You cannot delete a function if it's
          * associated with a cache behavior. First, update your distributions to remove the
          * function association from all cache behaviors, then delete the function.</p>
-         * <p>To delete a function, you must provide the function’s name and version
+         * <p>To delete a function, you must provide the function's name and version
          * (<code>ETag</code> value). To get these values, you can use
          * <code>ListFunctions</code> and <code>DescribeFunction</code>.</p><p><h3>See
          * Also:</h3>   <a
@@ -599,7 +690,7 @@ namespace CloudFront
          * <p>Deletes a key group.</p> <p>You cannot delete a key group that is referenced
          * in a cache behavior. First update your distributions to remove the key group
          * from all cache behaviors, then delete the key group.</p> <p>To delete a key
-         * group, you must provide the key group’s identifier and version. To get these
+         * group, you must provide the key group's identifier and version. To get these
          * values, use <code>ListKeyGroups</code> followed by <code>GetKeyGroup</code> or
          * <code>GetKeyGroupConfig</code>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteKeyGroup2020_05_31">AWS
@@ -657,10 +748,10 @@ namespace CloudFront
 
         /**
          * <p>Deletes an origin request policy.</p> <p>You cannot delete an origin request
-         * policy if it’s attached to any cache behaviors. First update your distributions
+         * policy if it's attached to any cache behaviors. First update your distributions
          * to remove the origin request policy from all cache behaviors, then delete the
          * origin request policy.</p> <p>To delete an origin request policy, you must
-         * provide the policy’s identifier and version. To get the identifier, you can use
+         * provide the policy's identifier and version. To get the identifier, you can use
          * <code>ListOriginRequestPolicies</code> or
          * <code>GetOriginRequestPolicy</code>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteOriginRequestPolicy2020_05_31">AWS
@@ -698,10 +789,10 @@ namespace CloudFront
 
         /**
          * <p>Deletes a real-time log configuration.</p> <p>You cannot delete a real-time
-         * log configuration if it’s attached to a cache behavior. First update your
+         * log configuration if it's attached to a cache behavior. First update your
          * distributions to remove the real-time log configuration from all cache
          * behaviors, then delete the real-time log configuration.</p> <p>To delete a
-         * real-time log configuration, you can provide the configuration’s name or its
+         * real-time log configuration, you can provide the configuration's name or its
          * Amazon Resource Name (ARN). You must provide at least one. If you provide both,
          * CloudFront uses the name to identify the real-time log configuration to
          * delete.</p><p><h3>See Also:</h3>   <a
@@ -722,12 +813,12 @@ namespace CloudFront
 
         /**
          * <p>Deletes a response headers policy.</p> <p>You cannot delete a response
-         * headers policy if it’s attached to a cache behavior. First update your
+         * headers policy if it's attached to a cache behavior. First update your
          * distributions to remove the response headers policy from all cache behaviors,
          * then delete the response headers policy.</p> <p>To delete a response headers
-         * policy, you must provide the policy’s identifier and version. To get these
+         * policy, you must provide the policy's identifier and version. To get these
          * values, you can use <code>ListResponseHeadersPolicies</code> or
-         * <code>GetResponseHeadersPolicy</code>. </p><p><h3>See Also:</h3>   <a
+         * <code>GetResponseHeadersPolicy</code>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteResponseHeadersPolicy2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -790,9 +881,9 @@ namespace CloudFront
 
         /**
          * <p>Gets configuration information and metadata about a CloudFront function, but
-         * not the function’s code. To get a function’s code, use
+         * not the function's code. To get a function's code, use
          * <code>GetFunction</code>.</p> <p>To get configuration information and metadata
-         * about a function, you must provide the function’s name and stage. To get these
+         * about a function, you must provide the function's name and stage. To get these
          * values, you can use <code>ListFunctions</code>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DescribeFunction2020_05_31">AWS
          * API Reference</a></p>
@@ -811,10 +902,10 @@ namespace CloudFront
 
         /**
          * <p>Gets a cache policy, including the following metadata:</p> <ul> <li> <p>The
-         * policy’s identifier.</p> </li> <li> <p>The date and time when the policy was
+         * policy's identifier.</p> </li> <li> <p>The date and time when the policy was
          * last modified.</p> </li> </ul> <p>To get a cache policy, you must provide the
-         * policy’s identifier. If the cache policy is attached to a distribution’s cache
-         * behavior, you can get the policy’s identifier using
+         * policy's identifier. If the cache policy is attached to a distribution's cache
+         * behavior, you can get the policy's identifier using
          * <code>ListDistributions</code> or <code>GetDistribution</code>. If the cache
          * policy is not attached to a cache behavior, you can get the identifier using
          * <code>ListCachePolicies</code>.</p><p><h3>See Also:</h3>   <a
@@ -835,8 +926,8 @@ namespace CloudFront
 
         /**
          * <p>Gets a cache policy configuration.</p> <p>To get a cache policy
-         * configuration, you must provide the policy’s identifier. If the cache policy is
-         * attached to a distribution’s cache behavior, you can get the policy’s identifier
+         * configuration, you must provide the policy's identifier. If the cache policy is
+         * attached to a distribution's cache behavior, you can get the policy's identifier
          * using <code>ListDistributions</code> or <code>GetDistribution</code>. If the
          * cache policy is not attached to a cache behavior, you can get the identifier
          * using <code>ListCachePolicies</code>.</p><p><h3>See Also:</h3>   <a
@@ -856,8 +947,8 @@ namespace CloudFront
         virtual void GetCachePolicyConfig2020_05_31Async(const Model::GetCachePolicyConfig2020_05_31Request& request, const GetCachePolicyConfig2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Get the information about an origin access identity. </p><p><h3>See
-         * Also:</h3>   <a
+         * <p>Get the information about an origin access identity.</p><p><h3>See Also:</h3>
+         * <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetCloudFrontOriginAccessIdentity2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -874,8 +965,8 @@ namespace CloudFront
         virtual void GetCloudFrontOriginAccessIdentity2020_05_31Async(const Model::GetCloudFrontOriginAccessIdentity2020_05_31Request& request, const GetCloudFrontOriginAccessIdentity2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Get the configuration information about an origin access identity.
-         * </p><p><h3>See Also:</h3>   <a
+         * <p>Get the configuration information about an origin access
+         * identity.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetCloudFrontOriginAccessIdentityConfig2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -890,6 +981,43 @@ namespace CloudFront
          * An Async wrapper for GetCloudFrontOriginAccessIdentityConfig2020_05_31 that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void GetCloudFrontOriginAccessIdentityConfig2020_05_31Async(const Model::GetCloudFrontOriginAccessIdentityConfig2020_05_31Request& request, const GetCloudFrontOriginAccessIdentityConfig2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Gets a continuous deployment policy, including metadata (the policy's
+         * identifier and the date and time when the policy was last
+         * modified).</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetContinuousDeploymentPolicy2020_05_31">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetContinuousDeploymentPolicy2020_05_31Outcome GetContinuousDeploymentPolicy2020_05_31(const Model::GetContinuousDeploymentPolicy2020_05_31Request& request) const;
+
+        /**
+         * A Callable wrapper for GetContinuousDeploymentPolicy2020_05_31 that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetContinuousDeploymentPolicy2020_05_31OutcomeCallable GetContinuousDeploymentPolicy2020_05_31Callable(const Model::GetContinuousDeploymentPolicy2020_05_31Request& request) const;
+
+        /**
+         * An Async wrapper for GetContinuousDeploymentPolicy2020_05_31 that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetContinuousDeploymentPolicy2020_05_31Async(const Model::GetContinuousDeploymentPolicy2020_05_31Request& request, const GetContinuousDeploymentPolicy2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Gets configuration information about a continuous deployment
+         * policy.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetContinuousDeploymentPolicyConfig2020_05_31">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetContinuousDeploymentPolicyConfig2020_05_31Outcome GetContinuousDeploymentPolicyConfig2020_05_31(const Model::GetContinuousDeploymentPolicyConfig2020_05_31Request& request) const;
+
+        /**
+         * A Callable wrapper for GetContinuousDeploymentPolicyConfig2020_05_31 that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetContinuousDeploymentPolicyConfig2020_05_31OutcomeCallable GetContinuousDeploymentPolicyConfig2020_05_31Callable(const Model::GetContinuousDeploymentPolicyConfig2020_05_31Request& request) const;
+
+        /**
+         * An Async wrapper for GetContinuousDeploymentPolicyConfig2020_05_31 that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetContinuousDeploymentPolicyConfig2020_05_31Async(const Model::GetContinuousDeploymentPolicyConfig2020_05_31Request& request, const GetContinuousDeploymentPolicyConfig2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Get the information about a distribution.</p><p><h3>See Also:</h3>   <a
@@ -909,7 +1037,7 @@ namespace CloudFront
         virtual void GetDistribution2020_05_31Async(const Model::GetDistribution2020_05_31Request& request, const GetDistribution2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Get the configuration information about a distribution. </p><p><h3>See
+         * <p>Get the configuration information about a distribution.</p><p><h3>See
          * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetDistributionConfig2020_05_31">AWS
          * API Reference</a></p>
@@ -1001,7 +1129,7 @@ namespace CloudFront
         /**
          * <p>Gets the code of a CloudFront function. To get configuration information and
          * metadata about a function, use <code>DescribeFunction</code>.</p> <p>To get a
-         * function’s code, you must provide the function’s name and stage. To get these
+         * function's code, you must provide the function's name and stage. To get these
          * values, you can use <code>ListFunctions</code>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetFunction2020_05_31">AWS
          * API Reference</a></p>
@@ -1019,7 +1147,7 @@ namespace CloudFront
         virtual void GetFunction2020_05_31Async(const Model::GetFunction2020_05_31Request& request, const GetFunction2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Get the information about an invalidation. </p><p><h3>See Also:</h3>   <a
+         * <p>Get the information about an invalidation.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetInvalidation2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -1037,9 +1165,9 @@ namespace CloudFront
 
         /**
          * <p>Gets a key group, including the date and time when the key group was last
-         * modified.</p> <p>To get a key group, you must provide the key group’s
-         * identifier. If the key group is referenced in a distribution’s cache behavior,
-         * you can get the key group’s identifier using <code>ListDistributions</code> or
+         * modified.</p> <p>To get a key group, you must provide the key group's
+         * identifier. If the key group is referenced in a distribution's cache behavior,
+         * you can get the key group's identifier using <code>ListDistributions</code> or
          * <code>GetDistribution</code>. If the key group is not referenced in a cache
          * behavior, you can get the identifier using
          * <code>ListKeyGroups</code>.</p><p><h3>See Also:</h3>   <a
@@ -1060,8 +1188,8 @@ namespace CloudFront
 
         /**
          * <p>Gets a key group configuration.</p> <p>To get a key group configuration, you
-         * must provide the key group’s identifier. If the key group is referenced in a
-         * distribution’s cache behavior, you can get the key group’s identifier using
+         * must provide the key group's identifier. If the key group is referenced in a
+         * distribution's cache behavior, you can get the key group's identifier using
          * <code>ListDistributions</code> or <code>GetDistribution</code>. If the key group
          * is not referenced in a cache behavior, you can get the identifier using
          * <code>ListKeyGroups</code>.</p><p><h3>See Also:</h3>   <a
@@ -1136,10 +1264,10 @@ namespace CloudFront
 
         /**
          * <p>Gets an origin request policy, including the following metadata:</p> <ul>
-         * <li> <p>The policy’s identifier.</p> </li> <li> <p>The date and time when the
+         * <li> <p>The policy's identifier.</p> </li> <li> <p>The date and time when the
          * policy was last modified.</p> </li> </ul> <p>To get an origin request policy,
-         * you must provide the policy’s identifier. If the origin request policy is
-         * attached to a distribution’s cache behavior, you can get the policy’s identifier
+         * you must provide the policy's identifier. If the origin request policy is
+         * attached to a distribution's cache behavior, you can get the policy's identifier
          * using <code>ListDistributions</code> or <code>GetDistribution</code>. If the
          * origin request policy is not attached to a cache behavior, you can get the
          * identifier using <code>ListOriginRequestPolicies</code>.</p><p><h3>See
@@ -1161,9 +1289,9 @@ namespace CloudFront
 
         /**
          * <p>Gets an origin request policy configuration.</p> <p>To get an origin request
-         * policy configuration, you must provide the policy’s identifier. If the origin
-         * request policy is attached to a distribution’s cache behavior, you can get the
-         * policy’s identifier using <code>ListDistributions</code> or
+         * policy configuration, you must provide the policy's identifier. If the origin
+         * request policy is attached to a distribution's cache behavior, you can get the
+         * policy's identifier using <code>ListDistributions</code> or
          * <code>GetDistribution</code>. If the origin request policy is not attached to a
          * cache behavior, you can get the identifier using
          * <code>ListOriginRequestPolicies</code>.</p><p><h3>See Also:</h3>   <a
@@ -1218,7 +1346,7 @@ namespace CloudFront
 
         /**
          * <p>Gets a real-time log configuration.</p> <p>To get a real-time log
-         * configuration, you can provide the configuration’s name or its Amazon Resource
+         * configuration, you can provide the configuration's name or its Amazon Resource
          * Name (ARN). You must provide at least one. If you provide both, CloudFront uses
          * the name to identify the real-time log configuration to get.</p><p><h3>See
          * Also:</h3>   <a
@@ -1238,11 +1366,11 @@ namespace CloudFront
         virtual void GetRealtimeLogConfig2020_05_31Async(const Model::GetRealtimeLogConfig2020_05_31Request& request, const GetRealtimeLogConfig2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Gets a response headers policy, including metadata (the policy’s identifier
+         * <p>Gets a response headers policy, including metadata (the policy's identifier
          * and the date and time when the policy was last modified).</p> <p>To get a
-         * response headers policy, you must provide the policy’s identifier. If the
-         * response headers policy is attached to a distribution’s cache behavior, you can
-         * get the policy’s identifier using <code>ListDistributions</code> or
+         * response headers policy, you must provide the policy's identifier. If the
+         * response headers policy is attached to a distribution's cache behavior, you can
+         * get the policy's identifier using <code>ListDistributions</code> or
          * <code>GetDistribution</code>. If the response headers policy is not attached to
          * a cache behavior, you can get the identifier using
          * <code>ListResponseHeadersPolicies</code>.</p><p><h3>See Also:</h3>   <a
@@ -1263,9 +1391,9 @@ namespace CloudFront
 
         /**
          * <p>Gets a response headers policy configuration.</p> <p>To get a response
-         * headers policy configuration, you must provide the policy’s identifier. If the
-         * response headers policy is attached to a distribution’s cache behavior, you can
-         * get the policy’s identifier using <code>ListDistributions</code> or
+         * headers policy configuration, you must provide the policy's identifier. If the
+         * response headers policy is attached to a distribution's cache behavior, you can
+         * get the policy's identifier using <code>ListDistributions</code> or
          * <code>GetDistribution</code>. If the response headers policy is not attached to
          * a cache behavior, you can get the identifier using
          * <code>ListResponseHeadersPolicies</code>.</p><p><h3>See Also:</h3>   <a
@@ -1303,8 +1431,8 @@ namespace CloudFront
         virtual void GetStreamingDistribution2020_05_31Async(const Model::GetStreamingDistribution2020_05_31Request& request, const GetStreamingDistribution2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Get the configuration information about a streaming distribution.
-         * </p><p><h3>See Also:</h3>   <a
+         * <p>Get the configuration information about a streaming
+         * distribution.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetStreamingDistributionConfig2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -1368,7 +1496,7 @@ namespace CloudFront
          * distributions and Amazon Web Services accounts for each conflicting alias. In
          * the returned list, the distribution and account IDs are partially hidden, which
          * allows you to identify the distributions and accounts that you own, but helps to
-         * protect the information of ones that you don’t own.</p> <p>Use this operation to
+         * protect the information of ones that you don't own.</p> <p>Use this operation to
          * find aliases that are in use in CloudFront that conflict or overlap with the
          * provided alias. For example, if you provide <code>www.example.com</code> as
          * input, the returned list can include <code>www.example.com</code> and the
@@ -1406,6 +1534,30 @@ namespace CloudFront
         virtual void ListConflictingAliases2020_05_31Async(const Model::ListConflictingAliases2020_05_31Request& request, const ListConflictingAliases2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Gets a list of the continuous deployment policies in your Amazon Web Services
+         * account.</p> <p>You can optionally specify the maximum number of items to
+         * receive in the response. If the total number of items in the list exceeds the
+         * maximum that you specify, or the default maximum, the response is paginated. To
+         * get the next page of items, send a subsequent request that specifies the
+         * <code>NextMarker</code> value from the current response as the
+         * <code>Marker</code> value in the subsequent request.</p><p><h3>See Also:</h3>  
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListContinuousDeploymentPolicies2020_05_31">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ListContinuousDeploymentPolicies2020_05_31Outcome ListContinuousDeploymentPolicies2020_05_31(const Model::ListContinuousDeploymentPolicies2020_05_31Request& request) const;
+
+        /**
+         * A Callable wrapper for ListContinuousDeploymentPolicies2020_05_31 that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ListContinuousDeploymentPolicies2020_05_31OutcomeCallable ListContinuousDeploymentPolicies2020_05_31Callable(const Model::ListContinuousDeploymentPolicies2020_05_31Request& request) const;
+
+        /**
+         * An Async wrapper for ListContinuousDeploymentPolicies2020_05_31 that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ListContinuousDeploymentPolicies2020_05_31Async(const Model::ListContinuousDeploymentPolicies2020_05_31Request& request, const ListContinuousDeploymentPolicies2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>List CloudFront distributions.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributions2020_05_31">AWS
          * API Reference</a></p>
@@ -1424,7 +1576,7 @@ namespace CloudFront
 
         /**
          * <p>Gets a list of distribution IDs for distributions that have a cache behavior
-         * that’s associated with the specified cache policy.</p> <p>You can optionally
+         * that's associated with the specified cache policy.</p> <p>You can optionally
          * specify the maximum number of items to receive in the response. If the total
          * number of items in the list exceeds the maximum that you specify, or the default
          * maximum, the response is paginated. To get the next page of items, send a
@@ -1472,7 +1624,7 @@ namespace CloudFront
 
         /**
          * <p>Gets a list of distribution IDs for distributions that have a cache behavior
-         * that’s associated with the specified origin request policy.</p> <p>You can
+         * that's associated with the specified origin request policy.</p> <p>You can
          * optionally specify the maximum number of items to receive in the response. If
          * the total number of items in the list exceeds the maximum that you specify, or
          * the default maximum, the response is paginated. To get the next page of items,
@@ -1495,7 +1647,7 @@ namespace CloudFront
         virtual void ListDistributionsByOriginRequestPolicyId2020_05_31Async(const Model::ListDistributionsByOriginRequestPolicyId2020_05_31Request& request, const ListDistributionsByOriginRequestPolicyId2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Gets a list of distributions that have a cache behavior that’s associated
+         * <p>Gets a list of distributions that have a cache behavior that's associated
          * with the specified real-time log configuration.</p> <p>You can specify the
          * real-time log configuration by its name or its Amazon Resource Name (ARN). You
          * must provide at least one. If you provide both, CloudFront uses the name to
@@ -1505,7 +1657,7 @@ namespace CloudFront
          * or the default maximum, the response is paginated. To get the next page of
          * items, send a subsequent request that specifies the <code>NextMarker</code>
          * value from the current response as the <code>Marker</code> value in the
-         * subsequent request. </p><p><h3>See Also:</h3>   <a
+         * subsequent request.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributionsByRealtimeLogConfig2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -1523,7 +1675,7 @@ namespace CloudFront
 
         /**
          * <p>Gets a list of distribution IDs for distributions that have a cache behavior
-         * that’s associated with the specified response headers policy.</p> <p>You can
+         * that's associated with the specified response headers policy.</p> <p>You can
          * optionally specify the maximum number of items to receive in the response. If
          * the total number of items in the list exceeds the maximum that you specify, or
          * the default maximum, the response is paginated. To get the next page of items,
@@ -1626,7 +1778,7 @@ namespace CloudFront
         virtual void ListFunctions2020_05_31Async(const Model::ListFunctions2020_05_31Request& request, const ListFunctions2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Lists invalidation batches. </p><p><h3>See Also:</h3>   <a
+         * <p>Lists invalidation batches.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListInvalidations2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -1737,8 +1889,8 @@ namespace CloudFront
          * number of items in the list exceeds the maximum that you specify, or the default
          * maximum, the response is paginated. To get the next page of items, send a
          * subsequent request that specifies the <code>NextMarker</code> value from the
-         * current response as the <code>Marker</code> value in the subsequent request.
-         * </p><p><h3>See Also:</h3>   <a
+         * current response as the <code>Marker</code> value in the subsequent
+         * request.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListRealtimeLogConfigs2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -1780,7 +1932,7 @@ namespace CloudFront
         virtual void ListResponseHeadersPolicies2020_05_31Async(const Model::ListResponseHeadersPolicies2020_05_31Request& request, const ListResponseHeadersPolicies2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>List streaming distributions. </p><p><h3>See Also:</h3>   <a
+         * <p>List streaming distributions.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListStreamingDistributions2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -1818,9 +1970,9 @@ namespace CloudFront
          * <code>DEVELOPMENT</code> stage to <code>LIVE</code>. This automatically updates
          * all cache behaviors that are using this function to use the newly published copy
          * in the <code>LIVE</code> stage.</p> <p>When a function is published to the
-         * <code>LIVE</code> stage, you can attach the function to a distribution’s cache
-         * behavior, using the function’s Amazon Resource Name (ARN).</p> <p>To publish a
-         * function, you must provide the function’s name and version (<code>ETag</code>
+         * <code>LIVE</code> stage, you can attach the function to a distribution's cache
+         * behavior, using the function's Amazon Resource Name (ARN).</p> <p>To publish a
+         * function, you must provide the function's name and version (<code>ETag</code>
          * value). To get these values, you can use <code>ListFunctions</code> and
          * <code>DescribeFunction</code>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/PublishFunction2020_05_31">AWS
@@ -1860,13 +2012,13 @@ namespace CloudFront
          * <i>event object</i> that represents an HTTP request or response that your
          * CloudFront distribution could receive in production. CloudFront runs the
          * function, passing it the event object that you provided, and returns the
-         * function’s result (the modified event object) in the response. The response also
+         * function's result (the modified event object) in the response. The response also
          * contains function logs and error messages, if any exist. For more information
          * about testing functions, see <a
          * href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/managing-functions.html#test-function">Testing
          * functions</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> <p>To test a
-         * function, you provide the function’s name and version (<code>ETag</code> value)
-         * along with the event object. To get the function’s name and version, you can use
+         * function, you provide the function's name and version (<code>ETag</code> value)
+         * along with the event object. To get the function's name and version, you can use
          * <code>ListFunctions</code> and <code>DescribeFunction</code>.</p><p><h3>See
          * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/TestFunction2020_05_31">AWS
@@ -1910,7 +2062,7 @@ namespace CloudFront
          * the cache policy configuration that you want to update.</p> </li> <li> <p>Call
          * <code>UpdateCachePolicy</code> by providing the entire cache policy
          * configuration, including the fields that you modified and those that you
-         * didn’t.</p> </li> </ol><p><h3>See Also:</h3>   <a
+         * didn't.</p> </li> </ol><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateCachePolicy2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -1927,7 +2079,7 @@ namespace CloudFront
         virtual void UpdateCachePolicy2020_05_31Async(const Model::UpdateCachePolicy2020_05_31Request& request, const UpdateCachePolicy2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Update an origin access identity. </p><p><h3>See Also:</h3>   <a
+         * <p>Update an origin access identity.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateCloudFrontOriginAccessIdentity2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -1944,56 +2096,53 @@ namespace CloudFront
         virtual void UpdateCloudFrontOriginAccessIdentity2020_05_31Async(const Model::UpdateCloudFrontOriginAccessIdentity2020_05_31Request& request, const UpdateCloudFrontOriginAccessIdentity2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Updates the configuration for a web distribution. </p>  <p>When
-         * you update a distribution, there are more required fields than when you create a
-         * distribution. When you update your distribution by using this API action, follow
-         * the steps here to get the current configuration and then make your updates, to
-         * make sure that you include all of the required fields. To view a summary, see <a
-         * href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-overview-required-fields.html">Required
-         * Fields for Create Distribution and Update Distribution</a> in the <i>Amazon
-         * CloudFront Developer Guide</i>.</p>  <p>The update process includes
-         * getting the current distribution configuration, updating the XML document that
-         * is returned to make your changes, and then submitting an
-         * <code>UpdateDistribution</code> request to make the updates.</p> <p>For
-         * information about updating a distribution using the CloudFront console instead,
-         * see <a
-         * href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-creating-console.html">Creating
-         * a Distribution</a> in the <i>Amazon CloudFront Developer Guide</i>.</p> <p>
-         * <b>To update a web distribution using the CloudFront API</b> </p> <ol> <li>
-         * <p>Submit a <a
-         * href="https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetDistributionConfig.html">GetDistributionConfig</a>
-         * request to get the current configuration and an <code>Etag</code> header for the
-         * distribution.</p>  <p>If you update the distribution again, you must get a
-         * new <code>Etag</code> header.</p>  </li> <li> <p>Update the XML document
-         * that was returned in the response to your <code>GetDistributionConfig</code>
-         * request to include your changes. </p>  <p>When you edit the XML file,
-         * be aware of the following:</p> <ul> <li> <p>You must strip out the ETag
-         * parameter that is returned.</p> </li> <li> <p>Additional fields are required
-         * when you update a distribution. There may be fields included in the XML file for
-         * features that you haven't configured for your distribution. This is expected and
-         * required to successfully update the distribution.</p> </li> <li> <p>You can't
-         * change the value of <code>CallerReference</code>. If you try to change this
-         * value, CloudFront returns an <code>IllegalUpdate</code> error. </p> </li> <li>
-         * <p>The new configuration replaces the existing configuration; the values that
-         * you specify in an <code>UpdateDistribution</code> request are not merged into
-         * your existing configuration. When you add, delete, or replace values in an
-         * element that allows multiple values (for example, <code>CNAME</code>), you must
-         * specify all of the values that you want to appear in the updated distribution.
-         * In addition, you must update the corresponding <code>Quantity</code>
-         * element.</p> </li> </ul>  </li> <li> <p>Submit an
-         * <code>UpdateDistribution</code> request to update the configuration for your
-         * distribution:</p> <ul> <li> <p>In the request body, include the XML document
-         * that you updated in Step 2. The request body must include an XML document with a
-         * <code>DistributionConfig</code> element.</p> </li> <li> <p>Set the value of the
-         * HTTP <code>If-Match</code> header to the value of the <code>ETag</code> header
-         * that CloudFront returned when you submitted the
-         * <code>GetDistributionConfig</code> request in Step 1.</p> </li> </ul> </li> <li>
-         * <p>Review the response to the <code>UpdateDistribution</code> request to confirm
-         * that the configuration was successfully updated.</p> </li> <li> <p>Optional:
-         * Submit a <a
-         * href="https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetDistribution.html">GetDistribution</a>
-         * request to confirm that your changes have propagated. When propagation is
-         * complete, the value of <code>Status</code> is <code>Deployed</code>.</p> </li>
+         * <p>Updates a continuous deployment policy. You can update a continuous
+         * deployment policy to enable or disable it, to change the percentage of traffic
+         * that it sends to the staging distribution, or to change the staging distribution
+         * that it sends traffic to.</p> <p>When you update a continuous deployment policy
+         * configuration, all the fields are updated with the values that are provided in
+         * the request. You cannot update some fields independent of others. To update a
+         * continuous deployment policy configuration:</p> <ol> <li> <p>Use
+         * <code>GetContinuousDeploymentPolicyConfig</code> to get the current
+         * configuration.</p> </li> <li> <p>Locally modify the fields in the continuous
+         * deployment policy configuration that you want to update.</p> </li> <li> <p>Use
+         * <code>UpdateContinuousDeploymentPolicy</code>, providing the entire continuous
+         * deployment policy configuration, including the fields that you modified and
+         * those that you didn't.</p> </li> </ol><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateContinuousDeploymentPolicy2020_05_31">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::UpdateContinuousDeploymentPolicy2020_05_31Outcome UpdateContinuousDeploymentPolicy2020_05_31(const Model::UpdateContinuousDeploymentPolicy2020_05_31Request& request) const;
+
+        /**
+         * A Callable wrapper for UpdateContinuousDeploymentPolicy2020_05_31 that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::UpdateContinuousDeploymentPolicy2020_05_31OutcomeCallable UpdateContinuousDeploymentPolicy2020_05_31Callable(const Model::UpdateContinuousDeploymentPolicy2020_05_31Request& request) const;
+
+        /**
+         * An Async wrapper for UpdateContinuousDeploymentPolicy2020_05_31 that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void UpdateContinuousDeploymentPolicy2020_05_31Async(const Model::UpdateContinuousDeploymentPolicy2020_05_31Request& request, const UpdateContinuousDeploymentPolicy2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Updates the configuration for a CloudFront distribution.</p> <p>The update
+         * process includes getting the current distribution configuration, updating it to
+         * make your changes, and then submitting an <code>UpdateDistribution</code>
+         * request to make the updates.</p> <p> <b>To update a web distribution using the
+         * CloudFront API</b> </p> <ol> <li> <p>Use <code>GetDistributionConfig</code> to
+         * get the current configuration, including the version identifier
+         * (<code>ETag</code>).</p> </li> <li> <p>Update the distribution configuration
+         * that was returned in the response. Note the following important requirements and
+         * restrictions:</p> <ul> <li> <p>You must rename the <code>ETag</code> field to
+         * <code>IfMatch</code>, leaving the value unchanged. (Set the value of
+         * <code>IfMatch</code> to the value of <code>ETag</code>, then remove the
+         * <code>ETag</code> field.)</p> </li> <li> <p>You can't change the value of
+         * <code>CallerReference</code>.</p> </li> </ul> </li> <li> <p>Submit an
+         * <code>UpdateDistribution</code> request, providing the distribution
+         * configuration. The new configuration replaces the existing configuration. The
+         * values that you specify in an <code>UpdateDistribution</code> request are not
+         * merged into your existing configuration. Make sure to include all fields: the
+         * ones that you modified and also the ones that you didn't.</p> </li>
          * </ol><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateDistribution2020_05_31">AWS
          * API Reference</a></p>
@@ -2011,7 +2160,35 @@ namespace CloudFront
         virtual void UpdateDistribution2020_05_31Async(const Model::UpdateDistribution2020_05_31Request& request, const UpdateDistribution2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Update a field-level encryption configuration. </p><p><h3>See Also:</h3>   <a
+         * <p>Copies the staging distribution's configuration to its corresponding primary
+         * distribution. The primary distribution retains its <code>Aliases</code> (also
+         * known as alternate domain names or CNAMEs) and
+         * <code>ContinuousDeploymentPolicyId</code> value, but otherwise its configuration
+         * is overwritten to match the staging distribution.</p> <p>You can use this
+         * operation in a continuous deployment workflow after you have tested
+         * configuration changes on the staging distribution. After using a continuous
+         * deployment policy to move a portion of your domain name's traffic to the staging
+         * distribution and verifying that it works as intended, you can use this operation
+         * to copy the staging distribution's configuration to the primary distribution.
+         * This action will disable the continuous deployment policy and move your domain's
+         * traffic back to the primary distribution.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateDistributionWithStagingConfig2020_05_31">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::UpdateDistributionWithStagingConfig2020_05_31Outcome UpdateDistributionWithStagingConfig2020_05_31(const Model::UpdateDistributionWithStagingConfig2020_05_31Request& request) const;
+
+        /**
+         * A Callable wrapper for UpdateDistributionWithStagingConfig2020_05_31 that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::UpdateDistributionWithStagingConfig2020_05_31OutcomeCallable UpdateDistributionWithStagingConfig2020_05_31Callable(const Model::UpdateDistributionWithStagingConfig2020_05_31Request& request) const;
+
+        /**
+         * An Async wrapper for UpdateDistributionWithStagingConfig2020_05_31 that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void UpdateDistributionWithStagingConfig2020_05_31Async(const Model::UpdateDistributionWithStagingConfig2020_05_31Request& request, const UpdateDistributionWithStagingConfig2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Update a field-level encryption configuration.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateFieldLevelEncryptionConfig2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -2028,7 +2205,7 @@ namespace CloudFront
         virtual void UpdateFieldLevelEncryptionConfig2020_05_31Async(const Model::UpdateFieldLevelEncryptionConfig2020_05_31Request& request, const UpdateFieldLevelEncryptionConfig2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Update a field-level encryption profile. </p><p><h3>See Also:</h3>   <a
+         * <p>Update a field-level encryption profile.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateFieldLevelEncryptionProfile2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -2045,9 +2222,9 @@ namespace CloudFront
         virtual void UpdateFieldLevelEncryptionProfile2020_05_31Async(const Model::UpdateFieldLevelEncryptionProfile2020_05_31Request& request, const UpdateFieldLevelEncryptionProfile2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Updates a CloudFront function.</p> <p>You can update a function’s code or the
-         * comment that describes the function. You cannot update a function’s name.</p>
-         * <p>To update a function, you provide the function’s name and version
+         * <p>Updates a CloudFront function.</p> <p>You can update a function's code or the
+         * comment that describes the function. You cannot update a function's name.</p>
+         * <p>To update a function, you provide the function's name and version
          * (<code>ETag</code> value) along with the updated function code. To get the name
          * and version, you can use <code>ListFunctions</code> and
          * <code>DescribeFunction</code>.</p><p><h3>See Also:</h3>   <a
@@ -2074,7 +2251,7 @@ namespace CloudFront
          * </li> <li> <p>Locally modify the fields in the key group that you want to
          * update. For example, add or remove public key IDs.</p> </li> <li> <p>Call
          * <code>UpdateKeyGroup</code> with the entire key group object, including the
-         * fields that you modified and those that you didn’t.</p> </li> </ol><p><h3>See
+         * fields that you modified and those that you didn't.</p> </li> </ol><p><h3>See
          * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateKeyGroup2020_05_31">AWS
          * API Reference</a></p>
@@ -2118,7 +2295,7 @@ namespace CloudFront
          * configuration that you want to update.</p> </li> <li> <p>Call
          * <code>UpdateOriginRequestPolicy</code> by providing the entire origin request
          * policy configuration, including the fields that you modified and those that you
-         * didn’t.</p> </li> </ol><p><h3>See Also:</h3>   <a
+         * didn't.</p> </li> </ol><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateOriginRequestPolicy2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -2162,7 +2339,7 @@ namespace CloudFront
          * log configuration that you want to update.</p> </li> <li> <p>Call this API
          * (<code>UpdateRealtimeLogConfig</code>) by providing the entire real-time log
          * configuration, including the parameters that you modified and those that you
-         * didn’t.</p> </li> </ol> <p>You cannot update a real-time log configuration’s
+         * didn't.</p> </li> </ol> <p>You cannot update a real-time log configuration's
          * <code>Name</code> or <code>ARN</code>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateRealtimeLogConfig2020_05_31">AWS
          * API Reference</a></p>
@@ -2184,11 +2361,11 @@ namespace CloudFront
          * policy, the entire policy is replaced. You cannot update some policy fields
          * independent of others. To update a response headers policy configuration:</p>
          * <ol> <li> <p>Use <code>GetResponseHeadersPolicyConfig</code> to get the current
-         * policy’s configuration.</p> </li> <li> <p>Modify the fields in the response
+         * policy's configuration.</p> </li> <li> <p>Modify the fields in the response
          * headers policy configuration that you want to update.</p> </li> <li> <p>Call
          * <code>UpdateResponseHeadersPolicy</code>, providing the entire response headers
          * policy configuration, including the fields that you modified and those that you
-         * didn’t.</p> </li> </ol><p><h3>See Also:</h3>   <a
+         * didn't.</p> </li> </ol><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateResponseHeadersPolicy2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -2205,7 +2382,7 @@ namespace CloudFront
         virtual void UpdateResponseHeadersPolicy2020_05_31Async(const Model::UpdateResponseHeadersPolicy2020_05_31Request& request, const UpdateResponseHeadersPolicy2020_05_31ResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Update a streaming distribution. </p><p><h3>See Also:</h3>   <a
+         * <p>Update a streaming distribution.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateStreamingDistribution2020_05_31">AWS
          * API Reference</a></p>
          */
@@ -2223,12 +2400,14 @@ namespace CloudFront
 
 
         void OverrideEndpoint(const Aws::String& endpoint);
+        std::shared_ptr<CloudFrontEndpointProviderBase>& accessEndpointProvider();
   private:
-        void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+        friend class Aws::Client::ClientWithAsyncTemplateMethods<CloudFrontClient>;
+        void init(const CloudFrontClientConfiguration& clientConfiguration);
 
-        Aws::String m_uri;
-        Aws::String m_configScheme;
+        CloudFrontClientConfiguration m_clientConfiguration;
         std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+        std::shared_ptr<CloudFrontEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace CloudFront

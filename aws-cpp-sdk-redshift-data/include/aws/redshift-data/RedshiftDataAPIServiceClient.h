@@ -7,6 +7,7 @@
 #include <aws/redshift-data/RedshiftDataAPIService_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/redshift-data/RedshiftDataAPIServiceServiceClientModel.h>
 
@@ -20,36 +21,63 @@ namespace RedshiftDataAPIService
    * succeeds. </p> <p>For more information about the Amazon Redshift Data API and
    * CLI usage examples, see <a
    * href="https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html">Using the
-   * Amazon Redshift Data API</a> in the <i>Amazon Redshift Cluster Management
-   * Guide</i>. </p>
+   * Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>.
+   * </p>
    */
-  class AWS_REDSHIFTDATAAPISERVICE_API RedshiftDataAPIServiceClient : public Aws::Client::AWSJsonClient
+  class AWS_REDSHIFTDATAAPISERVICE_API RedshiftDataAPIServiceClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<RedshiftDataAPIServiceClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        RedshiftDataAPIServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        RedshiftDataAPIServiceClient(const Aws::RedshiftDataAPIService::RedshiftDataAPIServiceClientConfiguration& clientConfiguration = Aws::RedshiftDataAPIService::RedshiftDataAPIServiceClientConfiguration(),
+                                     std::shared_ptr<RedshiftDataAPIServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<RedshiftDataAPIServiceEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         RedshiftDataAPIServiceClient(const Aws::Auth::AWSCredentials& credentials,
-                                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                     std::shared_ptr<RedshiftDataAPIServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<RedshiftDataAPIServiceEndpointProvider>(ALLOCATION_TAG),
+                                     const Aws::RedshiftDataAPIService::RedshiftDataAPIServiceClientConfiguration& clientConfiguration = Aws::RedshiftDataAPIService::RedshiftDataAPIServiceClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         RedshiftDataAPIServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                                     const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                                     std::shared_ptr<RedshiftDataAPIServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<RedshiftDataAPIServiceEndpointProvider>(ALLOCATION_TAG),
+                                     const Aws::RedshiftDataAPIService::RedshiftDataAPIServiceClientConfiguration& clientConfiguration = Aws::RedshiftDataAPIService::RedshiftDataAPIServiceClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        RedshiftDataAPIServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        RedshiftDataAPIServiceClient(const Aws::Auth::AWSCredentials& credentials,
+                                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        RedshiftDataAPIServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                                     const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~RedshiftDataAPIServiceClient();
-
 
         /**
          * <p>Runs one or more SQL statements, which can be data manipulation language
@@ -65,7 +93,11 @@ namespace RedshiftDataAPIService
          * required. When connecting to a serverless workgroup, specify the workgroup name
          * and database name. Also, permission to call the
          * <code>redshift-serverless:GetCredentials</code> operation is required. </p>
-         * </li> </ul><p><h3>See Also:</h3>   <a
+         * </li> </ul> <p>For more information about the Amazon Redshift Data API and CLI
+         * usage examples, see <a
+         * href="https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html">Using the
+         * Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>.
+         * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-data-2019-12-20/BatchExecuteStatement">AWS
          * API Reference</a></p>
          */
@@ -82,7 +114,10 @@ namespace RedshiftDataAPIService
         virtual void BatchExecuteStatementAsync(const Model::BatchExecuteStatementRequest& request, const BatchExecuteStatementResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Cancels a running query. To be canceled, a query must be running.
+         * <p>Cancels a running query. To be canceled, a query must be running. </p> <p>For
+         * more information about the Amazon Redshift Data API and CLI usage examples, see
+         * <a href="https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html">Using
+         * the Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>.
          * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-data-2019-12-20/CancelStatement">AWS
          * API Reference</a></p>
@@ -103,7 +138,11 @@ namespace RedshiftDataAPIService
          * <p>Describes the details about a specific instance when a query was run by the
          * Amazon Redshift Data API. The information includes when the query started, when
          * it finished, the query status, the number of rows returned, and the SQL
-         * statement. </p><p><h3>See Also:</h3>   <a
+         * statement. </p> <p>For more information about the Amazon Redshift Data API and
+         * CLI usage examples, see <a
+         * href="https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html">Using the
+         * Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>.
+         * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-data-2019-12-20/DescribeStatement">AWS
          * API Reference</a></p>
          */
@@ -134,7 +173,11 @@ namespace RedshiftDataAPIService
          * connecting to a serverless workgroup, specify the workgroup name and database
          * name. Also, permission to call the
          * <code>redshift-serverless:GetCredentials</code> operation is required. </p>
-         * </li> </ul><p><h3>See Also:</h3>   <a
+         * </li> </ul> <p>For more information about the Amazon Redshift Data API and CLI
+         * usage examples, see <a
+         * href="https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html">Using the
+         * Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>.
+         * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-data-2019-12-20/DescribeTable">AWS
          * API Reference</a></p>
          */
@@ -165,7 +208,11 @@ namespace RedshiftDataAPIService
          * connecting to a serverless workgroup, specify the workgroup name and database
          * name. Also, permission to call the
          * <code>redshift-serverless:GetCredentials</code> operation is required. </p>
-         * </li> </ul><p><h3>See Also:</h3>   <a
+         * </li> </ul> <p>For more information about the Amazon Redshift Data API and CLI
+         * usage examples, see <a
+         * href="https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html">Using the
+         * Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>.
+         * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-data-2019-12-20/ExecuteStatement">AWS
          * API Reference</a></p>
          */
@@ -183,7 +230,11 @@ namespace RedshiftDataAPIService
 
         /**
          * <p>Fetches the temporarily cached result of an SQL statement. A token is
-         * returned to page through the statement results. </p><p><h3>See Also:</h3>   <a
+         * returned to page through the statement results. </p> <p>For more information
+         * about the Amazon Redshift Data API and CLI usage examples, see <a
+         * href="https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html">Using the
+         * Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>.
+         * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-data-2019-12-20/GetStatementResult">AWS
          * API Reference</a></p>
          */
@@ -213,7 +264,11 @@ namespace RedshiftDataAPIService
          * connecting to a serverless workgroup, specify the workgroup name and database
          * name. Also, permission to call the
          * <code>redshift-serverless:GetCredentials</code> operation is required. </p>
-         * </li> </ul><p><h3>See Also:</h3>   <a
+         * </li> </ul> <p>For more information about the Amazon Redshift Data API and CLI
+         * usage examples, see <a
+         * href="https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html">Using the
+         * Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>.
+         * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-data-2019-12-20/ListDatabases">AWS
          * API Reference</a></p>
          */
@@ -243,7 +298,11 @@ namespace RedshiftDataAPIService
          * connecting to a serverless workgroup, specify the workgroup name and database
          * name. Also, permission to call the
          * <code>redshift-serverless:GetCredentials</code> operation is required. </p>
-         * </li> </ul><p><h3>See Also:</h3>   <a
+         * </li> </ul> <p>For more information about the Amazon Redshift Data API and CLI
+         * usage examples, see <a
+         * href="https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html">Using the
+         * Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>.
+         * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-data-2019-12-20/ListSchemas">AWS
          * API Reference</a></p>
          */
@@ -261,8 +320,11 @@ namespace RedshiftDataAPIService
 
         /**
          * <p>List of SQL statements. By default, only finished statements are shown. A
-         * token is returned to page through the statement list. </p><p><h3>See Also:</h3> 
-         * <a
+         * token is returned to page through the statement list. </p> <p>For more
+         * information about the Amazon Redshift Data API and CLI usage examples, see <a
+         * href="https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html">Using the
+         * Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>.
+         * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-data-2019-12-20/ListStatements">AWS
          * API Reference</a></p>
          */
@@ -294,7 +356,11 @@ namespace RedshiftDataAPIService
          * connecting to a serverless workgroup, specify the workgroup name and database
          * name. Also, permission to call the
          * <code>redshift-serverless:GetCredentials</code> operation is required. </p>
-         * </li> </ul><p><h3>See Also:</h3>   <a
+         * </li> </ul> <p>For more information about the Amazon Redshift Data API and CLI
+         * usage examples, see <a
+         * href="https://docs.aws.amazon.com/redshift/latest/mgmt/data-api.html">Using the
+         * Amazon Redshift Data API</a> in the <i>Amazon Redshift Management Guide</i>.
+         * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-data-2019-12-20/ListTables">AWS
          * API Reference</a></p>
          */
@@ -312,12 +378,14 @@ namespace RedshiftDataAPIService
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<RedshiftDataAPIServiceEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<RedshiftDataAPIServiceClient>;
+      void init(const RedshiftDataAPIServiceClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      RedshiftDataAPIServiceClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<RedshiftDataAPIServiceEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace RedshiftDataAPIService

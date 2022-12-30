@@ -7,6 +7,7 @@
 #include <aws/translate/Translate_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/translate/TranslateServiceClientModel.h>
 
@@ -15,36 +16,63 @@ namespace Aws
 namespace Translate
 {
   /**
-   * <p>Provides translation between one source language and another of the same set
-   * of languages.</p>
+   * <p>Provides translation of the input content from the source language to the
+   * target language.</p>
    */
-  class AWS_TRANSLATE_API TranslateClient : public Aws::Client::AWSJsonClient
+  class AWS_TRANSLATE_API TranslateClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<TranslateClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        TranslateClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        TranslateClient(const Aws::Translate::TranslateClientConfiguration& clientConfiguration = Aws::Translate::TranslateClientConfiguration(),
+                        std::shared_ptr<TranslateEndpointProviderBase> endpointProvider = Aws::MakeShared<TranslateEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         TranslateClient(const Aws::Auth::AWSCredentials& credentials,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<TranslateEndpointProviderBase> endpointProvider = Aws::MakeShared<TranslateEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::Translate::TranslateClientConfiguration& clientConfiguration = Aws::Translate::TranslateClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         TranslateClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<TranslateEndpointProviderBase> endpointProvider = Aws::MakeShared<TranslateEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::Translate::TranslateClientConfiguration& clientConfiguration = Aws::Translate::TranslateClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        TranslateClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        TranslateClient(const Aws::Auth::AWSCredentials& credentials,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        TranslateClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~TranslateClient();
-
 
         /**
          * <p>Creates a parallel data resource in Amazon Translate by importing an input
@@ -218,7 +246,12 @@ namespace Translate
         virtual void ListParallelDataAsync(const Model::ListParallelDataRequest& request, const ListParallelDataResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * 
+         * <p>Lists all tags associated with a given Amazon Translate resource. For more
+         * information, see <a
+         * href="https://docs.aws.amazon.com/translate/latest/dg/tagging.html"> Tagging
+         * your resources</a>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/translate-2017-07-01/ListTagsForResource">AWS
+         * API Reference</a></p>
          */
         virtual Model::ListTagsForResourceOutcome ListTagsForResource(const Model::ListTagsForResourceRequest& request) const;
 
@@ -269,14 +302,17 @@ namespace Translate
         virtual void ListTextTranslationJobsAsync(const Model::ListTextTranslationJobsRequest& request, const ListTextTranslationJobsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Starts an asynchronous batch translation job. Batch translation jobs can be
-         * used to translate large volumes of text across multiple documents at once. For
-         * more information, see <a>async</a>.</p> <p>Batch translation jobs can be
-         * described with the <a>DescribeTextTranslationJob</a> operation, listed with the
+         * <p>Starts an asynchronous batch translation job. Use batch translation jobs to
+         * translate large volumes of text across multiple documents at once. For batch
+         * translation, you can input documents with different source languages (specify
+         * <code>auto</code> as the source language). You can specify one or more target
+         * languages. Batch translation translates each input document into each of the
+         * target languages. For more information, see <a
+         * href="https://docs.aws.amazon.com/translate/latest/dg/async.html">Asynchronous
+         * batch processing</a>.</p> <p>Batch translation jobs can be described with the
+         * <a>DescribeTextTranslationJob</a> operation, listed with the
          * <a>ListTextTranslationJobs</a> operation, and stopped with the
-         * <a>StopTextTranslationJob</a> operation.</p>  <p>Amazon Translate does not
-         * support batch translation of multiple source languages at once.</p>
-         * <p><h3>See Also:</h3>   <a
+         * <a>StopTextTranslationJob</a> operation.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/translate-2017-07-01/StartTextTranslationJob">AWS
          * API Reference</a></p>
          */
@@ -319,7 +355,12 @@ namespace Translate
         virtual void StopTextTranslationJobAsync(const Model::StopTextTranslationJobRequest& request, const StopTextTranslationJobResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * 
+         * <p>Associates a specific tag with a resource. A tag is a key-value pair that
+         * adds as a metadata to a resource. For more information, see <a
+         * href="https://docs.aws.amazon.com/translate/latest/dg/tagging.html"> Tagging
+         * your resources</a>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/translate-2017-07-01/TagResource">AWS
+         * API Reference</a></p>
          */
         virtual Model::TagResourceOutcome TagResource(const Model::TagResourceRequest& request) const;
 
@@ -335,8 +376,9 @@ namespace Translate
 
         /**
          * <p>Translates input text from the source language to the target language. For a
-         * list of available languages and language codes, see
-         * <a>what-is-languages</a>.</p><p><h3>See Also:</h3>   <a
+         * list of available languages and language codes, see <a
+         * href="https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html">Supported
+         * languages</a>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/translate-2017-07-01/TranslateText">AWS
          * API Reference</a></p>
          */
@@ -353,7 +395,12 @@ namespace Translate
         virtual void TranslateTextAsync(const Model::TranslateTextRequest& request, const TranslateTextResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * 
+         * <p>Removes a specific tag associated with an Amazon Translate resource. For more
+         * information, see <a
+         * href="https://docs.aws.amazon.com/translate/latest/dg/tagging.html"> Tagging
+         * your resources</a>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/translate-2017-07-01/UntagResource">AWS
+         * API Reference</a></p>
          */
         virtual Model::UntagResourceOutcome UntagResource(const Model::UntagResourceRequest& request) const;
 
@@ -387,12 +434,14 @@ namespace Translate
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<TranslateEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<TranslateClient>;
+      void init(const TranslateClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      TranslateClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<TranslateEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Translate

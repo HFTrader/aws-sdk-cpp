@@ -7,6 +7,7 @@
 #include <aws/codepipeline/CodePipeline_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/codepipeline/CodePipelineServiceClientModel.h>
 
@@ -96,33 +97,60 @@ namespace CodePipeline
    * <a>PutThirdPartyJobSuccessResult</a>, which provides details of a job
    * success.</p> </li> </ul>
    */
-  class AWS_CODEPIPELINE_API CodePipelineClient : public Aws::Client::AWSJsonClient
+  class AWS_CODEPIPELINE_API CodePipelineClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<CodePipelineClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        CodePipelineClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        CodePipelineClient(const Aws::CodePipeline::CodePipelineClientConfiguration& clientConfiguration = Aws::CodePipeline::CodePipelineClientConfiguration(),
+                           std::shared_ptr<CodePipelineEndpointProviderBase> endpointProvider = Aws::MakeShared<CodePipelineEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         CodePipelineClient(const Aws::Auth::AWSCredentials& credentials,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<CodePipelineEndpointProviderBase> endpointProvider = Aws::MakeShared<CodePipelineEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::CodePipeline::CodePipelineClientConfiguration& clientConfiguration = Aws::CodePipeline::CodePipelineClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         CodePipelineClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<CodePipelineEndpointProviderBase> endpointProvider = Aws::MakeShared<CodePipelineEndpointProvider>(ALLOCATION_TAG),
+                           const Aws::CodePipeline::CodePipelineClientConfiguration& clientConfiguration = Aws::CodePipeline::CodePipelineClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CodePipelineClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        CodePipelineClient(const Aws::Auth::AWSCredentials& credentials,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        CodePipelineClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~CodePipelineClient();
-
 
         /**
          * <p>Returns information about a specified job and whether that job has been
@@ -883,12 +911,14 @@ namespace CodePipeline
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<CodePipelineEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<CodePipelineClient>;
+      void init(const CodePipelineClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      CodePipelineClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<CodePipelineEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace CodePipeline

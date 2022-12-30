@@ -6,6 +6,7 @@
 package com.amazonaws.util.awsclientgenerator.generators.cpp.s3;
 
 import com.amazonaws.util.awsclientgenerator.domainmodels.SdkFileEntry;
+import com.amazonaws.util.awsclientgenerator.domainmodels.codegeneration.Operation;
 import com.amazonaws.util.awsclientgenerator.domainmodels.codegeneration.ServiceModel;
 import com.amazonaws.util.awsclientgenerator.domainmodels.codegeneration.Shape;
 import com.amazonaws.util.awsclientgenerator.domainmodels.codegeneration.ShapeMember;
@@ -106,12 +107,20 @@ public class S3RestXmlCppClientGenerator  extends RestXmlCppClientGenerator {
                     operationEntry.setSupportsChunkedEncoding(true);
                 });
 
-
-
         serviceModel.getOperations().values().stream()
-                .filter(operationEntry ->
-                        serviceModel.getMetadata().getNamespace().equals("S3Crt") && opsThatDoNotSupportFutureInS3CRT.contains(operationEntry.getName()))
-                .forEach(operationEntry -> operationEntry.setS3CrtSpecific(true));
+                .filter(operationEntry -> operationEntry.getName().equals("WriteGetObjectResponse"))
+                .forEach(operationEntry -> {
+                    operationEntry.setRequiresServiceNameOverride(true);
+                    operationEntry.setServiceNameOverride("s3-object-lambda");
+                    operationEntry.setSupportsChunkedEncoding(true);
+                });
+
+
+        if (serviceModel.getMetadata().getNamespace().equals("S3Crt")) {
+            serviceModel.getOperations().values().stream()
+                    .filter(operationEntry -> opsThatDoNotSupportFutureInS3CRT.contains(operationEntry.getName()))
+                    .forEach(operationEntry -> operationEntry.setS3CrtSpecific(true));
+        }
 
         Shape locationConstraints = serviceModel.getShapes().get("BucketLocationConstraint");
 
@@ -276,6 +285,15 @@ public class S3RestXmlCppClientGenerator  extends RestXmlCppClientGenerator {
         Shape shape = shapeEntry.getValue();
         VelocityContext context = createContext(serviceModel);
         context.put("shape", shape);
+        if (shape.isRequest()) {
+            for (Map.Entry<String, Operation> opEntry : serviceModel.getOperations().entrySet()) {
+                Operation op = opEntry.getValue();
+                if (op.getRequest() != null && op.getRequest().getShape().getName() == shape.getName()) {
+                    context.put("operation", op);
+                    break;
+                }
+            }
+        }
         context.put("typeInfo", new CppShapeInformation(shape, serviceModel));
         context.put("CppViewHelper", CppViewHelper.class);
         return makeFile(template, context, fileName, true);

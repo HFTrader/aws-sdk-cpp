@@ -23,13 +23,19 @@ namespace Translate
 namespace Model
 {
 
-  class AWS_TRANSLATE_API TooManyTagsException
+  /**
+   * <p>You have added too many tags to this resource. The maximum is 50
+   * tags.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/translate-2017-07-01/TooManyTagsException">AWS
+   * API Reference</a></p>
+   */
+  class TooManyTagsException
   {
   public:
-    TooManyTagsException();
-    TooManyTagsException(Aws::Utils::Json::JsonView jsonValue);
-    TooManyTagsException& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_TRANSLATE_API TooManyTagsException();
+    AWS_TRANSLATE_API TooManyTagsException(Aws::Utils::Json::JsonView jsonValue);
+    AWS_TRANSLATE_API TooManyTagsException& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_TRANSLATE_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     

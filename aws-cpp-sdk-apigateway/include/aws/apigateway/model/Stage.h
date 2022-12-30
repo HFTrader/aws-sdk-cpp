@@ -36,13 +36,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/Stage">AWS
    * API Reference</a></p>
    */
-  class AWS_APIGATEWAY_API Stage
+  class Stage
   {
   public:
-    Stage();
-    Stage(Aws::Utils::Json::JsonView jsonValue);
-    Stage& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_APIGATEWAY_API Stage();
+    AWS_APIGATEWAY_API Stage(Aws::Utils::Json::JsonView jsonValue);
+    AWS_APIGATEWAY_API Stage& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_APIGATEWAY_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -255,32 +255,50 @@ namespace Model
 
 
     /**
-     * <p>The size of the cache cluster for the stage, if enabled.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline const CacheClusterSize& GetCacheClusterSize() const{ return m_cacheClusterSize; }
 
     /**
-     * <p>The size of the cache cluster for the stage, if enabled.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline bool CacheClusterSizeHasBeenSet() const { return m_cacheClusterSizeHasBeenSet; }
 
     /**
-     * <p>The size of the cache cluster for the stage, if enabled.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline void SetCacheClusterSize(const CacheClusterSize& value) { m_cacheClusterSizeHasBeenSet = true; m_cacheClusterSize = value; }
 
     /**
-     * <p>The size of the cache cluster for the stage, if enabled.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline void SetCacheClusterSize(CacheClusterSize&& value) { m_cacheClusterSizeHasBeenSet = true; m_cacheClusterSize = std::move(value); }
 
     /**
-     * <p>The size of the cache cluster for the stage, if enabled.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline Stage& WithCacheClusterSize(const CacheClusterSize& value) { SetCacheClusterSize(value); return *this;}
 
     /**
-     * <p>The size of the cache cluster for the stage, if enabled.</p>
+     * <p>The stage's cache capacity in GB. For more information about choosing a cache
+     * size, see <a
+     * href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html">Enabling
+     * API caching to enhance responsiveness</a>.</p>
      */
     inline Stage& WithCacheClusterSize(CacheClusterSize&& value) { SetCacheClusterSize(std::move(value)); return *this;}
 

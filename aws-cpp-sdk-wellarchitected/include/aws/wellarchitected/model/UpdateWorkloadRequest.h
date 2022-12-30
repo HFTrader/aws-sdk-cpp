@@ -10,6 +10,7 @@
 #include <aws/wellarchitected/model/WorkloadEnvironment.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/wellarchitected/model/WorkloadImprovementStatus.h>
+#include <aws/wellarchitected/model/WorkloadDiscoveryConfig.h>
 #include <utility>
 
 namespace Aws
@@ -24,10 +25,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/UpdateWorkloadInput">AWS
    * API Reference</a></p>
    */
-  class AWS_WELLARCHITECTED_API UpdateWorkloadRequest : public WellArchitectedRequest
+  class UpdateWorkloadRequest : public WellArchitectedRequest
   {
   public:
-    UpdateWorkloadRequest();
+    AWS_WELLARCHITECTED_API UpdateWorkloadRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -35,7 +36,7 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "UpdateWorkload"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_WELLARCHITECTED_API Aws::String SerializePayload() const override;
 
 
     
@@ -420,6 +421,89 @@ namespace Model
     
     inline UpdateWorkloadRequest& WithImprovementStatus(WorkloadImprovementStatus&& value) { SetImprovementStatus(std::move(value)); return *this;}
 
+
+    /**
+     * <p>Well-Architected discovery configuration settings to associate to the
+     * workload.</p>
+     */
+    inline const WorkloadDiscoveryConfig& GetDiscoveryConfig() const{ return m_discoveryConfig; }
+
+    /**
+     * <p>Well-Architected discovery configuration settings to associate to the
+     * workload.</p>
+     */
+    inline bool DiscoveryConfigHasBeenSet() const { return m_discoveryConfigHasBeenSet; }
+
+    /**
+     * <p>Well-Architected discovery configuration settings to associate to the
+     * workload.</p>
+     */
+    inline void SetDiscoveryConfig(const WorkloadDiscoveryConfig& value) { m_discoveryConfigHasBeenSet = true; m_discoveryConfig = value; }
+
+    /**
+     * <p>Well-Architected discovery configuration settings to associate to the
+     * workload.</p>
+     */
+    inline void SetDiscoveryConfig(WorkloadDiscoveryConfig&& value) { m_discoveryConfigHasBeenSet = true; m_discoveryConfig = std::move(value); }
+
+    /**
+     * <p>Well-Architected discovery configuration settings to associate to the
+     * workload.</p>
+     */
+    inline UpdateWorkloadRequest& WithDiscoveryConfig(const WorkloadDiscoveryConfig& value) { SetDiscoveryConfig(value); return *this;}
+
+    /**
+     * <p>Well-Architected discovery configuration settings to associate to the
+     * workload.</p>
+     */
+    inline UpdateWorkloadRequest& WithDiscoveryConfig(WorkloadDiscoveryConfig&& value) { SetDiscoveryConfig(std::move(value)); return *this;}
+
+
+    /**
+     * <p>List of AppRegistry application ARNs to associate to the workload.</p>
+     */
+    inline const Aws::Vector<Aws::String>& GetApplications() const{ return m_applications; }
+
+    /**
+     * <p>List of AppRegistry application ARNs to associate to the workload.</p>
+     */
+    inline bool ApplicationsHasBeenSet() const { return m_applicationsHasBeenSet; }
+
+    /**
+     * <p>List of AppRegistry application ARNs to associate to the workload.</p>
+     */
+    inline void SetApplications(const Aws::Vector<Aws::String>& value) { m_applicationsHasBeenSet = true; m_applications = value; }
+
+    /**
+     * <p>List of AppRegistry application ARNs to associate to the workload.</p>
+     */
+    inline void SetApplications(Aws::Vector<Aws::String>&& value) { m_applicationsHasBeenSet = true; m_applications = std::move(value); }
+
+    /**
+     * <p>List of AppRegistry application ARNs to associate to the workload.</p>
+     */
+    inline UpdateWorkloadRequest& WithApplications(const Aws::Vector<Aws::String>& value) { SetApplications(value); return *this;}
+
+    /**
+     * <p>List of AppRegistry application ARNs to associate to the workload.</p>
+     */
+    inline UpdateWorkloadRequest& WithApplications(Aws::Vector<Aws::String>&& value) { SetApplications(std::move(value)); return *this;}
+
+    /**
+     * <p>List of AppRegistry application ARNs to associate to the workload.</p>
+     */
+    inline UpdateWorkloadRequest& AddApplications(const Aws::String& value) { m_applicationsHasBeenSet = true; m_applications.push_back(value); return *this; }
+
+    /**
+     * <p>List of AppRegistry application ARNs to associate to the workload.</p>
+     */
+    inline UpdateWorkloadRequest& AddApplications(Aws::String&& value) { m_applicationsHasBeenSet = true; m_applications.push_back(std::move(value)); return *this; }
+
+    /**
+     * <p>List of AppRegistry application ARNs to associate to the workload.</p>
+     */
+    inline UpdateWorkloadRequest& AddApplications(const char* value) { m_applicationsHasBeenSet = true; m_applications.push_back(value); return *this; }
+
   private:
 
     Aws::String m_workloadId;
@@ -466,6 +550,12 @@ namespace Model
 
     WorkloadImprovementStatus m_improvementStatus;
     bool m_improvementStatusHasBeenSet = false;
+
+    WorkloadDiscoveryConfig m_discoveryConfig;
+    bool m_discoveryConfigHasBeenSet = false;
+
+    Aws::Vector<Aws::String> m_applications;
+    bool m_applicationsHasBeenSet = false;
   };
 
 } // namespace Model

@@ -7,6 +7,7 @@
 #include <aws/greengrassv2/GreengrassV2_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/greengrassv2/GreengrassV2ServiceClientModel.h>
 
@@ -30,33 +31,60 @@ namespace GreengrassV2
    * href="https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html">What
    * is IoT Greengrass?</a> in the <i>IoT Greengrass V2 Developer Guide</i>.</p>
    */
-  class AWS_GREENGRASSV2_API GreengrassV2Client : public Aws::Client::AWSJsonClient
+  class AWS_GREENGRASSV2_API GreengrassV2Client : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<GreengrassV2Client>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        GreengrassV2Client(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        GreengrassV2Client(const Aws::GreengrassV2::GreengrassV2ClientConfiguration& clientConfiguration = Aws::GreengrassV2::GreengrassV2ClientConfiguration(),
+                           std::shared_ptr<GreengrassV2EndpointProviderBase> endpointProvider = Aws::MakeShared<GreengrassV2EndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         GreengrassV2Client(const Aws::Auth::AWSCredentials& credentials,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<GreengrassV2EndpointProviderBase> endpointProvider = Aws::MakeShared<GreengrassV2EndpointProvider>(ALLOCATION_TAG),
+                           const Aws::GreengrassV2::GreengrassV2ClientConfiguration& clientConfiguration = Aws::GreengrassV2::GreengrassV2ClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         GreengrassV2Client(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                           const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                           std::shared_ptr<GreengrassV2EndpointProviderBase> endpointProvider = Aws::MakeShared<GreengrassV2EndpointProvider>(ALLOCATION_TAG),
+                           const Aws::GreengrassV2::GreengrassV2ClientConfiguration& clientConfiguration = Aws::GreengrassV2::GreengrassV2ClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GreengrassV2Client(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        GreengrassV2Client(const Aws::Auth::AWSCredentials& credentials,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        GreengrassV2Client(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                           const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~GreengrassV2Client();
-
 
         /**
          * <p>Associates a Greengrass service role with IoT Greengrass for your Amazon Web
@@ -740,12 +768,14 @@ namespace GreengrassV2
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<GreengrassV2EndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<GreengrassV2Client>;
+      void init(const GreengrassV2ClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      GreengrassV2ClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<GreengrassV2EndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace GreengrassV2

@@ -56,7 +56,13 @@ ReplicationGroup::ReplicationGroup() :
     m_dataTiering(DataTieringStatus::NOT_SET),
     m_dataTieringHasBeenSet(false),
     m_autoMinorVersionUpgrade(false),
-    m_autoMinorVersionUpgradeHasBeenSet(false)
+    m_autoMinorVersionUpgradeHasBeenSet(false),
+    m_networkType(NetworkType::NOT_SET),
+    m_networkTypeHasBeenSet(false),
+    m_ipDiscovery(IpDiscovery::NOT_SET),
+    m_ipDiscoveryHasBeenSet(false),
+    m_transitEncryptionMode(TransitEncryptionMode::NOT_SET),
+    m_transitEncryptionModeHasBeenSet(false)
 {
 }
 
@@ -96,7 +102,13 @@ ReplicationGroup::ReplicationGroup(const XmlNode& xmlNode) :
     m_dataTiering(DataTieringStatus::NOT_SET),
     m_dataTieringHasBeenSet(false),
     m_autoMinorVersionUpgrade(false),
-    m_autoMinorVersionUpgradeHasBeenSet(false)
+    m_autoMinorVersionUpgradeHasBeenSet(false),
+    m_networkType(NetworkType::NOT_SET),
+    m_networkTypeHasBeenSet(false),
+    m_ipDiscovery(IpDiscovery::NOT_SET),
+    m_ipDiscoveryHasBeenSet(false),
+    m_transitEncryptionMode(TransitEncryptionMode::NOT_SET),
+    m_transitEncryptionModeHasBeenSet(false)
 {
   *this = xmlNode;
 }
@@ -299,6 +311,24 @@ ReplicationGroup& ReplicationGroup::operator =(const XmlNode& xmlNode)
       m_autoMinorVersionUpgrade = StringUtils::ConvertToBool(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(autoMinorVersionUpgradeNode.GetText()).c_str()).c_str());
       m_autoMinorVersionUpgradeHasBeenSet = true;
     }
+    XmlNode networkTypeNode = resultNode.FirstChild("NetworkType");
+    if(!networkTypeNode.IsNull())
+    {
+      m_networkType = NetworkTypeMapper::GetNetworkTypeForName(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(networkTypeNode.GetText()).c_str()).c_str());
+      m_networkTypeHasBeenSet = true;
+    }
+    XmlNode ipDiscoveryNode = resultNode.FirstChild("IpDiscovery");
+    if(!ipDiscoveryNode.IsNull())
+    {
+      m_ipDiscovery = IpDiscoveryMapper::GetIpDiscoveryForName(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(ipDiscoveryNode.GetText()).c_str()).c_str());
+      m_ipDiscoveryHasBeenSet = true;
+    }
+    XmlNode transitEncryptionModeNode = resultNode.FirstChild("TransitEncryptionMode");
+    if(!transitEncryptionModeNode.IsNull())
+    {
+      m_transitEncryptionMode = TransitEncryptionModeMapper::GetTransitEncryptionModeForName(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(transitEncryptionModeNode.GetText()).c_str()).c_str());
+      m_transitEncryptionModeHasBeenSet = true;
+    }
   }
 
   return *this;
@@ -471,6 +501,21 @@ void ReplicationGroup::OutputToStream(Aws::OStream& oStream, const char* locatio
       oStream << location << index << locationValue << ".AutoMinorVersionUpgrade=" << std::boolalpha << m_autoMinorVersionUpgrade << "&";
   }
 
+  if(m_networkTypeHasBeenSet)
+  {
+      oStream << location << index << locationValue << ".NetworkType=" << NetworkTypeMapper::GetNameForNetworkType(m_networkType) << "&";
+  }
+
+  if(m_ipDiscoveryHasBeenSet)
+  {
+      oStream << location << index << locationValue << ".IpDiscovery=" << IpDiscoveryMapper::GetNameForIpDiscovery(m_ipDiscovery) << "&";
+  }
+
+  if(m_transitEncryptionModeHasBeenSet)
+  {
+      oStream << location << index << locationValue << ".TransitEncryptionMode=" << TransitEncryptionModeMapper::GetNameForTransitEncryptionMode(m_transitEncryptionMode) << "&";
+  }
+
 }
 
 void ReplicationGroup::OutputToStream(Aws::OStream& oStream, const char* location) const
@@ -612,6 +657,18 @@ void ReplicationGroup::OutputToStream(Aws::OStream& oStream, const char* locatio
   if(m_autoMinorVersionUpgradeHasBeenSet)
   {
       oStream << location << ".AutoMinorVersionUpgrade=" << std::boolalpha << m_autoMinorVersionUpgrade << "&";
+  }
+  if(m_networkTypeHasBeenSet)
+  {
+      oStream << location << ".NetworkType=" << NetworkTypeMapper::GetNameForNetworkType(m_networkType) << "&";
+  }
+  if(m_ipDiscoveryHasBeenSet)
+  {
+      oStream << location << ".IpDiscovery=" << IpDiscoveryMapper::GetNameForIpDiscovery(m_ipDiscovery) << "&";
+  }
+  if(m_transitEncryptionModeHasBeenSet)
+  {
+      oStream << location << ".TransitEncryptionMode=" << TransitEncryptionModeMapper::GetNameForTransitEncryptionMode(m_transitEncryptionMode) << "&";
   }
 }
 

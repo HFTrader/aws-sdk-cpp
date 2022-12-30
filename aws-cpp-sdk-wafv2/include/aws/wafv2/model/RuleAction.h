@@ -9,6 +9,7 @@
 #include <aws/wafv2/model/AllowAction.h>
 #include <aws/wafv2/model/CountAction.h>
 #include <aws/wafv2/model/CaptchaAction.h>
+#include <aws/wafv2/model/ChallengeAction.h>
 #include <utility>
 
 namespace Aws
@@ -33,13 +34,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/RuleAction">AWS
    * API Reference</a></p>
    */
-  class AWS_WAFV2_API RuleAction
+  class RuleAction
   {
   public:
-    RuleAction();
-    RuleAction(Aws::Utils::Json::JsonView jsonValue);
-    RuleAction& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_WAFV2_API RuleAction();
+    AWS_WAFV2_API RuleAction(Aws::Utils::Json::JsonView jsonValue);
+    AWS_WAFV2_API RuleAction& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_WAFV2_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -177,6 +178,43 @@ namespace Model
      */
     inline RuleAction& WithCaptcha(CaptchaAction&& value) { SetCaptcha(std::move(value)); return *this;}
 
+
+    /**
+     * <p>Instructs WAF to run a <code>Challenge</code> check against the web
+     * request.</p>
+     */
+    inline const ChallengeAction& GetChallenge() const{ return m_challenge; }
+
+    /**
+     * <p>Instructs WAF to run a <code>Challenge</code> check against the web
+     * request.</p>
+     */
+    inline bool ChallengeHasBeenSet() const { return m_challengeHasBeenSet; }
+
+    /**
+     * <p>Instructs WAF to run a <code>Challenge</code> check against the web
+     * request.</p>
+     */
+    inline void SetChallenge(const ChallengeAction& value) { m_challengeHasBeenSet = true; m_challenge = value; }
+
+    /**
+     * <p>Instructs WAF to run a <code>Challenge</code> check against the web
+     * request.</p>
+     */
+    inline void SetChallenge(ChallengeAction&& value) { m_challengeHasBeenSet = true; m_challenge = std::move(value); }
+
+    /**
+     * <p>Instructs WAF to run a <code>Challenge</code> check against the web
+     * request.</p>
+     */
+    inline RuleAction& WithChallenge(const ChallengeAction& value) { SetChallenge(value); return *this;}
+
+    /**
+     * <p>Instructs WAF to run a <code>Challenge</code> check against the web
+     * request.</p>
+     */
+    inline RuleAction& WithChallenge(ChallengeAction&& value) { SetChallenge(std::move(value)); return *this;}
+
   private:
 
     BlockAction m_block;
@@ -190,6 +228,9 @@ namespace Model
 
     CaptchaAction m_captcha;
     bool m_captchaHasBeenSet = false;
+
+    ChallengeAction m_challenge;
+    bool m_challengeHasBeenSet = false;
   };
 
 } // namespace Model

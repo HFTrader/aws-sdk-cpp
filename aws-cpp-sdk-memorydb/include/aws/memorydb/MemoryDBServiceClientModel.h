@@ -7,10 +7,12 @@
 
 /* Generic header includes */
 #include <aws/memorydb/MemoryDBErrors.h>
+#include <aws/core/client/GenericClientConfiguration.h>
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/client/AsyncCallerContext.h>
 #include <aws/core/http/HttpTypes.h>
+#include <aws/memorydb/MemoryDBEndpointProvider.h>
 #include <future>
 #include <functional>
 /* End of generic header includes */
@@ -36,6 +38,8 @@
 #include <aws/memorydb/model/DescribeEventsResult.h>
 #include <aws/memorydb/model/DescribeParameterGroupsResult.h>
 #include <aws/memorydb/model/DescribeParametersResult.h>
+#include <aws/memorydb/model/DescribeReservedNodesResult.h>
+#include <aws/memorydb/model/DescribeReservedNodesOfferingsResult.h>
 #include <aws/memorydb/model/DescribeServiceUpdatesResult.h>
 #include <aws/memorydb/model/DescribeSnapshotsResult.h>
 #include <aws/memorydb/model/DescribeSubnetGroupsResult.h>
@@ -43,6 +47,7 @@
 #include <aws/memorydb/model/FailoverShardResult.h>
 #include <aws/memorydb/model/ListAllowedNodeTypeUpdatesResult.h>
 #include <aws/memorydb/model/ListTagsResult.h>
+#include <aws/memorydb/model/PurchaseReservedNodesOfferingResult.h>
 #include <aws/memorydb/model/ResetParameterGroupResult.h>
 #include <aws/memorydb/model/TagResourceResult.h>
 #include <aws/memorydb/model/UntagResourceResult.h>
@@ -84,6 +89,10 @@ namespace Aws
 
   namespace MemoryDB
   {
+    using MemoryDBClientConfiguration = Aws::Client::GenericClientConfiguration<false>;
+    using MemoryDBEndpointProviderBase = Aws::MemoryDB::Endpoint::MemoryDBEndpointProviderBase;
+    using MemoryDBEndpointProvider = Aws::MemoryDB::Endpoint::MemoryDBEndpointProvider;
+
     namespace Model
     {
       /* Service model forward declarations required in MemoryDBClient header */
@@ -107,6 +116,8 @@ namespace Aws
       class DescribeEventsRequest;
       class DescribeParameterGroupsRequest;
       class DescribeParametersRequest;
+      class DescribeReservedNodesRequest;
+      class DescribeReservedNodesOfferingsRequest;
       class DescribeServiceUpdatesRequest;
       class DescribeSnapshotsRequest;
       class DescribeSubnetGroupsRequest;
@@ -114,6 +125,7 @@ namespace Aws
       class FailoverShardRequest;
       class ListAllowedNodeTypeUpdatesRequest;
       class ListTagsRequest;
+      class PurchaseReservedNodesOfferingRequest;
       class ResetParameterGroupRequest;
       class TagResourceRequest;
       class UntagResourceRequest;
@@ -145,6 +157,8 @@ namespace Aws
       typedef Aws::Utils::Outcome<DescribeEventsResult, MemoryDBError> DescribeEventsOutcome;
       typedef Aws::Utils::Outcome<DescribeParameterGroupsResult, MemoryDBError> DescribeParameterGroupsOutcome;
       typedef Aws::Utils::Outcome<DescribeParametersResult, MemoryDBError> DescribeParametersOutcome;
+      typedef Aws::Utils::Outcome<DescribeReservedNodesResult, MemoryDBError> DescribeReservedNodesOutcome;
+      typedef Aws::Utils::Outcome<DescribeReservedNodesOfferingsResult, MemoryDBError> DescribeReservedNodesOfferingsOutcome;
       typedef Aws::Utils::Outcome<DescribeServiceUpdatesResult, MemoryDBError> DescribeServiceUpdatesOutcome;
       typedef Aws::Utils::Outcome<DescribeSnapshotsResult, MemoryDBError> DescribeSnapshotsOutcome;
       typedef Aws::Utils::Outcome<DescribeSubnetGroupsResult, MemoryDBError> DescribeSubnetGroupsOutcome;
@@ -152,6 +166,7 @@ namespace Aws
       typedef Aws::Utils::Outcome<FailoverShardResult, MemoryDBError> FailoverShardOutcome;
       typedef Aws::Utils::Outcome<ListAllowedNodeTypeUpdatesResult, MemoryDBError> ListAllowedNodeTypeUpdatesOutcome;
       typedef Aws::Utils::Outcome<ListTagsResult, MemoryDBError> ListTagsOutcome;
+      typedef Aws::Utils::Outcome<PurchaseReservedNodesOfferingResult, MemoryDBError> PurchaseReservedNodesOfferingOutcome;
       typedef Aws::Utils::Outcome<ResetParameterGroupResult, MemoryDBError> ResetParameterGroupOutcome;
       typedef Aws::Utils::Outcome<TagResourceResult, MemoryDBError> TagResourceOutcome;
       typedef Aws::Utils::Outcome<UntagResourceResult, MemoryDBError> UntagResourceOutcome;
@@ -183,6 +198,8 @@ namespace Aws
       typedef std::future<DescribeEventsOutcome> DescribeEventsOutcomeCallable;
       typedef std::future<DescribeParameterGroupsOutcome> DescribeParameterGroupsOutcomeCallable;
       typedef std::future<DescribeParametersOutcome> DescribeParametersOutcomeCallable;
+      typedef std::future<DescribeReservedNodesOutcome> DescribeReservedNodesOutcomeCallable;
+      typedef std::future<DescribeReservedNodesOfferingsOutcome> DescribeReservedNodesOfferingsOutcomeCallable;
       typedef std::future<DescribeServiceUpdatesOutcome> DescribeServiceUpdatesOutcomeCallable;
       typedef std::future<DescribeSnapshotsOutcome> DescribeSnapshotsOutcomeCallable;
       typedef std::future<DescribeSubnetGroupsOutcome> DescribeSubnetGroupsOutcomeCallable;
@@ -190,6 +207,7 @@ namespace Aws
       typedef std::future<FailoverShardOutcome> FailoverShardOutcomeCallable;
       typedef std::future<ListAllowedNodeTypeUpdatesOutcome> ListAllowedNodeTypeUpdatesOutcomeCallable;
       typedef std::future<ListTagsOutcome> ListTagsOutcomeCallable;
+      typedef std::future<PurchaseReservedNodesOfferingOutcome> PurchaseReservedNodesOfferingOutcomeCallable;
       typedef std::future<ResetParameterGroupOutcome> ResetParameterGroupOutcomeCallable;
       typedef std::future<TagResourceOutcome> TagResourceOutcomeCallable;
       typedef std::future<UntagResourceOutcome> UntagResourceOutcomeCallable;
@@ -224,6 +242,8 @@ namespace Aws
     typedef std::function<void(const MemoryDBClient*, const Model::DescribeEventsRequest&, const Model::DescribeEventsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DescribeEventsResponseReceivedHandler;
     typedef std::function<void(const MemoryDBClient*, const Model::DescribeParameterGroupsRequest&, const Model::DescribeParameterGroupsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DescribeParameterGroupsResponseReceivedHandler;
     typedef std::function<void(const MemoryDBClient*, const Model::DescribeParametersRequest&, const Model::DescribeParametersOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DescribeParametersResponseReceivedHandler;
+    typedef std::function<void(const MemoryDBClient*, const Model::DescribeReservedNodesRequest&, const Model::DescribeReservedNodesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DescribeReservedNodesResponseReceivedHandler;
+    typedef std::function<void(const MemoryDBClient*, const Model::DescribeReservedNodesOfferingsRequest&, const Model::DescribeReservedNodesOfferingsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DescribeReservedNodesOfferingsResponseReceivedHandler;
     typedef std::function<void(const MemoryDBClient*, const Model::DescribeServiceUpdatesRequest&, const Model::DescribeServiceUpdatesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DescribeServiceUpdatesResponseReceivedHandler;
     typedef std::function<void(const MemoryDBClient*, const Model::DescribeSnapshotsRequest&, const Model::DescribeSnapshotsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DescribeSnapshotsResponseReceivedHandler;
     typedef std::function<void(const MemoryDBClient*, const Model::DescribeSubnetGroupsRequest&, const Model::DescribeSubnetGroupsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DescribeSubnetGroupsResponseReceivedHandler;
@@ -231,6 +251,7 @@ namespace Aws
     typedef std::function<void(const MemoryDBClient*, const Model::FailoverShardRequest&, const Model::FailoverShardOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > FailoverShardResponseReceivedHandler;
     typedef std::function<void(const MemoryDBClient*, const Model::ListAllowedNodeTypeUpdatesRequest&, const Model::ListAllowedNodeTypeUpdatesOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > ListAllowedNodeTypeUpdatesResponseReceivedHandler;
     typedef std::function<void(const MemoryDBClient*, const Model::ListTagsRequest&, const Model::ListTagsOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > ListTagsResponseReceivedHandler;
+    typedef std::function<void(const MemoryDBClient*, const Model::PurchaseReservedNodesOfferingRequest&, const Model::PurchaseReservedNodesOfferingOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > PurchaseReservedNodesOfferingResponseReceivedHandler;
     typedef std::function<void(const MemoryDBClient*, const Model::ResetParameterGroupRequest&, const Model::ResetParameterGroupOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > ResetParameterGroupResponseReceivedHandler;
     typedef std::function<void(const MemoryDBClient*, const Model::TagResourceRequest&, const Model::TagResourceOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > TagResourceResponseReceivedHandler;
     typedef std::function<void(const MemoryDBClient*, const Model::UntagResourceRequest&, const Model::UntagResourceOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > UntagResourceResponseReceivedHandler;

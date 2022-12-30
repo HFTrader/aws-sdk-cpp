@@ -7,6 +7,7 @@
 #include <aws/synthetics/Synthetics_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/synthetics/SyntheticsServiceClientModel.h>
 
@@ -31,33 +32,60 @@ namespace Synthetics
    * href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/servicelens_canaries_security.html">Security
    * Considerations for Synthetics Canaries</a>.</p>
    */
-  class AWS_SYNTHETICS_API SyntheticsClient : public Aws::Client::AWSJsonClient
+  class AWS_SYNTHETICS_API SyntheticsClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<SyntheticsClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        SyntheticsClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        SyntheticsClient(const Aws::Synthetics::SyntheticsClientConfiguration& clientConfiguration = Aws::Synthetics::SyntheticsClientConfiguration(),
+                         std::shared_ptr<SyntheticsEndpointProviderBase> endpointProvider = Aws::MakeShared<SyntheticsEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         SyntheticsClient(const Aws::Auth::AWSCredentials& credentials,
-                         const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                         std::shared_ptr<SyntheticsEndpointProviderBase> endpointProvider = Aws::MakeShared<SyntheticsEndpointProvider>(ALLOCATION_TAG),
+                         const Aws::Synthetics::SyntheticsClientConfiguration& clientConfiguration = Aws::Synthetics::SyntheticsClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         SyntheticsClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                         const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                         std::shared_ptr<SyntheticsEndpointProviderBase> endpointProvider = Aws::MakeShared<SyntheticsEndpointProvider>(ALLOCATION_TAG),
+                         const Aws::Synthetics::SyntheticsClientConfiguration& clientConfiguration = Aws::Synthetics::SyntheticsClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SyntheticsClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        SyntheticsClient(const Aws::Auth::AWSCredentials& credentials,
+                         const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        SyntheticsClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                         const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~SyntheticsClient();
-
 
         /**
          * <p>Associates a canary with a group. Using groups can help you with managing and
@@ -537,12 +565,14 @@ namespace Synthetics
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<SyntheticsEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<SyntheticsClient>;
+      void init(const SyntheticsClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      SyntheticsClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<SyntheticsEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Synthetics

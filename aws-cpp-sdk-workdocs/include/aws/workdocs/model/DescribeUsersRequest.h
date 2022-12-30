@@ -25,10 +25,10 @@ namespace Model
 
   /**
    */
-  class AWS_WORKDOCS_API DescribeUsersRequest : public WorkDocsRequest
+  class DescribeUsersRequest : public WorkDocsRequest
   {
   public:
-    DescribeUsersRequest();
+    AWS_WORKDOCS_API DescribeUsersRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -36,11 +36,11 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "DescribeUsers"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_WORKDOCS_API Aws::String SerializePayload() const override;
 
-    void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+    AWS_WORKDOCS_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_WORKDOCS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 
     /**
@@ -175,42 +175,146 @@ namespace Model
 
 
     /**
-     * <p>A query to filter users by user name.</p>
+     * <p>A query to filter users by user name. Remember the following about the
+     * <code>Userids</code> and <code>Query</code> parameters:</p> <ul> <li> <p>If you
+     * don't use either parameter, the API returns a paginated list of all users on the
+     * site.</p> </li> <li> <p>If you use both parameters, the API ignores the
+     * <code>Query</code> parameter.</p> </li> <li> <p>The <code>Userid</code>
+     * parameter only returns user names that match a corresponding user ID.</p> </li>
+     * <li> <p>The <code>Query</code> parameter runs a "prefix" search for users by the
+     * <code>GivenName</code>, <code>SurName</code>, or <code>UserName</code> fields
+     * included in a <a
+     * href="https://docs.aws.amazon.com/workdocs/latest/APIReference/API_CreateUser.html">CreateUser</a>
+     * API call. For example, querying on <code>Ma</code> returns Márcia Oliveira,
+     * María García, and Mateo Jackson. If you use multiple characters, the API only
+     * returns data that matches all characters. For example, querying on <code>Ma
+     * J</code> only returns Mateo Jackson.</p> </li> </ul>
      */
     inline const Aws::String& GetQuery() const{ return m_query; }
 
     /**
-     * <p>A query to filter users by user name.</p>
+     * <p>A query to filter users by user name. Remember the following about the
+     * <code>Userids</code> and <code>Query</code> parameters:</p> <ul> <li> <p>If you
+     * don't use either parameter, the API returns a paginated list of all users on the
+     * site.</p> </li> <li> <p>If you use both parameters, the API ignores the
+     * <code>Query</code> parameter.</p> </li> <li> <p>The <code>Userid</code>
+     * parameter only returns user names that match a corresponding user ID.</p> </li>
+     * <li> <p>The <code>Query</code> parameter runs a "prefix" search for users by the
+     * <code>GivenName</code>, <code>SurName</code>, or <code>UserName</code> fields
+     * included in a <a
+     * href="https://docs.aws.amazon.com/workdocs/latest/APIReference/API_CreateUser.html">CreateUser</a>
+     * API call. For example, querying on <code>Ma</code> returns Márcia Oliveira,
+     * María García, and Mateo Jackson. If you use multiple characters, the API only
+     * returns data that matches all characters. For example, querying on <code>Ma
+     * J</code> only returns Mateo Jackson.</p> </li> </ul>
      */
     inline bool QueryHasBeenSet() const { return m_queryHasBeenSet; }
 
     /**
-     * <p>A query to filter users by user name.</p>
+     * <p>A query to filter users by user name. Remember the following about the
+     * <code>Userids</code> and <code>Query</code> parameters:</p> <ul> <li> <p>If you
+     * don't use either parameter, the API returns a paginated list of all users on the
+     * site.</p> </li> <li> <p>If you use both parameters, the API ignores the
+     * <code>Query</code> parameter.</p> </li> <li> <p>The <code>Userid</code>
+     * parameter only returns user names that match a corresponding user ID.</p> </li>
+     * <li> <p>The <code>Query</code> parameter runs a "prefix" search for users by the
+     * <code>GivenName</code>, <code>SurName</code>, or <code>UserName</code> fields
+     * included in a <a
+     * href="https://docs.aws.amazon.com/workdocs/latest/APIReference/API_CreateUser.html">CreateUser</a>
+     * API call. For example, querying on <code>Ma</code> returns Márcia Oliveira,
+     * María García, and Mateo Jackson. If you use multiple characters, the API only
+     * returns data that matches all characters. For example, querying on <code>Ma
+     * J</code> only returns Mateo Jackson.</p> </li> </ul>
      */
     inline void SetQuery(const Aws::String& value) { m_queryHasBeenSet = true; m_query = value; }
 
     /**
-     * <p>A query to filter users by user name.</p>
+     * <p>A query to filter users by user name. Remember the following about the
+     * <code>Userids</code> and <code>Query</code> parameters:</p> <ul> <li> <p>If you
+     * don't use either parameter, the API returns a paginated list of all users on the
+     * site.</p> </li> <li> <p>If you use both parameters, the API ignores the
+     * <code>Query</code> parameter.</p> </li> <li> <p>The <code>Userid</code>
+     * parameter only returns user names that match a corresponding user ID.</p> </li>
+     * <li> <p>The <code>Query</code> parameter runs a "prefix" search for users by the
+     * <code>GivenName</code>, <code>SurName</code>, or <code>UserName</code> fields
+     * included in a <a
+     * href="https://docs.aws.amazon.com/workdocs/latest/APIReference/API_CreateUser.html">CreateUser</a>
+     * API call. For example, querying on <code>Ma</code> returns Márcia Oliveira,
+     * María García, and Mateo Jackson. If you use multiple characters, the API only
+     * returns data that matches all characters. For example, querying on <code>Ma
+     * J</code> only returns Mateo Jackson.</p> </li> </ul>
      */
     inline void SetQuery(Aws::String&& value) { m_queryHasBeenSet = true; m_query = std::move(value); }
 
     /**
-     * <p>A query to filter users by user name.</p>
+     * <p>A query to filter users by user name. Remember the following about the
+     * <code>Userids</code> and <code>Query</code> parameters:</p> <ul> <li> <p>If you
+     * don't use either parameter, the API returns a paginated list of all users on the
+     * site.</p> </li> <li> <p>If you use both parameters, the API ignores the
+     * <code>Query</code> parameter.</p> </li> <li> <p>The <code>Userid</code>
+     * parameter only returns user names that match a corresponding user ID.</p> </li>
+     * <li> <p>The <code>Query</code> parameter runs a "prefix" search for users by the
+     * <code>GivenName</code>, <code>SurName</code>, or <code>UserName</code> fields
+     * included in a <a
+     * href="https://docs.aws.amazon.com/workdocs/latest/APIReference/API_CreateUser.html">CreateUser</a>
+     * API call. For example, querying on <code>Ma</code> returns Márcia Oliveira,
+     * María García, and Mateo Jackson. If you use multiple characters, the API only
+     * returns data that matches all characters. For example, querying on <code>Ma
+     * J</code> only returns Mateo Jackson.</p> </li> </ul>
      */
     inline void SetQuery(const char* value) { m_queryHasBeenSet = true; m_query.assign(value); }
 
     /**
-     * <p>A query to filter users by user name.</p>
+     * <p>A query to filter users by user name. Remember the following about the
+     * <code>Userids</code> and <code>Query</code> parameters:</p> <ul> <li> <p>If you
+     * don't use either parameter, the API returns a paginated list of all users on the
+     * site.</p> </li> <li> <p>If you use both parameters, the API ignores the
+     * <code>Query</code> parameter.</p> </li> <li> <p>The <code>Userid</code>
+     * parameter only returns user names that match a corresponding user ID.</p> </li>
+     * <li> <p>The <code>Query</code> parameter runs a "prefix" search for users by the
+     * <code>GivenName</code>, <code>SurName</code>, or <code>UserName</code> fields
+     * included in a <a
+     * href="https://docs.aws.amazon.com/workdocs/latest/APIReference/API_CreateUser.html">CreateUser</a>
+     * API call. For example, querying on <code>Ma</code> returns Márcia Oliveira,
+     * María García, and Mateo Jackson. If you use multiple characters, the API only
+     * returns data that matches all characters. For example, querying on <code>Ma
+     * J</code> only returns Mateo Jackson.</p> </li> </ul>
      */
     inline DescribeUsersRequest& WithQuery(const Aws::String& value) { SetQuery(value); return *this;}
 
     /**
-     * <p>A query to filter users by user name.</p>
+     * <p>A query to filter users by user name. Remember the following about the
+     * <code>Userids</code> and <code>Query</code> parameters:</p> <ul> <li> <p>If you
+     * don't use either parameter, the API returns a paginated list of all users on the
+     * site.</p> </li> <li> <p>If you use both parameters, the API ignores the
+     * <code>Query</code> parameter.</p> </li> <li> <p>The <code>Userid</code>
+     * parameter only returns user names that match a corresponding user ID.</p> </li>
+     * <li> <p>The <code>Query</code> parameter runs a "prefix" search for users by the
+     * <code>GivenName</code>, <code>SurName</code>, or <code>UserName</code> fields
+     * included in a <a
+     * href="https://docs.aws.amazon.com/workdocs/latest/APIReference/API_CreateUser.html">CreateUser</a>
+     * API call. For example, querying on <code>Ma</code> returns Márcia Oliveira,
+     * María García, and Mateo Jackson. If you use multiple characters, the API only
+     * returns data that matches all characters. For example, querying on <code>Ma
+     * J</code> only returns Mateo Jackson.</p> </li> </ul>
      */
     inline DescribeUsersRequest& WithQuery(Aws::String&& value) { SetQuery(std::move(value)); return *this;}
 
     /**
-     * <p>A query to filter users by user name.</p>
+     * <p>A query to filter users by user name. Remember the following about the
+     * <code>Userids</code> and <code>Query</code> parameters:</p> <ul> <li> <p>If you
+     * don't use either parameter, the API returns a paginated list of all users on the
+     * site.</p> </li> <li> <p>If you use both parameters, the API ignores the
+     * <code>Query</code> parameter.</p> </li> <li> <p>The <code>Userid</code>
+     * parameter only returns user names that match a corresponding user ID.</p> </li>
+     * <li> <p>The <code>Query</code> parameter runs a "prefix" search for users by the
+     * <code>GivenName</code>, <code>SurName</code>, or <code>UserName</code> fields
+     * included in a <a
+     * href="https://docs.aws.amazon.com/workdocs/latest/APIReference/API_CreateUser.html">CreateUser</a>
+     * API call. For example, querying on <code>Ma</code> returns Márcia Oliveira,
+     * María García, and Mateo Jackson. If you use multiple characters, the API only
+     * returns data that matches all characters. For example, querying on <code>Ma
+     * J</code> only returns Mateo Jackson.</p> </li> </ul>
      */
     inline DescribeUsersRequest& WithQuery(const char* value) { SetQuery(value); return *this;}
 

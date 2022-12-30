@@ -5,9 +5,9 @@
 
 #pragma once
 #include <aws/s3control/S3Control_EXPORTS.h>
-#include <aws/s3control/S3ControlEndpoint.h>
-#include <aws/core/client/ClientConfiguration.h>
+#include <aws/s3control/S3ControlEndpointProvider.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/auth/AWSAuthSigner.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/utils/DNS.h>
@@ -17,49 +17,65 @@ namespace Aws
 {
 namespace S3Control
 {
-    // Get endpoint, signer region and signer service name after computing the endpoint.
-    struct ComputeEndpointResult
-    {
-      ComputeEndpointResult(const Aws::String& iEndpointName = "", const Aws::String& iSignerRegion = "", const Aws::String& iSignerServiceName = "") :
-        endpoint(iEndpointName), signerRegion(iSignerRegion), signerServiceName(iSignerServiceName) {}
-
-      Aws::String endpoint;
-      Aws::String signerRegion;
-      Aws::String signerServiceName;
-    };
-    typedef Aws::Utils::Outcome<ComputeEndpointResult, Aws::Client::AWSError<S3ControlErrors>> ComputeEndpointOutcome;
 
     /**
      * <p> Amazon Web Services S3 Control provides access to Amazon S3 control plane
    * actions. </p>
      */
-    class AWS_S3CONTROL_API S3ControlClient : public Aws::Client::AWSXMLClient
+    class AWS_S3CONTROL_API S3ControlClient : public Aws::Client::AWSXMLClient, public Aws::Client::ClientWithAsyncTemplateMethods<S3ControlClient>
     {
     public:
         typedef Aws::Client::AWSXMLClient BASECLASS;
+        static const char* SERVICE_NAME;
+        static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        S3ControlClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        S3ControlClient(const Aws::S3Control::S3ControlClientConfiguration& clientConfiguration = Aws::S3Control::S3ControlClientConfiguration(),
+                        std::shared_ptr<S3ControlEndpointProviderBase> endpointProvider = Aws::MakeShared<S3ControlEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         S3ControlClient(const Aws::Auth::AWSCredentials& credentials,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<S3ControlEndpointProviderBase> endpointProvider = Aws::MakeShared<S3ControlEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::S3Control::S3ControlClientConfiguration& clientConfiguration = Aws::S3Control::S3ControlClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         S3ControlClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<S3ControlEndpointProviderBase> endpointProvider = Aws::MakeShared<S3ControlEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::S3Control::S3ControlClientConfiguration& clientConfiguration = Aws::S3Control::S3ControlClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        S3ControlClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        S3ControlClient(const Aws::Auth::AWSCredentials& credentials,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        S3ControlClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~S3ControlClient();
-
 
         /**
          * <p>Creates an access point and associates it with the specified bucket. For more
@@ -1252,6 +1268,31 @@ namespace S3Control
         virtual void GetMultiRegionAccessPointPolicyStatusAsync(const Model::GetMultiRegionAccessPointPolicyStatusRequest& request, const GetMultiRegionAccessPointPolicyStatusResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Returns the routing configuration for a Multi-Region Access Point, indicating
+         * which Regions are active or passive.</p> <p>To obtain routing control changes
+         * and failover requests, use the Amazon S3 failover control infrastructure
+         * endpoints in these five Amazon Web Services Regions:</p> <ul> <li> <p>
+         * <code>us-east-1</code> </p> </li> <li> <p> <code>us-west-2</code> </p> </li>
+         * <li> <p> <code>ap-southeast-2</code> </p> </li> <li> <p>
+         * <code>ap-northeast-1</code> </p> </li> <li> <p> <code>eu-west-1</code> </p>
+         * </li> </ul>  <p>Your Amazon S3 bucket does not need to be in these five
+         * Regions.</p> <p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/GetMultiRegionAccessPointRoutes">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetMultiRegionAccessPointRoutesOutcome GetMultiRegionAccessPointRoutes(const Model::GetMultiRegionAccessPointRoutesRequest& request) const;
+
+        /**
+         * A Callable wrapper for GetMultiRegionAccessPointRoutes that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetMultiRegionAccessPointRoutesOutcomeCallable GetMultiRegionAccessPointRoutesCallable(const Model::GetMultiRegionAccessPointRoutesRequest& request) const;
+
+        /**
+         * An Async wrapper for GetMultiRegionAccessPointRoutes that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetMultiRegionAccessPointRoutesAsync(const Model::GetMultiRegionAccessPointRoutesRequest& request, const GetMultiRegionAccessPointRoutesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Retrieves the <code>PublicAccessBlock</code> configuration for an Amazon Web
          * Services account. For more information, see <a
          * href="https://docs.aws.amazon.com/AmazonS3/latest/dev/access-control-block-public-access.html">
@@ -1280,9 +1321,12 @@ namespace S3Control
          * <p>Gets the Amazon S3 Storage Lens configuration. For more information, see <a
          * href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage_lens.html">Assessing
          * your storage activity and usage with Amazon S3 Storage Lens </a> in the
-         * <i>Amazon S3 User Guide</i>.</p>  <p>To use this action, you must have
-         * permission to perform the <code>s3:GetStorageLensConfiguration</code> action.
-         * For more information, see <a
+         * <i>Amazon S3 User Guide</i>. For a complete list of S3 Storage Lens metrics, see
+         * <a
+         * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage_lens_metrics_glossary.html">S3
+         * Storage Lens metrics glossary</a> in the <i>Amazon S3 User Guide</i>.</p> 
+         * <p>To use this action, you must have permission to perform the
+         * <code>s3:GetStorageLensConfiguration</code> action. For more information, see <a
          * href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage_lens_iam_permissions.html">Setting
          * permissions to use Amazon S3 Storage Lens</a> in the <i>Amazon S3 User
          * Guide</i>.</p> <p><h3>See Also:</h3>   <a
@@ -1328,18 +1372,18 @@ namespace S3Control
         virtual void GetStorageLensConfigurationTaggingAsync(const Model::GetStorageLensConfigurationTaggingRequest& request, const GetStorageLensConfigurationTaggingResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Returns a list of the access points currently associated with the specified
-         * bucket. You can retrieve up to 1000 access points per call. If the specified
-         * bucket has more than 1,000 access points (or the number specified in
-         * <code>maxResults</code>, whichever is less), the response will include a
-         * continuation token that you can use to list the additional access points.</p>
-         * <p/> <p>All Amazon S3 on Outposts REST API requests for this action require an
-         * additional parameter of <code>x-amz-outpost-id</code> to be passed with the
-         * request. In addition, you must use an S3 on Outposts endpoint hostname prefix
-         * instead of <code>s3-control</code>. For an example of the request syntax for
-         * Amazon S3 on Outposts that uses the S3 on Outposts endpoint hostname prefix and
-         * the <code>x-amz-outpost-id</code> derived by using the access point ARN, see the
-         * <a
+         * <p>Returns a list of the access points owned by the current account associated
+         * with the specified bucket. You can retrieve up to 1000 access points per call.
+         * If the specified bucket has more than 1,000 access points (or the number
+         * specified in <code>maxResults</code>, whichever is less), the response will
+         * include a continuation token that you can use to list the additional access
+         * points.</p> <p/> <p>All Amazon S3 on Outposts REST API requests for this action
+         * require an additional parameter of <code>x-amz-outpost-id</code> to be passed
+         * with the request. In addition, you must use an S3 on Outposts endpoint hostname
+         * prefix instead of <code>s3-control</code>. For an example of the request syntax
+         * for Amazon S3 on Outposts that uses the S3 on Outposts endpoint hostname prefix
+         * and the <code>x-amz-outpost-id</code> derived by using the access point ARN, see
+         * the <a
          * href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPoint.html#API_control_GetAccessPoint_Examples">Examples</a>
          * section.</p> <p>The following actions are related to
          * <code>ListAccessPoints</code>:</p> <ul> <li> <p> <a
@@ -1917,7 +1961,10 @@ namespace S3Control
          * <p>Puts an Amazon S3 Storage Lens configuration. For more information about S3
          * Storage Lens, see <a
          * href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage_lens.html">Working
-         * with Amazon S3 Storage Lens</a> in the <i>Amazon S3 User Guide</i>.</p> 
+         * with Amazon S3 Storage Lens</a> in the <i>Amazon S3 User Guide</i>. For a
+         * complete list of S3 Storage Lens metrics, see <a
+         * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage_lens_metrics_glossary.html">S3
+         * Storage Lens metrics glossary</a> in the <i>Amazon S3 User Guide</i>.</p> 
          * <p>To use this action, you must have permission to perform the
          * <code>s3:PutStorageLensConfiguration</code> action. For more information, see <a
          * href="https://docs.aws.amazon.com/AmazonS3/latest/dev/storage_lens_iam_permissions.html">Setting
@@ -1963,6 +2010,41 @@ namespace S3Control
          * An Async wrapper for PutStorageLensConfigurationTagging that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void PutStorageLensConfigurationTaggingAsync(const Model::PutStorageLensConfigurationTaggingRequest& request, const PutStorageLensConfigurationTaggingResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Submits an updated route configuration for a Multi-Region Access Point. This
+         * API operation updates the routing status for the specified Regions from active
+         * to passive, or from passive to active. A value of <code>0</code> indicates a
+         * passive status, which means that traffic won't be routed to the specified
+         * Region. A value of <code>100</code> indicates an active status, which means that
+         * traffic will be routed to the specified Region. At least one Region must be
+         * active at all times.</p> <p>When the routing configuration is changed, any
+         * in-progress operations (uploads, copies, deletes, and so on) to formerly active
+         * Regions will continue to run to their final completion state (success or
+         * failure). The routing configurations of any Regions that aren’t specified remain
+         * unchanged.</p>  <p>Updated routing configurations might not be immediately
+         * applied. It can take up to 2 minutes for your changes to take effect.</p>
+         *  <p>To submit routing control changes and failover requests, use the
+         * Amazon S3 failover control infrastructure endpoints in these five Amazon Web
+         * Services Regions:</p> <ul> <li> <p> <code>us-east-1</code> </p> </li> <li> <p>
+         * <code>us-west-2</code> </p> </li> <li> <p> <code>ap-southeast-2</code> </p>
+         * </li> <li> <p> <code>ap-northeast-1</code> </p> </li> <li> <p>
+         * <code>eu-west-1</code> </p> </li> </ul>  <p>Your Amazon S3 bucket does not
+         * need to be in these five Regions.</p> <p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/SubmitMultiRegionAccessPointRoutes">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::SubmitMultiRegionAccessPointRoutesOutcome SubmitMultiRegionAccessPointRoutes(const Model::SubmitMultiRegionAccessPointRoutesRequest& request) const;
+
+        /**
+         * A Callable wrapper for SubmitMultiRegionAccessPointRoutes that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::SubmitMultiRegionAccessPointRoutesOutcomeCallable SubmitMultiRegionAccessPointRoutesCallable(const Model::SubmitMultiRegionAccessPointRoutesRequest& request) const;
+
+        /**
+         * An Async wrapper for SubmitMultiRegionAccessPointRoutes that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void SubmitMultiRegionAccessPointRoutesAsync(const Model::SubmitMultiRegionAccessPointRoutesRequest& request, const SubmitMultiRegionAccessPointRoutesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Updates an existing S3 Batch Operations job's priority. For more information,
@@ -2024,34 +2106,13 @@ namespace S3Control
 
 
         void OverrideEndpoint(const Aws::String& endpoint);
+        std::shared_ptr<S3ControlEndpointProviderBase>& accessEndpointProvider();
     private:
-        void init(const Client::ClientConfiguration& clientConfiguration);
-        void LoadS3ControlSpecificConfig(const Aws::String& profile);
-        /**
-         * For operations without account ID or ARN as parameters, e.g. CreateBucket, ListRegionalBuckets. Possible endpoints:
-         * - s3-control[.dualstack].{region}.amazonaws.com
-         * - s3-outposts.{region}.amazonaws.com
-         * @param hasOutpostId: Use s3-outposts as service name for both endpoint and signer if true.
-         */
-        ComputeEndpointOutcome ComputeEndpointString(bool hasOutpostId = false) const;
-        /**
-         * For operations without account ID, but with ARN as parameters. e.g. GetBucket. Possible endpoints:
-         * - {accountId}.s3-control[.dualstack].{region}.amazonaws.com
-         * - s3-outposts.{region}.amazonaws.com
-         * @param name: accesspoint name (ARN) or bucket name (ARN).
-         * @param hasOutpostId: Use s3-outposts as service name to sign the request if true.
-         * @param uriPathPrefix: Path prefix of the first resource in the uri.
-         */
-        ComputeEndpointOutcome ComputeEndpointString(const Aws::String& name, bool hasOutpostId, const Aws::String& uriPathPrefix) const;
-
-        Aws::String m_baseUri;
-        Aws::String m_scheme;
-        bool m_enableHostPrefixInjection = false;
-        Aws::String m_configScheme;
+        friend class Aws::Client::ClientWithAsyncTemplateMethods<S3ControlClient>;
+        void init(const S3ControlClientConfiguration& clientConfiguration);
+        S3ControlClientConfiguration m_clientConfiguration;
         std::shared_ptr<Utils::Threading::Executor> m_executor;
-        bool m_useDualStack = false;
-        bool m_useArnRegion = false;
-        bool m_useCustomEndpoint = false;
+        std::shared_ptr<S3ControlEndpointProviderBase> m_endpointProvider;
     };
 
   } // namespace S3Control

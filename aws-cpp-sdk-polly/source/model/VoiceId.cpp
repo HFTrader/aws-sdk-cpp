@@ -93,6 +93,12 @@ namespace Aws
         static const int Pedro_HASH = HashingUtils::HashString("Pedro");
         static const int Kajal_HASH = HashingUtils::HashString("Kajal");
         static const int Hiujin_HASH = HashingUtils::HashString("Hiujin");
+        static const int Laura_HASH = HashingUtils::HashString("Laura");
+        static const int Elin_HASH = HashingUtils::HashString("Elin");
+        static const int Ida_HASH = HashingUtils::HashString("Ida");
+        static const int Suvi_HASH = HashingUtils::HashString("Suvi");
+        static const int Ola_HASH = HashingUtils::HashString("Ola");
+        static const int Hala_HASH = HashingUtils::HashString("Hala");
 
 
         VoiceId GetVoiceIdForName(const Aws::String& name)
@@ -390,6 +396,30 @@ namespace Aws
           {
             return VoiceId::Hiujin;
           }
+          else if (hashCode == Laura_HASH)
+          {
+            return VoiceId::Laura;
+          }
+          else if (hashCode == Elin_HASH)
+          {
+            return VoiceId::Elin;
+          }
+          else if (hashCode == Ida_HASH)
+          {
+            return VoiceId::Ida;
+          }
+          else if (hashCode == Suvi_HASH)
+          {
+            return VoiceId::Suvi;
+          }
+          else if (hashCode == Ola_HASH)
+          {
+            return VoiceId::Ola;
+          }
+          else if (hashCode == Hala_HASH)
+          {
+            return VoiceId::Hala;
+          }
           EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
           if(overflowContainer)
           {
@@ -550,6 +580,18 @@ namespace Aws
             return "Kajal";
           case VoiceId::Hiujin:
             return "Hiujin";
+          case VoiceId::Laura:
+            return "Laura";
+          case VoiceId::Elin:
+            return "Elin";
+          case VoiceId::Ida:
+            return "Ida";
+          case VoiceId::Suvi:
+            return "Suvi";
+          case VoiceId::Ola:
+            return "Ola";
+          case VoiceId::Hala:
+            return "Hala";
           default:
             EnumParseOverflowContainer* overflowContainer = Aws::GetEnumOverflowContainer();
             if(overflowContainer)

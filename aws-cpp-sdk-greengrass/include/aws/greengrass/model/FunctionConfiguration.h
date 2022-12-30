@@ -30,13 +30,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/greengrass-2017-06-07/FunctionConfiguration">AWS
    * API Reference</a></p>
    */
-  class AWS_GREENGRASS_API FunctionConfiguration
+  class FunctionConfiguration
   {
   public:
-    FunctionConfiguration();
-    FunctionConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    FunctionConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_GREENGRASS_API FunctionConfiguration();
+    AWS_GREENGRASS_API FunctionConfiguration(Aws::Utils::Json::JsonView jsonValue);
+    AWS_GREENGRASS_API FunctionConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_GREENGRASS_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -271,6 +271,55 @@ namespace Model
      */
     inline FunctionConfiguration& WithTimeout(int value) { SetTimeout(value); return *this;}
 
+
+    /**
+     * The Lambda runtime supported by Greengrass which is to be used instead of the
+     * one specified in the Lambda function.
+     */
+    inline const Aws::String& GetFunctionRuntimeOverride() const{ return m_functionRuntimeOverride; }
+
+    /**
+     * The Lambda runtime supported by Greengrass which is to be used instead of the
+     * one specified in the Lambda function.
+     */
+    inline bool FunctionRuntimeOverrideHasBeenSet() const { return m_functionRuntimeOverrideHasBeenSet; }
+
+    /**
+     * The Lambda runtime supported by Greengrass which is to be used instead of the
+     * one specified in the Lambda function.
+     */
+    inline void SetFunctionRuntimeOverride(const Aws::String& value) { m_functionRuntimeOverrideHasBeenSet = true; m_functionRuntimeOverride = value; }
+
+    /**
+     * The Lambda runtime supported by Greengrass which is to be used instead of the
+     * one specified in the Lambda function.
+     */
+    inline void SetFunctionRuntimeOverride(Aws::String&& value) { m_functionRuntimeOverrideHasBeenSet = true; m_functionRuntimeOverride = std::move(value); }
+
+    /**
+     * The Lambda runtime supported by Greengrass which is to be used instead of the
+     * one specified in the Lambda function.
+     */
+    inline void SetFunctionRuntimeOverride(const char* value) { m_functionRuntimeOverrideHasBeenSet = true; m_functionRuntimeOverride.assign(value); }
+
+    /**
+     * The Lambda runtime supported by Greengrass which is to be used instead of the
+     * one specified in the Lambda function.
+     */
+    inline FunctionConfiguration& WithFunctionRuntimeOverride(const Aws::String& value) { SetFunctionRuntimeOverride(value); return *this;}
+
+    /**
+     * The Lambda runtime supported by Greengrass which is to be used instead of the
+     * one specified in the Lambda function.
+     */
+    inline FunctionConfiguration& WithFunctionRuntimeOverride(Aws::String&& value) { SetFunctionRuntimeOverride(std::move(value)); return *this;}
+
+    /**
+     * The Lambda runtime supported by Greengrass which is to be used instead of the
+     * one specified in the Lambda function.
+     */
+    inline FunctionConfiguration& WithFunctionRuntimeOverride(const char* value) { SetFunctionRuntimeOverride(value); return *this;}
+
   private:
 
     EncodingType m_encodingType;
@@ -293,6 +342,9 @@ namespace Model
 
     int m_timeout;
     bool m_timeoutHasBeenSet = false;
+
+    Aws::String m_functionRuntimeOverride;
+    bool m_functionRuntimeOverrideHasBeenSet = false;
   };
 
 } // namespace Model

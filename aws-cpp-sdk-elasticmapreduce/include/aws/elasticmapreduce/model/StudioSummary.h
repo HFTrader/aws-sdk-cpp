@@ -32,13 +32,13 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/StudioSummary">AWS
    * API Reference</a></p>
    */
-  class AWS_EMR_API StudioSummary
+  class StudioSummary
   {
   public:
-    StudioSummary();
-    StudioSummary(Aws::Utils::Json::JsonView jsonValue);
-    StudioSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_EMR_API StudioSummary();
+    AWS_EMR_API StudioSummary(Aws::Utils::Json::JsonView jsonValue);
+    AWS_EMR_API StudioSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_EMR_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**
@@ -255,38 +255,38 @@ namespace Model
 
 
     /**
-     * <p>Specifies whether the Studio authenticates users using IAM or Amazon Web
-     * Services SSO.</p>
+     * <p>Specifies whether the Studio authenticates users using IAM or IAM Identity
+     * Center.</p>
      */
     inline const AuthMode& GetAuthMode() const{ return m_authMode; }
 
     /**
-     * <p>Specifies whether the Studio authenticates users using IAM or Amazon Web
-     * Services SSO.</p>
+     * <p>Specifies whether the Studio authenticates users using IAM or IAM Identity
+     * Center.</p>
      */
     inline bool AuthModeHasBeenSet() const { return m_authModeHasBeenSet; }
 
     /**
-     * <p>Specifies whether the Studio authenticates users using IAM or Amazon Web
-     * Services SSO.</p>
+     * <p>Specifies whether the Studio authenticates users using IAM or IAM Identity
+     * Center.</p>
      */
     inline void SetAuthMode(const AuthMode& value) { m_authModeHasBeenSet = true; m_authMode = value; }
 
     /**
-     * <p>Specifies whether the Studio authenticates users using IAM or Amazon Web
-     * Services SSO.</p>
+     * <p>Specifies whether the Studio authenticates users using IAM or IAM Identity
+     * Center.</p>
      */
     inline void SetAuthMode(AuthMode&& value) { m_authModeHasBeenSet = true; m_authMode = std::move(value); }
 
     /**
-     * <p>Specifies whether the Studio authenticates users using IAM or Amazon Web
-     * Services SSO.</p>
+     * <p>Specifies whether the Studio authenticates users using IAM or IAM Identity
+     * Center.</p>
      */
     inline StudioSummary& WithAuthMode(const AuthMode& value) { SetAuthMode(value); return *this;}
 
     /**
-     * <p>Specifies whether the Studio authenticates users using IAM or Amazon Web
-     * Services SSO.</p>
+     * <p>Specifies whether the Studio authenticates users using IAM or IAM Identity
+     * Center.</p>
      */
     inline StudioSummary& WithAuthMode(AuthMode&& value) { SetAuthMode(std::move(value)); return *this;}
 

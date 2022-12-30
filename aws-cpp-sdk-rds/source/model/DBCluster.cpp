@@ -112,7 +112,9 @@ DBCluster::DBCluster() :
     m_performanceInsightsRetentionPeriod(0),
     m_performanceInsightsRetentionPeriodHasBeenSet(false),
     m_serverlessV2ScalingConfigurationHasBeenSet(false),
-    m_networkTypeHasBeenSet(false)
+    m_networkTypeHasBeenSet(false),
+    m_dBSystemIdHasBeenSet(false),
+    m_masterUserSecretHasBeenSet(false)
 {
 }
 
@@ -208,7 +210,9 @@ DBCluster::DBCluster(const XmlNode& xmlNode) :
     m_performanceInsightsRetentionPeriod(0),
     m_performanceInsightsRetentionPeriodHasBeenSet(false),
     m_serverlessV2ScalingConfigurationHasBeenSet(false),
-    m_networkTypeHasBeenSet(false)
+    m_networkTypeHasBeenSet(false),
+    m_dBSystemIdHasBeenSet(false),
+    m_masterUserSecretHasBeenSet(false)
 {
   *this = xmlNode;
 }
@@ -693,6 +697,18 @@ DBCluster& DBCluster::operator =(const XmlNode& xmlNode)
       m_networkType = Aws::Utils::Xml::DecodeEscapedXmlText(networkTypeNode.GetText());
       m_networkTypeHasBeenSet = true;
     }
+    XmlNode dBSystemIdNode = resultNode.FirstChild("DBSystemId");
+    if(!dBSystemIdNode.IsNull())
+    {
+      m_dBSystemId = Aws::Utils::Xml::DecodeEscapedXmlText(dBSystemIdNode.GetText());
+      m_dBSystemIdHasBeenSet = true;
+    }
+    XmlNode masterUserSecretNode = resultNode.FirstChild("MasterUserSecret");
+    if(!masterUserSecretNode.IsNull())
+    {
+      m_masterUserSecret = masterUserSecretNode;
+      m_masterUserSecretHasBeenSet = true;
+    }
   }
 
   return *this;
@@ -1103,6 +1119,18 @@ void DBCluster::OutputToStream(Aws::OStream& oStream, const char* location, unsi
       oStream << location << index << locationValue << ".NetworkType=" << StringUtils::URLEncode(m_networkType.c_str()) << "&";
   }
 
+  if(m_dBSystemIdHasBeenSet)
+  {
+      oStream << location << index << locationValue << ".DBSystemId=" << StringUtils::URLEncode(m_dBSystemId.c_str()) << "&";
+  }
+
+  if(m_masterUserSecretHasBeenSet)
+  {
+      Aws::StringStream masterUserSecretLocationAndMemberSs;
+      masterUserSecretLocationAndMemberSs << location << index << locationValue << ".MasterUserSecret";
+      m_masterUserSecret.OutputToStream(oStream, masterUserSecretLocationAndMemberSs.str().c_str());
+  }
+
 }
 
 void DBCluster::OutputToStream(Aws::OStream& oStream, const char* location) const
@@ -1440,6 +1468,16 @@ void DBCluster::OutputToStream(Aws::OStream& oStream, const char* location) cons
   if(m_networkTypeHasBeenSet)
   {
       oStream << location << ".NetworkType=" << StringUtils::URLEncode(m_networkType.c_str()) << "&";
+  }
+  if(m_dBSystemIdHasBeenSet)
+  {
+      oStream << location << ".DBSystemId=" << StringUtils::URLEncode(m_dBSystemId.c_str()) << "&";
+  }
+  if(m_masterUserSecretHasBeenSet)
+  {
+      Aws::String masterUserSecretLocationAndMember(location);
+      masterUserSecretLocationAndMember += ".MasterUserSecret";
+      m_masterUserSecret.OutputToStream(oStream, masterUserSecretLocationAndMember.c_str());
   }
 }
 

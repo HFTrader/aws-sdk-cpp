@@ -7,6 +7,7 @@
 #include <aws/opsworkscm/OpsWorksCM_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/opsworkscm/OpsWorksCMServiceClientModel.h>
 
@@ -58,33 +59,60 @@ namespace OpsWorksCM
    * <b>Throttling limits</b> </p> <p>All API operations allow for five requests per
    * second with a burst of 10 requests per second.</p>
    */
-  class AWS_OPSWORKSCM_API OpsWorksCMClient : public Aws::Client::AWSJsonClient
+  class AWS_OPSWORKSCM_API OpsWorksCMClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<OpsWorksCMClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        OpsWorksCMClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        OpsWorksCMClient(const Aws::OpsWorksCM::OpsWorksCMClientConfiguration& clientConfiguration = Aws::OpsWorksCM::OpsWorksCMClientConfiguration(),
+                         std::shared_ptr<OpsWorksCMEndpointProviderBase> endpointProvider = Aws::MakeShared<OpsWorksCMEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         OpsWorksCMClient(const Aws::Auth::AWSCredentials& credentials,
-                         const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                         std::shared_ptr<OpsWorksCMEndpointProviderBase> endpointProvider = Aws::MakeShared<OpsWorksCMEndpointProvider>(ALLOCATION_TAG),
+                         const Aws::OpsWorksCM::OpsWorksCMClientConfiguration& clientConfiguration = Aws::OpsWorksCM::OpsWorksCMClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         OpsWorksCMClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                         const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                         std::shared_ptr<OpsWorksCMEndpointProviderBase> endpointProvider = Aws::MakeShared<OpsWorksCMEndpointProvider>(ALLOCATION_TAG),
+                         const Aws::OpsWorksCM::OpsWorksCMClientConfiguration& clientConfiguration = Aws::OpsWorksCM::OpsWorksCMClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        OpsWorksCMClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        OpsWorksCMClient(const Aws::Auth::AWSCredentials& credentials,
+                         const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        OpsWorksCMClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                         const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~OpsWorksCMClient();
-
 
         /**
          * <p> Associates a new node with the server. For more information about how to
@@ -548,12 +576,14 @@ namespace OpsWorksCM
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<OpsWorksCMEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<OpsWorksCMClient>;
+      void init(const OpsWorksCMClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      OpsWorksCMClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<OpsWorksCMEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace OpsWorksCM

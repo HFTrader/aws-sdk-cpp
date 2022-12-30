@@ -8,6 +8,7 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/AmazonSerializableWebServiceRequest.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/ec2/EC2ServiceClientModel.h>
 
@@ -39,33 +40,81 @@ namespace EC2
    * href="http://aws.amazon.com/documentation/vpn">Amazon Web Services VPN
    * documentation</a> </p> </li> </ul>
    */
-  class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient
+  class AWS_EC2_API EC2Client : public Aws::Client::AWSXMLClient, public Aws::Client::ClientWithAsyncTemplateMethods<EC2Client>
   {
     public:
       typedef Aws::Client::AWSXMLClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        EC2Client(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        EC2Client(const Aws::EC2::EC2ClientConfiguration& clientConfiguration = Aws::EC2::EC2ClientConfiguration(),
+                  std::shared_ptr<EC2EndpointProviderBase> endpointProvider = Aws::MakeShared<EC2EndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         EC2Client(const Aws::Auth::AWSCredentials& credentials,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<EC2EndpointProviderBase> endpointProvider = Aws::MakeShared<EC2EndpointProvider>(ALLOCATION_TAG),
+                  const Aws::EC2::EC2ClientConfiguration& clientConfiguration = Aws::EC2::EC2ClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         EC2Client(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<EC2EndpointProviderBase> endpointProvider = Aws::MakeShared<EC2EndpointProvider>(ALLOCATION_TAG),
+                  const Aws::EC2::EC2ClientConfiguration& clientConfiguration = Aws::EC2::EC2ClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        EC2Client(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        EC2Client(const Aws::Auth::AWSCredentials& credentials,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        EC2Client(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~EC2Client();
 
+
+        /**
+         * <p>Accepts an Elastic IP address transfer. For more information, see <a
+         * href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#using-instance-addressing-eips-transfer-accept">Accept
+         * a transferred Elastic IP address</a> in the <i>Amazon Virtual Private Cloud User
+         * Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AcceptAddressTransfer">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::AcceptAddressTransferOutcome AcceptAddressTransfer(const Model::AcceptAddressTransferRequest& request) const;
+
+        /**
+         * A Callable wrapper for AcceptAddressTransfer that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::AcceptAddressTransferOutcomeCallable AcceptAddressTransferCallable(const Model::AcceptAddressTransferRequest& request) const;
+
+        /**
+         * An Async wrapper for AcceptAddressTransfer that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void AcceptAddressTransferAsync(const Model::AcceptAddressTransferRequest& request, const AcceptAddressTransferResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Accepts the Convertible Reserved Instance exchange quote described in the
@@ -787,6 +836,26 @@ namespace EC2
         virtual void AttachNetworkInterfaceAsync(const Model::AttachNetworkInterfaceRequest& request, const AttachNetworkInterfaceResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>A trust provider is a third-party entity that creates, maintains, and manages
+         * identity information for users and devices. One or more trust providers can be
+         * attached to an Amazon Web Services Verified Access instance.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AttachVerifiedAccessTrustProvider">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::AttachVerifiedAccessTrustProviderOutcome AttachVerifiedAccessTrustProvider(const Model::AttachVerifiedAccessTrustProviderRequest& request) const;
+
+        /**
+         * A Callable wrapper for AttachVerifiedAccessTrustProvider that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::AttachVerifiedAccessTrustProviderOutcomeCallable AttachVerifiedAccessTrustProviderCallable(const Model::AttachVerifiedAccessTrustProviderRequest& request) const;
+
+        /**
+         * An Async wrapper for AttachVerifiedAccessTrustProvider that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void AttachVerifiedAccessTrustProviderAsync(const Model::AttachVerifiedAccessTrustProviderRequest& request, const AttachVerifiedAccessTrustProviderResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Attaches an EBS volume to a running or stopped instance and exposes it to the
          * instance with the specified device name.</p> <p>Encrypted EBS volumes must be
          * attached to instances that support Amazon EBS encryption. For more information,
@@ -1056,6 +1125,27 @@ namespace EC2
         virtual void CancelExportTaskAsync(const Model::CancelExportTaskRequest& request, const CancelExportTaskResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Removes your Amazon Web Services account from the launch permissions for the
+         * specified AMI. For more information, see <a
+         * href="https://docs.aws.amazon.com/">Cancel having an AMI shared with your Amazon
+         * Web Services account</a> in the <i>Amazon EC2 User Guide</i>.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CancelImageLaunchPermission">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CancelImageLaunchPermissionOutcome CancelImageLaunchPermission(const Model::CancelImageLaunchPermissionRequest& request) const;
+
+        /**
+         * A Callable wrapper for CancelImageLaunchPermission that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CancelImageLaunchPermissionOutcomeCallable CancelImageLaunchPermissionCallable(const Model::CancelImageLaunchPermissionRequest& request) const;
+
+        /**
+         * An Async wrapper for CancelImageLaunchPermission that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CancelImageLaunchPermissionAsync(const Model::CancelImageLaunchPermissionRequest& request, const CancelImageLaunchPermissionResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Cancels an in-process import virtual machine or import snapshot
          * task.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CancelImportTask">AWS
@@ -1194,12 +1284,11 @@ namespace EC2
          * different key that you specify in the request using <b>KmsKeyId</b>. Outposts do
          * not support unencrypted snapshots. For more information, <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/snapshots-outposts.html#ami">
-         * Amazon EBS local snapshots on Outposts</a> in the <i>Amazon Elastic Compute
-         * Cloud User Guide</i>.</p> <p>For more information about the prerequisites and
-         * limits when copying an AMI, see <a
-         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html">Copying
-         * an AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p><p><h3>See
-         * Also:</h3>   <a
+         * Amazon EBS local snapshots on Outposts</a> in the <i>Amazon EC2 User
+         * Guide</i>.</p> <p>For more information about the prerequisites and limits when
+         * copying an AMI, see <a
+         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html">Copy
+         * an AMI</a> in the <i>Amazon EC2 User Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CopyImage">AWS API
          * Reference</a></p>
          */
@@ -1662,8 +1751,8 @@ namespace EC2
          * those volumes. When you launch an instance from this new AMI, the instance
          * automatically launches with those additional volumes.</p> <p>For more
          * information, see <a
-         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html">Creating
-         * Amazon EBS-Backed Linux AMIs</a> in the <i>Amazon Elastic Compute Cloud User
+         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html">Create
+         * an Amazon EBS-backed Linux AMI</a> in the <i>Amazon Elastic Compute Cloud User
          * Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateImage">AWS API
          * Reference</a></p>
@@ -2226,10 +2315,12 @@ namespace EC2
         virtual void CreatePublicIpv4PoolAsync(const Model::CreatePublicIpv4PoolRequest& request, const CreatePublicIpv4PoolResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Creates a root volume replacement task for an Amazon EC2 instance. The root
-         * volume can either be restored to its initial launch state, or it can be restored
-         * using a specific snapshot.</p> <p>For more information, see <a
-         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-restoring-volume.html#replace-root">Replace
+         * <p>Replaces the EBS-backed root volume for a <code>running</code> instance with
+         * a new volume that is restored to the original root volume's launch state, that
+         * is restored to a specific snapshot taken from the original root volume, or that
+         * is restored from an AMI that has the same key characteristics as that of the
+         * instance.</p> <p>For more information, see <a
+         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/replace-root.html">Replace
          * a root volume</a> in the <i>Amazon Elastic Compute Cloud User
          * Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateReplaceRootVolumeTask">AWS
@@ -2291,11 +2382,11 @@ namespace EC2
          * <p>To use this API, you must have the required permissions. For more
          * information, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html#ami-s3-permissions">Permissions
-         * for storing and restoring AMIs using Amazon S3</a> in the <i>Amazon Elastic
-         * Compute Cloud User Guide</i>.</p> <p>For more information, see <a
+         * for storing and restoring AMIs using Amazon S3</a> in the <i>Amazon EC2 User
+         * Guide</i>.</p> <p>For more information, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html">Store
-         * and restore an AMI using Amazon S3</a> in the <i>Amazon Elastic Compute Cloud
-         * User Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * and restore an AMI using Amazon S3</a> in the <i>Amazon EC2 User
+         * Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateRestoreImageTask">AWS
          * API Reference</a></p>
          */
@@ -2508,11 +2599,11 @@ namespace EC2
          * <p>Stores an AMI as a single object in an Amazon S3 bucket.</p> <p>To use this
          * API, you must have the required permissions. For more information, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html#ami-s3-permissions">Permissions
-         * for storing and restoring AMIs using Amazon S3</a> in the <i>Amazon Elastic
-         * Compute Cloud User Guide</i>.</p> <p>For more information, see <a
+         * for storing and restoring AMIs using Amazon S3</a> in the <i>Amazon EC2 User
+         * Guide</i>.</p> <p>For more information, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html">Store
-         * and restore an AMI using Amazon S3</a> in the <i>Amazon Elastic Compute Cloud
-         * User Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * and restore an AMI using Amazon S3</a> in the <i>Amazon EC2 User
+         * Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateStoreImageTask">AWS
          * API Reference</a></p>
          */
@@ -2932,6 +3023,88 @@ namespace EC2
          * An Async wrapper for CreateTransitGatewayVpcAttachment that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void CreateTransitGatewayVpcAttachmentAsync(const Model::CreateTransitGatewayVpcAttachmentRequest& request, const CreateTransitGatewayVpcAttachmentResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>An Amazon Web Services Verified Access endpoint is where you define your
+         * application along with an optional endpoint-level access policy.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessEndpoint">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CreateVerifiedAccessEndpointOutcome CreateVerifiedAccessEndpoint(const Model::CreateVerifiedAccessEndpointRequest& request) const;
+
+        /**
+         * A Callable wrapper for CreateVerifiedAccessEndpoint that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CreateVerifiedAccessEndpointOutcomeCallable CreateVerifiedAccessEndpointCallable(const Model::CreateVerifiedAccessEndpointRequest& request) const;
+
+        /**
+         * An Async wrapper for CreateVerifiedAccessEndpoint that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CreateVerifiedAccessEndpointAsync(const Model::CreateVerifiedAccessEndpointRequest& request, const CreateVerifiedAccessEndpointResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>An Amazon Web Services Verified Access group is a collection of Amazon Web
+         * Services Verified Access endpoints who's associated applications have similar
+         * security requirements. Each instance within an Amazon Web Services Verified
+         * Access group shares an Amazon Web Services Verified Access policy. For example,
+         * you can group all Amazon Web Services Verified Access instances associated with
+         * “sales” applications together and use one common Amazon Web Services Verified
+         * Access policy.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessGroup">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CreateVerifiedAccessGroupOutcome CreateVerifiedAccessGroup(const Model::CreateVerifiedAccessGroupRequest& request) const;
+
+        /**
+         * A Callable wrapper for CreateVerifiedAccessGroup that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CreateVerifiedAccessGroupOutcomeCallable CreateVerifiedAccessGroupCallable(const Model::CreateVerifiedAccessGroupRequest& request) const;
+
+        /**
+         * An Async wrapper for CreateVerifiedAccessGroup that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CreateVerifiedAccessGroupAsync(const Model::CreateVerifiedAccessGroupRequest& request, const CreateVerifiedAccessGroupResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>An Amazon Web Services Verified Access instance is a regional entity that
+         * evaluates application requests and grants access only when your security
+         * requirements are met.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessInstance">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CreateVerifiedAccessInstanceOutcome CreateVerifiedAccessInstance(const Model::CreateVerifiedAccessInstanceRequest& request) const;
+
+        /**
+         * A Callable wrapper for CreateVerifiedAccessInstance that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CreateVerifiedAccessInstanceOutcomeCallable CreateVerifiedAccessInstanceCallable(const Model::CreateVerifiedAccessInstanceRequest& request) const;
+
+        /**
+         * An Async wrapper for CreateVerifiedAccessInstance that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CreateVerifiedAccessInstanceAsync(const Model::CreateVerifiedAccessInstanceRequest& request, const CreateVerifiedAccessInstanceResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>A trust provider is a third-party entity that creates, maintains, and manages
+         * identity information for users and devices. When an application request is made,
+         * the identity information sent by the trust provider will be evaluated by Amazon
+         * Web Services Verified Access, before allowing or denying the application
+         * request.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessTrustProvider">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::CreateVerifiedAccessTrustProviderOutcome CreateVerifiedAccessTrustProvider(const Model::CreateVerifiedAccessTrustProviderRequest& request) const;
+
+        /**
+         * A Callable wrapper for CreateVerifiedAccessTrustProvider that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::CreateVerifiedAccessTrustProviderOutcomeCallable CreateVerifiedAccessTrustProviderCallable(const Model::CreateVerifiedAccessTrustProviderRequest& request) const;
+
+        /**
+         * An Async wrapper for CreateVerifiedAccessTrustProvider that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void CreateVerifiedAccessTrustProviderAsync(const Model::CreateVerifiedAccessTrustProviderRequest& request, const CreateVerifiedAccessTrustProviderResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Creates an EBS volume that can be attached to an instance in the same
@@ -4311,6 +4484,78 @@ namespace EC2
         virtual void DeleteTransitGatewayVpcAttachmentAsync(const Model::DeleteTransitGatewayVpcAttachmentRequest& request, const DeleteTransitGatewayVpcAttachmentResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Delete an Amazon Web Services Verified Access endpoint.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteVerifiedAccessEndpoint">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DeleteVerifiedAccessEndpointOutcome DeleteVerifiedAccessEndpoint(const Model::DeleteVerifiedAccessEndpointRequest& request) const;
+
+        /**
+         * A Callable wrapper for DeleteVerifiedAccessEndpoint that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DeleteVerifiedAccessEndpointOutcomeCallable DeleteVerifiedAccessEndpointCallable(const Model::DeleteVerifiedAccessEndpointRequest& request) const;
+
+        /**
+         * An Async wrapper for DeleteVerifiedAccessEndpoint that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DeleteVerifiedAccessEndpointAsync(const Model::DeleteVerifiedAccessEndpointRequest& request, const DeleteVerifiedAccessEndpointResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Delete an Amazon Web Services Verified Access group.</p><p><h3>See Also:</h3>
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteVerifiedAccessGroup">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DeleteVerifiedAccessGroupOutcome DeleteVerifiedAccessGroup(const Model::DeleteVerifiedAccessGroupRequest& request) const;
+
+        /**
+         * A Callable wrapper for DeleteVerifiedAccessGroup that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DeleteVerifiedAccessGroupOutcomeCallable DeleteVerifiedAccessGroupCallable(const Model::DeleteVerifiedAccessGroupRequest& request) const;
+
+        /**
+         * An Async wrapper for DeleteVerifiedAccessGroup that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DeleteVerifiedAccessGroupAsync(const Model::DeleteVerifiedAccessGroupRequest& request, const DeleteVerifiedAccessGroupResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Delete an Amazon Web Services Verified Access instance.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteVerifiedAccessInstance">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DeleteVerifiedAccessInstanceOutcome DeleteVerifiedAccessInstance(const Model::DeleteVerifiedAccessInstanceRequest& request) const;
+
+        /**
+         * A Callable wrapper for DeleteVerifiedAccessInstance that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DeleteVerifiedAccessInstanceOutcomeCallable DeleteVerifiedAccessInstanceCallable(const Model::DeleteVerifiedAccessInstanceRequest& request) const;
+
+        /**
+         * An Async wrapper for DeleteVerifiedAccessInstance that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DeleteVerifiedAccessInstanceAsync(const Model::DeleteVerifiedAccessInstanceRequest& request, const DeleteVerifiedAccessInstanceResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Delete an Amazon Web Services Verified Access trust provider.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteVerifiedAccessTrustProvider">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DeleteVerifiedAccessTrustProviderOutcome DeleteVerifiedAccessTrustProvider(const Model::DeleteVerifiedAccessTrustProviderRequest& request) const;
+
+        /**
+         * A Callable wrapper for DeleteVerifiedAccessTrustProvider that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DeleteVerifiedAccessTrustProviderOutcomeCallable DeleteVerifiedAccessTrustProviderCallable(const Model::DeleteVerifiedAccessTrustProviderRequest& request) const;
+
+        /**
+         * An Async wrapper for DeleteVerifiedAccessTrustProvider that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DeleteVerifiedAccessTrustProviderAsync(const Model::DeleteVerifiedAccessTrustProviderRequest& request, const DeleteVerifiedAccessTrustProviderResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Deletes the specified EBS volume. The volume must be in the
          * <code>available</code> state (not attached to an instance).</p> <p>The volume
          * can remain in the <code>deleting</code> state for several minutes.</p> <p>For
@@ -4577,13 +4822,13 @@ namespace EC2
          * Bin retention rule, the AMI is retained in the Recycle Bin for the specified
          * retention period. For more information, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/recycle-bin.html">Recycle
-         * Bin</a> in the Amazon Elastic Compute Cloud User Guide.</p> <p>When you
-         * deregister an AMI, it doesn't affect any instances that you've already launched
-         * from the AMI. You'll continue to incur usage costs for those instances until you
-         * terminate them.</p> <p>When you deregister an Amazon EBS-backed AMI, it doesn't
-         * affect the snapshot that was created for the root volume of the instance during
-         * the AMI creation process. When you deregister an instance store-backed AMI, it
-         * doesn't affect the files that you uploaded to Amazon S3 when you created the
+         * Bin</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>When you deregister an AMI,
+         * it doesn't affect any instances that you've already launched from the AMI.
+         * You'll continue to incur usage costs for those instances until you terminate
+         * them.</p> <p>When you deregister an Amazon EBS-backed AMI, it doesn't affect the
+         * snapshot that was created for the root volume of the instance during the AMI
+         * creation process. When you deregister an instance store-backed AMI, it doesn't
+         * affect the files that you uploaded to Amazon S3 when you created the
          * AMI.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeregisterImage">AWS
          * API Reference</a></p>
@@ -4693,6 +4938,26 @@ namespace EC2
         virtual void DescribeAccountAttributesAsync(const Model::DescribeAccountAttributesRequest& request, const DescribeAccountAttributesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Describes an Elastic IP address transfer. For more information, see <a
+         * href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#transfer-EIPs-intro">Transfer
+         * Elastic IP addresses</a> in the <i>Amazon Virtual Private Cloud User
+         * Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeAddressTransfers">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeAddressTransfersOutcome DescribeAddressTransfers(const Model::DescribeAddressTransfersRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeAddressTransfers that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeAddressTransfersOutcomeCallable DescribeAddressTransfersCallable(const Model::DescribeAddressTransfersRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeAddressTransfers that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeAddressTransfersAsync(const Model::DescribeAddressTransfersRequest& request, const DescribeAddressTransfersResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Describes the specified Elastic IP addresses or all of your Elastic IP
          * addresses.</p> <p>An Elastic IP address is for use in either the EC2-Classic
          * platform or in a VPC. For more information, see <a
@@ -4797,6 +5062,24 @@ namespace EC2
          * An Async wrapper for DescribeAvailabilityZones that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void DescribeAvailabilityZonesAsync(const Model::DescribeAvailabilityZonesRequest& request, const DescribeAvailabilityZonesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Describes the current Infrastructure Performance metric
+         * subscriptions.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeAwsNetworkPerformanceMetricSubscriptions">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeAwsNetworkPerformanceMetricSubscriptionsOutcome DescribeAwsNetworkPerformanceMetricSubscriptions(const Model::DescribeAwsNetworkPerformanceMetricSubscriptionsRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeAwsNetworkPerformanceMetricSubscriptions that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeAwsNetworkPerformanceMetricSubscriptionsOutcomeCallable DescribeAwsNetworkPerformanceMetricSubscriptionsCallable(const Model::DescribeAwsNetworkPerformanceMetricSubscriptionsRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeAwsNetworkPerformanceMetricSubscriptions that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeAwsNetworkPerformanceMetricSubscriptionsAsync(const Model::DescribeAwsNetworkPerformanceMetricSubscriptionsRequest& request, const DescribeAwsNetworkPerformanceMetricSubscriptionsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Describes the specified bundle tasks or all of your bundle tasks.</p> 
@@ -6355,7 +6638,7 @@ namespace EC2
 
         /**
          * <p>Describes a root volume replacement task. For more information, see <a
-         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-restoring-volume.html#replace-root">Replace
+         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/replace-root.html">Replace
          * a root volume</a> in the <i>Amazon Elastic Compute Cloud User
          * Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeReplaceRootVolumeTasks">AWS
@@ -6748,8 +7031,8 @@ namespace EC2
          * time and not miss a recorded event. Spot Fleet events are available for 48
          * hours.</p> <p>For more information, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/fleet-monitor.html">Monitor
-         * fleet events using Amazon EventBridge</a> in the <i>Amazon EC2 User Guide for
-         * Linux Instances</i>.</p><p><h3>See Also:</h3>   <a
+         * fleet events using Amazon EventBridge</a> in the <i>Amazon EC2 User
+         * Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeSpotFleetRequestHistory">AWS
          * API Reference</a></p>
          */
@@ -6871,11 +7154,11 @@ namespace EC2
          * only tasks from the past 31 days can be viewed.</p> <p>To use this API, you must
          * have the required permissions. For more information, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html#ami-s3-permissions">Permissions
-         * for storing and restoring AMIs using Amazon S3</a> in the <i>Amazon Elastic
-         * Compute Cloud User Guide</i>.</p> <p>For more information, see <a
+         * for storing and restoring AMIs using Amazon S3</a> in the <i>Amazon EC2 User
+         * Guide</i>.</p> <p>For more information, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html">Store
-         * and restore an AMI using Amazon S3</a> in the <i>Amazon Elastic Compute Cloud
-         * User Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * and restore an AMI using Amazon S3</a> in the <i>Amazon EC2 User
+         * Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeStoreImageTasks">AWS
          * API Reference</a></p>
          */
@@ -7188,6 +7471,95 @@ namespace EC2
          * An Async wrapper for DescribeTrunkInterfaceAssociations that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void DescribeTrunkInterfaceAssociationsAsync(const Model::DescribeTrunkInterfaceAssociationsRequest& request, const DescribeTrunkInterfaceAssociationsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Describe Amazon Web Services Verified Access endpoints.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVerifiedAccessEndpoints">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeVerifiedAccessEndpointsOutcome DescribeVerifiedAccessEndpoints(const Model::DescribeVerifiedAccessEndpointsRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeVerifiedAccessEndpoints that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeVerifiedAccessEndpointsOutcomeCallable DescribeVerifiedAccessEndpointsCallable(const Model::DescribeVerifiedAccessEndpointsRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeVerifiedAccessEndpoints that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeVerifiedAccessEndpointsAsync(const Model::DescribeVerifiedAccessEndpointsRequest& request, const DescribeVerifiedAccessEndpointsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Describe details of existing Verified Access groups.</p><p><h3>See Also:</h3>
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVerifiedAccessGroups">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeVerifiedAccessGroupsOutcome DescribeVerifiedAccessGroups(const Model::DescribeVerifiedAccessGroupsRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeVerifiedAccessGroups that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeVerifiedAccessGroupsOutcomeCallable DescribeVerifiedAccessGroupsCallable(const Model::DescribeVerifiedAccessGroupsRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeVerifiedAccessGroups that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeVerifiedAccessGroupsAsync(const Model::DescribeVerifiedAccessGroupsRequest& request, const DescribeVerifiedAccessGroupsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Describes the current logging configuration for the Amazon Web Services
+         * Verified Access instances.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVerifiedAccessInstanceLoggingConfigurations">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeVerifiedAccessInstanceLoggingConfigurationsOutcome DescribeVerifiedAccessInstanceLoggingConfigurations(const Model::DescribeVerifiedAccessInstanceLoggingConfigurationsRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeVerifiedAccessInstanceLoggingConfigurations that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeVerifiedAccessInstanceLoggingConfigurationsOutcomeCallable DescribeVerifiedAccessInstanceLoggingConfigurationsCallable(const Model::DescribeVerifiedAccessInstanceLoggingConfigurationsRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeVerifiedAccessInstanceLoggingConfigurations that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeVerifiedAccessInstanceLoggingConfigurationsAsync(const Model::DescribeVerifiedAccessInstanceLoggingConfigurationsRequest& request, const DescribeVerifiedAccessInstanceLoggingConfigurationsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Describe Verified Access instances.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVerifiedAccessInstances">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeVerifiedAccessInstancesOutcome DescribeVerifiedAccessInstances(const Model::DescribeVerifiedAccessInstancesRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeVerifiedAccessInstances that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeVerifiedAccessInstancesOutcomeCallable DescribeVerifiedAccessInstancesCallable(const Model::DescribeVerifiedAccessInstancesRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeVerifiedAccessInstances that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeVerifiedAccessInstancesAsync(const Model::DescribeVerifiedAccessInstancesRequest& request, const DescribeVerifiedAccessInstancesResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Describe details of existing Verified Access trust providers.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVerifiedAccessTrustProviders">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeVerifiedAccessTrustProvidersOutcome DescribeVerifiedAccessTrustProviders(const Model::DescribeVerifiedAccessTrustProvidersRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeVerifiedAccessTrustProviders that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeVerifiedAccessTrustProvidersOutcomeCallable DescribeVerifiedAccessTrustProvidersCallable(const Model::DescribeVerifiedAccessTrustProvidersRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeVerifiedAccessTrustProviders that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeVerifiedAccessTrustProvidersAsync(const Model::DescribeVerifiedAccessTrustProvidersRequest& request, const DescribeVerifiedAccessTrustProvidersResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Describes the specified attribute of the specified volume. You can specify
@@ -7634,6 +8006,24 @@ namespace EC2
         virtual void DetachNetworkInterfaceAsync(const Model::DetachNetworkInterfaceRequest& request, const DetachNetworkInterfaceResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Detach a trust provider from an Amazon Web Services Verified Access
+         * instance.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DetachVerifiedAccessTrustProvider">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DetachVerifiedAccessTrustProviderOutcome DetachVerifiedAccessTrustProvider(const Model::DetachVerifiedAccessTrustProviderRequest& request) const;
+
+        /**
+         * A Callable wrapper for DetachVerifiedAccessTrustProvider that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DetachVerifiedAccessTrustProviderOutcomeCallable DetachVerifiedAccessTrustProviderCallable(const Model::DetachVerifiedAccessTrustProviderRequest& request) const;
+
+        /**
+         * An Async wrapper for DetachVerifiedAccessTrustProvider that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DetachVerifiedAccessTrustProviderAsync(const Model::DetachVerifiedAccessTrustProviderRequest& request, const DetachVerifiedAccessTrustProviderResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Detaches an EBS volume from an instance. Make sure to unmount any file
          * systems on the device within your operating system before detaching the volume.
          * Failure to do so can result in the volume becoming stuck in the
@@ -7684,6 +8074,44 @@ namespace EC2
          * An Async wrapper for DetachVpnGateway that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void DetachVpnGatewayAsync(const Model::DetachVpnGatewayRequest& request, const DetachVpnGatewayResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Disables Elastic IP address transfer. For more information, see <a
+         * href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#transfer-EIPs-intro">Transfer
+         * Elastic IP addresses</a> in the <i>Amazon Virtual Private Cloud User
+         * Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableAddressTransfer">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DisableAddressTransferOutcome DisableAddressTransfer(const Model::DisableAddressTransferRequest& request) const;
+
+        /**
+         * A Callable wrapper for DisableAddressTransfer that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DisableAddressTransferOutcomeCallable DisableAddressTransferCallable(const Model::DisableAddressTransferRequest& request) const;
+
+        /**
+         * An Async wrapper for DisableAddressTransfer that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DisableAddressTransferAsync(const Model::DisableAddressTransferRequest& request, const DisableAddressTransferResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Disables Infrastructure Performance metric subscriptions.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableAwsNetworkPerformanceMetricSubscription">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DisableAwsNetworkPerformanceMetricSubscriptionOutcome DisableAwsNetworkPerformanceMetricSubscription(const Model::DisableAwsNetworkPerformanceMetricSubscriptionRequest& request) const;
+
+        /**
+         * A Callable wrapper for DisableAwsNetworkPerformanceMetricSubscription that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DisableAwsNetworkPerformanceMetricSubscriptionOutcomeCallable DisableAwsNetworkPerformanceMetricSubscriptionCallable(const Model::DisableAwsNetworkPerformanceMetricSubscriptionRequest& request) const;
+
+        /**
+         * An Async wrapper for DisableAwsNetworkPerformanceMetricSubscription that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DisableAwsNetworkPerformanceMetricSubscriptionAsync(const Model::DisableAwsNetworkPerformanceMetricSubscriptionRequest& request, const DisableAwsNetworkPerformanceMetricSubscriptionResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Disables EBS encryption by default for your account in the current
@@ -7752,8 +8180,7 @@ namespace EC2
          * <p>Cancels the deprecation of the specified AMI.</p> <p>For more information,
          * see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-deprecate.html">Deprecate
-         * an AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p><p><h3>See
-         * Also:</h3>   <a
+         * an AMI</a> in the <i>Amazon EC2 User Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableImageDeprecation">AWS
          * API Reference</a></p>
          */
@@ -8150,6 +8577,44 @@ namespace EC2
         virtual void DisassociateVpcCidrBlockAsync(const Model::DisassociateVpcCidrBlockRequest& request, const DisassociateVpcCidrBlockResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Enables Elastic IP address transfer. For more information, see <a
+         * href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#transfer-EIPs-intro">Transfer
+         * Elastic IP addresses</a> in the <i>Amazon Virtual Private Cloud User
+         * Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableAddressTransfer">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::EnableAddressTransferOutcome EnableAddressTransfer(const Model::EnableAddressTransferRequest& request) const;
+
+        /**
+         * A Callable wrapper for EnableAddressTransfer that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::EnableAddressTransferOutcomeCallable EnableAddressTransferCallable(const Model::EnableAddressTransferRequest& request) const;
+
+        /**
+         * An Async wrapper for EnableAddressTransfer that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void EnableAddressTransferAsync(const Model::EnableAddressTransferRequest& request, const EnableAddressTransferResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Enables Infrastructure Performance subscriptions.</p><p><h3>See Also:</h3>  
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableAwsNetworkPerformanceMetricSubscription">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::EnableAwsNetworkPerformanceMetricSubscriptionOutcome EnableAwsNetworkPerformanceMetricSubscription(const Model::EnableAwsNetworkPerformanceMetricSubscriptionRequest& request) const;
+
+        /**
+         * A Callable wrapper for EnableAwsNetworkPerformanceMetricSubscription that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::EnableAwsNetworkPerformanceMetricSubscriptionOutcomeCallable EnableAwsNetworkPerformanceMetricSubscriptionCallable(const Model::EnableAwsNetworkPerformanceMetricSubscriptionRequest& request) const;
+
+        /**
+         * An Async wrapper for EnableAwsNetworkPerformanceMetricSubscription that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void EnableAwsNetworkPerformanceMetricSubscriptionAsync(const Model::EnableAwsNetworkPerformanceMetricSubscriptionRequest& request, const EnableAwsNetworkPerformanceMetricSubscriptionResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Enables EBS encryption by default for your account in the current Region.</p>
          * <p>After you enable encryption by default, the EBS volumes that you create are
          * always encrypted, either using the default KMS key or the KMS key that you
@@ -8232,8 +8697,7 @@ namespace EC2
          * <p>Enables deprecation of the specified AMI at the specified date and time.</p>
          * <p>For more information, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-deprecate.html">Deprecate
-         * an AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p><p><h3>See
-         * Also:</h3>   <a
+         * an AMI</a> in the <i>Amazon EC2 User Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableImageDeprecation">AWS
          * API Reference</a></p>
          */
@@ -8270,6 +8734,27 @@ namespace EC2
          * An Async wrapper for EnableIpamOrganizationAdminAccount that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void EnableIpamOrganizationAdminAccountAsync(const Model::EnableIpamOrganizationAdminAccountRequest& request, const EnableIpamOrganizationAdminAccountResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Establishes a trust relationship between Reachability Analyzer and
+         * Organizations. This operation must be performed by the management account for
+         * the organization.</p> <p>After you establish a trust relationship, a user in the
+         * management account or a delegated administrator account can run a cross-account
+         * analysis using resources from the member accounts.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableReachabilityAnalyzerOrganizationSharing">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::EnableReachabilityAnalyzerOrganizationSharingOutcome EnableReachabilityAnalyzerOrganizationSharing(const Model::EnableReachabilityAnalyzerOrganizationSharingRequest& request) const;
+
+        /**
+         * A Callable wrapper for EnableReachabilityAnalyzerOrganizationSharing that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::EnableReachabilityAnalyzerOrganizationSharingOutcomeCallable EnableReachabilityAnalyzerOrganizationSharingCallable(const Model::EnableReachabilityAnalyzerOrganizationSharingRequest& request) const;
+
+        /**
+         * An Async wrapper for EnableReachabilityAnalyzerOrganizationSharing that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void EnableReachabilityAnalyzerOrganizationSharingAsync(const Model::EnableReachabilityAnalyzerOrganizationSharingRequest& request, const EnableReachabilityAnalyzerOrganizationSharingResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Enables access to the EC2 serial console of all instances for your account.
@@ -8528,6 +9013,23 @@ namespace EC2
          * An Async wrapper for GetAssociatedIpv6PoolCidrs that queues the request into a thread executor and triggers associated callback when operation has finished.
          */
         virtual void GetAssociatedIpv6PoolCidrsAsync(const Model::GetAssociatedIpv6PoolCidrsRequest& request, const GetAssociatedIpv6PoolCidrsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Gets network performance data.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetAwsNetworkPerformanceData">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetAwsNetworkPerformanceDataOutcome GetAwsNetworkPerformanceData(const Model::GetAwsNetworkPerformanceDataRequest& request) const;
+
+        /**
+         * A Callable wrapper for GetAwsNetworkPerformanceData that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetAwsNetworkPerformanceDataOutcomeCallable GetAwsNetworkPerformanceDataCallable(const Model::GetAwsNetworkPerformanceDataRequest& request) const;
+
+        /**
+         * An Async wrapper for GetAwsNetworkPerformanceData that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetAwsNetworkPerformanceDataAsync(const Model::GetAwsNetworkPerformanceDataRequest& request, const GetAwsNetworkPerformanceDataResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
          * <p>Gets usage information about a Capacity Reservation. If the Capacity
@@ -9227,6 +9729,42 @@ namespace EC2
         virtual void GetTransitGatewayRouteTablePropagationsAsync(const Model::GetTransitGatewayRouteTablePropagationsRequest& request, const GetTransitGatewayRouteTablePropagationsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Get the Verified Access policy associated with the endpoint.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetVerifiedAccessEndpointPolicy">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetVerifiedAccessEndpointPolicyOutcome GetVerifiedAccessEndpointPolicy(const Model::GetVerifiedAccessEndpointPolicyRequest& request) const;
+
+        /**
+         * A Callable wrapper for GetVerifiedAccessEndpointPolicy that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetVerifiedAccessEndpointPolicyOutcomeCallable GetVerifiedAccessEndpointPolicyCallable(const Model::GetVerifiedAccessEndpointPolicyRequest& request) const;
+
+        /**
+         * An Async wrapper for GetVerifiedAccessEndpointPolicy that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetVerifiedAccessEndpointPolicyAsync(const Model::GetVerifiedAccessEndpointPolicyRequest& request, const GetVerifiedAccessEndpointPolicyResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Shows the contents of the Verified Access policy associated with the
+         * group.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetVerifiedAccessGroupPolicy">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::GetVerifiedAccessGroupPolicyOutcome GetVerifiedAccessGroupPolicy(const Model::GetVerifiedAccessGroupPolicyRequest& request) const;
+
+        /**
+         * A Callable wrapper for GetVerifiedAccessGroupPolicy that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::GetVerifiedAccessGroupPolicyOutcomeCallable GetVerifiedAccessGroupPolicyCallable(const Model::GetVerifiedAccessGroupPolicyRequest& request) const;
+
+        /**
+         * An Async wrapper for GetVerifiedAccessGroupPolicy that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void GetVerifiedAccessGroupPolicyAsync(const Model::GetVerifiedAccessGroupPolicyRequest& request, const GetVerifiedAccessGroupPolicyResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Download an Amazon Web Services-provided sample configuration file to be used
          * with the customer gateway device specified for your Site-to-Site VPN
          * connection.</p><p><h3>See Also:</h3>   <a
@@ -9419,8 +9957,7 @@ namespace EC2
          * <p>Lists one or more AMIs that are currently in the Recycle Bin. For more
          * information, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/recycle-bin.html">Recycle
-         * Bin</a> in the Amazon Elastic Compute Cloud User Guide.</p><p><h3>See Also:</h3>
-         * <a
+         * Bin</a> in the <i>Amazon EC2 User Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ListImagesInRecycleBin">AWS
          * API Reference</a></p>
          */
@@ -10459,6 +10996,132 @@ namespace EC2
         virtual void ModifyTransitGatewayVpcAttachmentAsync(const Model::ModifyTransitGatewayVpcAttachmentRequest& request, const ModifyTransitGatewayVpcAttachmentResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p>Modifies the configuration of an Amazon Web Services Verified Access
+         * endpoint.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessEndpoint">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ModifyVerifiedAccessEndpointOutcome ModifyVerifiedAccessEndpoint(const Model::ModifyVerifiedAccessEndpointRequest& request) const;
+
+        /**
+         * A Callable wrapper for ModifyVerifiedAccessEndpoint that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ModifyVerifiedAccessEndpointOutcomeCallable ModifyVerifiedAccessEndpointCallable(const Model::ModifyVerifiedAccessEndpointRequest& request) const;
+
+        /**
+         * An Async wrapper for ModifyVerifiedAccessEndpoint that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ModifyVerifiedAccessEndpointAsync(const Model::ModifyVerifiedAccessEndpointRequest& request, const ModifyVerifiedAccessEndpointResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Modifies the specified Verified Access endpoint policy.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessEndpointPolicy">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ModifyVerifiedAccessEndpointPolicyOutcome ModifyVerifiedAccessEndpointPolicy(const Model::ModifyVerifiedAccessEndpointPolicyRequest& request) const;
+
+        /**
+         * A Callable wrapper for ModifyVerifiedAccessEndpointPolicy that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ModifyVerifiedAccessEndpointPolicyOutcomeCallable ModifyVerifiedAccessEndpointPolicyCallable(const Model::ModifyVerifiedAccessEndpointPolicyRequest& request) const;
+
+        /**
+         * An Async wrapper for ModifyVerifiedAccessEndpointPolicy that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ModifyVerifiedAccessEndpointPolicyAsync(const Model::ModifyVerifiedAccessEndpointPolicyRequest& request, const ModifyVerifiedAccessEndpointPolicyResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Modifies the specified Verified Access group configuration.</p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessGroup">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ModifyVerifiedAccessGroupOutcome ModifyVerifiedAccessGroup(const Model::ModifyVerifiedAccessGroupRequest& request) const;
+
+        /**
+         * A Callable wrapper for ModifyVerifiedAccessGroup that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ModifyVerifiedAccessGroupOutcomeCallable ModifyVerifiedAccessGroupCallable(const Model::ModifyVerifiedAccessGroupRequest& request) const;
+
+        /**
+         * An Async wrapper for ModifyVerifiedAccessGroup that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ModifyVerifiedAccessGroupAsync(const Model::ModifyVerifiedAccessGroupRequest& request, const ModifyVerifiedAccessGroupResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Modifies the specified Verified Access group policy.</p><p><h3>See Also:</h3>
+         * <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessGroupPolicy">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ModifyVerifiedAccessGroupPolicyOutcome ModifyVerifiedAccessGroupPolicy(const Model::ModifyVerifiedAccessGroupPolicyRequest& request) const;
+
+        /**
+         * A Callable wrapper for ModifyVerifiedAccessGroupPolicy that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ModifyVerifiedAccessGroupPolicyOutcomeCallable ModifyVerifiedAccessGroupPolicyCallable(const Model::ModifyVerifiedAccessGroupPolicyRequest& request) const;
+
+        /**
+         * An Async wrapper for ModifyVerifiedAccessGroupPolicy that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ModifyVerifiedAccessGroupPolicyAsync(const Model::ModifyVerifiedAccessGroupPolicyRequest& request, const ModifyVerifiedAccessGroupPolicyResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Modifies the configuration of the specified Verified Access
+         * instance.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessInstance">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ModifyVerifiedAccessInstanceOutcome ModifyVerifiedAccessInstance(const Model::ModifyVerifiedAccessInstanceRequest& request) const;
+
+        /**
+         * A Callable wrapper for ModifyVerifiedAccessInstance that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ModifyVerifiedAccessInstanceOutcomeCallable ModifyVerifiedAccessInstanceCallable(const Model::ModifyVerifiedAccessInstanceRequest& request) const;
+
+        /**
+         * An Async wrapper for ModifyVerifiedAccessInstance that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ModifyVerifiedAccessInstanceAsync(const Model::ModifyVerifiedAccessInstanceRequest& request, const ModifyVerifiedAccessInstanceResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Modifies the logging configuration for the specified Amazon Web Services
+         * Verified Access instance.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessInstanceLoggingConfiguration">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ModifyVerifiedAccessInstanceLoggingConfigurationOutcome ModifyVerifiedAccessInstanceLoggingConfiguration(const Model::ModifyVerifiedAccessInstanceLoggingConfigurationRequest& request) const;
+
+        /**
+         * A Callable wrapper for ModifyVerifiedAccessInstanceLoggingConfiguration that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ModifyVerifiedAccessInstanceLoggingConfigurationOutcomeCallable ModifyVerifiedAccessInstanceLoggingConfigurationCallable(const Model::ModifyVerifiedAccessInstanceLoggingConfigurationRequest& request) const;
+
+        /**
+         * An Async wrapper for ModifyVerifiedAccessInstanceLoggingConfiguration that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ModifyVerifiedAccessInstanceLoggingConfigurationAsync(const Model::ModifyVerifiedAccessInstanceLoggingConfigurationRequest& request, const ModifyVerifiedAccessInstanceLoggingConfigurationResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
+         * <p>Modifies the configuration of the specified Amazon Web Services Verified
+         * Access trust provider.</p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessTrustProvider">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::ModifyVerifiedAccessTrustProviderOutcome ModifyVerifiedAccessTrustProvider(const Model::ModifyVerifiedAccessTrustProviderRequest& request) const;
+
+        /**
+         * A Callable wrapper for ModifyVerifiedAccessTrustProvider that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::ModifyVerifiedAccessTrustProviderOutcomeCallable ModifyVerifiedAccessTrustProviderCallable(const Model::ModifyVerifiedAccessTrustProviderRequest& request) const;
+
+        /**
+         * An Async wrapper for ModifyVerifiedAccessTrustProvider that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void ModifyVerifiedAccessTrustProviderAsync(const Model::ModifyVerifiedAccessTrustProviderRequest& request, const ModifyVerifiedAccessTrustProviderResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>You can modify several parameters of an existing EBS volume, including volume
          * size, volume type, and IOPS capacity. If your EBS volume is attached to a
          * current-generation EC2 instance type, you might be able to apply these changes
@@ -11075,8 +11738,8 @@ namespace EC2
          * <p>Registers an AMI. When you're creating an AMI, this is the final step you
          * must complete before you can launch an instance from the AMI. For more
          * information about creating AMIs, see <a
-         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami.html">Creating
-         * your own AMIs</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
+         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami.html">Create
+         * your own AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
          *  <p>For Amazon EBS-backed instances, <a>CreateImage</a> creates and
          * registers the AMI in a single request, so you don't have to register the AMI
          * yourself. We recommend that you always use <a>CreateImage</a> unless you have a
@@ -11112,9 +11775,9 @@ namespace EC2
          * matching billing product code, the Reserved Instance will not be applied to the
          * On-Demand Instance. For information about how to obtain the platform details and
          * billing information of an AMI, see <a
-         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-billing-info.html">Understanding
-         * AMI billing</a> in the <i>Amazon Elastic Compute Cloud User
-         * Guide</i>.</p><p><h3>See Also:</h3>   <a
+         * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-billing-info.html">Understand
+         * AMI billing information</a> in the <i>Amazon EC2 User Guide</i>.</p><p><h3>See
+         * Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RegisterImage">AWS
          * API Reference</a></p>
          */
@@ -11558,13 +12221,12 @@ namespace EC2
          * <code>instance</code> resource types are supported.</p> <p>For more information,
          * see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-requests.html">Spot
-         * Fleet requests</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.</p>
-         *  <p>We strongly discourage using the RequestSpotFleet API because it
-         * is a legacy API with no planned investment. For options for requesting Spot
-         * Instances, see <a
+         * Fleet requests</a> in the <i>Amazon EC2 User Guide</i>.</p>  <p>We
+         * strongly discourage using the RequestSpotFleet API because it is a legacy API
+         * with no planned investment. For options for requesting Spot Instances, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-best-practices.html#which-spot-request-method-to-use">Which
-         * is the best Spot request method to use?</a> in the <i>Amazon EC2 User Guide for
-         * Linux Instances</i>.</p> <p><h3>See Also:</h3>   <a
+         * is the best Spot request method to use?</a> in the <i>Amazon EC2 User
+         * Guide</i>.</p> <p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RequestSpotFleet">AWS
          * API Reference</a></p>
          */
@@ -11783,8 +12445,7 @@ namespace EC2
         /**
          * <p>Restores an AMI from the Recycle Bin. For more information, see <a
          * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/recycle-bin.html">Recycle
-         * Bin</a> in the Amazon Elastic Compute Cloud User Guide.</p><p><h3>See Also:</h3>
-         * <a
+         * Bin</a> in the <i>Amazon EC2 User Guide</i>.</p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RestoreImageFromRecycleBin">AWS
          * API Reference</a></p>
          */
@@ -12469,12 +13130,14 @@ namespace EC2
 
 
         void OverrideEndpoint(const Aws::String& endpoint);
+        std::shared_ptr<EC2EndpointProviderBase>& accessEndpointProvider();
   private:
-        void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+        friend class Aws::Client::ClientWithAsyncTemplateMethods<EC2Client>;
+        void init(const EC2ClientConfiguration& clientConfiguration);
 
-        Aws::String m_uri;
-        Aws::String m_configScheme;
+        EC2ClientConfiguration m_clientConfiguration;
         std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+        std::shared_ptr<EC2EndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace EC2

@@ -35,10 +35,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/RunJobFlowInput">AWS
    * API Reference</a></p>
    */
-  class AWS_EMR_API RunJobFlowRequest : public EMRRequest
+  class RunJobFlowRequest : public EMRRequest
   {
   public:
-    RunJobFlowRequest();
+    AWS_EMR_API RunJobFlowRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -46,9 +46,9 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "RunJobFlow"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_EMR_API Aws::String SerializePayload() const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_EMR_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 
     /**
@@ -1049,49 +1049,57 @@ namespace Model
 
     /**
      * <p>The IAM role that Amazon EMR assumes in order to access Amazon Web Services
-     * resources on your behalf.</p>
+     * resources on your behalf. If you've created a custom service role path, you must
+     * specify it for the service role when you launch your cluster.</p>
      */
     inline const Aws::String& GetServiceRole() const{ return m_serviceRole; }
 
     /**
      * <p>The IAM role that Amazon EMR assumes in order to access Amazon Web Services
-     * resources on your behalf.</p>
+     * resources on your behalf. If you've created a custom service role path, you must
+     * specify it for the service role when you launch your cluster.</p>
      */
     inline bool ServiceRoleHasBeenSet() const { return m_serviceRoleHasBeenSet; }
 
     /**
      * <p>The IAM role that Amazon EMR assumes in order to access Amazon Web Services
-     * resources on your behalf.</p>
+     * resources on your behalf. If you've created a custom service role path, you must
+     * specify it for the service role when you launch your cluster.</p>
      */
     inline void SetServiceRole(const Aws::String& value) { m_serviceRoleHasBeenSet = true; m_serviceRole = value; }
 
     /**
      * <p>The IAM role that Amazon EMR assumes in order to access Amazon Web Services
-     * resources on your behalf.</p>
+     * resources on your behalf. If you've created a custom service role path, you must
+     * specify it for the service role when you launch your cluster.</p>
      */
     inline void SetServiceRole(Aws::String&& value) { m_serviceRoleHasBeenSet = true; m_serviceRole = std::move(value); }
 
     /**
      * <p>The IAM role that Amazon EMR assumes in order to access Amazon Web Services
-     * resources on your behalf.</p>
+     * resources on your behalf. If you've created a custom service role path, you must
+     * specify it for the service role when you launch your cluster.</p>
      */
     inline void SetServiceRole(const char* value) { m_serviceRoleHasBeenSet = true; m_serviceRole.assign(value); }
 
     /**
      * <p>The IAM role that Amazon EMR assumes in order to access Amazon Web Services
-     * resources on your behalf.</p>
+     * resources on your behalf. If you've created a custom service role path, you must
+     * specify it for the service role when you launch your cluster.</p>
      */
     inline RunJobFlowRequest& WithServiceRole(const Aws::String& value) { SetServiceRole(value); return *this;}
 
     /**
      * <p>The IAM role that Amazon EMR assumes in order to access Amazon Web Services
-     * resources on your behalf.</p>
+     * resources on your behalf. If you've created a custom service role path, you must
+     * specify it for the service role when you launch your cluster.</p>
      */
     inline RunJobFlowRequest& WithServiceRole(Aws::String&& value) { SetServiceRole(std::move(value)); return *this;}
 
     /**
      * <p>The IAM role that Amazon EMR assumes in order to access Amazon Web Services
-     * resources on your behalf.</p>
+     * resources on your behalf. If you've created a custom service role path, you must
+     * specify it for the service role when you launch your cluster.</p>
      */
     inline RunJobFlowRequest& WithServiceRole(const char* value) { SetServiceRole(value); return *this;}
 

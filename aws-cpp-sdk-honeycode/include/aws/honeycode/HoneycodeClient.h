@@ -7,6 +7,7 @@
 #include <aws/honeycode/Honeycode_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/honeycode/HoneycodeServiceClientModel.h>
 
@@ -20,33 +21,60 @@ namespace Honeycode
    * managing almost anything, like projects, customers, operations, approvals,
    * resources, and even your team. </p>
    */
-  class AWS_HONEYCODE_API HoneycodeClient : public Aws::Client::AWSJsonClient
+  class AWS_HONEYCODE_API HoneycodeClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<HoneycodeClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        HoneycodeClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        HoneycodeClient(const Aws::Honeycode::HoneycodeClientConfiguration& clientConfiguration = Aws::Honeycode::HoneycodeClientConfiguration(),
+                        std::shared_ptr<HoneycodeEndpointProviderBase> endpointProvider = Aws::MakeShared<HoneycodeEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         HoneycodeClient(const Aws::Auth::AWSCredentials& credentials,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<HoneycodeEndpointProviderBase> endpointProvider = Aws::MakeShared<HoneycodeEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::Honeycode::HoneycodeClientConfiguration& clientConfiguration = Aws::Honeycode::HoneycodeClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         HoneycodeClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                        const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                        std::shared_ptr<HoneycodeEndpointProviderBase> endpointProvider = Aws::MakeShared<HoneycodeEndpointProvider>(ALLOCATION_TAG),
+                        const Aws::Honeycode::HoneycodeClientConfiguration& clientConfiguration = Aws::Honeycode::HoneycodeClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        HoneycodeClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        HoneycodeClient(const Aws::Auth::AWSCredentials& credentials,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        HoneycodeClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                        const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~HoneycodeClient();
-
 
         /**
          * <p> The BatchCreateTableRows API allows you to create one or more rows at the
@@ -350,12 +378,14 @@ namespace Honeycode
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<HoneycodeEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<HoneycodeClient>;
+      void init(const HoneycodeClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      HoneycodeClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<HoneycodeEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace Honeycode

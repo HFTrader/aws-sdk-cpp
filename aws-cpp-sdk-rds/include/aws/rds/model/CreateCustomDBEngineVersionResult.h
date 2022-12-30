@@ -7,6 +7,7 @@
 #include <aws/rds/RDS_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/rds/model/CharacterSet.h>
+#include <aws/rds/model/CustomDBEngineVersionAMI.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/rds/model/ResponseMetadata.h>
@@ -37,12 +38,12 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/DBEngineVersion">AWS
    * API Reference</a></p>
    */
-  class AWS_RDS_API CreateCustomDBEngineVersionResult
+  class CreateCustomDBEngineVersionResult
   {
   public:
-    CreateCustomDBEngineVersionResult();
-    CreateCustomDBEngineVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    CreateCustomDBEngineVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+    AWS_RDS_API CreateCustomDBEngineVersionResult();
+    AWS_RDS_API CreateCustomDBEngineVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+    AWS_RDS_API CreateCustomDBEngineVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
 
     /**
@@ -259,6 +260,75 @@ namespace Model
      * specified.</p>
      */
     inline CreateCustomDBEngineVersionResult& WithDefaultCharacterSet(CharacterSet&& value) { SetDefaultCharacterSet(std::move(value)); return *this;}
+
+
+    /**
+     * <p>The EC2 image</p>
+     */
+    inline const CustomDBEngineVersionAMI& GetImage() const{ return m_image; }
+
+    /**
+     * <p>The EC2 image</p>
+     */
+    inline void SetImage(const CustomDBEngineVersionAMI& value) { m_image = value; }
+
+    /**
+     * <p>The EC2 image</p>
+     */
+    inline void SetImage(CustomDBEngineVersionAMI&& value) { m_image = std::move(value); }
+
+    /**
+     * <p>The EC2 image</p>
+     */
+    inline CreateCustomDBEngineVersionResult& WithImage(const CustomDBEngineVersionAMI& value) { SetImage(value); return *this;}
+
+    /**
+     * <p>The EC2 image</p>
+     */
+    inline CreateCustomDBEngineVersionResult& WithImage(CustomDBEngineVersionAMI&& value) { SetImage(std::move(value)); return *this;}
+
+
+    /**
+     * <p>A value that indicates the source media provider of the AMI based on the
+     * usage operation. Applicable for RDS Custom for SQL Server.</p>
+     */
+    inline const Aws::String& GetDBEngineMediaType() const{ return m_dBEngineMediaType; }
+
+    /**
+     * <p>A value that indicates the source media provider of the AMI based on the
+     * usage operation. Applicable for RDS Custom for SQL Server.</p>
+     */
+    inline void SetDBEngineMediaType(const Aws::String& value) { m_dBEngineMediaType = value; }
+
+    /**
+     * <p>A value that indicates the source media provider of the AMI based on the
+     * usage operation. Applicable for RDS Custom for SQL Server.</p>
+     */
+    inline void SetDBEngineMediaType(Aws::String&& value) { m_dBEngineMediaType = std::move(value); }
+
+    /**
+     * <p>A value that indicates the source media provider of the AMI based on the
+     * usage operation. Applicable for RDS Custom for SQL Server.</p>
+     */
+    inline void SetDBEngineMediaType(const char* value) { m_dBEngineMediaType.assign(value); }
+
+    /**
+     * <p>A value that indicates the source media provider of the AMI based on the
+     * usage operation. Applicable for RDS Custom for SQL Server.</p>
+     */
+    inline CreateCustomDBEngineVersionResult& WithDBEngineMediaType(const Aws::String& value) { SetDBEngineMediaType(value); return *this;}
+
+    /**
+     * <p>A value that indicates the source media provider of the AMI based on the
+     * usage operation. Applicable for RDS Custom for SQL Server.</p>
+     */
+    inline CreateCustomDBEngineVersionResult& WithDBEngineMediaType(Aws::String&& value) { SetDBEngineMediaType(std::move(value)); return *this;}
+
+    /**
+     * <p>A value that indicates the source media provider of the AMI based on the
+     * usage operation. Applicable for RDS Custom for SQL Server.</p>
+     */
+    inline CreateCustomDBEngineVersionResult& WithDBEngineMediaType(const char* value) { SetDBEngineMediaType(value); return *this;}
 
 
     /**
@@ -1034,6 +1104,84 @@ namespace Model
     inline CreateCustomDBEngineVersionResult& WithSupportsBabelfish(bool value) { SetSupportsBabelfish(value); return *this;}
 
 
+    /**
+     * <p>JSON string that lists the installation files and parameters that RDS Custom
+     * uses to create a custom engine version (CEV). RDS Custom applies the patches in
+     * the order in which they're listed in the manifest. You can set the Oracle home,
+     * Oracle base, and UNIX/Linux user and group using the installation parameters.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-cev.preparing.html#custom-cev.preparing.manifest.fields">JSON
+     * fields in the CEV manifest</a> in the <i>Amazon RDS User Guide</i>. </p>
+     */
+    inline const Aws::String& GetCustomDBEngineVersionManifest() const{ return m_customDBEngineVersionManifest; }
+
+    /**
+     * <p>JSON string that lists the installation files and parameters that RDS Custom
+     * uses to create a custom engine version (CEV). RDS Custom applies the patches in
+     * the order in which they're listed in the manifest. You can set the Oracle home,
+     * Oracle base, and UNIX/Linux user and group using the installation parameters.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-cev.preparing.html#custom-cev.preparing.manifest.fields">JSON
+     * fields in the CEV manifest</a> in the <i>Amazon RDS User Guide</i>. </p>
+     */
+    inline void SetCustomDBEngineVersionManifest(const Aws::String& value) { m_customDBEngineVersionManifest = value; }
+
+    /**
+     * <p>JSON string that lists the installation files and parameters that RDS Custom
+     * uses to create a custom engine version (CEV). RDS Custom applies the patches in
+     * the order in which they're listed in the manifest. You can set the Oracle home,
+     * Oracle base, and UNIX/Linux user and group using the installation parameters.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-cev.preparing.html#custom-cev.preparing.manifest.fields">JSON
+     * fields in the CEV manifest</a> in the <i>Amazon RDS User Guide</i>. </p>
+     */
+    inline void SetCustomDBEngineVersionManifest(Aws::String&& value) { m_customDBEngineVersionManifest = std::move(value); }
+
+    /**
+     * <p>JSON string that lists the installation files and parameters that RDS Custom
+     * uses to create a custom engine version (CEV). RDS Custom applies the patches in
+     * the order in which they're listed in the manifest. You can set the Oracle home,
+     * Oracle base, and UNIX/Linux user and group using the installation parameters.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-cev.preparing.html#custom-cev.preparing.manifest.fields">JSON
+     * fields in the CEV manifest</a> in the <i>Amazon RDS User Guide</i>. </p>
+     */
+    inline void SetCustomDBEngineVersionManifest(const char* value) { m_customDBEngineVersionManifest.assign(value); }
+
+    /**
+     * <p>JSON string that lists the installation files and parameters that RDS Custom
+     * uses to create a custom engine version (CEV). RDS Custom applies the patches in
+     * the order in which they're listed in the manifest. You can set the Oracle home,
+     * Oracle base, and UNIX/Linux user and group using the installation parameters.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-cev.preparing.html#custom-cev.preparing.manifest.fields">JSON
+     * fields in the CEV manifest</a> in the <i>Amazon RDS User Guide</i>. </p>
+     */
+    inline CreateCustomDBEngineVersionResult& WithCustomDBEngineVersionManifest(const Aws::String& value) { SetCustomDBEngineVersionManifest(value); return *this;}
+
+    /**
+     * <p>JSON string that lists the installation files and parameters that RDS Custom
+     * uses to create a custom engine version (CEV). RDS Custom applies the patches in
+     * the order in which they're listed in the manifest. You can set the Oracle home,
+     * Oracle base, and UNIX/Linux user and group using the installation parameters.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-cev.preparing.html#custom-cev.preparing.manifest.fields">JSON
+     * fields in the CEV manifest</a> in the <i>Amazon RDS User Guide</i>. </p>
+     */
+    inline CreateCustomDBEngineVersionResult& WithCustomDBEngineVersionManifest(Aws::String&& value) { SetCustomDBEngineVersionManifest(std::move(value)); return *this;}
+
+    /**
+     * <p>JSON string that lists the installation files and parameters that RDS Custom
+     * uses to create a custom engine version (CEV). RDS Custom applies the patches in
+     * the order in which they're listed in the manifest. You can set the Oracle home,
+     * Oracle base, and UNIX/Linux user and group using the installation parameters.
+     * For more information, see <a
+     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-cev.preparing.html#custom-cev.preparing.manifest.fields">JSON
+     * fields in the CEV manifest</a> in the <i>Amazon RDS User Guide</i>. </p>
+     */
+    inline CreateCustomDBEngineVersionResult& WithCustomDBEngineVersionManifest(const char* value) { SetCustomDBEngineVersionManifest(value); return *this;}
+
+
     
     inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
 
@@ -1062,6 +1210,10 @@ namespace Model
     Aws::String m_dBEngineVersionDescription;
 
     CharacterSet m_defaultCharacterSet;
+
+    CustomDBEngineVersionAMI m_image;
+
+    Aws::String m_dBEngineMediaType;
 
     Aws::Vector<CharacterSet> m_supportedCharacterSets;
 
@@ -1102,6 +1254,8 @@ namespace Model
     Aws::Vector<Tag> m_tagList;
 
     bool m_supportsBabelfish;
+
+    Aws::String m_customDBEngineVersionManifest;
 
     ResponseMetadata m_responseMetadata;
   };

@@ -19,10 +19,10 @@ namespace Model
 
   /**
    */
-  class AWS_WORKMAIL_API PutMobileDeviceAccessOverrideRequest : public WorkMailRequest
+  class PutMobileDeviceAccessOverrideRequest : public WorkMailRequest
   {
   public:
-    PutMobileDeviceAccessOverrideRequest();
+    AWS_WORKMAIL_API PutMobileDeviceAccessOverrideRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -30,56 +30,48 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "PutMobileDeviceAccessOverride"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_WORKMAIL_API Aws::String SerializePayload() const override;
 
-    Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+    AWS_WORKMAIL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 
     /**
-     * <p>Identifies the Amazon WorkMail organization for which you create the
-     * override.</p>
+     * <p>Identifies the WorkMail organization for which you create the override.</p>
      */
     inline const Aws::String& GetOrganizationId() const{ return m_organizationId; }
 
     /**
-     * <p>Identifies the Amazon WorkMail organization for which you create the
-     * override.</p>
+     * <p>Identifies the WorkMail organization for which you create the override.</p>
      */
     inline bool OrganizationIdHasBeenSet() const { return m_organizationIdHasBeenSet; }
 
     /**
-     * <p>Identifies the Amazon WorkMail organization for which you create the
-     * override.</p>
+     * <p>Identifies the WorkMail organization for which you create the override.</p>
      */
     inline void SetOrganizationId(const Aws::String& value) { m_organizationIdHasBeenSet = true; m_organizationId = value; }
 
     /**
-     * <p>Identifies the Amazon WorkMail organization for which you create the
-     * override.</p>
+     * <p>Identifies the WorkMail organization for which you create the override.</p>
      */
     inline void SetOrganizationId(Aws::String&& value) { m_organizationIdHasBeenSet = true; m_organizationId = std::move(value); }
 
     /**
-     * <p>Identifies the Amazon WorkMail organization for which you create the
-     * override.</p>
+     * <p>Identifies the WorkMail organization for which you create the override.</p>
      */
     inline void SetOrganizationId(const char* value) { m_organizationIdHasBeenSet = true; m_organizationId.assign(value); }
 
     /**
-     * <p>Identifies the Amazon WorkMail organization for which you create the
-     * override.</p>
+     * <p>Identifies the WorkMail organization for which you create the override.</p>
      */
     inline PutMobileDeviceAccessOverrideRequest& WithOrganizationId(const Aws::String& value) { SetOrganizationId(value); return *this;}
 
     /**
-     * <p>Identifies the Amazon WorkMail organization for which you create the
-     * override.</p>
+     * <p>Identifies the WorkMail organization for which you create the override.</p>
      */
     inline PutMobileDeviceAccessOverrideRequest& WithOrganizationId(Aws::String&& value) { SetOrganizationId(std::move(value)); return *this;}
 
     /**
-     * <p>Identifies the Amazon WorkMail organization for which you create the
-     * override.</p>
+     * <p>Identifies the WorkMail organization for which you create the override.</p>
      */
     inline PutMobileDeviceAccessOverrideRequest& WithOrganizationId(const char* value) { SetOrganizationId(value); return *this;}
 

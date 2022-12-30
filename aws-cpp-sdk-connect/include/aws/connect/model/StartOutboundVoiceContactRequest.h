@@ -22,10 +22,10 @@ namespace Model
 
   /**
    */
-  class AWS_CONNECT_API StartOutboundVoiceContactRequest : public ConnectRequest
+  class StartOutboundVoiceContactRequest : public ConnectRequest
   {
   public:
-    StartOutboundVoiceContactRequest();
+    AWS_CONNECT_API StartOutboundVoiceContactRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -33,7 +33,7 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "StartOutboundVoiceContact"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_CONNECT_API Aws::String SerializePayload() const override;
 
 
     /**
@@ -217,57 +217,81 @@ namespace Model
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. The token is valid for 7 days after creation. If a
-     * contact is already started, the contact ID is returned. </p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>. The token is valid for 7 days after
+     * creation. If a contact is already started, the contact ID is returned. </p>
      */
     inline const Aws::String& GetClientToken() const{ return m_clientToken; }
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. The token is valid for 7 days after creation. If a
-     * contact is already started, the contact ID is returned. </p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>. The token is valid for 7 days after
+     * creation. If a contact is already started, the contact ID is returned. </p>
      */
     inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. The token is valid for 7 days after creation. If a
-     * contact is already started, the contact ID is returned. </p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>. The token is valid for 7 days after
+     * creation. If a contact is already started, the contact ID is returned. </p>
      */
     inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. The token is valid for 7 days after creation. If a
-     * contact is already started, the contact ID is returned. </p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>. The token is valid for 7 days after
+     * creation. If a contact is already started, the contact ID is returned. </p>
      */
     inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. The token is valid for 7 days after creation. If a
-     * contact is already started, the contact ID is returned. </p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>. The token is valid for 7 days after
+     * creation. If a contact is already started, the contact ID is returned. </p>
      */
     inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. The token is valid for 7 days after creation. If a
-     * contact is already started, the contact ID is returned. </p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>. The token is valid for 7 days after
+     * creation. If a contact is already started, the contact ID is returned. </p>
      */
     inline StartOutboundVoiceContactRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. The token is valid for 7 days after creation. If a
-     * contact is already started, the contact ID is returned. </p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>. The token is valid for 7 days after
+     * creation. If a contact is already started, the contact ID is returned. </p>
      */
     inline StartOutboundVoiceContactRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
 
     /**
      * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. The token is valid for 7 days after creation. If a
-     * contact is already started, the contact ID is returned. </p>
+     * idempotency of the request. If not provided, the Amazon Web Services SDK
+     * populates this field. For more information about idempotency, see <a
+     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+     * retries safe with idempotent APIs</a>. The token is valid for 7 days after
+     * creation. If a contact is already started, the contact ID is returned. </p>
      */
     inline StartOutboundVoiceContactRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
 

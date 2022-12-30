@@ -7,6 +7,7 @@
 #include <aws/ivs/IVS_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/ivs/IVSServiceClientModel.h>
 
@@ -161,33 +162,60 @@ namespace IVS
    * ARN.</p> </li> <li> <p> <a>ListTagsForResource</a> — Gets information about
    * Amazon Web Services tags for the specified ARN.</p> </li> </ul>
    */
-  class AWS_IVS_API IVSClient : public Aws::Client::AWSJsonClient
+  class AWS_IVS_API IVSClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<IVSClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        IVSClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        IVSClient(const Aws::IVS::IVSClientConfiguration& clientConfiguration = Aws::IVS::IVSClientConfiguration(),
+                  std::shared_ptr<IVSEndpointProviderBase> endpointProvider = Aws::MakeShared<IVSEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         IVSClient(const Aws::Auth::AWSCredentials& credentials,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<IVSEndpointProviderBase> endpointProvider = Aws::MakeShared<IVSEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::IVS::IVSClientConfiguration& clientConfiguration = Aws::IVS::IVSClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         IVSClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<IVSEndpointProviderBase> endpointProvider = Aws::MakeShared<IVSEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::IVS::IVSClientConfiguration& clientConfiguration = Aws::IVS::IVSClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IVSClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        IVSClient(const Aws::Auth::AWSCredentials& credentials,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        IVSClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~IVSClient();
-
 
         /**
          * <p>Performs <a>GetChannel</a> on multiple ARNs simultaneously.</p><p><h3>See
@@ -748,12 +776,14 @@ namespace IVS
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<IVSEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<IVSClient>;
+      void init(const IVSClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      IVSClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<IVSEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace IVS

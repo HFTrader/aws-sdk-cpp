@@ -22,10 +22,10 @@ namespace Model
 
   /**
    */
-  class AWS_EC2_API GetIpamResourceCidrsRequest : public EC2Request
+  class GetIpamResourceCidrsRequest : public EC2Request
   {
   public:
-    GetIpamResourceCidrsRequest();
+    AWS_EC2_API GetIpamResourceCidrsRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -33,10 +33,10 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "GetIpamResourceCidrs"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_EC2_API Aws::String SerializePayload() const override;
 
   protected:
-    void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+    AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
 
   public:
 
@@ -354,22 +354,34 @@ namespace Model
     inline GetIpamResourceCidrsRequest& WithResourceType(IpamResourceType&& value) { SetResourceType(std::move(value)); return *this;}
 
 
-    
+    /**
+     * <p>The resource tag.</p>
+     */
     inline const RequestIpamResourceTag& GetResourceTag() const{ return m_resourceTag; }
 
-    
+    /**
+     * <p>The resource tag.</p>
+     */
     inline bool ResourceTagHasBeenSet() const { return m_resourceTagHasBeenSet; }
 
-    
+    /**
+     * <p>The resource tag.</p>
+     */
     inline void SetResourceTag(const RequestIpamResourceTag& value) { m_resourceTagHasBeenSet = true; m_resourceTag = value; }
 
-    
+    /**
+     * <p>The resource tag.</p>
+     */
     inline void SetResourceTag(RequestIpamResourceTag&& value) { m_resourceTagHasBeenSet = true; m_resourceTag = std::move(value); }
 
-    
+    /**
+     * <p>The resource tag.</p>
+     */
     inline GetIpamResourceCidrsRequest& WithResourceTag(const RequestIpamResourceTag& value) { SetResourceTag(value); return *this;}
 
-    
+    /**
+     * <p>The resource tag.</p>
+     */
     inline GetIpamResourceCidrsRequest& WithResourceTag(RequestIpamResourceTag&& value) { SetResourceTag(std::move(value)); return *this;}
 
 

@@ -7,6 +7,7 @@
 #include <aws/waf/WAF_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/waf/WAFServiceClientModel.h>
 
@@ -33,33 +34,60 @@ namespace WAF
    * href="https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html">AWS
    * WAF Classic</a> in the developer guide.</p>
    */
-  class AWS_WAF_API WAFClient : public Aws::Client::AWSJsonClient
+  class AWS_WAF_API WAFClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<WAFClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        WAFClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        WAFClient(const Aws::WAF::WAFClientConfiguration& clientConfiguration = Aws::WAF::WAFClientConfiguration(),
+                  std::shared_ptr<WAFEndpointProviderBase> endpointProvider = Aws::MakeShared<WAFEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         WAFClient(const Aws::Auth::AWSCredentials& credentials,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<WAFEndpointProviderBase> endpointProvider = Aws::MakeShared<WAFEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::WAF::WAFClientConfiguration& clientConfiguration = Aws::WAF::WAFClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         WAFClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                  const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                  std::shared_ptr<WAFEndpointProviderBase> endpointProvider = Aws::MakeShared<WAFEndpointProvider>(ALLOCATION_TAG),
+                  const Aws::WAF::WAFClientConfiguration& clientConfiguration = Aws::WAF::WAFClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        WAFClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        WAFClient(const Aws::Auth::AWSCredentials& credentials,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        WAFClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                  const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~WAFClient();
-
 
         /**
          *  <p>This is <b>AWS WAF Classic</b> documentation. For more information,
@@ -2764,12 +2792,14 @@ namespace WAF
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<WAFEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<WAFClient>;
+      void init(const WAFClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      WAFClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<WAFEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace WAF

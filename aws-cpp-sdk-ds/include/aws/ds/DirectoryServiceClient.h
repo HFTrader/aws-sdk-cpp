@@ -7,6 +7,7 @@
 #include <aws/ds/DirectoryService_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/ds/DirectoryServiceServiceClientModel.h>
 
@@ -32,33 +33,60 @@ namespace DirectoryService
    * href="http://aws.amazon.com/tools/">Tools for Amazon Web Services</a>.</p>
    * 
    */
-  class AWS_DIRECTORYSERVICE_API DirectoryServiceClient : public Aws::Client::AWSJsonClient
+  class AWS_DIRECTORYSERVICE_API DirectoryServiceClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<DirectoryServiceClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        DirectoryServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        DirectoryServiceClient(const Aws::DirectoryService::DirectoryServiceClientConfiguration& clientConfiguration = Aws::DirectoryService::DirectoryServiceClientConfiguration(),
+                               std::shared_ptr<DirectoryServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<DirectoryServiceEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         DirectoryServiceClient(const Aws::Auth::AWSCredentials& credentials,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<DirectoryServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<DirectoryServiceEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::DirectoryService::DirectoryServiceClientConfiguration& clientConfiguration = Aws::DirectoryService::DirectoryServiceClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         DirectoryServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                               const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                               std::shared_ptr<DirectoryServiceEndpointProviderBase> endpointProvider = Aws::MakeShared<DirectoryServiceEndpointProvider>(ALLOCATION_TAG),
+                               const Aws::DirectoryService::DirectoryServiceClientConfiguration& clientConfiguration = Aws::DirectoryService::DirectoryServiceClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DirectoryServiceClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DirectoryServiceClient(const Aws::Auth::AWSCredentials& credentials,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        DirectoryServiceClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                               const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~DirectoryServiceClient();
-
 
         /**
          * <p>Accepts a directory sharing request that was sent from the directory owner
@@ -729,6 +757,24 @@ namespace DirectoryService
         virtual void DescribeTrustsAsync(const Model::DescribeTrustsRequest& request, const DescribeTrustsResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p> Describes the updates of a directory for a particular update type.
+         * </p><p><h3>See Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ds-2015-04-16/DescribeUpdateDirectory">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::DescribeUpdateDirectoryOutcome DescribeUpdateDirectory(const Model::DescribeUpdateDirectoryRequest& request) const;
+
+        /**
+         * A Callable wrapper for DescribeUpdateDirectory that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::DescribeUpdateDirectoryOutcomeCallable DescribeUpdateDirectoryCallable(const Model::DescribeUpdateDirectoryRequest& request) const;
+
+        /**
+         * An Async wrapper for DescribeUpdateDirectory that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void DescribeUpdateDirectoryAsync(const Model::DescribeUpdateDirectoryRequest& request, const DescribeUpdateDirectoryResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Disables alternative client authentication methods for the specified
          * directory. </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/ds-2015-04-16/DisableClientAuthentication">AWS
@@ -1251,6 +1297,24 @@ namespace DirectoryService
         virtual void UpdateConditionalForwarderAsync(const Model::UpdateConditionalForwarderRequest& request, const UpdateConditionalForwarderResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
+         * <p> Updates the directory for a particular update type. </p><p><h3>See
+         * Also:</h3>   <a
+         * href="http://docs.aws.amazon.com/goto/WebAPI/ds-2015-04-16/UpdateDirectorySetup">AWS
+         * API Reference</a></p>
+         */
+        virtual Model::UpdateDirectorySetupOutcome UpdateDirectorySetup(const Model::UpdateDirectorySetupRequest& request) const;
+
+        /**
+         * A Callable wrapper for UpdateDirectorySetup that returns a future to the operation so that it can be executed in parallel to other requests.
+         */
+        virtual Model::UpdateDirectorySetupOutcomeCallable UpdateDirectorySetupCallable(const Model::UpdateDirectorySetupRequest& request) const;
+
+        /**
+         * An Async wrapper for UpdateDirectorySetup that queues the request into a thread executor and triggers associated callback when operation has finished.
+         */
+        virtual void UpdateDirectorySetupAsync(const Model::UpdateDirectorySetupRequest& request, const UpdateDirectorySetupResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
+
+        /**
          * <p>Adds or removes domain controllers to or from the directory. Based on the
          * difference between current value and new value (provided through this API call),
          * domain controllers will be added or removed. It may take up to 45 minutes for
@@ -1349,12 +1413,14 @@ namespace DirectoryService
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<DirectoryServiceEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<DirectoryServiceClient>;
+      void init(const DirectoryServiceClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      DirectoryServiceClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<DirectoryServiceEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace DirectoryService

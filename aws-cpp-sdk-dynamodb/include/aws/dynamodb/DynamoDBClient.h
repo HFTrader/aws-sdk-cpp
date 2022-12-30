@@ -7,6 +7,7 @@
 #include <aws/dynamodb/DynamoDB_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/dynamodb/DynamoDBServiceClientModel.h>
 
@@ -32,33 +33,60 @@ namespace DynamoDB
    * Zones in an Amazon Web Services Region, providing built-in high availability and
    * data durability.</p>
    */
-  class AWS_DYNAMODB_API DynamoDBClient : public Aws::Client::AWSJsonClient
+  class AWS_DYNAMODB_API DynamoDBClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<DynamoDBClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        DynamoDBClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        DynamoDBClient(const Aws::DynamoDB::DynamoDBClientConfiguration& clientConfiguration = Aws::DynamoDB::DynamoDBClientConfiguration(),
+                       std::shared_ptr<DynamoDBEndpointProviderBase> endpointProvider = Aws::MakeShared<DynamoDBEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         DynamoDBClient(const Aws::Auth::AWSCredentials& credentials,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<DynamoDBEndpointProviderBase> endpointProvider = Aws::MakeShared<DynamoDBEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::DynamoDB::DynamoDBClientConfiguration& clientConfiguration = Aws::DynamoDB::DynamoDBClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         DynamoDBClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                       const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                       std::shared_ptr<DynamoDBEndpointProviderBase> endpointProvider = Aws::MakeShared<DynamoDBEndpointProvider>(ALLOCATION_TAG),
+                       const Aws::DynamoDB::DynamoDBClientConfiguration& clientConfiguration = Aws::DynamoDB::DynamoDBClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DynamoDBClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        DynamoDBClient(const Aws::Auth::AWSCredentials& credentials,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        DynamoDBClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                       const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~DynamoDBClient();
-
 
         /**
          * <p>This operation allows you to perform batch reads or writes on data stored in
@@ -159,15 +187,17 @@ namespace DynamoDB
          * this distinction, see <a
          * href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html">Naming
          * Rules and Data Types</a>.</p>  <p> <code>BatchWriteItem</code> cannot
-         * update items. To update items, use the <code>UpdateItem</code> action.</p>
-         *  <p>The individual <code>PutItem</code> and <code>DeleteItem</code>
-         * operations specified in <code>BatchWriteItem</code> are atomic; however
-         * <code>BatchWriteItem</code> as a whole is not. If any requested operations fail
-         * because the table's provisioned throughput is exceeded or an internal processing
-         * failure occurs, the failed operations are returned in the
-         * <code>UnprocessedItems</code> response parameter. You can investigate and
-         * optionally resend the requests. Typically, you would call
-         * <code>BatchWriteItem</code> in a loop. Each iteration would check for
+         * update items. If you perform a <code>BatchWriteItem</code> operation on an
+         * existing item, that item's values will be overwritten by the operation and it
+         * will appear like it was updated. To update items, we recommend you use the
+         * <code>UpdateItem</code> action.</p>  <p>The individual
+         * <code>PutItem</code> and <code>DeleteItem</code> operations specified in
+         * <code>BatchWriteItem</code> are atomic; however <code>BatchWriteItem</code> as a
+         * whole is not. If any requested operations fail because the table's provisioned
+         * throughput is exceeded or an internal processing failure occurs, the failed
+         * operations are returned in the <code>UnprocessedItems</code> response parameter.
+         * You can investigate and optionally resend the requests. Typically, you would
+         * call <code>BatchWriteItem</code> in a loop. Each iteration would check for
          * unprocessed items and submit a new <code>BatchWriteItem</code> request with
          * those unprocessed items until all items have been processed.</p> <p>If
          * <i>none</i> of the items can be processed due to insufficient provisioned
@@ -1007,18 +1037,17 @@ namespace DynamoDB
          * doesn't exist), or replace an existing item if it has certain attribute values.
          * You can return the item's attribute values in the same operation, using the
          * <code>ReturnValues</code> parameter.</p> <p>When you add an item, the primary
-         * key attributes are the only required attributes. Attribute values cannot be
-         * null.</p> <p>Empty String and Binary attribute values are allowed. Attribute
-         * values of type String and Binary must have a length greater than zero if the
-         * attribute is used as a key attribute for a table or index. Set type attributes
-         * cannot be empty. </p> <p>Invalid Requests with empty values will be rejected
-         * with a <code>ValidationException</code> exception.</p>  <p>To prevent a
-         * new item from replacing an existing item, use a conditional expression that
-         * contains the <code>attribute_not_exists</code> function with the name of the
-         * attribute being used as the partition key for the table. Since every record must
-         * contain that attribute, the <code>attribute_not_exists</code> function will only
-         * succeed if no matching item exists.</p>  <p>For more information about
-         * <code>PutItem</code>, see <a
+         * key attributes are the only required attributes. </p> <p>Empty String and Binary
+         * attribute values are allowed. Attribute values of type String and Binary must
+         * have a length greater than zero if the attribute is used as a key attribute for
+         * a table or index. Set type attributes cannot be empty. </p> <p>Invalid Requests
+         * with empty values will be rejected with a <code>ValidationException</code>
+         * exception.</p>  <p>To prevent a new item from replacing an existing item,
+         * use a conditional expression that contains the <code>attribute_not_exists</code>
+         * function with the name of the attribute being used as the partition key for the
+         * table. Since every record must contain that attribute, the
+         * <code>attribute_not_exists</code> function will only succeed if no matching item
+         * exists.</p>  <p>For more information about <code>PutItem</code>, see <a
          * href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html">Working
          * with Items</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p><p><h3>See
          * Also:</h3>   <a
@@ -1542,15 +1571,15 @@ namespace DynamoDB
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<DynamoDBEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
-      void LoadDynamoDBSpecificConfig(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<DynamoDBClient>;
+      void init(const DynamoDBClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
       mutable Aws::Utils::ConcurrentCache<Aws::String, Aws::String> m_endpointsCache;
-      bool m_enableEndpointDiscovery = false;
-      Aws::String m_configScheme;
+      DynamoDBClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<DynamoDBEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace DynamoDB

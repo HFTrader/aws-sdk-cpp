@@ -22,10 +22,10 @@ namespace Model
    * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/DescribeEngineDefaultParametersMessage">AWS
    * API Reference</a></p>
    */
-  class AWS_ELASTICACHE_API DescribeEngineDefaultParametersRequest : public ElastiCacheRequest
+  class DescribeEngineDefaultParametersRequest : public ElastiCacheRequest
   {
   public:
-    DescribeEngineDefaultParametersRequest();
+    AWS_ELASTICACHE_API DescribeEngineDefaultParametersRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -33,10 +33,10 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "DescribeEngineDefaultParameters"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
 
   protected:
-    void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+    AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
 
   public:
 
@@ -45,7 +45,7 @@ namespace Model
      * <code>memcached1.4</code> | <code>memcached1.5</code> |
      * <code>memcached1.6</code> | <code>redis2.6</code> | <code>redis2.8</code> |
      * <code>redis3.2</code> | <code>redis4.0</code> | <code>redis5.0</code> |
-     * <code>redis6.x</code> | <code>redis6.2</code> </p>
+     * <code>redis6.x</code> | <code>redis6.2</code> | <code>redis7</code> </p>
      */
     inline const Aws::String& GetCacheParameterGroupFamily() const{ return m_cacheParameterGroupFamily; }
 
@@ -54,7 +54,7 @@ namespace Model
      * <code>memcached1.4</code> | <code>memcached1.5</code> |
      * <code>memcached1.6</code> | <code>redis2.6</code> | <code>redis2.8</code> |
      * <code>redis3.2</code> | <code>redis4.0</code> | <code>redis5.0</code> |
-     * <code>redis6.x</code> | <code>redis6.2</code> </p>
+     * <code>redis6.x</code> | <code>redis6.2</code> | <code>redis7</code> </p>
      */
     inline bool CacheParameterGroupFamilyHasBeenSet() const { return m_cacheParameterGroupFamilyHasBeenSet; }
 
@@ -63,7 +63,7 @@ namespace Model
      * <code>memcached1.4</code> | <code>memcached1.5</code> |
      * <code>memcached1.6</code> | <code>redis2.6</code> | <code>redis2.8</code> |
      * <code>redis3.2</code> | <code>redis4.0</code> | <code>redis5.0</code> |
-     * <code>redis6.x</code> | <code>redis6.2</code> </p>
+     * <code>redis6.x</code> | <code>redis6.2</code> | <code>redis7</code> </p>
      */
     inline void SetCacheParameterGroupFamily(const Aws::String& value) { m_cacheParameterGroupFamilyHasBeenSet = true; m_cacheParameterGroupFamily = value; }
 
@@ -72,7 +72,7 @@ namespace Model
      * <code>memcached1.4</code> | <code>memcached1.5</code> |
      * <code>memcached1.6</code> | <code>redis2.6</code> | <code>redis2.8</code> |
      * <code>redis3.2</code> | <code>redis4.0</code> | <code>redis5.0</code> |
-     * <code>redis6.x</code> | <code>redis6.2</code> </p>
+     * <code>redis6.x</code> | <code>redis6.2</code> | <code>redis7</code> </p>
      */
     inline void SetCacheParameterGroupFamily(Aws::String&& value) { m_cacheParameterGroupFamilyHasBeenSet = true; m_cacheParameterGroupFamily = std::move(value); }
 
@@ -81,7 +81,7 @@ namespace Model
      * <code>memcached1.4</code> | <code>memcached1.5</code> |
      * <code>memcached1.6</code> | <code>redis2.6</code> | <code>redis2.8</code> |
      * <code>redis3.2</code> | <code>redis4.0</code> | <code>redis5.0</code> |
-     * <code>redis6.x</code> | <code>redis6.2</code> </p>
+     * <code>redis6.x</code> | <code>redis6.2</code> | <code>redis7</code> </p>
      */
     inline void SetCacheParameterGroupFamily(const char* value) { m_cacheParameterGroupFamilyHasBeenSet = true; m_cacheParameterGroupFamily.assign(value); }
 
@@ -90,7 +90,7 @@ namespace Model
      * <code>memcached1.4</code> | <code>memcached1.5</code> |
      * <code>memcached1.6</code> | <code>redis2.6</code> | <code>redis2.8</code> |
      * <code>redis3.2</code> | <code>redis4.0</code> | <code>redis5.0</code> |
-     * <code>redis6.x</code> | <code>redis6.2</code> </p>
+     * <code>redis6.x</code> | <code>redis6.2</code> | <code>redis7</code> </p>
      */
     inline DescribeEngineDefaultParametersRequest& WithCacheParameterGroupFamily(const Aws::String& value) { SetCacheParameterGroupFamily(value); return *this;}
 
@@ -99,7 +99,7 @@ namespace Model
      * <code>memcached1.4</code> | <code>memcached1.5</code> |
      * <code>memcached1.6</code> | <code>redis2.6</code> | <code>redis2.8</code> |
      * <code>redis3.2</code> | <code>redis4.0</code> | <code>redis5.0</code> |
-     * <code>redis6.x</code> | <code>redis6.2</code> </p>
+     * <code>redis6.x</code> | <code>redis6.2</code> | <code>redis7</code> </p>
      */
     inline DescribeEngineDefaultParametersRequest& WithCacheParameterGroupFamily(Aws::String&& value) { SetCacheParameterGroupFamily(std::move(value)); return *this;}
 
@@ -108,7 +108,7 @@ namespace Model
      * <code>memcached1.4</code> | <code>memcached1.5</code> |
      * <code>memcached1.6</code> | <code>redis2.6</code> | <code>redis2.8</code> |
      * <code>redis3.2</code> | <code>redis4.0</code> | <code>redis5.0</code> |
-     * <code>redis6.x</code> | <code>redis6.2</code> </p>
+     * <code>redis6.x</code> | <code>redis6.2</code> | <code>redis7</code> </p>
      */
     inline DescribeEngineDefaultParametersRequest& WithCacheParameterGroupFamily(const char* value) { SetCacheParameterGroupFamily(value); return *this;}
 

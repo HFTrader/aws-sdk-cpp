@@ -7,10 +7,12 @@
 
 /* Generic header includes */
 #include <aws/appsync/AppSyncErrors.h>
+#include <aws/core/client/GenericClientConfiguration.h>
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/client/AsyncCallerContext.h>
 #include <aws/core/http/HttpTypes.h>
+#include <aws/appsync/AppSyncEndpointProvider.h>
 #include <future>
 #include <functional>
 /* End of generic header includes */
@@ -34,6 +36,7 @@
 #include <aws/appsync/model/DeleteResolverResult.h>
 #include <aws/appsync/model/DeleteTypeResult.h>
 #include <aws/appsync/model/DisassociateApiResult.h>
+#include <aws/appsync/model/EvaluateCodeResult.h>
 #include <aws/appsync/model/EvaluateMappingTemplateResult.h>
 #include <aws/appsync/model/FlushApiCacheResult.h>
 #include <aws/appsync/model/GetApiAssociationResult.h>
@@ -99,6 +102,10 @@ namespace Aws
 
   namespace AppSync
   {
+    using AppSyncClientConfiguration = Aws::Client::GenericClientConfiguration<false>;
+    using AppSyncEndpointProviderBase = Aws::AppSync::Endpoint::AppSyncEndpointProviderBase;
+    using AppSyncEndpointProvider = Aws::AppSync::Endpoint::AppSyncEndpointProvider;
+
     namespace Model
     {
       /* Service model forward declarations required in AppSyncClient header */
@@ -120,6 +127,7 @@ namespace Aws
       class DeleteResolverRequest;
       class DeleteTypeRequest;
       class DisassociateApiRequest;
+      class EvaluateCodeRequest;
       class EvaluateMappingTemplateRequest;
       class FlushApiCacheRequest;
       class GetApiAssociationRequest;
@@ -173,6 +181,7 @@ namespace Aws
       typedef Aws::Utils::Outcome<DeleteResolverResult, AppSyncError> DeleteResolverOutcome;
       typedef Aws::Utils::Outcome<DeleteTypeResult, AppSyncError> DeleteTypeOutcome;
       typedef Aws::Utils::Outcome<DisassociateApiResult, AppSyncError> DisassociateApiOutcome;
+      typedef Aws::Utils::Outcome<EvaluateCodeResult, AppSyncError> EvaluateCodeOutcome;
       typedef Aws::Utils::Outcome<EvaluateMappingTemplateResult, AppSyncError> EvaluateMappingTemplateOutcome;
       typedef Aws::Utils::Outcome<FlushApiCacheResult, AppSyncError> FlushApiCacheOutcome;
       typedef Aws::Utils::Outcome<GetApiAssociationResult, AppSyncError> GetApiAssociationOutcome;
@@ -226,6 +235,7 @@ namespace Aws
       typedef std::future<DeleteResolverOutcome> DeleteResolverOutcomeCallable;
       typedef std::future<DeleteTypeOutcome> DeleteTypeOutcomeCallable;
       typedef std::future<DisassociateApiOutcome> DisassociateApiOutcomeCallable;
+      typedef std::future<EvaluateCodeOutcome> EvaluateCodeOutcomeCallable;
       typedef std::future<EvaluateMappingTemplateOutcome> EvaluateMappingTemplateOutcomeCallable;
       typedef std::future<FlushApiCacheOutcome> FlushApiCacheOutcomeCallable;
       typedef std::future<GetApiAssociationOutcome> GetApiAssociationOutcomeCallable;
@@ -282,6 +292,7 @@ namespace Aws
     typedef std::function<void(const AppSyncClient*, const Model::DeleteResolverRequest&, const Model::DeleteResolverOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DeleteResolverResponseReceivedHandler;
     typedef std::function<void(const AppSyncClient*, const Model::DeleteTypeRequest&, const Model::DeleteTypeOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DeleteTypeResponseReceivedHandler;
     typedef std::function<void(const AppSyncClient*, const Model::DisassociateApiRequest&, const Model::DisassociateApiOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > DisassociateApiResponseReceivedHandler;
+    typedef std::function<void(const AppSyncClient*, const Model::EvaluateCodeRequest&, const Model::EvaluateCodeOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > EvaluateCodeResponseReceivedHandler;
     typedef std::function<void(const AppSyncClient*, const Model::EvaluateMappingTemplateRequest&, const Model::EvaluateMappingTemplateOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > EvaluateMappingTemplateResponseReceivedHandler;
     typedef std::function<void(const AppSyncClient*, const Model::FlushApiCacheRequest&, const Model::FlushApiCacheOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > FlushApiCacheResponseReceivedHandler;
     typedef std::function<void(const AppSyncClient*, const Model::GetApiAssociationRequest&, const Model::GetApiAssociationOutcome&, const std::shared_ptr<const Aws::Client::AsyncCallerContext>&) > GetApiAssociationResponseReceivedHandler;

@@ -7,6 +7,7 @@
 #include <aws/networkmanager/NetworkManager_EXPORTS.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/networkmanager/NetworkManagerServiceClientModel.h>
 
@@ -19,33 +20,60 @@ namespace NetworkManager
    * Cloud WAN core network and your Transit Gateway network across Amazon Web
    * Services accounts, Regions, and on-premises locations.</p>
    */
-  class AWS_NETWORKMANAGER_API NetworkManagerClient : public Aws::Client::AWSJsonClient
+  class AWS_NETWORKMANAGER_API NetworkManagerClient : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<NetworkManagerClient>
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
+      static const char* SERVICE_NAME;
+      static const char* ALLOCATION_TAG;
 
        /**
         * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
-        NetworkManagerClient(const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+        NetworkManagerClient(const Aws::NetworkManager::NetworkManagerClientConfiguration& clientConfiguration = Aws::NetworkManager::NetworkManagerClientConfiguration(),
+                             std::shared_ptr<NetworkManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<NetworkManagerEndpointProvider>(ALLOCATION_TAG));
 
        /**
         * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
         * is not specified, it will be initialized to default values.
         */
         NetworkManagerClient(const Aws::Auth::AWSCredentials& credentials,
-                             const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                             std::shared_ptr<NetworkManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<NetworkManagerEndpointProvider>(ALLOCATION_TAG),
+                             const Aws::NetworkManager::NetworkManagerClientConfiguration& clientConfiguration = Aws::NetworkManager::NetworkManagerClientConfiguration());
 
        /**
         * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
         * the default http client factory will be used
         */
         NetworkManagerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
-                             const Aws::Client::ClientConfiguration& clientConfiguration = Aws::Client::ClientConfiguration());
+                             std::shared_ptr<NetworkManagerEndpointProviderBase> endpointProvider = Aws::MakeShared<NetworkManagerEndpointProvider>(ALLOCATION_TAG),
+                             const Aws::NetworkManager::NetworkManagerClientConfiguration& clientConfiguration = Aws::NetworkManager::NetworkManagerClientConfiguration());
 
+
+        /* Legacy constructors due deprecation */
+       /**
+        * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        NetworkManagerClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+        * is not specified, it will be initialized to default values.
+        */
+        NetworkManagerClient(const Aws::Auth::AWSCredentials& credentials,
+                             const Aws::Client::ClientConfiguration& clientConfiguration);
+
+       /**
+        * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+        * the default http client factory will be used
+        */
+        NetworkManagerClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                             const Aws::Client::ClientConfiguration& clientConfiguration);
+
+        /* End of legacy constructors due deprecation */
         virtual ~NetworkManagerClient();
-
 
         /**
          * <p>Accepts a core network attachment request. </p> <p>Once the attachment
@@ -1390,9 +1418,9 @@ namespace NetworkManager
         virtual void RestoreCoreNetworkPolicyVersionAsync(const Model::RestoreCoreNetworkPolicyVersionRequest& request, const RestoreCoreNetworkPolicyVersionResponseReceivedHandler& handler, const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const;
 
         /**
-         * <p>Enables for the Network Manager service for an Amazon Web Services
-         * Organization. This can only be called by a management account within the
-         * organization. </p><p><h3>See Also:</h3>   <a
+         * <p>Enables the Network Manager service for an Amazon Web Services Organization.
+         * This can only be called by a management account within the organization.
+         * </p><p><h3>See Also:</h3>   <a
          * href="http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/StartOrganizationServiceAccessUpdate">AWS
          * API Reference</a></p>
          */
@@ -1606,12 +1634,14 @@ namespace NetworkManager
 
 
       void OverrideEndpoint(const Aws::String& endpoint);
+      std::shared_ptr<NetworkManagerEndpointProviderBase>& accessEndpointProvider();
     private:
-      void init(const Aws::Client::ClientConfiguration& clientConfiguration);
+      friend class Aws::Client::ClientWithAsyncTemplateMethods<NetworkManagerClient>;
+      void init(const NetworkManagerClientConfiguration& clientConfiguration);
 
-      Aws::String m_uri;
-      Aws::String m_configScheme;
+      NetworkManagerClientConfiguration m_clientConfiguration;
       std::shared_ptr<Aws::Utils::Threading::Executor> m_executor;
+      std::shared_ptr<NetworkManagerEndpointProviderBase> m_endpointProvider;
   };
 
 } // namespace NetworkManager

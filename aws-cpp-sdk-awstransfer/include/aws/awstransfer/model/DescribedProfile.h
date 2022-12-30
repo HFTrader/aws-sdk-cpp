@@ -27,18 +27,18 @@ namespace Model
 {
 
   /**
-   * <p>The details for a local or partner AS2 profile. profile.</p><p><h3>See
-   * Also:</h3>   <a
+   * <p>The details for a local or partner AS2 profile. </p><p><h3>See Also:</h3>  
+   * <a
    * href="http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribedProfile">AWS
    * API Reference</a></p>
    */
-  class AWS_TRANSFER_API DescribedProfile
+  class DescribedProfile
   {
   public:
-    DescribedProfile();
-    DescribedProfile(Aws::Utils::Json::JsonView jsonValue);
-    DescribedProfile& operator=(Aws::Utils::Json::JsonView jsonValue);
-    Aws::Utils::Json::JsonValue Jsonize() const;
+    AWS_TRANSFER_API DescribedProfile();
+    AWS_TRANSFER_API DescribedProfile(Aws::Utils::Json::JsonView jsonValue);
+    AWS_TRANSFER_API DescribedProfile& operator=(Aws::Utils::Json::JsonView jsonValue);
+    AWS_TRANSFER_API Aws::Utils::Json::JsonValue Jsonize() const;
 
 
     /**

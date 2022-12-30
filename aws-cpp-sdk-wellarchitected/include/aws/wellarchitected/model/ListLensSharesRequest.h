@@ -23,10 +23,10 @@ namespace Model
 
   /**
    */
-  class AWS_WELLARCHITECTED_API ListLensSharesRequest : public WellArchitectedRequest
+  class ListLensSharesRequest : public WellArchitectedRequest
   {
   public:
-    ListLensSharesRequest();
+    AWS_WELLARCHITECTED_API ListLensSharesRequest();
 
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
@@ -34,9 +34,9 @@ namespace Model
     // so we can not get operation's name from response.
     inline virtual const char* GetServiceRequestName() const override { return "ListLensShares"; }
 
-    Aws::String SerializePayload() const override;
+    AWS_WELLARCHITECTED_API Aws::String SerializePayload() const override;
 
-    void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+    AWS_WELLARCHITECTED_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
 
 
     
@@ -65,50 +65,50 @@ namespace Model
 
 
     /**
-     * <p>The Amazon Web Services account ID or IAM role with which the lens is
-     * shared.</p>
+     * <p>The Amazon Web Services account ID, IAM role, organization ID, or
+     * organizational unit (OU) ID with which the lens is shared.</p>
      */
     inline const Aws::String& GetSharedWithPrefix() const{ return m_sharedWithPrefix; }
 
     /**
-     * <p>The Amazon Web Services account ID or IAM role with which the lens is
-     * shared.</p>
+     * <p>The Amazon Web Services account ID, IAM role, organization ID, or
+     * organizational unit (OU) ID with which the lens is shared.</p>
      */
     inline bool SharedWithPrefixHasBeenSet() const { return m_sharedWithPrefixHasBeenSet; }
 
     /**
-     * <p>The Amazon Web Services account ID or IAM role with which the lens is
-     * shared.</p>
+     * <p>The Amazon Web Services account ID, IAM role, organization ID, or
+     * organizational unit (OU) ID with which the lens is shared.</p>
      */
     inline void SetSharedWithPrefix(const Aws::String& value) { m_sharedWithPrefixHasBeenSet = true; m_sharedWithPrefix = value; }
 
     /**
-     * <p>The Amazon Web Services account ID or IAM role with which the lens is
-     * shared.</p>
+     * <p>The Amazon Web Services account ID, IAM role, organization ID, or
+     * organizational unit (OU) ID with which the lens is shared.</p>
      */
     inline void SetSharedWithPrefix(Aws::String&& value) { m_sharedWithPrefixHasBeenSet = true; m_sharedWithPrefix = std::move(value); }
 
     /**
-     * <p>The Amazon Web Services account ID or IAM role with which the lens is
-     * shared.</p>
+     * <p>The Amazon Web Services account ID, IAM role, organization ID, or
+     * organizational unit (OU) ID with which the lens is shared.</p>
      */
     inline void SetSharedWithPrefix(const char* value) { m_sharedWithPrefixHasBeenSet = true; m_sharedWithPrefix.assign(value); }
 
     /**
-     * <p>The Amazon Web Services account ID or IAM role with which the lens is
-     * shared.</p>
+     * <p>The Amazon Web Services account ID, IAM role, organization ID, or
+     * organizational unit (OU) ID with which the lens is shared.</p>
      */
     inline ListLensSharesRequest& WithSharedWithPrefix(const Aws::String& value) { SetSharedWithPrefix(value); return *this;}
 
     /**
-     * <p>The Amazon Web Services account ID or IAM role with which the lens is
-     * shared.</p>
+     * <p>The Amazon Web Services account ID, IAM role, organization ID, or
+     * organizational unit (OU) ID with which the lens is shared.</p>
      */
     inline ListLensSharesRequest& WithSharedWithPrefix(Aws::String&& value) { SetSharedWithPrefix(std::move(value)); return *this;}
 
     /**
-     * <p>The Amazon Web Services account ID or IAM role with which the lens is
-     * shared.</p>
+     * <p>The Amazon Web Services account ID, IAM role, organization ID, or
+     * organizational unit (OU) ID with which the lens is shared.</p>
      */
     inline ListLensSharesRequest& WithSharedWithPrefix(const char* value) { SetSharedWithPrefix(value); return *this;}
 
